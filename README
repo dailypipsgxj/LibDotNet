@@ -1,0 +1,1 @@
+LibDotNet is a C# compatability layer for Vala. It implements a range of C# class and functions to make porting C# code easier.
