@@ -1,6 +1,4 @@
-## Process this file with automake to produce Makefile.in
-
-## Created by Anjuta
+include $(top_srcdir)/src/sourcefiles.am
 
 AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
@@ -17,8 +15,7 @@ lib_LTLIBRARIES = libdotnet.la
 vapidir = $(datadir)/vala/vapi
 dist_vapi_DATA = libdotnet-0.1.vapi libdotnet-0.1.deps
 
-libdotnet_la_SOURCES = libdotnet.vala \
-	System.Collections.Generic.vala
+libdotnet_la_SOURCES = $(LIBDOTNET_SOURCES)
 
 libdotnet_la_LDFLAGS = 
 	
