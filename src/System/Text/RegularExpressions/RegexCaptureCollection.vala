@@ -20,8 +20,8 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class CaptureCollection : ICollection
     {
-        private readonly Group _group;
-        private readonly int _capcount;
+        private   Group _group;
+        private   int _capcount;
         private Capture[] _captures;
 
         internal CaptureCollection(Group group)
@@ -101,7 +101,7 @@ namespace System.Text.RegularExpressions
 
         private class Enumerator : IEnumerator
         {
-            private readonly CaptureCollection _collection;
+            private   CaptureCollection _collection;
             private int _index;
 
             internal Enumerator(CaptureCollection collection)

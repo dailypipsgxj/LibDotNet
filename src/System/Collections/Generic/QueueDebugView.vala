@@ -7,7 +7,7 @@ namespace System.Collections.Generic
 {
     internal sealed class QueueDebugView<T>
     {
-        private readonly Queue<T> _queue;
+        private   Queue<T> _queue;
 
         public QueueDebugView(Queue<T> queue)
         {

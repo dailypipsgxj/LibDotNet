@@ -16,8 +16,8 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class GroupCollection : ICollection
     {
-        private readonly Match _match;
-        private readonly Dictionary<int, int> _captureMap;
+        private   Match _match;
+        private   Dictionary<int, int> _captureMap;
 
         // cache of Group objects fed to the user
         private Group[] _groups;
@@ -123,7 +123,7 @@ namespace System.Text.RegularExpressions
 
         private class Enumerator : IEnumerator
         {
-            private readonly GroupCollection _collection;
+            private   GroupCollection _collection;
             private int _index;
 
             internal Enumerator(GroupCollection collection)

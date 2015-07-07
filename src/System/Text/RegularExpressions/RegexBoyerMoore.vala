@@ -18,15 +18,15 @@ namespace System.Text.RegularExpressions
 {
     internal sealed class RegexBoyerMoore
     {
-        private readonly int[] _positive;
-        private readonly int[] _negativeASCII;
-        private readonly int[][] _negativeUnicode;
-        private readonly String _pattern;
-        private readonly int _lowASCII;
-        private readonly int _highASCII;
-        private readonly bool _rightToLeft;
-        private readonly bool _caseInsensitive;
-        private readonly CultureInfo _culture;
+        private   int[] _positive;
+        private   int[] _negativeASCII;
+        private   int[][] _negativeUnicode;
+        private   String _pattern;
+        private   int _lowASCII;
+        private   int _highASCII;
+        private   bool _rightToLeft;
+        private   bool _caseInsensitive;
+        private   CultureInfo _culture;
 
         /// <summary>
         /// Constructs a Boyer-Moore state machine for searching for the string

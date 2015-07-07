@@ -19,9 +19,9 @@ namespace System.Text.RegularExpressions
         internal const int LastGroup = -3;
         internal const int WholeString = -4;
 
-        private readonly String _rep;
-        private readonly List<String> _strings; // table of string constants
-        private readonly List<Int32> _rules;    // negative -> group #, positive -> string #
+        private   String _rep;
+        private   List<String> _strings; // table of string constants
+        private   List<Int32> _rules;    // negative -> group #, positive -> string #
 
         /// <summary>
         /// Since RegexReplacement shares the same parser as Regex,

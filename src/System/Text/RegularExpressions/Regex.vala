@@ -15,7 +15,7 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents an immutable, compiled regular expression. Also
     /// contains static methods that allow use of regular expressions without instantiating
-    /// a Regex explicitly.
+    /// a Regex  ly.
     /// </summary>
     public class Regex
     {
@@ -26,7 +26,7 @@ namespace System.Text.RegularExpressions
 
         // We need this because time is queried using Environment.TickCount for performance reasons
         // (Environment.TickCount returns milliseconds as an int and cycles):
-        private static readonly TimeSpan MaximumMatchTimeout = TimeSpan.FromMilliseconds(Int32.MaxValue - 1);
+        private static   TimeSpan MaximumMatchTimeout = TimeSpan.FromMilliseconds(Int32.MaxValue - 1);
 
         // InfiniteMatchTimeout specifies that match timeout is switched OFF. It allows for faster code paths
         // compared to simply having a very large timeout.
@@ -36,13 +36,13 @@ namespace System.Text.RegularExpressions
         //       There may in theory be a SKU that has RegEx, but no multithreading.
         // We create a public Regex.InfiniteMatchTimeout constant, which for consistency uses the save underlying
         // value as Timeout.InfiniteTimeSpan creating an implementation detail dependency only.
-        public static readonly TimeSpan InfiniteMatchTimeout = Timeout.InfiniteTimeSpan;
+        public static   TimeSpan InfiniteMatchTimeout = Timeout.InfiniteTimeSpan;
 
         internal TimeSpan _internalMatchTimeout;   // timeout for the execution of this regex
 
         // DefaultMatchTimeout specifies the match timeout to use if no other timeout was specified
         // by one means or another. Typically, it is set to InfiniteMatchTimeout.
-        internal static readonly TimeSpan DefaultMatchTimeout = InfiniteMatchTimeout;
+        internal static   TimeSpan DefaultMatchTimeout = InfiniteMatchTimeout;
 
         // *********** } match timeout fields ***********
 
@@ -956,9 +956,9 @@ namespace System.Text.RegularExpressions
      */
     internal struct CachedCodeEntryKey : IEquatable<CachedCodeEntryKey>
     {
-        private readonly RegexOptions _options;
-        private readonly string _cultureKey;
-        private readonly string _pattern;
+        private   RegexOptions _options;
+        private   string _cultureKey;
+        private   string _pattern;
 
         internal CachedCodeEntryKey(RegexOptions options, string cultureKey, string pattern)
         {

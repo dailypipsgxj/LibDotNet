@@ -33,7 +33,7 @@ namespace System.Collections
     // capacity of the sorted list is automatically increased as required by
     // reallocating the internal arrays.  The capacity is never automatically 
     // decreased, but users can call either TrimToSize or 
-    // Capacity explicitly.
+    // Capacity  ly.
     // 
     // The GetKeyList and GetValueList methods of a sorted list
     // provides access to the keys and values of the sorted list in the form of

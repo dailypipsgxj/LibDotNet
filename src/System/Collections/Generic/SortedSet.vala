@@ -86,7 +86,7 @@ namespace System.Collections.Generic
                 throw new ArgumentNullException("collection");
             }
 
-            // these are explicit type checks in the mould of HashSet. It would have worked better
+            // these are   type checks in the mould of HashSet. It would have worked better
             // with something like an ISorted<T> (we could make this work for SortedList.Keys etc)
             SortedSet<T> baseSortedSet = collection as SortedSet<T>;
             SortedSet<T> baseTreeSubSet = collection as TreeSubSet;
@@ -1738,7 +1738,7 @@ namespace System.Collections.Generic
         // <ReferencesCritical Name="Method: BitHelper.IsMarked(System.Int32):System.Boolean" Ring="1" />
         // <ReferencesCritical Name="Method: BitHelper.MarkBit(System.Int32):System.Void" Ring="1" />
         // </SecurityKernel>
-        private unsafe ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
+        private   ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
         {
             ElementCount result;
 

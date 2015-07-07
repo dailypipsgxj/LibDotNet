@@ -7,7 +7,7 @@ namespace System.Collections.Generic
 {
     internal sealed class IDictionaryDebugView<K, V>
     {
-        private readonly IDictionary<K, V> _dict;
+        private   IDictionary<K, V> _dict;
 
         public IDictionaryDebugView(IDictionary<K, V> dictionary)
         {
@@ -31,7 +31,7 @@ namespace System.Collections.Generic
 
     internal sealed class DictionaryKeyCollectionDebugView<TKey, TValue>
     {
-        private readonly ICollection<TKey> _collection;
+        private   ICollection<TKey> _collection;
 
         public DictionaryKeyCollectionDebugView(ICollection<TKey> collection)
         {
@@ -55,7 +55,7 @@ namespace System.Collections.Generic
 
     internal sealed class DictionaryValueCollectionDebugView<TKey, TValue>
     {
-        private readonly ICollection<TValue> _collection;
+        private   ICollection<TValue> _collection;
 
         public DictionaryValueCollectionDebugView(ICollection<TValue> collection)
         {

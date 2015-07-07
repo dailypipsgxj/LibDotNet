@@ -7,7 +7,7 @@ namespace System.Collections.Generic
 {
     internal sealed class StackDebugView<T>
     {
-        private readonly Stack<T> _stack;
+        private   Stack<T> _stack;
 
         public StackDebugView(Stack<T> stack)
         {

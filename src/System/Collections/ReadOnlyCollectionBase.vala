@@ -14,7 +14,7 @@ using System;
 
 namespace System.Collections
 {
-    // Useful base class for typed readonly collections where items derive from object
+    // Useful base class for typed   collections where items derive from object
     public abstract class ReadOnlyCollectionBase : ICollection
     {
         private ArrayList _list;

@@ -22,8 +22,8 @@ namespace System.Text.RegularExpressions
         private int _depth;
         private int[] _emitted;
         private int _curpos;
-        private readonly Dictionary<string, int> _stringhash;
-        private readonly List<String> _stringtable;
+        private   Dictionary<string, int> _stringhash;
+        private   List<String> _stringtable;
         private bool _counting;
         private int _count;
         private int _trackcount;

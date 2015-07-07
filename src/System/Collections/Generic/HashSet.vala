@@ -48,9 +48,9 @@ namespace System.Collections.Generic
     /// the same time. 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
-    [DebuggerDisplay("Count = {Count}")]
-    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "By design")]
+    //[DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
+    //[DebuggerDisplay("Count = {Count}")]
+    //[SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "By design")]
     public class HashSet<T> : ICollection<T>, ISet<T>, IReadOnlyCollection<T>
     {
         // store lower 31 bits of hash code
@@ -60,7 +60,7 @@ namespace System.Collections.Generic
         // when constructing a hashset from an existing collection, it may contain duplicates, 
         // so this is used as the max acceptable excess ratio of capacity to count. Note that
         // this is only used on the ctor and not to automatically shrink if the hashset has, e.g,
-        // a lot of adds followed by removes. Users must explicitly shrink by calling TrimExcess.
+        // a lot of adds followed by removes. Users must  ly shrink by calling TrimExcess.
         // This is set to 3 because capacity is acceptable as 2x rounded up to nearest prime.
         private const int ShrinkThreshold = 3;
 
@@ -72,7 +72,7 @@ namespace System.Collections.Generic
         private IEqualityComparer<T> _comparer;
         private int _version;
 
-        #region Constructors
+        //#region Constructors
 
         public HashSet()
             : this(EqualityComparer<T>.Default)
@@ -131,12 +131,12 @@ namespace System.Collections.Generic
             }
         }
 
-        #endregion
+        //#endregion
 
-        #region ICollection<T> methods
+        //#region ICollection<T> methods
 
         /// <summary>
-        /// Add item to this hashset. This is the explicit implementation of the ICollection<T>
+        /// Add item to this hashset. This is the   implementation of the ICollection<T>
         /// interface. The other Add method returns bool indicating whether item was added.
         /// </summary>
         /// <param name="item">item to add</param>
@@ -257,16 +257,16 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Whether this is readonly
+        /// Whether this is  
         /// </summary>
         bool ICollection<T>.IsReadOnly
         {
             get { return false; }
         }
 
-        #endregion
+        //#endregion
 
-        #region IEnumerable methods
+        //#region IEnumerable methods
 
         public Enumerator GetEnumerator()
         {
@@ -283,9 +283,9 @@ namespace System.Collections.Generic
             return new Enumerator(this);
         }
 
-        #endregion
+        //#endregion
 
-        #region HashSet methods
+        //#region HashSet methods
 
         /// <summary>
         /// Add item to this HashSet. Returns bool indicating whether item was added (won't be 
@@ -1082,7 +1082,7 @@ namespace System.Collections.Generic
         /// This attempts to allocate on the stack, if below StackAllocThreshold.
         /// </summary>
         /// <param name="other"></param>
-        private unsafe void IntersectWithEnumerable(IEnumerable<T> other)
+        private   void IntersectWithEnumerable(IEnumerable<T> other)
         {
             Debug.Assert(_buckets != null, "_buckets shouldn't be null; callers should check first");
 
@@ -1182,7 +1182,7 @@ namespace System.Collections.Generic
         ///
         /// </summary>
         /// <param name="other"></param>
-        private unsafe void SymmetricExceptWithEnumerable(IEnumerable<T> other)
+        private   void SymmetricExceptWithEnumerable(IEnumerable<T> other)
         {
             int originalLastIndex = _lastIndex;
             int intArrayLength = BitHelper.ToIntArrayLength(originalLastIndex);
@@ -1317,7 +1317,7 @@ namespace System.Collections.Generic
         /// <param name="returnIfUnfound">Allows us to finish faster for equals and proper superset
         /// because unfoundCount must be 0.</param>
         /// <returns></returns>
-        private unsafe ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
+        private   ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
         {
             ElementCount result;
 

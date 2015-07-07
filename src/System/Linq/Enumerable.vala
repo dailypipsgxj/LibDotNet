@@ -2506,7 +2506,7 @@ namespace System.Linq
     // 
     internal class EmptyEnumerable<TElement>
     {
-        public static readonly TElement[] Instance = new TElement[0];
+        public static   TElement[] Instance = new TElement[0];
     }
 
     internal class IdentityFunction<TElement>
@@ -2715,7 +2715,7 @@ namespace System.Linq
             return GetEnumerator();
         }
 
-        // DDB195907: implement IGrouping<>.Key implicitly
+        // DDB195907: implement IGrouping<>.Key  ly
         // so that WPF binding works on this property.
         public TKey Key
         {

@@ -56,18 +56,18 @@ namespace System.Text.RegularExpressions
         private const char ZeroWidthNonJoiner = '\u200C';
 
 
-        private static readonly String s_internalRegexIgnoreCase = "__InternalRegexIgnoreCase__";
-        private static readonly String s_space = "\x64";
-        private static readonly String s_notSpace = "\uFF9C";
-        private static readonly String s_word = "\u0000\u0002\u0004\u0005\u0003\u0001\u0006\u0009\u0013\u0000";
-        private static readonly String s_notWord = "\u0000\uFFFE\uFFFC\uFFFB\uFFFD\uFFFF\uFFFA\uFFF7\uFFED\u0000";
+        private static   String s_internalRegexIgnoreCase = "__InternalRegexIgnoreCase__";
+        private static   String s_space = "\x64";
+        private static   String s_notSpace = "\uFF9C";
+        private static   String s_word = "\u0000\u0002\u0004\u0005\u0003\u0001\u0006\u0009\u0013\u0000";
+        private static   String s_notWord = "\u0000\uFFFE\uFFFC\uFFFB\uFFFD\uFFFF\uFFFA\uFFF7\uFFED\u0000";
 
-        internal static readonly String SpaceClass = "\u0000\u0000\u0001\u0064";
-        internal static readonly String NotSpaceClass = "\u0001\u0000\u0001\u0064";
-        internal static readonly String WordClass = "\u0000\u0000\u000A\u0000\u0002\u0004\u0005\u0003\u0001\u0006\u0009\u0013\u0000";
-        internal static readonly String NotWordClass = "\u0001\u0000\u000A\u0000\u0002\u0004\u0005\u0003\u0001\u0006\u0009\u0013\u0000";
-        internal static readonly String DigitClass = "\u0000\u0000\u0001\u0009";
-        internal static readonly String NotDigitClass = "\u0000\u0000\u0001\uFFF7";
+        internal static   String SpaceClass = "\u0000\u0000\u0001\u0064";
+        internal static   String NotSpaceClass = "\u0001\u0000\u0001\u0064";
+        internal static   String WordClass = "\u0000\u0000\u000A\u0000\u0002\u0004\u0005\u0003\u0001\u0006\u0009\u0013\u0000";
+        internal static   String NotWordClass = "\u0001\u0000\u000A\u0000\u0002\u0004\u0005\u0003\u0001\u0006\u0009\u0013\u0000";
+        internal static   String DigitClass = "\u0000\u0000\u0001\u0009";
+        internal static   String NotDigitClass = "\u0000\u0000\u0001\uFFF7";
 
         private const String ECMASpaceSet = "\u0009\u000E\u0020\u0021";
         private const String NotECMASpaceSet = "\0\u0009\u000E\u0020\u0021";
@@ -88,7 +88,7 @@ namespace System.Text.RegularExpressions
 
         // UnicodeCategory is zero based, so we add one to each value and subtract it off later
         private const int DefinedCategoriesCapacity = 38;
-        private static readonly Dictionary<String, String> s_definedCategories = new Dictionary<String, String>(DefinedCategoriesCapacity)
+        private static   Dictionary<String, String> s_definedCategories = new Dictionary<String, String>(DefinedCategoriesCapacity)
         {
             // Others
             { "Cc", "\u000F" }, // UnicodeCategory.Control + 1
@@ -154,7 +154,7 @@ namespace System.Text.RegularExpressions
          *
         **/
         // Has to be sorted by the first column
-        private static readonly String[][] s_propTable = {
+        private static   String[][] s_propTable = {
             new [] {"IsAlphabeticPresentationForms",       "\uFB00\uFB50"},
             new [] {"IsArabic",                            "\u0600\u0700"},
             new [] {"IsArabicPresentationForms-A",         "\uFB50\uFE00"},
@@ -312,7 +312,7 @@ namespace System.Text.RegularExpressions
         private const int LowercaseBor = 2;    // Bitwise or with 1.
         private const int LowercaseBad = 3;    // Bitwise and with 1 and add original.
 
-        private static readonly LowerCaseMapping[] s_lcTable = new LowerCaseMapping[]
+        private static   LowerCaseMapping[] s_lcTable = new LowerCaseMapping[]
         {
             new LowerCaseMapping('\u0041', '\u005A', LowercaseAdd, 32),
             new LowerCaseMapping('\u00C0', '\u00DE', LowercaseAdd, 32),
@@ -1252,8 +1252,8 @@ namespace System.Text.RegularExpressions
             return desc.ToString();
         }
 
-        internal static readonly char[] Hex = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-        internal static readonly string[] Categories = new string[] {"Lu", "Ll", "Lt", "Lm", "Lo", s_internalRegexIgnoreCase,
+        internal static   char[] Hex = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+        internal static   string[] Categories = new string[] {"Lu", "Ll", "Lt", "Lm", "Lo", s_internalRegexIgnoreCase,
                                                                      "Mn", "Mc", "Me",
                                                                      "Nd", "Nl", "No",
                                                                      "Zs", "Zl", "Zp",
@@ -1329,10 +1329,10 @@ namespace System.Text.RegularExpressions
                 _data = data;
             }
 
-            internal readonly char _chMin;
-            internal readonly char _chMax;
-            internal readonly int _lcOp;
-            internal readonly int _data;
+            internal   char _chMin;
+            internal   char _chMax;
+            internal   int _lcOp;
+            internal   int _data;
         }
 
         /// <summary>
@@ -1340,7 +1340,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         private sealed class SingleRangeComparer : IComparer<SingleRange>
         {
-            public static readonly SingleRangeComparer Instance = new SingleRangeComparer();
+            public static   SingleRangeComparer Instance = new SingleRangeComparer();
 
             private SingleRangeComparer()
             {
@@ -1363,8 +1363,8 @@ namespace System.Text.RegularExpressions
                 _last = last;
             }
 
-            internal readonly char _first;
-            internal readonly char _last;
+            internal   char _first;
+            internal   char _last;
         }
     }
 }

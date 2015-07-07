@@ -19,8 +19,8 @@ namespace System.Collections
     public sealed class Comparer : IComparer
     {
         private CompareInfo _compareInfo;
-        public static readonly Comparer Default = new Comparer(CultureInfo.CurrentCulture);
-        public static readonly Comparer DefaultInvariant = new Comparer(CultureInfo.InvariantCulture);
+        public static   Comparer Default = new Comparer(CultureInfo.CurrentCulture);
+        public static   Comparer DefaultInvariant = new Comparer(CultureInfo.InvariantCulture);
 
         private const String CompareInfoName = "CompareInfo";
 

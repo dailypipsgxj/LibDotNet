@@ -12,8 +12,8 @@ namespace System.Text.RegularExpressions
 {
     internal sealed class RegexInterpreter : RegexRunner
     {
-        private readonly RegexCode _code;
-        private readonly CultureInfo _culture;
+        private   RegexCode _code;
+        private   CultureInfo _culture;
         private int _operator;
         private int _codepos;
         private bool _rightToLeft;

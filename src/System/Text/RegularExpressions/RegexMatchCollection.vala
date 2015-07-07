@@ -21,12 +21,12 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class MatchCollection : ICollection
     {
-        private readonly Regex _regex;
-        private readonly List<Match> _matches;
+        private   Regex _regex;
+        private   List<Match> _matches;
         private bool _done;
-        private readonly string _input;
-        private readonly int _beginning;
-        private readonly int _length;
+        private   string _input;
+        private   int _beginning;
+        private   int _length;
         private int _startat;
         private int _prevlen;
 
@@ -141,7 +141,7 @@ namespace System.Text.RegularExpressions
 
         private class Enumerator : IEnumerator
         {
-            private readonly MatchCollection _collection;
+            private   MatchCollection _collection;
             private int _index;
 
             internal Enumerator(MatchCollection collection)

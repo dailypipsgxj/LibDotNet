@@ -44,22 +44,22 @@ namespace System.Collections.Generic
     /// on a bit array and then need to loop over it. In particular, if it avoided visiting 
     /// every bit, it would allow good perf improvements when the bit array is sparse.
     /// </summary>
-    unsafe internal sealed class BitHelper
+    internal sealed class BitHelper
     {   // should not be serialized
         private const byte MarkedBitFlag = 1;
         private const byte IntSize = 32;
 
         // m_length of underlying int array (not logical bit array)
-        private readonly int _length;
+        private   int _length;
 
         // ptr to stack alloc'd array of ints
-        private readonly int* _arrayPtr;
+        private   int* _arrayPtr;
 
         // array of ints
-        private readonly int[] _array;
+        private   int[] _array;
 
         // whether to operate on stack alloc'd or heap alloc'd array 
-        private readonly bool _useStackAlloc;
+        private   bool _useStackAlloc;
 
         /// <summary>
         /// Instantiates a BitHelper with a heap alloc'd array of ints

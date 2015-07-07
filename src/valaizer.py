@@ -1,8 +1,9 @@
 # this script scans the src directory for files with the .cs extension and
 # changes it to the .vala extension as well as strips the BOM from the file
-# it then adds the filename to the list of files to be compiled
+# it then adds the filename to the list of files to be compiled (not yet implemented)
 
 import os, sys, codecs
+import re, mmap
 
 BUFSIZE = 4096
 BOMLEN = len(codecs.BOM_UTF8)
@@ -13,17 +14,7 @@ def listFiles (dir):
 			yield os.path.join(root,file)
 	return
     
-def main ():
-	path = os.path.dirname(os.path.realpath(__file__))
-	for f in listFiles (path):
-		if (f.endswith ('cs')) :
-			newname = f.replace('.cs', '.vala')
-			output = os.rename(f, newname)
-			removeBOM (newname)
-		elif (f.endswith ('vala')) :
-			print f.replace(path + "/", '\t') + " \\"
-
-def removeBOM (path) :
+def stripBOM (path) :
 	with open(path, "r+b") as fp:
 		chunk = fp.read(BUFSIZE)
 		if chunk.startswith(codecs.BOM_UTF8):
@@ -38,6 +29,48 @@ def removeBOM (path) :
 			fp.seek(-BOMLEN, os.SEEK_CUR)
 			fp.truncate()
 
+def processFile (path):
+	data = ""
+	with open (path, "r+") as f:
+		data = mmap.mmap(f.fileno(), 0)
+		data = re.sub('unsafe ', "", data)
+		data = re.sub('explicit ', "", data)
+		data = re.sub('implicit ', "", data)
+		data = re.sub('readonly ', "", data)
+		f.close()
+	
+	with open (path, "w") as f:
+		f.write (data)
+		
 
+
+def main ():
+	path = os.path.dirname(os.path.realpath(__file__))
+	for f in listFiles (path):
+		if (f.endswith ('cs')) :
+			newname = f.replace('.cs', '.vala')
+			output = os.rename(f, newname)
+			stripBOM (newname)
+			processFile (newname)
+		elif (f.endswith ('vala')) :
+			print f.replace(path + "/", '\t') + " \\"
+			processFile (f)
+
+		
 if __name__ == "__main__":
 	main()
+
+# Strip from files:
+# unsafe
+# explicit
+# implicit
+# readonly
+
+# preprocessor directives
+# #region
+# #endregion
+
+# Convert doc tags to Valadoc format
+# Mangel attributes
+# Overloaded constructors
+# base calls

@@ -1402,7 +1402,7 @@ namespace System.Collections
         // hashtable operations such as add.  Having a prime guarantees that double 
         // hashing does not lead to infinite loops.  IE, your hash function will be 
         // h1(key) + i*h2(key), 0 <= i < size.  h2 and the size must be relatively prime.
-        public static readonly int[] primes = {
+        public static   int[] primes = {
             3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
             1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
             17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,
@@ -1519,7 +1519,7 @@ namespace System.Collections
         private static RandomNumberGenerator rng;
         private static byte[] data;
         private static int currentIndex = bufferSize;
-        private static readonly object lockObj = new Object();
+        private static   object lockObj = new Object();
 
         internal static long GetEntropy()
         {

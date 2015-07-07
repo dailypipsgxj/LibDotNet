@@ -7,7 +7,7 @@ namespace System.Collections.Generic
 {
     internal sealed class ICollectionDebugView<T>
     {
-        private readonly ICollection<T> _collection;
+        private   ICollection<T> _collection;
 
         public ICollectionDebugView(ICollection<T> collection)
         {
