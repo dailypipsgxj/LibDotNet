@@ -20,7 +20,7 @@ using System.Globalization;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexCode
+    internal class RegexCode
     {
         // The following primitive operations come directly from the parser
 

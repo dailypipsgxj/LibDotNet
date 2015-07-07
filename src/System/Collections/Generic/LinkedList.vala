@@ -8,7 +8,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace System.Collections.Generic
 {
     [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerDisplay("Count = {Count}")]
+
     public class LinkedList<T> : ICollection<T>, System.Collections.ICollection, IReadOnlyCollection<T>
     {
         // This LinkedList is a doubly-Linked circular list.
@@ -544,7 +545,7 @@ namespace System.Collections.Generic
     }
 
     // Note following class is not serializable since we customized the serialization of LinkedList. 
-    public sealed class LinkedListNode<T>
+    public class LinkedListNode<T>
     {
         internal LinkedList<T> list;
         internal LinkedListNode<T> next;

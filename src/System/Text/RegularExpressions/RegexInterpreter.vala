@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexInterpreter : RegexRunner
+    internal class RegexInterpreter : RegexRunner
     {
         private   RegexCode _code;
         private   CultureInfo _culture;

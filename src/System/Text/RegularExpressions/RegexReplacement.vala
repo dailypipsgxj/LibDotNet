@@ -10,7 +10,7 @@ using System.IO;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexReplacement
+    internal class RegexReplacement
     {
         // Constants for special insertion patterns
         internal const int Specials = 4;

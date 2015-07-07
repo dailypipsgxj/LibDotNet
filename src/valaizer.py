@@ -37,11 +37,23 @@ def processFile (path):
 		data = re.sub('explicit ', "", data)
 		data = re.sub('implicit ', "", data)
 		data = re.sub('readonly ', "", data)
+		data = re.sub('sealed ', "", data)
+		data = re.sub('\#region ', "", data)
+		data = re.sub('\#endregion ', "", data)
+		data = re.sub(ur'\s*: base\s*\(([\w\s,<>\[\].=&\':/*]*?)\)\s*?\s*(?={){', baseReplace, data)
+		data = re.sub(ur'\n\s*(\[[a-zA-Z0-9()"=\{\}\s.]*\])', attrReplace, data)
 		f.close()
+
+	print data
 	
 	with open (path, "w") as f:
 		f.write (data)
 		
+def baseReplace (matchobj):
+	return "{\n\t\t\tbase(" + matchobj.group (1) + ");"
+
+def attrReplace (matchobj):
+	return "\n// " + matchobj.group (1) + "\n"
 
 
 def main ():

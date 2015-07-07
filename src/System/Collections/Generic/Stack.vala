@@ -18,7 +18,8 @@ namespace System.Collections.Generic
     // so Push can be O(n).  Pop is O(1).
 
     [DebuggerTypeProxy(typeof(StackDebugView<>))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerDisplay("Count = {Count}")]
+
     public class Stack<T> : IEnumerable<T>,
         System.Collections.ICollection,
         IReadOnlyCollection<T>

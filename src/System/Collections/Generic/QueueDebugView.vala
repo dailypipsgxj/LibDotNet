@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace System.Collections.Generic
 {
-    internal sealed class QueueDebugView<T>
+    internal class QueueDebugView<T>
     {
         private   Queue<T> _queue;
 
@@ -18,8 +18,8 @@ namespace System.Collections.Generic
 
             _queue = queue;
         }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public T[] Items
         {
             get

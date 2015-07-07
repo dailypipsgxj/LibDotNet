@@ -79,11 +79,11 @@ POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
 subdir = .
-DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
-	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
+DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in $(dist_doc_DATA) COPYING ar-lib compile \
-	config.guess config.sub depcomp install-sh missing ltmain.sh
+	$(srcdir)/config.h.in $(dist_doc_DATA) AUTHORS COPYING \
+	ChangeLog INSTALL NEWS README ar-lib compile config.guess \
+	config.sub depcomp install-sh missing ltmain.sh
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -222,15 +222,15 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/developer/libdotnet/missing aclocal-1.14
+ACLOCAL = ${SHELL} /home/developer/projects/LibDotNet/missing aclocal-1.14
 ALL_LINGUAS = 
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
 AS = as
-AUTOCONF = ${SHELL} /home/developer/libdotnet/missing autoconf
-AUTOHEADER = ${SHELL} /home/developer/libdotnet/missing autoheader
-AUTOMAKE = ${SHELL} /home/developer/libdotnet/missing automake-1.14
+AUTOCONF = ${SHELL} /home/developer/projects/LibDotNet/missing autoconf
+AUTOHEADER = ${SHELL} /home/developer/projects/LibDotNet/missing autoheader
+AUTOMAKE = ${SHELL} /home/developer/projects/LibDotNet/missing automake-1.14
 AWK = mawk
 CATALOGS = 
 CATOBJEXT = .gmo
@@ -281,7 +281,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/developer/libdotnet/missing makeinfo
+MAKEINFO = ${SHELL} /home/developer/projects/LibDotNet/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 MKINSTALLDIRS = ./mkinstalldirs
@@ -318,10 +318,10 @@ USE_NLS = yes
 VALAC = /usr/local/bin/valac
 VERSION = 0.1
 XGETTEXT = /usr/bin/xgettext
-abs_builddir = /home/developer/libdotnet
-abs_srcdir = /home/developer/libdotnet
-abs_top_builddir = /home/developer/libdotnet
-abs_top_srcdir = /home/developer/libdotnet
+abs_builddir = /home/developer/projects/LibDotNet
+abs_srcdir = /home/developer/projects/LibDotNet
+abs_top_builddir = /home/developer/projects/LibDotNet
+abs_top_srcdir = /home/developer/projects/LibDotNet
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -350,7 +350,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/developer/libdotnet/install-sh
+install_sh = ${SHELL} /home/developer/projects/LibDotNet/install-sh
 intltool__v_merge_options_ = $(intltool__v_merge_options_$(AM_DEFAULT_VERBOSITY))
 intltool__v_merge_options_0 = -q
 libdir = ${exec_prefix}/lib
@@ -404,15 +404,15 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
-	      echo ' cd $(srcdir) && $(AUTOMAKE) --gnu'; \
-	      $(am__cd) $(srcdir) && $(AUTOMAKE) --gnu \
+	      echo ' cd $(srcdir) && $(AUTOMAKE) --foreign'; \
+	      $(am__cd) $(srcdir) && $(AUTOMAKE) --foreign \
 		&& exit 0; \
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu Makefile
+	  $(AUTOMAKE) --foreign Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

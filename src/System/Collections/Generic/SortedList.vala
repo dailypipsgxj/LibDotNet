@@ -47,7 +47,8 @@ namespace System.Collections.Generic
     // be specified.
     // 
     [DebuggerTypeProxy(typeof(IDictionaryDebugView<,>))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerDisplay("Count = {Count}")]
+
     public class SortedList<TKey, TValue> :
         IDictionary<TKey, TValue>, System.Collections.IDictionary, IReadOnlyDictionary<TKey, TValue>
     {
@@ -900,7 +901,7 @@ namespace System.Collections.Generic
             }
         }
 
-        private sealed class SortedListKeyEnumerator : IEnumerator<TKey>, System.Collections.IEnumerator
+        private class SortedListKeyEnumerator : IEnumerator<TKey>, System.Collections.IEnumerator
         {
             private SortedList<TKey, TValue> _sortedList;
             private int _index;
@@ -970,7 +971,7 @@ namespace System.Collections.Generic
             }
         }
 
-        private sealed class SortedListValueEnumerator : IEnumerator<TValue>, System.Collections.IEnumerator
+        private class SortedListValueEnumerator : IEnumerator<TValue>, System.Collections.IEnumerator
         {
             private SortedList<TKey, TValue> _sortedList;
             private int _index;
@@ -1041,8 +1042,9 @@ namespace System.Collections.Generic
         }
 
         [DebuggerTypeProxy(typeof(DictionaryKeyCollectionDebugView<,>))]
-        [DebuggerDisplay("Count = {Count}")]
-        private sealed class KeyList : IList<TKey>, System.Collections.ICollection
+// [DebuggerDisplay("Count = {Count}")]
+
+        private class KeyList : IList<TKey>, System.Collections.ICollection
         {
             private SortedList<TKey, TValue> _dict;
 
@@ -1159,8 +1161,9 @@ namespace System.Collections.Generic
         }
 
         [DebuggerTypeProxy(typeof(DictionaryValueCollectionDebugView<,>))]
-        [DebuggerDisplay("Count = {Count}")]
-        private sealed class ValueList : IList<TValue>, System.Collections.ICollection
+// [DebuggerDisplay("Count = {Count}")]
+
+        private class ValueList : IList<TValue>, System.Collections.ICollection
         {
             private SortedList<TKey, TValue> _dict;
 

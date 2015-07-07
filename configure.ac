@@ -5,7 +5,7 @@ AC_INIT(libdotnet, 0.1)
 
 AC_CONFIG_HEADERS([config.h])
 
-AM_INIT_AUTOMAKE([1.11])
+AM_INIT_AUTOMAKE([1.11 foreign subdir-objects])
 
 AM_SILENT_RULES([yes])
 

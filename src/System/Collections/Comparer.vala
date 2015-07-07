@@ -16,7 +16,7 @@ using System.Diagnostics.Contracts;
 
 namespace System.Collections
 {
-    public sealed class Comparer : IComparer
+    public class Comparer : IComparer
     {
         private CompareInfo _compareInfo;
         public static   Comparer Default = new Comparer(CultureInfo.CurrentCulture);

@@ -72,7 +72,7 @@ namespace System.Collections.Generic
         private IEqualityComparer<T> _comparer;
         private int _version;
 
-        //#region Constructors
+        //Constructors
 
         public HashSet()
             : this(EqualityComparer<T>.Default)
@@ -133,7 +133,7 @@ namespace System.Collections.Generic
 
         //#endregion
 
-        //#region ICollection<T> methods
+        //ICollection<T> methods
 
         /// <summary>
         /// Add item to this hashset. This is the   implementation of the ICollection<T>
@@ -266,7 +266,7 @@ namespace System.Collections.Generic
 
         //#endregion
 
-        //#region IEnumerable methods
+        //IEnumerable methods
 
         public Enumerator GetEnumerator()
         {
@@ -285,7 +285,7 @@ namespace System.Collections.Generic
 
         //#endregion
 
-        //#region HashSet methods
+        //HashSet methods
 
         /// <summary>
         /// Add item to this HashSet. Returns bool indicating whether item was added (won't be 
@@ -870,7 +870,7 @@ namespace System.Collections.Generic
 
         #endregion
 
-        #region Helper methods
+        Helper methods
 
         /// <summary>
         /// Initializes buckets and slots arrays. Uses suggested capacity by finding next prime

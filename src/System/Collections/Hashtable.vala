@@ -54,8 +54,10 @@ namespace System.Collections
     // the Hashtable.  That hash function (and the equals method on the 
     // IEqualityComparer) would be used for all objects in the table.
     //
-    [DebuggerTypeProxy(typeof(System.Collections.Hashtable.HashtableDebugView))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerTypeProxy(typeof(System.Collections.Hashtable.HashtableDebugView))]
+
+// [DebuggerDisplay("Count = {Count}")]
+
     public class Hashtable : IDictionary
     {
         /*
@@ -1113,8 +1115,8 @@ namespace System.Collections
         {
             protected Hashtable _table;
 
-            internal SyncHashtable(Hashtable table) : base(false)
-            {
+            internal SyncHashtable(Hashtable table){
+			base(false);
                 _table = table;
             }
 
@@ -1373,8 +1375,8 @@ namespace System.Collections
 
                 _hashtable = hashtable;
             }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
             public KeyValuePairs[] Items
             {
                 get

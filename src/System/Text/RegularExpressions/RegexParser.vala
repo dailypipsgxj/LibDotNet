@@ -16,7 +16,7 @@ using System.IO;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexParser
+    internal class RegexParser
     {
         internal RegexNode _stack;
         internal RegexNode _group;

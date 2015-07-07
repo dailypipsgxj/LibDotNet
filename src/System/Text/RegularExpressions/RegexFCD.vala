@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexFCD
+    internal class RegexFCD
     {
         private int[] _intStack;
         private int _intDepth;
@@ -525,7 +525,7 @@ namespace System.Text.RegularExpressions
         }
     }
 
-    internal sealed class RegexFC
+    internal class RegexFC
     {
         internal RegexCharClass _cc;
         internal bool _nullable;
@@ -605,7 +605,7 @@ namespace System.Text.RegularExpressions
         }
     }
 
-    internal sealed class RegexPrefix
+    internal class RegexPrefix
     {
         internal String _prefix;
         internal bool _caseInsensitive;

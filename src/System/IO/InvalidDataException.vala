@@ -5,21 +5,18 @@ using System;
 
 namespace System.IO
 {
-    public sealed class InvalidDataException : Exception
+    public class InvalidDataException : Exception
     {
-        public InvalidDataException()
-            : base(SR.GenericInvalidData)
-        {
+        public InvalidDataException(){
+			base(SR.GenericInvalidData);
         }
 
-        public InvalidDataException(string message)
-            : base(message)
-        {
+        public InvalidDataException(string message){
+			base(message);
         }
 
-        public InvalidDataException(string message, Exception innerException)
-            : base(message, innerException)
-        {
+        public InvalidDataException(string message, Exception innerException){
+			base(message, innerException);
         }
     }
 }

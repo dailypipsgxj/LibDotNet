@@ -996,7 +996,7 @@ namespace System.Text.RegularExpressions
     /*
      * Used to cache byte codes
      */
-    internal sealed class CachedCodeEntry
+    internal class CachedCodeEntry
     {
         internal CachedCodeEntryKey _key;
         internal RegexCode _code;
@@ -1025,7 +1025,7 @@ namespace System.Text.RegularExpressions
     /*
      * Used to cache one exclusive runner reference
      */
-    internal sealed class ExclusiveReference
+    internal class ExclusiveReference
     {
         private RegexRunner _ref;
         private Object _obj;
@@ -1115,7 +1115,7 @@ namespace System.Text.RegularExpressions
     /*
      * Used to cache a weak reference in a threadsafe way
      */
-    internal sealed class SharedReference
+    internal class SharedReference
     {
         private WeakReference _ref = new WeakReference(null);
         private int _locked;

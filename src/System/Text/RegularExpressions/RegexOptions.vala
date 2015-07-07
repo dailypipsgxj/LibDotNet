@@ -3,7 +3,8 @@
 
 namespace System.Text.RegularExpressions
 {
-    [Flags]
+// [Flags]
+
     public enum RegexOptions
     {
         None                    = 0x0000,

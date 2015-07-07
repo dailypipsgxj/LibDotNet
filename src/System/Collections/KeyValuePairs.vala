@@ -17,10 +17,11 @@ namespace System.Collections
     [DebuggerDisplay("{_value}", Name = "[{_key}]")]
     internal class KeyValuePairs
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private   object _key;
+// [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private   object _key;
+// [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
         private   object _value;
 
         public KeyValuePairs(object key, object value)

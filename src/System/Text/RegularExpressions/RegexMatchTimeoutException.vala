@@ -36,9 +36,8 @@ namespace System.Text.RegularExpressions
         /// developers should prefer using the constructor
         /// <code>public RegexMatchTimeoutException(string input, string pattern, TimeSpan matchTimeout)</code>.
         /// </summary>
-        public RegexMatchTimeoutException()
-            : base()
-        {
+        public RegexMatchTimeoutException(){
+			base();
             Init();
         }
 
@@ -49,9 +48,8 @@ namespace System.Text.RegularExpressions
         /// <code>public RegexMatchTimeoutException(string input, string pattern, TimeSpan matchTimeout)</code>.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        public RegexMatchTimeoutException(string message)
-            : base(message)
-        {
+        public RegexMatchTimeoutException(string message){
+			base(message);
             Init();
         }
 
@@ -63,9 +61,8 @@ namespace System.Text.RegularExpressions
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="inner">The exception that is the cause of the current exception, or a <code>null</code>.</param>
-        public RegexMatchTimeoutException(string message, Exception inner)
-            : base(message, inner)
-        {
+        public RegexMatchTimeoutException(string message, Exception inner){
+			base(message, inner);
             Init();
         }
 
@@ -83,14 +80,16 @@ namespace System.Text.RegularExpressions
 
         public string Pattern
         {
-            [SecurityCritical]
+// [SecurityCritical]
+
             get
             { return _regexPattern; }
         }
 
         public string Input
         {
-            [SecurityCritical]
+// [SecurityCritical]
+
             get
             { return _regexInput; }
         }
@@ -98,7 +97,8 @@ namespace System.Text.RegularExpressions
 
         public TimeSpan MatchTimeout
         {
-            [SecurityCritical]
+// [SecurityCritical]
+
             get
             { return _matchTimeout; }
         }

@@ -20,12 +20,15 @@ namespace System.Collections
 {
     // A simple stack of objects.  Internally it is implemented as an array,
     // so Push can be O(n).  Pop is O(1).
-    [DebuggerTypeProxy(typeof(System.Collections.Stack.StackDebugView))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerTypeProxy(typeof(System.Collections.Stack.StackDebugView))]
+
+// [DebuggerDisplay("Count = {Count}")]
+
     public class Stack : ICollection
     {
         private Object[] _array;     // Storage for stack elements
-        [ContractPublicPropertyName("Count")]
+// [ContractPublicPropertyName("Count")]
+
         private int _size;           // Number of items in the stack.
         private int _version;        // Used to keep enumerator in sync w/ collection.
         private Object _syncRoot;
@@ -420,8 +423,8 @@ namespace System.Collections
 
                 _stack = stack;
             }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
             public Object[] Items
             {
                 get

@@ -43,10 +43,11 @@ namespace System.Collections.Generic
 
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "by design name choice")]
     [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerDisplay("Count = {Count}")]
+
     public class SortedSet<T> : ISet<T>, ICollection<T>, ICollection, IReadOnlyCollection<T>
     {
-        #region local variables/constants
+        local variables/constants
         private Node _root;
         private IComparer<T> _comparer;
         private int _count;
@@ -57,7 +58,7 @@ namespace System.Collections.Generic
 
         #endregion
 
-        #region Constructors
+        Constructors
         public SortedSet()
         {
             _comparer = Comparer<T>.Default;
@@ -160,7 +161,7 @@ namespace System.Collections.Generic
 
         #endregion
 
-        #region Bulk Operation Helpers
+        Bulk Operation Helpers
         private void AddAllElements(IEnumerable<T> collection)
         {
             foreach (T item in collection)
@@ -281,7 +282,7 @@ namespace System.Collections.Generic
         }
         #endregion
 
-        #region Properties
+        Properties
         public int Count
         {
             get
@@ -328,7 +329,7 @@ namespace System.Collections.Generic
         }
         #endregion
 
-        #region Subclass helpers
+        Subclass helpers
 
         //virtual function for subclass that needs to update count
         internal virtual void VersionCheck() { }
@@ -341,7 +342,7 @@ namespace System.Collections.Generic
         }
         #endregion
 
-        #region ICollection<T> Members
+        ICollection<T> Members
         /// <summary>
         /// Add the value ITEM to the tree, returns true if added, false if duplicate 
         /// </summary>
@@ -718,7 +719,7 @@ namespace System.Collections.Generic
 
         #endregion
 
-        #region IEnumerable<T> members
+        IEnumerable<T> members
         public Enumerator GetEnumerator()
         {
             return new Enumerator(this);
@@ -738,7 +739,7 @@ namespace System.Collections.Generic
         }
         #endregion
 
-        #region Tree Specific Operations
+        Tree Specific Operations
 
         private static Node GetSibling(Node node, Node parent)
         {
@@ -1087,7 +1088,7 @@ namespace System.Collections.Generic
 
         #endregion
 
-        #region ISet Members
+        ISet Members
 
         /// <summary>
         /// Transform this set into its union with the IEnumerable OTHER            
@@ -1836,7 +1837,7 @@ namespace System.Collections.Generic
 
         #endregion
 
-        #region ISorted Members
+        ISorted Members
 
 
         public T Min
@@ -1902,7 +1903,7 @@ namespace System.Collections.Generic
         /// are reflected in the actual tree. Uses the Comparator of the underlying tree.
         /// </summary>
         /// <typeparam name="T"></typeparam>   
-        internal sealed class TreeSubSet : SortedSet<T>
+        internal class TreeSubSet : SortedSet<T>
         {
             private SortedSet<T> _underlying;
             private T _min,_max;
@@ -1921,9 +1922,8 @@ namespace System.Collections.Generic
             }
 #endif
 
-            public TreeSubSet(SortedSet<T> Underlying, T Min, T Max, bool lowerBoundActive, bool upperBoundActive)
-                : base(Underlying.Comparer)
-            {
+            public TreeSubSet(SortedSet<T> Underlying, T Min, T Max, bool lowerBoundActive, bool upperBoundActive){
+			base(Underlying.Comparer);
                 _underlying = Underlying;
                 _min = Min;
                 _max = Max;
@@ -2197,8 +2197,8 @@ namespace System.Collections.Generic
 
         #endregion
 
-        #region Helper Classes
-        internal sealed class Node
+        Helper Classes
+        internal class Node
         {
             public bool IsRed;
             public T Item;
@@ -2393,7 +2393,7 @@ namespace System.Collections.Generic
         }
         #endregion
 
-        #region misc
+        misc
         // used for set checking operations (using enumerables) that rely on counting
         private static int log2(int value)
         {
@@ -2416,7 +2416,7 @@ namespace System.Collections.Generic
     /// equality defined by the IComparer for this SortedSet be consistent with the default IEqualityComparer
     /// for the type T. If not, such an IEqualityComparer should be provided through the constructor.
     /// </summary>    
-    internal sealed class SortedSetEqualityComparer<T> : IEqualityComparer<SortedSet<T>>
+    internal class SortedSetEqualityComparer<T> : IEqualityComparer<SortedSet<T>>
     {
         private IComparer<T> _comparer;
         private IEqualityComparer<T> _eqComparer;

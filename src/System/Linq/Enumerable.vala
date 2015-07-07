@@ -3178,7 +3178,7 @@ namespace System.Linq
     /// This class provides the items view for the Enumerable
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal sealed class SystemCore_EnumerableDebugView<T>
+    internal class SystemCore_EnumerableDebugView<T>
     {
         public SystemCore_EnumerableDebugView(IEnumerable<T> enumerable)
         {
@@ -3189,8 +3189,8 @@ namespace System.Linq
 
             _enumerable = enumerable;
         }
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.RootHidden)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.RootHidden)]
         public T[] Items
         {
             get
@@ -3214,18 +3214,18 @@ namespace System.Linq
                 return _cachedCollection;
             }
         }
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private IEnumerable<T> _enumerable;
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private T[] _cachedCollection;
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private int _count;
     }
 
-    internal sealed class SystemCore_EnumerableDebugViewEmptyException : Exception
+    internal class SystemCore_EnumerableDebugViewEmptyException : Exception
     {
         public string Empty
         {
@@ -3236,7 +3236,7 @@ namespace System.Linq
         }
     }
 
-    internal sealed class SystemCore_EnumerableDebugView
+    internal class SystemCore_EnumerableDebugView
     {
         public SystemCore_EnumerableDebugView(IEnumerable enumerable)
         {
@@ -3249,8 +3249,8 @@ namespace System.Linq
             _count = 0;
             _cachedCollection = null;
         }
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.RootHidden)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.RootHidden)]
         public object[] Items
         {
             get
@@ -3274,14 +3274,14 @@ namespace System.Linq
                 return _cachedCollection;
             }
         }
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private IEnumerable _enumerable;
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private object[] _cachedCollection;
+// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
 
-        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private int _count;
     }
 }

@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace System.Collections.Generic
 {
-    internal sealed class ICollectionDebugView<T>
+    internal class ICollectionDebugView<T>
     {
         private   ICollection<T> _collection;
 
@@ -18,8 +18,8 @@ namespace System.Collections.Generic
 
             _collection = collection;
         }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public T[] Items
         {
             get

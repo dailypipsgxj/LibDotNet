@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace System.Collections.Generic
 {
-    internal sealed class IDictionaryDebugView<K, V>
+    internal class IDictionaryDebugView<K, V>
     {
         private   IDictionary<K, V> _dict;
 
@@ -16,8 +16,8 @@ namespace System.Collections.Generic
 
             _dict = dictionary;
         }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public KeyValuePair<K, V>[] Items
         {
             get
@@ -29,7 +29,7 @@ namespace System.Collections.Generic
         }
     }
 
-    internal sealed class DictionaryKeyCollectionDebugView<TKey, TValue>
+    internal class DictionaryKeyCollectionDebugView<TKey, TValue>
     {
         private   ICollection<TKey> _collection;
 
@@ -40,8 +40,8 @@ namespace System.Collections.Generic
 
             _collection = collection;
         }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public TKey[] Items
         {
             get
@@ -53,7 +53,7 @@ namespace System.Collections.Generic
         }
     }
 
-    internal sealed class DictionaryValueCollectionDebugView<TKey, TValue>
+    internal class DictionaryValueCollectionDebugView<TKey, TValue>
     {
         private   ICollection<TValue> _collection;
 
@@ -64,8 +64,8 @@ namespace System.Collections.Generic
 
             _collection = collection;
         }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public TValue[] Items
         {
             get

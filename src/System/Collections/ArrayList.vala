@@ -30,14 +30,18 @@ namespace System.Collections
     // internal array.
     // 
 #if FEATURE_NETCORE
-    [FriendAccessAllowed]
+// [FriendAccessAllowed]
+
 #endif
-    [DebuggerTypeProxy(typeof(System.Collections.ArrayList.ArrayListDebugView))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerTypeProxy(typeof(System.Collections.ArrayList.ArrayListDebugView))]
+
+// [DebuggerDisplay("Count = {Count}")]
+
     public class ArrayList : IList
     {
         private Object[] _items;
-        [ContractPublicPropertyName("Count")]
+// [ContractPublicPropertyName("Count")]
+
         private int _size;
         private int _version;
         private Object _syncRoot;
@@ -601,7 +605,8 @@ namespace System.Collections
         // Returns a read-only IList wrapper for the given IList.
         //
 #if FEATURE_NETCORE
-        [FriendAccessAllowed]
+// [FriendAccessAllowed]
+
 #endif
         public static IList ReadOnly(IList list)
         {
@@ -829,7 +834,8 @@ namespace System.Collections
         // downcasting all elements.  This copy may fail and is an O(n) operation.
         // Internally, this implementation calls Array.Copy.
         //
-        [SecuritySafeCritical]
+// [SecuritySafeCritical]
+
         public virtual Array ToArray(Type type)
         {
             if (type == null)
@@ -1243,8 +1249,8 @@ namespace System.Collections
                 _list.CopyTo(array, 0);
                 return array;
             }
+// [SecuritySafeCritical]
 
-            [SecuritySafeCritical]
             public override Array ToArray(Type type)
             {
                 if (type == null)
@@ -1262,7 +1268,7 @@ namespace System.Collections
 
             // This is the enumerator for an IList that's been wrapped in another
             // class that implements all of ArrayList's methods.
-            private sealed class IListWrapperEnumWrapper : IEnumerator
+            private class IListWrapperEnumWrapper : IEnumerator
             {
                 private IEnumerator _en;
                 private int _remaining;
@@ -1326,9 +1332,8 @@ namespace System.Collections
             private ArrayList _list;
             private Object _root;
 
-            internal SyncArrayList(ArrayList list)
-                : base(false)
-            {
+            internal SyncArrayList(ArrayList list){
+			base(false);
                 _list = list;
                 _root = list.SyncRoot;
             }
@@ -2431,7 +2436,7 @@ namespace System.Collections
         // Implements an enumerator for a ArrayList. The enumerator uses the
         // internal version number of the list to ensure that no modifications are
         // made to the list while an enumeration is in progress.
-        private sealed class ArrayListEnumerator : IEnumerator
+        private class ArrayListEnumerator : IEnumerator
         {
             private ArrayList _list;
             private int _index;
@@ -2493,12 +2498,13 @@ namespace System.Collections
         {
             private ArrayList _baseList;
             private int _baseIndex;
-            [ContractPublicPropertyName("Count")]
+// [ContractPublicPropertyName("Count")]
+
             private int _baseSize;
             private int _baseVersion;
 
-            internal Range(ArrayList list, int index, int count) : base(false)
-            {
+            internal Range(ArrayList list, int index, int count){
+			base(false);
                 _baseList = list;
                 _baseIndex = index;
                 _baseSize = count;
@@ -2902,8 +2908,8 @@ namespace System.Collections
                 Array.Copy(_baseList._items, _baseIndex, array, 0, _baseSize);
                 return array;
             }
+// [SecuritySafeCritical]
 
-            [SecuritySafeCritical]
             public override Array ToArray(Type type)
             {
                 if (type == null)
@@ -2922,7 +2928,7 @@ namespace System.Collections
             }
         }
 
-        private sealed class ArrayListEnumeratorSimple : IEnumerator
+        private class ArrayListEnumeratorSimple : IEnumerator
         {
             private ArrayList _list;
             private int _index;
@@ -3022,8 +3028,8 @@ namespace System.Collections
 
                 _arrayList = arrayList;
             }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
             public Object[] Items
             {
                 get

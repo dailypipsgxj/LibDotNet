@@ -16,7 +16,7 @@ using System.IO;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexBoyerMoore
+    internal class RegexBoyerMoore
     {
         private   int[] _positive;
         private   int[] _negativeASCII;

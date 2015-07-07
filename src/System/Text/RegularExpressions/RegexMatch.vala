@@ -62,10 +62,8 @@ namespace System.Text.RegularExpressions
             }
         }
 
-        internal Match(Regex regex, int capcount, String text, int begpos, int len, int startpos)
-
-        : base(text, new int[2], 0)
-        {
+        internal Match(Regex regex, int capcount, String text, int begpos, int len, int startpos){
+			base(text, new int[2], 0);
             _regex = regex;
             _matchcount = new int[capcount];
 
@@ -410,10 +408,8 @@ namespace System.Text.RegularExpressions
          * Nonpublic constructor
          */
         internal MatchSparse(Regex regex, Dictionary<Int32, Int32> caps, int capcount,
-                             String text, int begpos, int len, int startpos)
-
-        : base(regex, capcount, text, begpos, len, startpos)
-        {
+                             String text, int begpos, int len, int startpos){
+			base(regex, capcount, text, begpos, len, startpos);
             _caps = caps;
         }
 

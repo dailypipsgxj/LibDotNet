@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace System.Collections.Generic
 {
-    internal sealed class StackDebugView<T>
+    internal class StackDebugView<T>
     {
         private   Stack<T> _stack;
 
@@ -18,8 +18,8 @@ namespace System.Collections.Generic
 
             _stack = stack;
         }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         public T[] Items
         {
             get

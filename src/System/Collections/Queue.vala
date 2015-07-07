@@ -18,8 +18,10 @@ namespace System.Collections
 {
     // A simple Queue of objects.  Internally it is implemented as a circular
     // buffer, so Enqueue can be O(n).  Dequeue is O(1).
-    [DebuggerTypeProxy(typeof(System.Collections.Queue.QueueDebugView))]
-    [DebuggerDisplay("Count = {Count}")]
+// [DebuggerTypeProxy(typeof(System.Collections.Queue.QueueDebugView))]
+
+// [DebuggerDisplay("Count = {Count}")]
+
     public class Queue : ICollection
     {
         private Object[] _array;
@@ -510,8 +512,8 @@ namespace System.Collections
 
                 _queue = queue;
             }
+// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
-            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
             public Object[] Items
             {
                 get

@@ -16,7 +16,7 @@ using System.Globalization;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexWriter
+    internal class RegexWriter
     {
         private int[] _intStack;
         private int _depth;

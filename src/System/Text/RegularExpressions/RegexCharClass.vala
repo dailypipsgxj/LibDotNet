@@ -26,7 +26,7 @@ using System.IO;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexCharClass
+    internal class RegexCharClass
     {
         // instance data
         private List<SingleRange> _rangelist;
@@ -1338,7 +1338,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// For sorting ranges; compare based on the first char in the range.
         /// </summary>
-        private sealed class SingleRangeComparer : IComparer<SingleRange>
+        private class SingleRangeComparer : IComparer<SingleRange>
         {
             public static   SingleRangeComparer Instance = new SingleRangeComparer();
 

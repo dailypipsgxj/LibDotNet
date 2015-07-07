@@ -44,7 +44,7 @@ using System.Globalization;
 
 namespace System.Text.RegularExpressions
 {
-    internal sealed class RegexNode
+    internal class RegexNode
     {
         // RegexNode types
 
