@@ -40,14 +40,14 @@ namespace System.Collections.Generic
         RightLeftRotation = 3,
         LeftRightRotation = 4,
     }
+// [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "by design name choice")]
 
-    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "by design name choice")]
-    [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
+// [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
+
 // [DebuggerDisplay("Count = {Count}")]
 
     public class SortedSet<T> : ISet<T>, ICollection<T>, ICollection, IReadOnlyCollection<T>
     {
-        local variables/constants
         private Node _root;
         private IComparer<T> _comparer;
         private int _count;
@@ -56,9 +56,6 @@ namespace System.Collections.Generic
 
         internal const int StackAllocThreshold = 100;
 
-        #endregion
-
-        Constructors
         public SortedSet()
         {
             _comparer = Comparer<T>.Default;
@@ -77,14 +74,14 @@ namespace System.Collections.Generic
         }
 
 
-        public SortedSet(IEnumerable<T> collection) : this(collection, Comparer<T>.Default) { }
+        public SortedSet(IEnumerable<T> collection){
+			this(collection, Comparer<T>.Default); }
 
-        public SortedSet(IEnumerable<T> collection, IComparer<T> comparer)
-            : this(comparer)
-        {
+        public SortedSet(IEnumerable<T> collection, IComparer<T> comparer){
+			this(comparer);
             if (collection == null)
             {
-                throw new ArgumentNullException("collection");
+                throw ArgumentNullException("collection");
             }
 
             // these are   type checks in the mould of HashSet. It would have worked better
@@ -159,9 +156,6 @@ namespace System.Collections.Generic
             }
         }
 
-        #endregion
-
-        Bulk Operation Helpers
         private void AddAllElements(IEnumerable<T> collection)
         {
             foreach (T item in collection)
@@ -280,9 +274,7 @@ namespace System.Collections.Generic
             }
             return true;
         }
-        #endregion
 
-        Properties
         public int Count
         {
             get
@@ -314,9 +306,7 @@ namespace System.Collections.Generic
             {
                 return false;
             }
-        }
-
-        object ICollection.SyncRoot
+        }ObjectICollection.SyncRoot
         {
             get
             {
@@ -327,7 +317,6 @@ namespace System.Collections.Generic
                 return _syncRoot;
             }
         }
-        #endregion
 
         Subclass helpers
 
@@ -340,7 +329,6 @@ namespace System.Collections.Generic
         {
             return true;
         }
-        #endregion
 
         ICollection<T> Members
         /// <summary>
@@ -629,17 +617,17 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw ArgumentOutOfRangeException("index");
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             // will array, starting at arrayIndex, be able to hold elements? Note: not
@@ -647,7 +635,7 @@ namespace System.Collections.Generic
             // count of 0; subsequent check takes care of the rest)
             if (index > array.Length || count > array.Length - index)
             {
-                throw new ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
+                throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
             }
             //upper bound
             count += index;
@@ -670,27 +658,27 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Arg_RankMultiDimNotSupported);
+                throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
             }
 
             if (array.GetLowerBound(0) != 0)
             {
-                throw new ArgumentException(SR.Arg_NonZeroLowerBound);
+                throw ArgumentException(SR.Arg_NonZeroLowerBound);
             }
 
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             if (array.Length - index < Count)
             {
-                throw new ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
+                throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
             }
 
             T[] tarray = array as T[];
@@ -703,7 +691,7 @@ namespace System.Collections.Generic
                 object[] objects = array as object[];
                 if (objects == null)
                 {
-                    throw new ArgumentException(SR.Argument_InvalidArrayType);
+                    throw ArgumentException(SR.Argument_InvalidArrayType);
                 }
 
                 try
@@ -712,12 +700,12 @@ namespace System.Collections.Generic
                 }
                 catch (ArrayTypeMismatchException)
                 {
-                    throw new ArgumentException(SR.Argument_InvalidArrayType);
+                    throw ArgumentException(SR.Argument_InvalidArrayType);
                 }
             }
         }
 
-        #endregion
+        
 
         IEnumerable<T> members
         public Enumerator GetEnumerator()
@@ -737,7 +725,7 @@ namespace System.Collections.Generic
         {
             return new Enumerator(this);
         }
-        #endregion
+        
 
         Tree Specific Operations
 
@@ -1086,14 +1074,14 @@ namespace System.Collections.Generic
         }
 
 
-        #endregion
+        
 
         ISet Members
 
         /// <summary>
         /// Transform this set into its union with the IEnumerable OTHER            
         ///Attempts to insert each element and rejects it if it exists.          
-        /// NOTE: The caller object is important as UnionWith uses the Comparator 
+        /// NOTE: The callerObjectis important as UnionWith uses the Comparator 
         ///associated with THIS to check equality                                
         /// Throws ArgumentNullException if OTHER is null                         
         /// </summary>
@@ -1102,7 +1090,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             SortedSet<T> s = other as SortedSet<T>;
@@ -1253,7 +1241,7 @@ namespace System.Collections.Generic
 
         /// <summary>
         /// Transform this set into its intersection with the IEnumerable OTHER     
-        /// NOTE: The caller object is important as IntersectionWith uses the        
+        /// NOTE: The callerObjectis important as IntersectionWith uses the        
         /// comparator associated with THIS to check equality                        
         /// Throws ArgumentNullException if OTHER is null                         
         /// </summary>
@@ -1262,7 +1250,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if (Count == 0)
@@ -1341,7 +1329,7 @@ namespace System.Collections.Generic
 
         /// <summary>
         ///  Transform this set into its complement with the IEnumerable OTHER       
-        ///  NOTE: The caller object is important as ExceptWith uses the        
+        ///  NOTE: The callerObjectis important as ExceptWith uses the        
         ///  comparator associated with THIS to check equality                        
         ///  Throws ArgumentNullException if OTHER is null                           
         /// </summary>
@@ -1350,7 +1338,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if (_count == 0)
@@ -1389,7 +1377,7 @@ namespace System.Collections.Generic
 
         /// <summary>
         ///  Transform this set so it contains elements in THIS or OTHER but not both
-        ///  NOTE: The caller object is important as SymmetricExceptWith uses the        
+        ///  NOTE: The callerObjectis important as SymmetricExceptWith uses the        
         ///  comparator associated with THIS to check equality                        
         ///  Throws ArgumentNullException if OTHER is null                           
         /// </summary>
@@ -1398,7 +1386,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if (this.Count == 0)
@@ -1484,7 +1472,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if (Count == 0)
@@ -1529,7 +1517,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if ((other as ICollection) != null)
@@ -1565,7 +1553,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if ((other as ICollection) != null && (other as ICollection).Count == 0)
@@ -1599,7 +1587,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if (Count == 0)
@@ -1643,7 +1631,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             SortedSet<T> asSorted = other as SortedSet<T>;
@@ -1682,7 +1670,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
 
             if (this.Count == 0)
@@ -1809,7 +1797,7 @@ namespace System.Collections.Generic
         {
             if (match == null)
             {
-                throw new ArgumentNullException("match");
+                throw ArgumentNullException("match");
             }
             List<T> matches = new List<T>(this.Count);
 
@@ -1835,7 +1823,7 @@ namespace System.Collections.Generic
         }
 
 
-        #endregion
+        
 
         ISorted Members
 
@@ -1880,7 +1868,7 @@ namespace System.Collections.Generic
         {
             if (Comparer.Compare(lowerValue, upperValue) > 0)
             {
-                throw new ArgumentException("lowerBound is greater than upperBound");
+                throw ArgumentException("lowerBound is greater than upperBound");
             }
             return new TreeSubSet(this, lowerValue, upperValue, true, true);
         }
@@ -1943,7 +1931,7 @@ namespace System.Collections.Generic
             {
                 if (!IsWithinRange(item))
                 {
-                    throw new ArgumentOutOfRangeException("collection");
+                    throw ArgumentOutOfRangeException("collection");
                 }
 
                 bool ret = _underlying.AddIfNotPresent(item);
@@ -2165,12 +2153,12 @@ namespace System.Collections.Generic
                 if (_lBoundActive && Comparer.Compare(_min, lowerValue) > 0)
                 {
                     //lBound = min;
-                    throw new ArgumentOutOfRangeException("lowerValue");
+                    throw ArgumentOutOfRangeException("lowerValue");
                 }
                 if (_uBoundActive && Comparer.Compare(_max, upperValue) < 0)
                 {
                     //uBound = max;
-                    throw new ArgumentOutOfRangeException("upperValue");
+                    throw ArgumentOutOfRangeException("upperValue");
                 }
                 TreeSubSet ret = (TreeSubSet)_underlying.GetViewBetween(lowerValue, upperValue);
                 return ret;
@@ -2195,9 +2183,6 @@ namespace System.Collections.Generic
             }
         }
 
-        #endregion
-
-        Helper Classes
         internal class Node
         {
             public bool IsRed;
@@ -2205,22 +2190,15 @@ namespace System.Collections.Generic
             public Node Left;
             public Node Right;
 
-            public Node(T item)
-            {
-                // The default color will be red, we never need to create a black node directly.                
-                this.Item = item;
-                IsRed = true;
-            }
-
-            public Node(T item, bool isRed)
+            public Node(T item, bool isRed = true)
             {
                 // The default color will be red, we never need to create a black node directly.                
                 this.Item = item;
                 this.IsRed = isRed;
             }
         }
+// [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
 
-        [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
         public struct Enumerator : IEnumerator<T>, IEnumerator
         {
             private SortedSet<T> _tree;
@@ -2297,7 +2275,7 @@ namespace System.Collections.Generic
 
                 if (_version != _tree._version)
                 {
-                    throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 }
 
                 if (_stack.Count == 0)
@@ -2344,15 +2322,13 @@ namespace System.Collections.Generic
                     }
                     return default(T);
                 }
-            }
-
-            object IEnumerator.Current
+            }ObjectIEnumerator.Current
             {
                 get
                 {
                     if (_current == null)
                     {
-                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
+                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
                     }
 
                     return _current.Item;
@@ -2371,7 +2347,7 @@ namespace System.Collections.Generic
             {
                 if (_version != _tree._version)
                 {
-                    throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 }
 
                 _stack.Clear();
@@ -2391,7 +2367,7 @@ namespace System.Collections.Generic
             internal int uniqueCount;
             internal int unfoundCount;
         }
-        #endregion
+        
 
         misc
         // used for set checking operations (using enumerables) that rely on counting
@@ -2406,7 +2382,7 @@ namespace System.Collections.Generic
             }
             return c;
         }
-        #endregion
+        
 
 
     }
@@ -2421,11 +2397,14 @@ namespace System.Collections.Generic
         private IComparer<T> _comparer;
         private IEqualityComparer<T> _eqComparer;
 
-        public SortedSetEqualityComparer() : this(null, null) { }
+        public SortedSetEqualityComparer(){
+			this(null, null); }
 
-        public SortedSetEqualityComparer(IComparer<T> comparer) : this(comparer, null) { }
+        public SortedSetEqualityComparer(IComparer<T> comparer){
+			this(comparer, null); }
 
-        public SortedSetEqualityComparer(IEqualityComparer<T> memberEqualityComparer) : this(null, memberEqualityComparer) { }
+        public SortedSetEqualityComparer(IEqualityComparer<T> memberEqualityComparer){
+			this(null, memberEqualityComparer); }
 
         /// <summary>
         /// Create a new SetEqualityComparer, given a comparer for member order and another for member equality (these

@@ -37,17 +37,15 @@ namespace System.Collections
 
         // Creates a queue with room for capacity objects. The default initial
         // capacity and grow factor are used.
-        public Queue()
-            : this(32, (float)2.0)
-        {
+        public Queue(){
+			this(32, (float)2.0);
         }
 
         // Creates a queue with room for capacity objects. The default grow factor
         // is used.
         //
-        public Queue(int capacity)
-            : this(capacity, (float)2.0)
-        {
+        public Queue(int capacity){
+			this(capacity, (float)2.0);
         }
 
         // Creates a queue with room for capacity objects. When full, the new
@@ -56,9 +54,9 @@ namespace System.Collections
         public Queue(int capacity, float growFactor)
         {
             if (capacity < 0)
-                throw new ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNum);
             if (!(growFactor >= 1.0 && growFactor <= 10.0))
-                throw new ArgumentOutOfRangeException("growFactor", SR.Format(SR.ArgumentOutOfRange_QueueGrowFactor, 1, 10));
+                throw ArgumentOutOfRangeException("growFactor", SR.Format(SR.ArgumentOutOfRange_QueueGrowFactor, 1, 10));
             Contract.EndContractBlock();
 
             _array = new Object[capacity];
@@ -71,10 +69,10 @@ namespace System.Collections
         // Fills a Queue with the elements of an ICollection.  Uses the enumerator
         // to get each of the elements.
         //
-        public Queue(ICollection col) : this((col == null ? 32 : col.Count))
-        {
+        public Queue(ICollection col){
+			this((col == null ? 32 : col.Count));
             if (col == null)
-                throw new ArgumentNullException("col");
+                throw ArgumentNullException("col");
             Contract.EndContractBlock();
             IEnumerator en = col.GetEnumerator();
             while (en.MoveNext())
@@ -143,15 +141,15 @@ namespace System.Collections
         public virtual void CopyTo(Array array, int index)
         {
             if (array == null)
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             if (array.Rank != 1)
-                throw new ArgumentException(SR.Arg_RankMultiDimNotSupported);
+                throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
             if (index < 0)
-                throw new ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_Index);
+                throw ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_Index);
             Contract.EndContractBlock();
             int arrayLen = array.Length;
             if (arrayLen - index < _size)
-                throw new ArgumentException(SR.Argument_InvalidOffLen);
+                throw ArgumentException(SR.Argument_InvalidOffLen);
 
             int numToCopy = _size;
             if (numToCopy == 0)
@@ -191,12 +189,12 @@ namespace System.Collections
             return new QueueEnumerator(this);
         }
 
-        // Removes the object at the head of the queue and returns it. If the queue
+        // Removes theObjectat the head of the queue and returns it. If the queue
         // is empty, this method simply returns null.
         public virtual Object Dequeue()
         {
             if (Count == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyQueue);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyQueue);
             Contract.EndContractBlock();
 
             Object removed = _array[_head];
@@ -207,13 +205,13 @@ namespace System.Collections
             return removed;
         }
 
-        // Returns the object at the head of the queue. The object remains in the
+        // Returns theObjectat the head of the queue. TheObjectremains in the
         // queue. If the queue is empty, this method throws an 
         // InvalidOperationException.
         public virtual Object Peek()
         {
             if (Count == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyQueue);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyQueue);
             Contract.EndContractBlock();
 
             return _array[_head];
@@ -226,12 +224,12 @@ namespace System.Collections
         public static Queue Synchronized(Queue queue)
         {
             if (queue == null)
-                throw new ArgumentNullException("queue");
+                throw ArgumentNullException("queue");
             Contract.EndContractBlock();
             return new SynchronizedQueue(queue);
         }
 
-        // Returns true if the queue contains at least one object equal to obj.
+        // Returns true if the queue contains at least oneObjectequal to obj.
         // Equality is determined using obj.Equals().
         //
         // Exceptions: ArgumentNullException if obj == null.
@@ -391,8 +389,8 @@ namespace System.Collections
                     _q.Enqueue(value);
                 }
             }
-
-            [SuppressMessage("Microsoft.Contracts", "CC1055")]  // Thread safety problems with precondition - can't express the precondition as of Dev10.
+// [SuppressMessage("Microsoft.Contracts", "CC1055")]
+  // Thread safety problems with precondition - can't express the precondition as of Dev10.
             public override Object Dequeue()
             {
                 lock (_root)
@@ -408,8 +406,8 @@ namespace System.Collections
                     return _q.GetEnumerator();
                 }
             }
-
-            [SuppressMessage("Microsoft.Contracts", "CC1055")]  // Thread safety problems with precondition - can't express the precondition as of Dev10.
+// [SuppressMessage("Microsoft.Contracts", "CC1055")]
+  // Thread safety problems with precondition - can't express the precondition as of Dev10.
             public override Object Peek()
             {
                 lock (_root)
@@ -458,7 +456,7 @@ namespace System.Collections
 
             public virtual bool MoveNext()
             {
-                if (_version != _q._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _q._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
 
                 if (_index < 0)
                 {
@@ -481,9 +479,9 @@ namespace System.Collections
                     if (_currentElement == _q._array)
                     {
                         if (_index == 0)
-                            throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
+                            throw InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
                         else
-                            throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
+                            throw InvalidOperationException(SR.InvalidOperation_EnumEnded);
                     }
                     return _currentElement;
                 }
@@ -491,7 +489,7 @@ namespace System.Collections
 
             public virtual void Reset()
             {
-                if (_version != _q._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _q._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 if (_q._size == 0)
                     _index = -1;
                 else
@@ -507,7 +505,7 @@ namespace System.Collections
             public QueueDebugView(Queue queue)
             {
                 if (queue == null)
-                    throw new ArgumentNullException("queue");
+                    throw ArgumentNullException("queue");
                 Contract.EndContractBlock();
 
                 _queue = queue;

@@ -20,7 +20,7 @@ namespace System.Collections
     public class CaseInsensitiveComparer : IComparer
     {
         private CompareInfo _compareInfo;
-        private static volatile CaseInsensitiveComparer s_InvariantCaseInsensitiveComparer;
+        private static CaseInsensitiveComparer s_InvariantCaseInsensitiveComparer;
 
         public CaseInsensitiveComparer()
         {
@@ -31,7 +31,7 @@ namespace System.Collections
         {
             if (culture == null)
             {
-                throw new ArgumentNullException("culture");
+                throw ArgumentNullException("culture");
             }
             Contract.EndContractBlock();
             _compareInfo = culture.CompareInfo;

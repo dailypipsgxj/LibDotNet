@@ -734,7 +734,7 @@ namespace System.Text.RegularExpressions
 
                     case '\'':
                         close = '\'';
-                        goto case '<';
+                      //  goto case '<';
                     // fallthrough
 
                     case '<':

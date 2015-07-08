@@ -16,8 +16,8 @@ namespace System.Collections.Generic
 {
     // A simple stack of objects.  Internally it is implemented as an array,
     // so Push can be O(n).  Pop is O(1).
+// [DebuggerTypeProxy(typeof(StackDebugView<>))]
 
-    [DebuggerTypeProxy(typeof(StackDebugView<>))]
 // [DebuggerDisplay("Count = {Count}")]
 
     public class Stack<T> : IEnumerable<T>,
@@ -43,7 +43,7 @@ namespace System.Collections.Generic
         public Stack(int capacity)
         {
             if (capacity < 0)
-                throw new ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNumRequired);
+                throw ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNumRequired);
             _array = new T[capacity];
         }
 
@@ -54,7 +54,7 @@ namespace System.Collections.Generic
         public Stack(IEnumerable<T> collection)
         {
             if (collection == null)
-                throw new ArgumentNullException("collection");
+                throw ArgumentNullException("collection");
             _array = EnumerableHelpers.ToArray(collection, out _size);
         }
 
@@ -65,7 +65,7 @@ namespace System.Collections.Generic
         }
 
         /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.IsSynchronized"]/*' />
-        bool System.Collections.ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return false; }
         }
@@ -119,17 +119,17 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (arrayIndex < 0 || arrayIndex > array.Length)
             {
-                throw new ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             if (array.Length - arrayIndex < _size)
             {
-                throw new ArgumentException(SR.Argument_InvalidOffLen);
+                throw ArgumentException(SR.Argument_InvalidOffLen);
             }
 
             if (array != _array)
@@ -151,27 +151,27 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Arg_RankMultiDimNotSupported);
+                throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
             }
 
             if (array.GetLowerBound(0) != 0)
             {
-                throw new ArgumentException(SR.Arg_NonZeroLowerBound);
+                throw ArgumentException(SR.Arg_NonZeroLowerBound);
             }
 
             if (arrayIndex < 0 || arrayIndex > array.Length)
             {
-                throw new ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             if (array.Length - arrayIndex < _size)
             {
-                throw new ArgumentException(SR.Argument_InvalidOffLen);
+                throw ArgumentException(SR.Argument_InvalidOffLen);
             }
 
             try
@@ -179,9 +179,9 @@ namespace System.Collections.Generic
                 Array.Copy(_array, 0, array, arrayIndex, _size);
                 Array.Reverse(array, arrayIndex, _size);
             }
-            catch (ArrayTypeMismatchException)
+            catch (ArrayTypeMismatchException e)
             {
-                throw new ArgumentException(SR.Argument_InvalidArrayType);
+                throw ArgumentException(SR.Argument_InvalidArrayType);
             }
         }
 
@@ -194,14 +194,14 @@ namespace System.Collections.Generic
 
         /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.IEnumerable.GetEnumerator"]/*' />
         /// <internalonly/>
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        IEnumerator<T> GetEnumerator()
         {
-            return new Enumerator(this);
+            return Enumerator(this);
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new Enumerator(this);
+            return Enumerator(this);
         }
 
         public void TrimExcess()
@@ -214,13 +214,13 @@ namespace System.Collections.Generic
             }
         }
 
-        // Returns the top object on the stack without removing it.  If the stack
+        // Returns the topObjecton the stack without removing it.  If the stack
         // is empty, Peek throws an InvalidOperationException.
         /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.Peek"]/*' />
         public T Peek()
         {
             if (_size == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyStack);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyStack);
             return _array[_size - 1];
         }
 
@@ -230,7 +230,7 @@ namespace System.Collections.Generic
         public T Pop()
         {
             if (_size == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyStack);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyStack);
             _version++;
             T item = _array[--_size];
             _array[_size] = default(T);     // Free memory quicker.
@@ -264,16 +264,16 @@ namespace System.Collections.Generic
         }
 
         /// <include file='doc\Stack.uex' path='docs/doc[@for="StackEnumerator"]/*' />
-        [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-        public struct Enumerator : IEnumerator<T>,
-            System.Collections.IEnumerator
+// [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
+
+        public struct Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
             private Stack<T> _stack;
             private int _index;
             private int _version;
             private T _currentElement;
 
-            internal Enumerator(Stack<T> stack)
+            public Enumerator(Stack<T> stack)
             {
                 _stack = stack;
                 _version = _stack._version;
@@ -291,7 +291,7 @@ namespace System.Collections.Generic
             public bool MoveNext()
             {
                 bool retval;
-                if (_version != _stack._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _stack._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 if (_index == -2)
                 {  // First call to enumerator.
                     _index = _stack._size - 1;
@@ -318,25 +318,16 @@ namespace System.Collections.Generic
             {
                 get
                 {
-                    if (_index == -2) throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
-                    if (_index == -1) throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
+                    if (_index == -2) throw InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
+                    if (_index == -1) throw InvalidOperationException(SR.InvalidOperation_EnumEnded);
                     return _currentElement;
                 }
             }
 
-            Object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    if (_index == -2) throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
-                    if (_index == -1) throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
-                    return _currentElement;
-                }
-            }
 
             void System.Collections.IEnumerator.Reset()
             {
-                if (_version != _stack._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _stack._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 _index = -2;
                 _currentElement = default(T);
             }

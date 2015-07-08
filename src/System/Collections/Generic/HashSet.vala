@@ -74,9 +74,8 @@ namespace System.Collections.Generic
 
         //Constructors
 
-        public HashSet()
-            : this(EqualityComparer<T>.Default)
-        { }
+        public HashSet(){
+			this(EqualityComparer<T>.Default); }
 
         public HashSet(IEqualityComparer<T> comparer)
         {
@@ -92,9 +91,8 @@ namespace System.Collections.Generic
             _version = 0;
         }
 
-        public HashSet(IEnumerable<T> collection)
-            : this(collection, EqualityComparer<T>.Default)
-        { }
+        public HashSet(IEnumerable<T> collection){
+			this(collection, EqualityComparer<T>.Default); }
 
         /// <summary>
         /// Implementation Notes:
@@ -103,12 +101,11 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="collection"></param>
         /// <param name="comparer"></param>
-        public HashSet(IEnumerable<T> collection, IEqualityComparer<T> comparer)
-            : this(comparer)
-        {
+        public HashSet(IEnumerable<T> collection, IEqualityComparer<T> comparer){
+			this(comparer);
             if (collection == null)
             {
-                throw new ArgumentNullException("collection");
+                throw ArgumentNullException("collection");
             }
             Contract.EndContractBlock();
 
@@ -131,7 +128,7 @@ namespace System.Collections.Generic
             }
         }
 
-        //#endregion
+        //
 
         //ICollection<T> methods
 
@@ -259,12 +256,12 @@ namespace System.Collections.Generic
         /// <summary>
         /// Whether this is  
         /// </summary>
-        bool ICollection<T>.IsReadOnly
+        bool IsReadOnly
         {
             get { return false; }
         }
 
-        //#endregion
+        //
 
         //IEnumerable methods
 
@@ -273,17 +270,8 @@ namespace System.Collections.Generic
             return new Enumerator(this);
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-
-        //#endregion
+        //
 
         //HashSet methods
 
@@ -310,7 +298,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -338,7 +326,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -380,7 +368,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -412,7 +400,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -464,7 +452,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -515,7 +503,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -562,7 +550,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -614,7 +602,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -659,7 +647,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -688,7 +676,7 @@ namespace System.Collections.Generic
         {
             if (other == null)
             {
-                throw new ArgumentNullException("other");
+                throw ArgumentNullException("other");
             }
             Contract.EndContractBlock();
 
@@ -729,20 +717,20 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
             Contract.EndContractBlock();
 
             // check array index valid index into array
             if (arrayIndex < 0)
             {
-                throw new ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             // also throw if count less than 0
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             // will array, starting at arrayIndex, be able to hold elements? Note: not
@@ -750,7 +738,7 @@ namespace System.Collections.Generic
             // count of 0; subsequent check takes care of the rest)
             if (arrayIndex > array.Length || count > array.Length - arrayIndex)
             {
-                throw new ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
+                throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
             }
 
             int numCopied = 0;
@@ -773,7 +761,7 @@ namespace System.Collections.Generic
         {
             if (match == null)
             {
-                throw new ArgumentNullException("match");
+                throw ArgumentNullException("match");
             }
             Contract.EndContractBlock();
 
@@ -868,7 +856,7 @@ namespace System.Collections.Generic
             }
         }
 
-        #endregion
+        
 
         Helper methods
 
@@ -901,7 +889,7 @@ namespace System.Collections.Generic
             int newSize = HashHelpers.ExpandPrime(_count);
             if (newSize <= _count)
             {
-                throw new ArgumentException(SR.Arg_HSCapacityOverflow);
+                throw ArgumentException(SR.Arg_HSCapacityOverflow);
             }
 
             // Able to increase capacity; copy elements to larger array and rehash
@@ -1487,7 +1475,7 @@ namespace System.Collections.Generic
             return _comparer.GetHashCode(item) & Lower31BitMask;
         }
 
-        #endregion
+        
 
         // used for set checking operations (using enumerables) that rely on counting
         internal struct ElementCount
@@ -1526,7 +1514,7 @@ namespace System.Collections.Generic
             {
                 if (_version != _set._version)
                 {
-                    throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 }
 
                 while (_index < _set._lastIndex)
@@ -1558,7 +1546,7 @@ namespace System.Collections.Generic
                 {
                     if (_index == 0 || _index == _set._lastIndex + 1)
                     {
-                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
+                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
                     }
                     return Current;
                 }
@@ -1568,7 +1556,7 @@ namespace System.Collections.Generic
             {
                 if (_version != _set._version)
                 {
-                    throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 }
 
                 _index = 0;

@@ -1150,7 +1150,7 @@ namespace System.Text.RegularExpressions
                     }
                 }
             }
-            throw new ArgumentException(SR.Format(SR.MakeException, pattern, SR.Format(SR.UnknownProperty, capname)));
+            throw ArgumentException(SR.Format(SR.MakeException, pattern, SR.Format(SR.UnknownProperty, capname)));
         }
 
 #if DEBUG

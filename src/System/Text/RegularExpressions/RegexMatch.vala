@@ -67,7 +67,7 @@ namespace System.Text.RegularExpressions
             _regex = regex;
             _matchcount = new int[capcount];
 
-            _matches = new int[capcount][];
+            _matches = new int[capcount];
             _matches[0] = _caps;
             _textbeg = begpos;
             _textend = begpos + len;
@@ -132,10 +132,10 @@ namespace System.Text.RegularExpressions
             RegexReplacement repl;
 
             if (replacement == null)
-                throw new ArgumentNullException("replacement");
+                throw ArgumentNullException("replacement");
 
             if (_regex == null)
-                throw new NotSupportedException(SR.NoResultOnFailed);
+                throw NotSupportedException(SR.NoResultOnFailed);
 
             repl = (RegexReplacement)_regex._replref.Get();
 
@@ -172,17 +172,17 @@ namespace System.Text.RegularExpressions
 
 
         /*
-         * Convert to a thread-safe object by precomputing cache contents
+         * Convert to a thread-safeObjectby precomputing cache contents
          */
         /// <summary>
         /// Returns a Match instance equivalent to the one supplied that is safe to share
         /// between multiple threads.
         /// </summary>
 
-        static internal Match Synchronized(Match inner)
+        static Match Synchronized (Match inner)
         {
             if (inner == null)
-                throw new ArgumentNullException("inner");
+                throw ArgumentNullException("inner");
 
             int numgroups = inner._matchcount.Length;
 
@@ -402,7 +402,7 @@ namespace System.Text.RegularExpressions
     internal class MatchSparse : Match
     {
         // the lookup hashtable
-        new internal Dictionary<Int32, Int32> _caps;
+        internal Dictionary<Int32, Int32> _caps = new Dictionary<Int32, Int32> ();
 
         /*
          * Nonpublic constructor

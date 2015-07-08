@@ -13,7 +13,7 @@ namespace System.Collections.Generic
         {
             if (stack == null)
             {
-                throw new ArgumentNullException("stack");
+                throw ArgumentNullException("stack");
             }
 
             _stack = stack;

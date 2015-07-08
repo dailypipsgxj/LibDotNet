@@ -9,7 +9,7 @@
 namespace System.Text.RegularExpressions
 {
     /// <summary>
-    /// Represents the results from a single subexpression capture. The object represents
+    /// Represents the results from a single subexpression capture. TheObjectrepresents
     /// one substring for a single successful capture.
     /// </summary>
     public class Capture

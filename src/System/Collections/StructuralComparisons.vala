@@ -9,10 +9,10 @@ using System.Collections.Generic;
 
 namespace System.Collections
 {
-    public static class StructuralComparisons
+    public class StructuralComparisons
     {
-        private static volatile IComparer s_StructuralComparer;
-        private static volatile IEqualityComparer s_StructuralEqualityComparer;
+        private static IComparer s_StructuralComparer;
+        private static IEqualityComparer s_StructuralEqualityComparer;
 
         public static IComparer StructuralComparer
         {

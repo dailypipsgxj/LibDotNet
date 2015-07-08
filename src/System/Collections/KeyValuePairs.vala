@@ -14,17 +14,17 @@ using System.Diagnostics;
 
 namespace System.Collections
 {
-    [DebuggerDisplay("{_value}", Name = "[{_key}]")]
+// [DebuggerDisplay("{_value}", Name = "[{_key}]")]
     internal class KeyValuePairs
     {
 // [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
-        private   object _key;
+        private Object _key;
 // [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
-        private   object _value;
+        private Object _value;
 
-        public KeyValuePairs(object key, object value)
+        public KeyValuePairs(Object key, Object value)
         {
             _value = value;
             _key = key;

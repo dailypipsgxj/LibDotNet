@@ -18,7 +18,7 @@ using System.Globalization;
 
 namespace System.Text.RegularExpressions
 {
-    abstract internal class RegexRunner
+    internal abstract class RegexRunner
     {
         protected int _runtextbeg;         // beginning of text to search
         protected int _runtextend;         // end of text to search
@@ -54,10 +54,7 @@ namespace System.Text.RegularExpressions
 
         protected int _runtrackcount;      // count of states that may do backtracking
 
-        protected Match _runmatch;         // result object
-        protected Regex _runregex;         // regex object
-
-        private Int32 _timeout;            // timeout in milliseconds (needed for actual)        
+        protected Match _runmatch;         // resultObjectprotected Regex _runregex;         // regexObjectprivate Int32 _timeout;            // timeout in milliseconds (needed for actual)        
         private bool _ignoreTimeout;
         private Int32 _timeoutOccursAt;
 
@@ -69,11 +66,10 @@ namespace System.Text.RegularExpressions
         private const int TimeoutCheckFrequency = 1000;
         private int _timeoutChecksToSkip;
 
-        protected internal RegexRunner() { }
+        public RegexRunner() { }
 
         /// <summary>
-        /// Scans the string to find the first match. Uses the Match object
-        /// both to feed text in and as a place to store matches that come out.
+        /// Scans the string to find the first match. Uses the MatchObject/// both to feed text in and as a place to store matches that come out.
         ///
         /// All the action is in the abstract Go() method defined by subclasses. Our
         /// responsibility is to load up the class members (as done here) before
@@ -83,7 +79,7 @@ namespace System.Text.RegularExpressions
         /// and we could use a separate method Skip() that will quickly scan past
         /// any characters that we know can't match.
         /// </summary>
-        protected internal Match Scan(Regex regex, String text, int textbeg, int textend, int textstart, int prevlen, bool quick)
+        protected Match Scan(Regex regex, String text, int textbeg, int textend, int textstart, int prevlen, bool quick)
         {
             return Scan(regex, text, textbeg, textend, textstart, prevlen, quick, regex.MatchTimeout);
         }
@@ -238,7 +234,7 @@ namespace System.Text.RegularExpressions
             }
 #endif
 
-            throw new RegexMatchTimeoutException(_runtext, _runregex._pattern, TimeSpan.FromMilliseconds(_timeout));
+            throw RegexMatchTimeoutException(_runtext, _runregex._pattern, TimeSpan.FromMilliseconds(_timeout));
         }
 
         /// <summary>
@@ -268,7 +264,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         private void InitMatch()
         {
-            // Use a hashtable'ed Match object if the capture numbers are sparse
+            // Use a hashtable'ed MatchObjectif the capture numbers are sparse
 
             if (_runmatch == null)
             {
@@ -332,7 +328,7 @@ namespace System.Text.RegularExpressions
             else
             {
                 // in quick mode, a successful match returns null, and
-                // the allocated match object is left in the cache
+                // the allocated matchObjectis left in the cache
 
                 return null;
             }

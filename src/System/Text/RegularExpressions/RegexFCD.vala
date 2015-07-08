@@ -520,7 +520,7 @@ namespace System.Text.RegularExpressions
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Format(SR.UnexpectedOpcode, NodeType.ToString(CultureInfo.CurrentCulture)));
+                    throw ArgumentException(SR.Format(SR.UnexpectedOpcode, NodeType.ToString(CultureInfo.CurrentCulture)));
             }
         }
     }
@@ -537,7 +537,7 @@ namespace System.Text.RegularExpressions
             _nullable = nullable;
         }
 
-        internal RegexFC(char ch, bool not, bool nullable, bool caseInsensitive)
+        internal RegexFC(char ch, bool not, bool nullable, bool? caseInsensitive = null)
         {
             _cc = new RegexCharClass();
 
@@ -553,7 +553,7 @@ namespace System.Text.RegularExpressions
                 _cc.AddRange(ch, ch);
             }
 
-            _caseInsensitive = caseInsensitive;
+            if(caseInsensitive != null) _caseInsensitive = caseInsensitive;
             _nullable = nullable;
         }
 

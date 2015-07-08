@@ -14,7 +14,8 @@ using System;
 
 namespace System.Collections
 {
-    // Useful base class for typed read/write collections where items derive from object
+    // Useful base class for typed read/write collections where items derive from Object
+    
     public abstract class DictionaryBase : IDictionary
     {
         private Hashtable _hashtable;
@@ -40,32 +41,32 @@ namespace System.Collections
             get { return _hashtable == null ? 0 : _hashtable.Count; }
         }
 
-        bool IDictionary.IsReadOnly
+        bool IsReadOnly
         {
             get { return InnerHashtable.IsReadOnly; }
         }
 
-        bool IDictionary.IsFixedSize
+        bool IsFixedSize
         {
             get { return InnerHashtable.IsFixedSize; }
         }
 
-        bool ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return InnerHashtable.IsSynchronized; }
         }
 
-        ICollection IDictionary.Keys
+        ICollection Keys
         {
             get { return InnerHashtable.Keys; }
         }
 
-        Object ICollection.SyncRoot
+        Object SyncRoot
         {
             get { return InnerHashtable.SyncRoot; }
         }
 
-        ICollection IDictionary.Values
+        ICollection Values
         {
             get { return InnerHashtable.Values; }
         }
@@ -74,52 +75,50 @@ namespace System.Collections
         {
             InnerHashtable.CopyTo(array, index);
         }
+        
+        Object IDictionary.get (Object key)
+		{
+			Object currentValue = InnerHashtable[key];
+			OnGet(key, currentValue);
+			return currentValue;
+		}
 
-        object IDictionary.this[object key]
+        void IDictionary.set (Object key)
         {
-            get
-            {
-                object currentValue = InnerHashtable[key];
-                OnGet(key, currentValue);
-                return currentValue;
-            }
-            set
-            {
-                OnValidate(key, value);
-                bool keyExists = true;
-                Object temp = InnerHashtable[key];
-                if (temp == null)
-                {
-                    keyExists = InnerHashtable.Contains(key);
-                }
+			OnValidate(key, value);
+			bool keyExists = true;
+			Object temp = InnerHashtable[key];
+			if (temp == null)
+			{
+				keyExists = InnerHashtable.Contains(key);
+			}
 
-                OnSet(key, temp, value);
-                InnerHashtable[key] = value;
-                try
-                {
-                    OnSetComplete(key, temp, value);
-                }
-                catch
-                {
-                    if (keyExists)
-                    {
-                        InnerHashtable[key] = temp;
-                    }
-                    else
-                    {
-                        InnerHashtable.Remove(key);
-                    }
-                    throw;
-                }
-            }
-        }
+			OnSet(key, temp, value);
+			InnerHashtable[key] = value;
+			try
+			{
+				OnSetComplete(key, temp, value);
+			}
+			catch
+			{
+				if (keyExists)
+				{
+					InnerHashtable[key] = temp;
+				}
+				else
+				{
+					InnerHashtable.Remove(key);
+				}
+				//////throw;
+			}
+		}
 
-        bool IDictionary.Contains(object key)
+        bool Contains(Object key)
         {
             return InnerHashtable.Contains(key);
         }
 
-        void IDictionary.Add(object key, object value)
+        void Add(Object key, Object value)
         {
             OnValidate(key, value);
             OnInsert(key, value);
@@ -131,7 +130,7 @@ namespace System.Collections
             catch
             {
                 InnerHashtable.Remove(key);
-                throw;
+                //////throw;
             }
         }
 
@@ -142,7 +141,7 @@ namespace System.Collections
             OnClearComplete();
         }
 
-        void IDictionary.Remove(object key)
+        public void Remove(Object key)
         {
             if (InnerHashtable.Contains(key))
             {
@@ -158,31 +157,27 @@ namespace System.Collections
                 catch
                 {
                     InnerHashtable.Add(key, temp);
-                    throw;
+                    //////throw;
                 }
             }
         }
 
-        public IDictionaryEnumerator GetEnumerator()
+
+        IEnumerator GetEnumerator()
         {
             return InnerHashtable.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return InnerHashtable.GetEnumerator();
-        }
-
-        protected virtual object OnGet(object key, object currentValue)
+        protected virtual Object OnGet(Object key,Object currentValue)
         {
             return currentValue;
         }
 
-        protected virtual void OnSet(object key, object oldValue, object newValue)
+        protected virtual void OnSet(Object key, Object oldValue, Object newValue)
         {
         }
 
-        protected virtual void OnInsert(object key, object value)
+        protected virtual void OnInsert(Object key, Object value)
         {
         }
 
@@ -190,19 +185,19 @@ namespace System.Collections
         {
         }
 
-        protected virtual void OnRemove(object key, object value)
+        protected virtual void OnRemove(Object key, Object value)
         {
         }
 
-        protected virtual void OnValidate(object key, object value)
+        protected virtual void OnValidate(Object key, Object value)
         {
         }
 
-        protected virtual void OnSetComplete(object key, object oldValue, object newValue)
+        protected virtual void OnSetComplete(Object key, Object oldValue, Object newValue)
         {
         }
 
-        protected virtual void OnInsertComplete(object key, object value)
+        protected virtual void OnInsertComplete(Object key, Object value)
         {
         }
 
@@ -210,7 +205,7 @@ namespace System.Collections
         {
         }
 
-        protected virtual void OnRemoveComplete(object key, object value)
+        protected virtual void OnRemoveComplete(Object key, Object value)
         {
         }
     }

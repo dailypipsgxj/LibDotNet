@@ -33,7 +33,7 @@ namespace System.Collections
         {
             if (culture == null)
             {
-                throw new ArgumentNullException("culture");
+                throw ArgumentNullException("culture");
             }
             Contract.EndContractBlock();
             _compareInfo = culture.CompareInfo;
@@ -66,7 +66,7 @@ namespace System.Collections
             if (ib != null)
                 return -ib.CompareTo(a);
 
-            throw new ArgumentException(SR.Argument_ImplementIComparable);
+            throw ArgumentException(SR.Argument_ImplementIComparable);
         }
     }
 }

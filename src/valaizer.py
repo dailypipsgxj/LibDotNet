@@ -38,13 +38,20 @@ def processFile (path):
 		data = re.sub('implicit ', "", data)
 		data = re.sub('readonly ', "", data)
 		data = re.sub('sealed ', "", data)
-		data = re.sub('\#region ', "", data)
-		data = re.sub('\#endregion ', "", data)
-		data = re.sub(ur'\s*: base\s*\(([\w\s,<>\[\].=&\':/*]*?)\)\s*?\s*(?={){', baseReplace, data)
-		data = re.sub(ur'\n\s*(\[[a-zA-Z0-9()"=\{\}\s.]*\])', attrReplace, data)
+		data = re.sub('volatile ', "", data)
+		data = re.sub('protected internal', "internal protected", data)
+		data = re.sub('throw new', "throw", data)
+		data = re.sub('\sthrow;', "//throw;", data)
+		data = re.sub('\s*(object)\s* ', " Object ", data)
+		data = re.sub('\#region', "", data)
+		data = re.sub('\#endregion', "", data)
+		data = re.sub(ur'\s*: base\s*\(([\w\W\s\S[\].=&\':/*]*?)\)\s*?\s*(?={){', baseReplace, data)
+		data = re.sub(ur'\s*: this\s*\(([\w\W\s\S[\].=&\':/*]*?)\)\s*?\s*(?={){', thisReplace, data)
+		data = re.sub(ur'\n\s*(\[[\w\W\S\s]*?\])', attrReplace, data)
+		data = re.sub(ur'(\w*)\s*this\s*\[([\w\W\s\S[\].=&\':/*]*?)\]\s*?\s*(?={){\s*get\s*', setGetReplace, data)
 		f.close()
 
-	print data
+	#print data
 	
 	with open (path, "w") as f:
 		f.write (data)
@@ -52,9 +59,14 @@ def processFile (path):
 def baseReplace (matchobj):
 	return "{\n\t\t\tbase(" + matchobj.group (1) + ");"
 
+def thisReplace (matchobj):
+	return "{\n\t\t\tthis(" + matchobj.group (1) + ");"
+
 def attrReplace (matchobj):
 	return "\n// " + matchobj.group (1) + "\n"
 
+def setGetReplace (matchobj):
+	return matchobj.group (1) + " get (" + matchobj.group (2) + ") {\n\t\t"
 
 def main ():
 	path = os.path.dirname(os.path.realpath(__file__))

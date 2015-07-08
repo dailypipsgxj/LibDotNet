@@ -47,7 +47,7 @@ namespace System.Collections
         public Stack(int initialCapacity)
         {
             if (initialCapacity < 0)
-                throw new ArgumentOutOfRangeException("initialCapacity", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("initialCapacity", SR.ArgumentOutOfRange_NeedNonNegNum);
             Contract.EndContractBlock();
             if (initialCapacity < _defaultCapacity)
                 initialCapacity = _defaultCapacity;  // Simplify doubling logic in Push.
@@ -59,10 +59,10 @@ namespace System.Collections
         // Fills a Stack with the contents of a particular collection.  The items are
         // pushed onto the stack in the same order they are read by the enumerator.
         //
-        public Stack(ICollection col) : this((col == null ? 32 : col.Count))
-        {
+        public Stack(ICollection col){
+			this((col == null ? 32 : col.Count));
             if (col == null)
-                throw new ArgumentNullException("col");
+                throw ArgumentNullException("col");
             Contract.EndContractBlock();
             IEnumerator en = col.GetEnumerator();
             while (en.MoveNext())
@@ -137,13 +137,13 @@ namespace System.Collections
         public virtual void CopyTo(Array array, int index)
         {
             if (array == null)
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             if (array.Rank != 1)
-                throw new ArgumentException(SR.Arg_RankMultiDimNotSupported);
+                throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
             if (index < 0)
-                throw new ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_NeedNonNegNum);
             if (array.Length - index < _size)
-                throw new ArgumentException(SR.Argument_InvalidOffLen);
+                throw ArgumentException(SR.Argument_InvalidOffLen);
             Contract.EndContractBlock();
 
             int i = 0;
@@ -173,12 +173,12 @@ namespace System.Collections
             return new StackEnumerator(this);
         }
 
-        // Returns the top object on the stack without removing it.  If the stack
+        // Returns the topObjecton the stack without removing it.  If the stack
         // is empty, Peek throws an InvalidOperationException.
         public virtual Object Peek()
         {
             if (_size == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyStack);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyStack);
             Contract.EndContractBlock();
             return _array[_size - 1];
         }
@@ -188,7 +188,7 @@ namespace System.Collections
         public virtual Object Pop()
         {
             if (_size == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyStack);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyStack);
             //Contract.Ensures(Count == Contract.OldValue(Count) - 1);
             Contract.EndContractBlock();
             _version++;
@@ -217,7 +217,7 @@ namespace System.Collections
         public static Stack Synchronized(Stack stack)
         {
             if (stack == null)
-                throw new ArgumentNullException("stack");
+                throw ArgumentNullException("stack");
             Contract.Ensures(Contract.Result<Stack>() != null);
             Contract.EndContractBlock();
             return new SyncStack(stack);
@@ -316,8 +316,8 @@ namespace System.Collections
                     _s.Push(value);
                 }
             }
-
-            [SuppressMessage("Microsoft.Contracts", "CC1055")]  // Thread safety problems with precondition - can't express the precondition as of Dev10.
+// [SuppressMessage("Microsoft.Contracts", "CC1055")]
+  // Thread safety problems with precondition - can't express the precondition as of Dev10.
             public override Object Pop()
             {
                 lock (_root)
@@ -333,8 +333,8 @@ namespace System.Collections
                     return _s.GetEnumerator();
                 }
             }
-
-            [SuppressMessage("Microsoft.Contracts", "CC1055")]  // Thread safety problems with precondition - can't express the precondition
+// [SuppressMessage("Microsoft.Contracts", "CC1055")]
+  // Thread safety problems with precondition - can't express the precondition
             public override Object Peek()
             {
                 lock (_root)
@@ -371,7 +371,7 @@ namespace System.Collections
             public virtual bool MoveNext()
             {
                 bool retval;
-                if (_version != _stack._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _stack._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 if (_index == -2)
                 {  // First call to enumerator.
                     _index = _stack._size - 1;
@@ -397,15 +397,15 @@ namespace System.Collections
             {
                 get
                 {
-                    if (_index == -2) throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
-                    if (_index == -1) throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
+                    if (_index == -2) throw InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
+                    if (_index == -1) throw InvalidOperationException(SR.InvalidOperation_EnumEnded);
                     return _currentElement;
                 }
             }
 
             public virtual void Reset()
             {
-                if (_version != _stack._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _stack._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 _index = -2;
                 _currentElement = null;
             }
@@ -418,7 +418,7 @@ namespace System.Collections
             public StackDebugView(Stack stack)
             {
                 if (stack == null)
-                    throw new ArgumentNullException("stack");
+                    throw ArgumentNullException("stack");
                 Contract.EndContractBlock();
 
                 _stack = stack;

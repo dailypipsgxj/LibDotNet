@@ -16,7 +16,8 @@ namespace System.Collections.Generic
 {
     // A simple Queue of generic objects.  Internally it is implemented as a 
     // circular buffer, so Enqueue can be O(n).  Dequeue is O(1).
-    [DebuggerTypeProxy(typeof(QueueDebugView<>))]
+// [DebuggerTypeProxy(typeof(QueueDebugView<>))]
+
 // [DebuggerDisplay("Count = {Count}")]
 
     public class Queue<T> : IEnumerable<T>,
@@ -49,7 +50,7 @@ namespace System.Collections.Generic
         public Queue(int capacity)
         {
             if (capacity < 0)
-                throw new ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNumRequired);
+                throw ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNumRequired);
             _array = new T[capacity];
         }
 
@@ -60,7 +61,7 @@ namespace System.Collections.Generic
         public Queue(IEnumerable<T> collection)
         {
             if (collection == null)
-                throw new ArgumentNullException("collection");
+                throw ArgumentNullException("collection");
 
             _array = new T[DefaultCapacity];
 
@@ -81,12 +82,12 @@ namespace System.Collections.Generic
         }
 
         /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.IsSynchronized"]/*' />
-        bool System.Collections.ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return false; }
         }
 
-        Object System.Collections.ICollection.SyncRoot
+        Object SyncRoot
         {
             get
             {
@@ -124,18 +125,18 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (arrayIndex < 0 || arrayIndex > array.Length)
             {
-                throw new ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_Index);
+                throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_Index);
             }
 
             int arrayLen = array.Length;
             if (arrayLen - arrayIndex < _size)
             {
-                throw new ArgumentException(SR.Argument_InvalidOffLen);
+                throw ArgumentException(SR.Argument_InvalidOffLen);
             }
 
             int numToCopy = (arrayLen - arrayIndex < _size) ? (arrayLen - arrayIndex) : _size;
@@ -154,28 +155,28 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Arg_RankMultiDimNotSupported);
+                throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
             }
 
             if (array.GetLowerBound(0) != 0)
             {
-                throw new ArgumentException(SR.Arg_NonZeroLowerBound);
+                throw ArgumentException(SR.Arg_NonZeroLowerBound);
             }
 
             int arrayLen = array.Length;
             if (index < 0 || index > arrayLen)
             {
-                throw new ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_Index);
+                throw ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_Index);
             }
 
             if (arrayLen - index < _size)
             {
-                throw new ArgumentException(SR.Argument_InvalidOffLen);
+                throw ArgumentException(SR.Argument_InvalidOffLen);
             }
 
             int numToCopy = (arrayLen - index < _size) ? arrayLen - index : _size;
@@ -194,7 +195,7 @@ namespace System.Collections.Generic
             }
             catch (ArrayTypeMismatchException)
             {
-                throw new ArgumentException(SR.Argument_InvalidArrayType);
+                throw ArgumentException(SR.Argument_InvalidArrayType);
             }
         }
 
@@ -240,13 +241,13 @@ namespace System.Collections.Generic
             return new Enumerator(this);
         }
 
-        // Removes the object at the head of the queue and returns it. If the queue
+        // Removes theObjectat the head of the queue and returns it. If the queue
         // is empty, this method simply returns null.
         /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.Dequeue"]/*' />
         public T Dequeue()
         {
             if (_size == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyQueue);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyQueue);
 
             T removed = _array[_head];
             _array[_head] = default(T);
@@ -256,19 +257,19 @@ namespace System.Collections.Generic
             return removed;
         }
 
-        // Returns the object at the head of the queue. The object remains in the
+        // Returns theObjectat the head of the queue. TheObjectremains in the
         // queue. If the queue is empty, this method throws an 
         // InvalidOperationException.
         /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.Peek"]/*' />
         public T Peek()
         {
             if (_size == 0)
-                throw new InvalidOperationException(SR.InvalidOperation_EmptyQueue);
+                throw InvalidOperationException(SR.InvalidOperation_EmptyQueue);
 
             return _array[_head];
         }
 
-        // Returns true if the queue contains at least one object equal to item.
+        // Returns true if the queue contains at least oneObjectequal to item.
         // Equality is determined using item.Equals().
         //
         // Exceptions: ArgumentNullException if item == null.
@@ -363,7 +364,8 @@ namespace System.Collections.Generic
         // internal version number of the list to ensure that no modifications are
         // made to the list while an enumeration is in progress.
         /// <include file='doc\Queue.uex' path='docs/doc[@for="QueueEnumerator"]/*' />
-        [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
+// [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
+
         public struct Enumerator : IEnumerator<T>,
             System.Collections.IEnumerator
         {
@@ -390,7 +392,7 @@ namespace System.Collections.Generic
             /// <include file='doc\Queue.uex' path='docs/doc[@for="QueueEnumerator.MoveNext"]/*' />
             public bool MoveNext()
             {
-                if (_version != _q._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _q._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
 
                 if (_index == -2)
                     return false;
@@ -416,9 +418,9 @@ namespace System.Collections.Generic
                     if (_index < 0)
                     {
                         if (_index == -1)
-                            throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
+                            throw InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
                         else
-                            throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
+                            throw InvalidOperationException(SR.InvalidOperation_EnumEnded);
                     }
                     return _currentElement;
                 }
@@ -431,9 +433,9 @@ namespace System.Collections.Generic
                     if (_index < 0)
                     {
                         if (_index == -1)
-                            throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
+                            throw InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
                         else
-                            throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
+                            throw InvalidOperationException(SR.InvalidOperation_EnumEnded);
                     }
                     return _currentElement;
                 }
@@ -441,7 +443,7 @@ namespace System.Collections.Generic
 
             void System.Collections.IEnumerator.Reset()
             {
-                if (_version != _q._version) throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                if (_version != _q._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 _index = -1;
                 _currentElement = default(T);
             }

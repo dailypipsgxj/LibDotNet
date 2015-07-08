@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// The RegexBoyerMoore object precomputes the Boyer-Moore
+// The RegexBoyerMooreObjectprecomputes the Boyer-Moore
 // tables for fast string scanning. These tables allow
 // you to scan for the first occurrence of a string within
 // a large body of text without examining every character.

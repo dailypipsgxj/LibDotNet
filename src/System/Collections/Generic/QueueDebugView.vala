@@ -13,7 +13,7 @@ namespace System.Collections.Generic
         {
             if (queue == null)
             {
-                throw new ArgumentNullException("queue");
+                throw ArgumentNullException("queue");
             }
 
             _queue = queue;

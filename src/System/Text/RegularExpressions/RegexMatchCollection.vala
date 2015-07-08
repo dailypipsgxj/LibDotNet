@@ -33,7 +33,7 @@ namespace System.Text.RegularExpressions
         internal MatchCollection(Regex regex, string input, int beginning, int length, int startat)
         {
             if (startat < 0 || startat > input.Length)
-                throw new ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
+                throw ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
 
             _regex = regex;
             _input = input;
@@ -60,20 +60,17 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the ith Match in the collection.
         /// </summary>
-        public virtual Match this[int i]
+        public override Match get (int i)
         {
-            get
-            {
-                if (i < 0)
-                    throw new ArgumentOutOfRangeException("i");
+			if (i < 0)
+				throw ArgumentOutOfRangeException("i");
 
-                Match match = GetMatch(i);
+			Match match = GetMatch(i);
 
-                if (match == null)
-                    throw new ArgumentOutOfRangeException("i");
+			if (match == null)
+				throw ArgumentOutOfRangeException("i");
 
-                return match;
-            }
+			return match;
         }
 
         /// <summary>
@@ -123,12 +120,12 @@ namespace System.Text.RegularExpressions
             }
         }
 
-        bool ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return false; }
         }
 
-        object ICollection.SyncRoot
+        Object SyncRoot
         {
             get { return this; }
         }
@@ -174,16 +171,12 @@ namespace System.Text.RegularExpressions
                 get
                 {
                     if (_index < 0)
-                        throw new InvalidOperationException(SR.EnumNotStarted);
+                        throw InvalidOperationException(SR.EnumNotStarted);
 
                     return _collection.GetMatch(_index);
                 }
             }
 
-            object IEnumerator.Current
-            {
-                get { return Current; }
-            }
 
             void IEnumerator.Reset()
             {

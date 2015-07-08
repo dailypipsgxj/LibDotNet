@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Collections.Generic
 {
-    [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
+// [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
 // [DebuggerDisplay("Count = {Count}")]
 
     public class LinkedList<T> : ICollection<T>, System.Collections.ICollection, IReadOnlyCollection<T>
@@ -18,15 +18,11 @@ namespace System.Collections.Generic
         internal int version;
         private Object _syncRoot;
 
-        public LinkedList()
-        {
-        }
-
         public LinkedList(IEnumerable<T> collection)
         {
             if (collection == null)
             {
-                throw new ArgumentNullException("collection");
+                throw ArgumentNullException("collection");
             }
 
             foreach (T item in collection)
@@ -50,12 +46,12 @@ namespace System.Collections.Generic
             get { return head == null ? null : head.prev; }
         }
 
-        bool ICollection<T>.IsReadOnly
+        bool IsReadOnly
         {
             get { return false; }
         }
 
-        void ICollection<T>.Add(T value)
+        void Add(T value)
         {
             AddLast(value);
         }
@@ -63,46 +59,57 @@ namespace System.Collections.Generic
         public LinkedListNode<T> AddAfter(LinkedListNode<T> node, T value)
         {
             ValidateNode(node);
-            LinkedListNode<T> result = new LinkedListNode<T>(node.list, value);
+            LinkedListNode<T> result;
+            
+            
+            if (value is LinkedListNode<T>) {
+				result = value;
+				ValidateNewNode(result);
+				result.list = this;
+			} else {
+				result = new LinkedListNode<T>(node.list, value);
+			}
+            
             InternalInsertNodeBefore(node.next, result);
             return result;
         }
 
-        public void AddAfter(LinkedListNode<T> node, LinkedListNode<T> newNode)
-        {
-            ValidateNode(node);
-            ValidateNewNode(newNode);
-            InternalInsertNodeBefore(node.next, newNode);
-            newNode.list = this;
-        }
 
         public LinkedListNode<T> AddBefore(LinkedListNode<T> node, T value)
         {
             ValidateNode(node);
-            LinkedListNode<T> result = new LinkedListNode<T>(node.list, value);
+            LinkedListNode<T> result;
+            
+            if (value is LinkedListNode<T>) {
+				result = value;
+				ValidateNewNode(result);
+				result.list = this;
+			} else {
+				result = new LinkedListNode<T>(node.list, value);
+			}
+
             InternalInsertNodeBefore(node, result);
+            
             if (node == head)
             {
                 head = result;
             }
             return result;
-        }
-
-        public void AddBefore(LinkedListNode<T> node, LinkedListNode<T> newNode)
-        {
-            ValidateNode(node);
-            ValidateNewNode(newNode);
-            InternalInsertNodeBefore(node, newNode);
-            newNode.list = this;
-            if (node == head)
-            {
-                head = newNode;
-            }
         }
 
         public LinkedListNode<T> AddFirst(T value)
         {
-            LinkedListNode<T> result = new LinkedListNode<T>(this, value);
+
+            LinkedListNode<T> result;
+            
+            if (value is LinkedListNode<T>) {
+				result = value;
+				ValidateNewNode(result);
+				result.list = this;
+			} else {
+				result = new LinkedListNode<T>(this, value);
+			}
+
             if (head == null)
             {
                 InternalInsertNodeToEmptyList(result);
@@ -115,25 +122,19 @@ namespace System.Collections.Generic
             return result;
         }
 
-        public void AddFirst(LinkedListNode<T> node)
-        {
-            ValidateNewNode(node);
-
-            if (head == null)
-            {
-                InternalInsertNodeToEmptyList(node);
-            }
-            else
-            {
-                InternalInsertNodeBefore(head, node);
-                head = node;
-            }
-            node.list = this;
-        }
-
         public LinkedListNode<T> AddLast(T value)
         {
-            LinkedListNode<T> result = new LinkedListNode<T>(this, value);
+
+            LinkedListNode<T> result;
+            
+            if (value is LinkedListNode<T>) {
+				result = value;
+				ValidateNewNode(result);
+				result.list = this;
+			} else {
+				result = new LinkedListNode<T>(this, value);
+			}
+
             if (head == null)
             {
                 InternalInsertNodeToEmptyList(result);
@@ -145,20 +146,6 @@ namespace System.Collections.Generic
             return result;
         }
 
-        public void AddLast(LinkedListNode<T> node)
-        {
-            ValidateNewNode(node);
-
-            if (head == null)
-            {
-                InternalInsertNodeToEmptyList(node);
-            }
-            else
-            {
-                InternalInsertNodeBefore(head, node);
-            }
-            node.list = this;
-        }
 
         public void Clear()
         {
@@ -184,17 +171,17 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (index < 0 || index > array.Length)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Format(SR.IndexOutOfRange, index));
+                throw ArgumentOutOfRangeException("index", SR.Format(SR.IndexOutOfRange, index));
             }
 
             if (array.Length - index < Count)
             {
-                throw new ArgumentException(SR.Arg_InsufficientSpace);
+                throw ArgumentException(SR.Arg_InsufficientSpace);
             }
 
             LinkedListNode<T> node = head;
@@ -281,14 +268,17 @@ namespace System.Collections.Generic
             return new Enumerator(this);
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public bool Remove(T value)
         {
-            LinkedListNode<T> node = Find(value);
+			
+			LinkedListNode<T> node;
+			
+            if (value is LinkedListNode<T>) {
+				node = value;
+				ValidateNode(node);
+			} else {
+				node = Find(value);
+			}
             if (node != null)
             {
                 InternalRemoveNode(node);
@@ -297,21 +287,15 @@ namespace System.Collections.Generic
             return false;
         }
 
-        public void Remove(LinkedListNode<T> node)
-        {
-            ValidateNode(node);
-            InternalRemoveNode(node);
-        }
-
         public void RemoveFirst()
         {
-            if (head == null) { throw new InvalidOperationException(SR.LinkedListEmpty); }
+            if (head == null) { throw InvalidOperationException(SR.LinkedListEmpty); }
             InternalRemoveNode(head);
         }
 
         public void RemoveLast()
         {
-            if (head == null) { throw new InvalidOperationException(SR.LinkedListEmpty); }
+            if (head == null) { throw InvalidOperationException(SR.LinkedListEmpty); }
             InternalRemoveNode(head.prev);
         }
 
@@ -362,12 +346,12 @@ namespace System.Collections.Generic
         {
             if (node == null)
             {
-                throw new ArgumentNullException("node");
+                throw ArgumentNullException("node");
             }
 
             if (node.list != null)
             {
-                throw new InvalidOperationException(SR.LinkedListNodeIsAttached);
+                throw InvalidOperationException(SR.LinkedListNodeIsAttached);
             }
         }
 
@@ -376,21 +360,21 @@ namespace System.Collections.Generic
         {
             if (node == null)
             {
-                throw new ArgumentNullException("node");
+                throw ArgumentNullException("node");
             }
 
             if (node.list != this)
             {
-                throw new InvalidOperationException(SR.ExternalLinkedListNode);
+                throw InvalidOperationException(SR.ExternalLinkedListNode);
             }
         }
 
-        bool System.Collections.ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return false; }
         }
 
-        object System.Collections.ICollection.SyncRoot
+        Object SyncRoot
         {
             get
             {
@@ -406,27 +390,27 @@ namespace System.Collections.Generic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
             }
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Arg_MultiRank);
+                throw ArgumentException(SR.Arg_MultiRank);
             }
 
             if (array.GetLowerBound(0) != 0)
             {
-                throw new ArgumentException(SR.Arg_NonZeroLowerBound);
+                throw ArgumentException(SR.Arg_NonZeroLowerBound);
             }
 
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Format(SR.IndexOutOfRange, index));
+                throw ArgumentOutOfRangeException("index", SR.Format(SR.IndexOutOfRange, index));
             }
 
             if (array.Length - index < Count)
             {
-                throw new ArgumentException(SR.Arg_InsufficientSpace);
+                throw ArgumentException(SR.Arg_InsufficientSpace);
             }
 
             T[] tArray = array as T[];
@@ -441,7 +425,7 @@ namespace System.Collections.Generic
                 object[] objects = array as object[];
                 if (objects == null)
                 {
-                    throw new ArgumentException(SR.Invalid_Array_Type);
+                    throw ArgumentException(SR.Invalid_Array_Type);
                 }
                 LinkedListNode<T> node = head;
                 try
@@ -455,9 +439,9 @@ namespace System.Collections.Generic
                         } while (node != head);
                     }
                 }
-                catch (ArrayTypeMismatchException)
+                catch (ArrayTypeMismatchException e)
                 {
-                    throw new ArgumentException(SR.Invalid_Array_Type);
+                    throw ArgumentException(SR.Invalid_Array_Type);
                 }
             }
         }
@@ -467,7 +451,7 @@ namespace System.Collections.Generic
             return GetEnumerator();
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
+        // [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
         public struct Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
             private LinkedList<T> _list;
@@ -476,7 +460,7 @@ namespace System.Collections.Generic
             private T _current;
             private int _index;
 
-            internal Enumerator(LinkedList<T> list)
+            public Enumerator(LinkedList<T> list)
             {
                 _list = list;
                 _version = list.version;
@@ -485,18 +469,13 @@ namespace System.Collections.Generic
                 _index = 0;
             }
 
-            public T Current
-            {
-                get { return _current; }
-            }
-
-            object System.Collections.IEnumerator.Current
+            public Object Current
             {
                 get
                 {
                     if (_index == 0 || (_index == _list.Count + 1))
                     {
-                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
+                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
                     }
 
                     return _current;
@@ -507,7 +486,7 @@ namespace System.Collections.Generic
             {
                 if (_version != _list.version)
                 {
-                    throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 }
 
                 if (_node == null)
@@ -530,7 +509,7 @@ namespace System.Collections.Generic
             {
                 if (_version != _list.version)
                 {
-                    throw new InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
+                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 }
 
                 _current = default(T);
@@ -552,14 +531,9 @@ namespace System.Collections.Generic
         internal LinkedListNode<T> prev;
         internal T item;
 
-        public LinkedListNode(T value)
+        internal LinkedListNode(LinkedList<T>? list = null, T value)
         {
-            this.item = value;
-        }
-
-        internal LinkedListNode(LinkedList<T> list, T value)
-        {
-            this.list = list;
+            if (list != null) this.list = list;
             this.item = value;
         }
 

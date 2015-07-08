@@ -15,7 +15,7 @@ namespace System.Text.RegularExpressions
      * or right to left). It is created by Group.Captures
      */
     /// <summary>
-    /// Represents a sequence of capture substrings. The object is used
+    /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
     public class CaptureCollection : ICollection
@@ -41,9 +41,8 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns a specific capture, by index, in this collection.
         /// </summary>
-        public Capture this[int i]
-        {
-            get { return GetCapture(i); }
+        public Capture get (int i) {
+		{ return GetCapture(i); }
         }
 
         /// <summary>
@@ -63,7 +62,7 @@ namespace System.Text.RegularExpressions
                 return _group;
 
             if (i >= _capcount || i < 0)
-                throw new ArgumentOutOfRangeException("i");
+                throw ArgumentOutOfRangeException("i");
 
             // first time a capture is accessed, compute them all
             if (_captures == null)
@@ -81,9 +80,7 @@ namespace System.Text.RegularExpressions
         bool ICollection.IsSynchronized
         {
             get { return false; }
-        }
-
-        object ICollection.SyncRoot
+        }ObjectICollection.SyncRoot
         {
             get { return _group; }
         }
@@ -91,7 +88,7 @@ namespace System.Text.RegularExpressions
         void ICollection.CopyTo(Array array, int arrayIndex)
         {
             if (array == null)
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
 
             for (int i = arrayIndex, j = 0; j < Count; i++, j++)
             {
@@ -129,13 +126,11 @@ namespace System.Text.RegularExpressions
                 get
                 {
                     if (_index < 0 || _index >= _collection.Count)
-                        throw new InvalidOperationException(SR.EnumNotStarted);
+                        throw InvalidOperationException(SR.EnumNotStarted);
 
                     return _collection[_index];
                 }
-            }
-
-            object IEnumerator.Current
+            }ObjectIEnumerator.Current
             {
                 get { return Current; }
             }

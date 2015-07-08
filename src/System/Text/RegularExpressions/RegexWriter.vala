@@ -558,7 +558,7 @@ namespace System.Text.RegularExpressions
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Format(SR.UnexpectedOpcode, nodetype.ToString(CultureInfo.CurrentCulture)));
+                    throw ArgumentException(SR.Format(SR.UnexpectedOpcode, nodetype.ToString(CultureInfo.CurrentCulture)));
             }
         }
     }

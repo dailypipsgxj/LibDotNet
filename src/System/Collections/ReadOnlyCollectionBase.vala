@@ -14,7 +14,8 @@ using System;
 
 namespace System.Collections
 {
-    // Useful base class for typed   collections where items derive from object
+    // Useful base class for typed collections where items derive from Object
+
     public abstract class ReadOnlyCollectionBase : ICollection
     {
         private ArrayList _list;
@@ -34,17 +35,17 @@ namespace System.Collections
             get { return InnerList.Count; }
         }
 
-        bool ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return InnerList.IsSynchronized; }
         }
-
-        object ICollection.SyncRoot
+        
+        Object SyncRoot
         {
             get { return InnerList.SyncRoot; }
         }
 
-        void ICollection.CopyTo(Array array, int index)
+        void CopyTo(Array array, int index)
         {
             InnerList.CopyTo(array, index);
         }

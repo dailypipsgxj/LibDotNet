@@ -31,7 +31,7 @@ namespace System.Text.RegularExpressions
         internal RegexReplacement(String rep, RegexNode concat, Dictionary<Int32, Int32> _caps)
         {
             if (concat.Type() != RegexNode.Concatenate)
-                throw new ArgumentException(SR.ReplacementError);
+                throw ArgumentException(SR.ReplacementError);
 
             StringBuilder sb = StringBuilderCache.Acquire();
             List<String> strings = new List<String>();
@@ -67,7 +67,7 @@ namespace System.Text.RegularExpressions
                         break;
 
                     default:
-                        throw new ArgumentException(SR.ReplacementError);
+                        throw ArgumentException(SR.ReplacementError);
                 }
             }
 
@@ -187,9 +187,9 @@ namespace System.Text.RegularExpressions
         internal String Replace(Regex regex, String input, int count, int startat)
         {
             if (count < -1)
-                throw new ArgumentOutOfRangeException("count", SR.CountTooSmall);
+                throw ArgumentOutOfRangeException("count", SR.CountTooSmall);
             if (startat < 0 || startat > input.Length)
-                throw new ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
+                throw ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
 
             if (count == 0)
                 return input;
@@ -267,11 +267,11 @@ namespace System.Text.RegularExpressions
                                        String input, int count, int startat)
         {
             if (evaluator == null)
-                throw new ArgumentNullException("evaluator");
+                throw ArgumentNullException("evaluator");
             if (count < -1)
-                throw new ArgumentOutOfRangeException("count", SR.CountTooSmall);
+                throw ArgumentOutOfRangeException("count", SR.CountTooSmall);
             if (startat < 0 || startat > input.Length)
-                throw new ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
+                throw ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
 
             if (count == 0)
                 return input;
@@ -348,9 +348,9 @@ namespace System.Text.RegularExpressions
         internal static String[] Split(Regex regex, String input, int count, int startat)
         {
             if (count < 0)
-                throw new ArgumentOutOfRangeException("count", SR.CountTooSmall);
+                throw ArgumentOutOfRangeException("count", SR.CountTooSmall);
             if (startat < 0 || startat > input.Length)
-                throw new ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
+                throw ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
 
             String[] result;
 

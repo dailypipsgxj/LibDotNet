@@ -7,16 +7,13 @@ namespace System.IO
 {
     public class InvalidDataException : Exception
     {
-        public InvalidDataException(){
-			base(SR.GenericInvalidData);
-        }
 
-        public InvalidDataException(string message){
-			base(message);
-        }
-
-        public InvalidDataException(string message, Exception innerException){
-			base(message, innerException);
+        public InvalidDataException(string? message = null, Exception? innerException = null){
+			if (string == null) {
+				base(SR.GenericInvalidData);
+			} else {
+				base(message, innerException);
+			}
         }
     }
 }

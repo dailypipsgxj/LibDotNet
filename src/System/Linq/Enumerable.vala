@@ -147,9 +147,7 @@ namespace System.Linq
             public virtual TSource[] ToArray()
             {
                 return new Buffer<TSource>(this, queryInterfaces: false).ToArray();
-            }
-
-            object IEnumerator.Current
+            }ObjectIEnumerator.Current
             {
                 get { return Current; }
             }
@@ -1128,7 +1126,7 @@ namespace System.Linq
 
         private static IEnumerable<TResult> OfTypeIterator<TResult>(IEnumerable source)
         {
-            foreach (object obj in source)
+            foreach (Objectobj in source)
             {
                 if (obj is TResult) yield return (TResult)obj;
             }
@@ -1144,7 +1142,7 @@ namespace System.Linq
 
         private static IEnumerable<TResult> CastIterator<TResult>(IEnumerable source)
         {
-            foreach (object obj in source) yield return (TResult)obj;
+            foreach (Objectobj in source) yield return (TResult)obj;
         }
 
         public static TSource First<TSource>(this IEnumerable<TSource> source)
@@ -2530,7 +2528,8 @@ namespace System.Linq
     public interface ILookup<TKey, TElement> : IEnumerable<IGrouping<TKey, TElement>>
     {
         int Count { get; }
-        IEnumerable<TElement> this[TKey key] { get; }
+        IEnumerable<TElement> get (TKey key) {
+		; }
         bool Contains(TKey key);
     }
 
@@ -2577,10 +2576,8 @@ namespace System.Linq
             get { return _count; }
         }
 
-        public IEnumerable<TElement> this[TKey key]
-        {
-            get
-            {
+        public IEnumerable<TElement> get (TKey key) {
+		{
                 Grouping<TKey, TElement> grouping = GetGrouping(key, false);
                 if (grouping != null) return grouping;
                 return EmptyEnumerable<TElement>.Instance;
@@ -2772,10 +2769,8 @@ namespace System.Linq
             throw Error.NotSupported();
         }
 
-        TElement IList<TElement>.this[int index]
-        {
-            get
-            {
+        TElement IList<TElement>. get (int index) {
+		{
                 if (index < 0 || index >= count) throw Error.ArgumentOutOfRange("index");
                 return elements[index];
             }
@@ -2794,9 +2789,7 @@ namespace System.Linq
         private int _freeList;
         private IEqualityComparer<TElement> _comparer;
 
-        public Set() : this(null) { }
-
-        public Set(IEqualityComparer<TElement> comparer)
+        public Set(IEqualityComparer<TElement>? comparer = null)
         {
             if (comparer == null) comparer = EqualityComparer<TElement>.Default;
             _comparer = comparer;
@@ -2899,9 +2892,9 @@ namespace System.Linq
 
         internal struct Slot
         {
-            internal int hashCode;
-            internal TElement value;
-            internal int next;
+            public int hashCode;
+            public TElement value;
+            public int next;
         }
     }
 
@@ -3111,8 +3104,8 @@ namespace System.Linq
 
     internal struct Buffer<TElement>
     {
-        internal TElement[] items;
-        internal int count;
+        public TElement[] items;
+        public int count;
 
         internal Buffer(IEnumerable<TElement> source, bool queryInterfaces = true)
         {
@@ -3184,7 +3177,7 @@ namespace System.Linq
         {
             if (enumerable == null)
             {
-                throw new ArgumentNullException("enumerable");
+                throw ArgumentNullException("enumerable");
             }
 
             _enumerable = enumerable;
@@ -3207,7 +3200,7 @@ namespace System.Linq
                 }
                 if (_count == 0)
                 {
-                    throw new SystemCore_EnumerableDebugViewEmptyException();
+                    throw SystemCore_EnumerableDebugViewEmptyException();
                 }
                 _cachedCollection = new T[_count];
                 tempList.CopyTo(_cachedCollection, 0);
@@ -3242,7 +3235,7 @@ namespace System.Linq
         {
             if (enumerable == null)
             {
-                throw new ArgumentNullException("enumerable");
+                throw ArgumentNullException("enumerable");
             }
 
             _enumerable = enumerable;
@@ -3267,7 +3260,7 @@ namespace System.Linq
                 }
                 if (_count == 0)
                 {
-                    throw new SystemCore_EnumerableDebugViewEmptyException();
+                    throw SystemCore_EnumerableDebugViewEmptyException();
                 }
                 _cachedCollection = new object[_count];
                 tempList.CopyTo(_cachedCollection, 0);

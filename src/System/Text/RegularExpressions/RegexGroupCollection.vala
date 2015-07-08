@@ -11,7 +11,7 @@ using System.Diagnostics;
 namespace System.Text.RegularExpressions
 {
     /// <summary>
-    /// Represents a sequence of capture substrings. The object is used
+    /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
     public class GroupCollection : ICollection
@@ -36,15 +36,13 @@ namespace System.Text.RegularExpressions
             get { return _match._matchcount.Length; }
         }
 
-        public Group this[int groupnum]
+        public Group get(int groupnum)
         {
-            get { return GetGroup(groupnum); }
+            return GetGroup(groupnum);
         }
 
-        public Group this[string groupname]
-        {
-            get
-            {
+        public Group get (string groupname) {
+		{
                 if (_match._regex == null)
                     return Group._emptygroup;
 
@@ -100,12 +98,10 @@ namespace System.Text.RegularExpressions
             return _groups[groupnum - 1];
         }
 
-        bool ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return false; }
-        }
-
-        object ICollection.SyncRoot
+        }ObjectICollection.SyncRoot
         {
             get { return _match; }
         }
@@ -113,7 +109,7 @@ namespace System.Text.RegularExpressions
         void ICollection.CopyTo(Array array, int arrayIndex)
         {
             if (array == null)
-                throw new ArgumentNullException("array");
+                throw ArgumentNullException("array");
 
             for (int i = arrayIndex, j = 0; j < Count; i++, j++)
             {
@@ -151,13 +147,13 @@ namespace System.Text.RegularExpressions
                 get
                 {
                     if (_index < 0 || _index >= _collection.Count)
-                        throw new InvalidOperationException(SR.EnumNotStarted);
+                        throw InvalidOperationException(SR.EnumNotStarted);
 
                     return _collection[_index];
                 }
             }
-
-            object IEnumerator.Current
+            
+            Object IEnumerator.Current
             {
                 get { return Current; }
             }
