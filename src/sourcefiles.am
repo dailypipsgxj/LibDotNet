@@ -52,6 +52,7 @@ LIBDOTNET_SOURCES = \
 	System/Collections/Generic/ienumerator.vala \
 	System/Collections/Generic/iequalitycomparer.vala \
 	System/Collections/Generic/ilist.vala \
+	System/Collections/Generic/iset.vala \
 	System/Collections/Generic/ireadonlycollection.vala \
 	System/Collections/Generic/ireadonlydictionary.vala \
 	System/Collections/Generic/ireadonlylist.vala \
@@ -67,4 +68,6 @@ LIBDOTNET_SOURCES = \
 	System/Runtime/Serialization/StreamingContext.vala \
 	System/Security/Security.vala \
 	System/Threading/Threading.vala \
-	System/iequatable.vala 
+	System/iequatable.vala \
+	System/Nullable.vala \
+	System/idisposable.vala
