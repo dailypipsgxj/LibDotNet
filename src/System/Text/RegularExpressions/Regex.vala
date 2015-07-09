@@ -53,12 +53,12 @@ namespace System.Text.RegularExpressions
         internal string[] _capslist;                        // if captures are sparse or named captures are used, this is the sorted list of names
         internal int _capsize;                              // the size of the capture array
 
-        internal ExclusiveReference _runnerref;             // cached runner
-        internal SharedReference _replref;                  // cached parsed replacement pattern
-        internal RegexCode _code;                           // if interpreted, this is the code for RegexInterpreter
+        //internal ExclusiveReference _runnerref;             // cached runner
+        //internal SharedReference _replref;                  // cached parsed replacement pattern
+        //internal RegexCode _code;                           // if interpreted, this is the code for RegexInterpreter
         internal bool _refsInitialized = false;
 
-        internal static LinkedList<CachedCodeEntry> s_livecode = new LinkedList<CachedCodeEntry>();// the cache of code and factories that are currently loaded
+        //internal static LinkedList<CachedCodeEntry> s_livecode = new LinkedList<CachedCodeEntry>();// the cache of code and factories that are currently loaded
         internal static int s_cacheSize = 15;
 
         internal const int MaxOptionShift = 10;
@@ -215,7 +215,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the regular expression pattern passed into the constructor
         /// </summary>
-        public override string Tostring()
+        public override string ToString()
         {
             return _pattern;
         }
@@ -233,25 +233,7 @@ namespace System.Text.RegularExpressions
         public string[] GetGroupNames()
         {
             string[] result;
-
-            if (_capslist == null)
-            {
-                int max = _capsize;
-                result = new string[max];
-
-                for (int i = 0; i < max; i++)
-                {
-                    result[i] = i.to_string();
-                }
-            }
-            else
-            {
-                result = new string[_capslist.Length];
-
-                //System.Array.Copy(_capslist, 0, result, 0, _capslist.Length);
-            }
-
-            return result;
+			return result;
         }
 
         /*
@@ -266,27 +248,6 @@ namespace System.Text.RegularExpressions
         public int[] GetGroupNumbers()
         {
             int[] result;
-
-            if (_caps == null)
-            {
-                int max = _capsize;
-                result = new int[max];
-
-                for (int i = 0; i < max; i++)
-                {
-                    result[i] = i;
-                }
-            }
-            else
-            {
-                result = new int[_caps.Count];
-
-                foreach (KeyValuePairs<int, int> kvp in _caps)
-                {
-                    result[kvp.Value] = kvp.Key;
-                }
-            }
-
             return result;
         }
 
@@ -302,28 +263,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public string GroupNameFromNumber(int i)
         {
-            if (_capslist == null)
-            {
-                if (i >= 0 && i < _capsize)
-                    return i.to_string();
-
-                return "";
-            }
-            else
-            {
-                if (_caps != null)
-                {
-                    if (!_caps.ContainsKey(i))
-                        return "";
-
-                    i = _caps[i];
-                }
-
-                if (i >= 0 && i < _capslist.Length)
-                    return _capslist[i];
-
-                return "";
-            }
+            return "";
         }
 
         /*
@@ -419,7 +359,7 @@ namespace System.Text.RegularExpressions
             GLib.Regex re;
 			RegexCompileFlags flags = ConvertOptions (options);
 			re = new Regex (pattern, flags);
-			return new MatchCollection(re, input, 0, input.Length);
+			return new MatchCollection(re, input, 0, input.length);
 		}
         /*
          * Finds the first match, starting at the specified position
@@ -568,60 +508,7 @@ namespace System.Text.RegularExpressions
         }
         */
 
-        /*
-         * Find code cache based on options+pattern
-         */
-        private static CachedCodeEntry LookupCachedAndUpdate(CachedCodeEntryKey key)
-        {
-            lock (s_livecode)
-            {
-                for (LinkedListNode<CachedCodeEntry> current = s_livecode.First; current != null; current = current.Next)
-                {
-                    if (current.Value._key == key)
-                    {
-                        // If we find an entry in the cache, move it to the head at the same time.
-                        s_livecode.Remove(current);
-                        s_livecode.AddFirst(current);
-                        return current.Value;
-                    }
-                }
-            }
 
-            return null;
-        }
-
-        /*
-         * Add current code to the cache
-         */
-        private CachedCodeEntry CacheCode(CachedCodeEntryKey key)
-        {
-            CachedCodeEntry newcached = null;
-
-            lock (s_livecode)
-            {
-                // first look for it in the cache and move it to the head
-                for (LinkedListNode<CachedCodeEntry> current = s_livecode.First; current != null; current = current.Next)
-                {
-                    if (current.Value._key == key)
-                    {
-                        s_livecode.Remove(current);
-                        s_livecode.AddFirst(current);
-                        return current.Value;
-                    }
-                }
-
-                // it wasn't in the cache, so we'll add a new one.  Shortcut out for the case where cacheSize is zero.
-                if (s_cacheSize != 0)
-                {
-                    newcached = new CachedCodeEntry(key, _capnames, _capslist, _code, _caps, _capsize, _runnerref, _replref);
-                    s_livecode.AddFirst(newcached);
-                    if (s_livecode.Count > s_cacheSize)
-                        s_livecode.RemoveLast();
-                }
-            }
-
-            return newcached;
-        }
 
 
         /*
@@ -657,206 +544,4 @@ namespace System.Text.RegularExpressions
      */
     public delegate string MatchEvaluator(Match match);
 
-    /*
-     * Used as a key for CacheCodeEntry
-     */
-    internal struct CachedCodeEntryKey : IEquatable<CachedCodeEntryKey>
-    {
-        RegexOptions _options;
-        string _cultureKey;
-        string _pattern;
-
-        internal CachedCodeEntryKey(RegexOptions options, string cultureKey, string pattern)
-        {
-            _options = options;
-            _cultureKey = cultureKey;
-            _pattern = pattern;
-        }
-
-        public override bool Equals(Object obj)
-        {
-            return obj is CachedCodeEntryKey && this == ((CachedCodeEntryKey)obj);
-        }
-
-/*
-
-        public static bool operator ==(CachedCodeEntryKey left, CachedCodeEntryKey right)
-        {
-            return left._options == right._options && left._cultureKey == right._cultureKey && left._pattern == right._pattern;
-        }
-
-        public static bool operator !=(CachedCodeEntryKey left, CachedCodeEntryKey right)
-        {
-            return !(left == right);
-        }
-*/
-
-        public override int GetHashCode()
-        {
-            return ((int)_options) ^ _cultureKey.GetHashCode() ^ _pattern.GetHashCode();
-        }
-    }
-
-    /*
-     * Used to cache byte codes
-     */
-    internal class CachedCodeEntry
-    {
-        internal CachedCodeEntryKey _key;
-        internal RegexCode _code;
-        internal Dictionary<int32, int32> _caps;
-        internal Dictionary<string, int32> _capnames;
-        internal string[] _capslist;
-        internal int _capsize;
-        internal ExclusiveReference _runnerref;
-        internal SharedReference _replref;
-
-        internal CachedCodeEntry(CachedCodeEntryKey key, Dictionary<string, int32> capnames, string[] capslist, RegexCode code, Dictionary<int32, int32> caps, int capsize, ExclusiveReference runner, SharedReference repl)
-        {
-            _key = key;
-            _capnames = capnames;
-            _capslist = capslist;
-
-            _code = code;
-            _caps = caps;
-            _capsize = capsize;
-
-            _runnerref = runner;
-            _replref = repl;
-        }
-    }
-
-    /*
-     * Used to cache one exclusive runner reference
-     */
-    internal class ExclusiveReference
-    {
-        private RegexRunner _ref;
-        private Object _obj;
-        private int _locked;
-
-        /*
-         * Return anObjectand grab an exclusive lock.
-         *
-         * If the exclusive lock can't be obtained, null is returned;
-         * if theObjectcan't be returned, the lock is released.
-         *
-         */
-        internal Object Get()
-        {
-            // try to obtain the lock
-
-            if (0 == Interlocked.Exchange(ref _locked, 1))
-            {
-                // grab reference
-
-
-                Object obj = _ref;
-
-                // release the lock and return null if no reference
-
-                if (obj == null)
-                {
-                    _locked = 0;
-                    return null;
-                }
-
-                // remember the reference and keep the lock
-
-                _obj = obj;
-                return obj;
-            }
-
-            return null;
-        }
-
-        /*
-         * Release anObjectback to the cache
-         *
-         * If theObjectis the one that's under lock, the lock
-         * is released.
-         *
-         * If there is no cached object, then the lock is obtained
-         * and theObjectis placed in the cache.
-         *
-         */
-        internal void Release(Object obj)
-        {
-            if (obj == null)
-                throw ArgumentNullException("obj");
-
-            // if this reference owns the lock, release it
-
-            if (_obj == obj)
-            {
-                _obj = null;
-                _locked = 0;
-                return;
-            }
-
-            // if no reference owns the lock, try to cache this reference
-
-            if (_obj == null)
-            {
-                // try to obtain the lock
-
-                if (0 == Interlocked.Exchange(ref _locked, 1))
-                {
-                    // if there's really no reference, cache this reference
-
-                    if (_ref == null)
-                        _ref = (RegexRunner)obj;
-
-                    // release the lock
-
-                    _locked = 0;
-                    return;
-                }
-            }
-        }
-    }
-
-    /*
-     * Used to cache a weak reference in a threadsafe way
-     */
-    internal class SharedReference
-    {
-        private WeakReference _ref = new WeakReference(null);
-        private int _locked;
-
-        /*
-         * Return anObjectfrom a weakref, protected by a lock.
-         *
-         * If the exclusive lock can't be obtained, null is returned;
-         *
-         * Note that _ref.Target is referenced only under the protection
-         * of the lock. (Is this necessary?)
-         */
-        internal Object Get()
-        {
-            if (0 == Interlocked.Exchange(ref _locked, 1))
-            {
-                Object obj = _ref.Target;
-                _locked = 0;
-                return obj;
-            }
-
-            return null;
-        }
-
-        /*
-         * Suggest anObjectinto a weakref, protected by a lock.
-         *
-         * Note that _ref.Target is referenced only under the protection
-         * of the lock. (Is this necessary?)
-         */
-        internal void Cache(Object obj)
-        {
-            if (0 == Interlocked.Exchange(ref _locked, 1))
-            {
-                _ref.Target = obj;
-                _locked = 0;
-            }
-        }
-    }
 }

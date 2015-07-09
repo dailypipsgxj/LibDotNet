@@ -4,7 +4,6 @@ LIBDOTNET_SOURCES = \
 	System/Text/RegularExpressions/Regex.vala \
 	System/Text/RegularExpressions/RegexGroup.vala \
 	System/Text/RegularExpressions/RegexOptions.vala \
-	System/Text/RegularExpressions/RegexCode.vala \
 	System/Text/RegularExpressions/RegexGroupCollection.vala \
 	System/Text/RegularExpressions/RegexTree.vala \
 	System/Text/RegularExpressions/RegexCaptureCollection.vala \
