@@ -392,7 +392,7 @@ namespace System.Text.RegularExpressions
         /*
          * Nonpublic constructor
          */
-        internal MatchSparse(Regex regex, Dictionary<int32, int32> caps, int capcount,
+        internal MatchSparse(Regex regex, Gee.HashMap<int32, int32> caps, int capcount,
                              string text, int begpos, int len, int startpos){
 			base(regex, capcount, text, begpos, len, startpos);
             _caps = caps;
