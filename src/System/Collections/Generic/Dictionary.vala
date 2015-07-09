@@ -51,15 +51,14 @@ namespace System.Collections.Generic {
     using System.Diagnostics.Contracts;
     using System.Runtime.Serialization;
     using System.Security.Permissions;
-// [DebuggerTypeProxy(typeof(Mscorlib_DictionaryDebugView<,>))]
 
-// [DebuggerDisplay("Count = {Count}")]
-
-// [Serializable]
-
-// [System.Runtime.InteropServices.ComVisible(false)]
-
-    public class Dictionary<TKey,TValue>: Gee.HashMap<TKey,TValue>, IDictionary<TKey,TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue>, ISerializable, IDeserializationCallback  {
+    public class Dictionary<TKey,TValue>:
+		Gee.HashMap<TKey,TValue>,
+		IDictionary<TKey,TValue>,
+		IDictionary,
+		IReadOnlyDictionary<TKey, TValue>,
+		ISerializable,
+		IDeserializationCallback  {
     
         private struct Entry {
             public int hashCode;    // Lower 31 bits of hash code, -1 if unused
@@ -86,19 +85,14 @@ namespace System.Collections.Generic {
         private const string ComparerName = "Comparer";
 
 
-        public Dictionary(int capacity = 4, IEqualityComparer<TKey>? comparer = null) {
-            if (capacity < 0) ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.capacity);
-            if (capacity > 0) Initialize(capacity);
+        public Dictionary(int capacity = 0, IEqualityComparer<TKey>? comparer = null) {
             this.comparer = comparer ?? EqualityComparer<TKey>.Default;
+            base (null, comparer);
         }
 
         public Dictionary.FromDictionary(IDictionary<TKey,TValue> dictionary, IEqualityComparer<TKey>? comparer = null) {
 			
-			this(dictionary != null? dictionary.Count: 0, comparer);
-
-            if( dictionary == null) {
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.dictionary);
-            }
+			this(dictionary.Count, comparer);
 
             foreach (KeyValuePair<TKey,TValue> pair in dictionary) {
                 Add(pair.Key, pair.Value);
@@ -108,7 +102,7 @@ namespace System.Collections.Generic {
            
         public IEqualityComparer<TKey> Comparer {
             get {
-                return comparer;                
+                return comparer;      
             }               
         }
         
@@ -188,7 +182,7 @@ namespace System.Collections.Generic {
                 }
             }
             else {
-                EqualityComparer<TValue> c = EqualityComparer<TValue>.Default;
+                EqualityComparer<TValue> c = EqualityComparer.Default;
                 for (int i = 0; i < count; i++) {
                     if (entries[i].hashCode >= 0 && c.Equals(entries[i].value, value)) return true;
                 }
@@ -229,11 +223,7 @@ namespace System.Collections.Generic {
             }
             info.AddValue(VersionName, version);
 
-#if FEATURE_RANDOMIZED_STRING_HASHING
-            info.AddValue(ComparerName, HashHelpers.GetEqualityComparerForSerialization(comparer), typeof(IEqualityComparer<TKey>));
-#else
             info.AddValue(ComparerName, comparer, typeof(IEqualityComparer<TKey>));
-#endif
 
             info.AddValue(HashSizeName, buckets == null ? 0 : buckets.Length); //This is the length of the bucket array.
             if( buckets != null) {

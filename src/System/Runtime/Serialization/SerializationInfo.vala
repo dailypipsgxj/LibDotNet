@@ -40,13 +40,13 @@ namespace System.Runtime.Serialization
         private const string s_mscorlibAssemblySimpleName = "mscorlib";
         private const string s_mscorlibFileName = s_mscorlibAssemblySimpleName + ".dll";
         
-        internalstring[] m_members;
+        internal string[] m_members;
         internal Object[] m_data;
         internal Type[] m_types;
         internal int m_currMember;
         internal IFormatterConverter m_converter;
-        privatestring m_fullTypeName;
-        privatestring m_assemName;
+        private string m_fullTypeName;
+        private string m_assemName;
         private Type objectType;
         private bool isFullTypeNameSetExplicit;
         private bool isAssemblyNameSetExplicit;
@@ -56,7 +56,8 @@ namespace System.Runtime.Serialization
 // [CLSCompliant(false)]
 
         public SerializationInfo(Type type, IFormatterConverter converter)
-#if FEATURE_SERIALIZATION{
+#if FEATURE_SERIALIZATION
+		{
 			this(type, converter, false);
         }
 // [CLSCompliant(false)]
@@ -80,7 +81,7 @@ namespace System.Runtime.Serialization
             m_fullTypeName = type.FullName;
             m_assemName = type.Module.Assembly.FullName;
 
-            m_members = newstring[defaultSize];
+            m_members = new string[defaultSize];
             m_data = new Object[defaultSize];
             m_types = new Type[defaultSize];
 
@@ -91,7 +92,7 @@ namespace System.Runtime.Serialization
 #endif
         }
 
-        publicstring FullTypeName
+        public string FullTypeName
         {
             get
             {
@@ -110,7 +111,7 @@ namespace System.Runtime.Serialization
             }
         }
 
-        publicstring AssemblyName
+        public string AssemblyName
         {
             get
             {
@@ -203,8 +204,8 @@ namespace System.Runtime.Serialization
 
             // mscorlib will get loaded by the runtime regardless of its string casing or its public key token,
             // so setting the assembly name to mscorlib must always be protected by a demand
-            if (string.Equals(newAssembly.Name, s_mscorlibAssemblySimpleNamestringComparison.OrdinalIgnoreCase) ||
-                string.Equals(newAssembly.Name, s_mscorlibFileNamestringComparison.OrdinalIgnoreCase))
+            if (string.Equals(newAssembly.Name, s_mscorlibAssemblySimpleNameStringComparison.OrdinalIgnoreCase) ||
+                string.Equals(newAssembly.Name, s_mscorlibFileNameStringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
@@ -284,7 +285,7 @@ namespace System.Runtime.Serialization
             m_types = newTypes;
         }
 
-        public void AddValuestring name, Object value, Type type)
+        public void AddValue (string name, Object value, Type type)
         {
             if (null == name)
             {
@@ -307,118 +308,14 @@ namespace System.Runtime.Serialization
                 {
                     BCLDebug.Trace("SER", "[SerializationInfo.AddValue]Tried to add ", name, " twice to the SI.");
 
-                    throw SerializationException(Environment.GetResourcestring("Serialization_SameNameTwice"));
+                    throw SerializationException(Environment.GetResourceString("Serialization_SameNameTwice"));
                 }
             }
 
-            AddValue(name, value, type, m_currMember);
+            //AddValue(name, value, type, m_currMember);
 
         }
 
-        public void AddValuestring name, Object value)
-        {
-            if (null == value)
-            {
-                AddValue(name, value, typeof(Object));
-            }
-            else
-            {
-                AddValue(name, value, value.GetType());
-            }
-        }
-
-        public void AddValuestring name, bool value)
-        {
-            AddValue(name, (Object)value, typeof(bool));
-        }
-
-        public void AddValuestring name, char value)
-        {
-            AddValue(name, (Object)value, typeof(char));
-        }
-// [CLSCompliant(false)]
-
-        public void AddValuestring name, sbyte value)
-        {
-            AddValue(name, (Object)value, typeof(sbyte));
-        }
-
-        public void AddValuestring name, byte value)
-        {
-            AddValue(name, (Object)value, typeof(byte));
-        }
-
-        public void AddValuestring name, short value)
-        {
-            AddValue(name, (Object)value, typeof(short));
-        }
-// [CLSCompliant(false)]
-
-        public void AddValuestring name, ushort value)
-        {
-            AddValue(name, (Object)value, typeof(ushort));
-        }
-
-        public void AddValuestring name, int value)
-        {
-            AddValue(name, (Object)value, typeof(int));
-        }
-// [CLSCompliant(false)]
-
-        public void AddValuestring name, uint value)
-        {
-            AddValue(name, (Object)value, typeof(uint));
-        }
-
-        public void AddValuestring name, long value)
-        {
-            AddValue(name, (Object)value, typeof(long));
-        }
-// [CLSCompliant(false)]
-
-        public void AddValuestring name, ulong value)
-        {
-            AddValue(name, (Object)value, typeof(ulong));
-        }
-
-        public void AddValuestring name, float value)
-        {
-            AddValue(name, (Object)value, typeof(float));
-        }
-
-        public void AddValuestring name, double value)
-        {
-            AddValue(name, (Object)value, typeof(double));
-        }
-
-        public void AddValuestring name, decimal value)
-        {
-            AddValue(name, (Object)value, typeof(decimal));
-        }
-
-        public void AddValuestring name, DateTime value)
-        {
-            AddValue(name, (Object)value, typeof(DateTime));
-        }
-
-        internal void AddValuestring name, Object value, Type type, int index)
-        {
-            //
-            // If we need to expand the arrays, do so.
-            //
-            if (index >= m_members.Length)
-            {
-                ExpandArrays();
-            }
-
-            //
-            // Add the data and then advance the counter.
-            //
-            m_members[index] = name;
-            m_data[index] = value;
-            m_types[index] = type;
-            m_currMember++;
-        }
 
         /*=================================UpdateValue==================================
         **Action: Finds the value if it exists in the current data.  If it does, we replace
@@ -432,7 +329,7 @@ namespace System.Runtime.Serialization
         **           type  -- the type of the data being added.
         **Exceptions: None.  All error checking is done with asserts.
         ==============================================================================*/
-        internal void UpdateValuestring name, Object value, Type type)
+        internal void UpdateValue (string name, Object value, Type type)
         {
             Contract.Assert(null != name, "[SerializationInfo.UpdateValue]name!=null");
             Contract.Assert(null != value, "[SerializationInfo.UpdateValue]value!=null");
@@ -452,7 +349,7 @@ namespace System.Runtime.Serialization
 
         }
 
-        private int FindElementstring name)
+        private int FindElement (string name)
         {
             if (null == name)
             {
@@ -481,12 +378,12 @@ namespace System.Runtime.Serialization
         **Exceptions: None.  FindElement does null checking and throws for elements not 
         **            found.
         ==============================================================================*/
-        private Object GetElementstring name, out Type foundType)
+        private Object GetElement (string name, out Type foundType)
         {
             int index = FindElement(name);
             if (index == -1)
             {
-                throw SerializationException(Environment.GetResourcestring("Serialization_NotFound", name));
+                throw SerializationException(Environment.GetResourceString("Serialization_NotFound", name));
             }
 
             Contract.Assert(index < m_data.Length, "[SerializationInfo.GetElement]index<m_data.Length");
@@ -499,7 +396,7 @@ namespace System.Runtime.Serialization
 // [System.Runtime.InteropServices.ComVisible(true)]
 
         // 
-        private Object GetElementNoThrowstring name, out Type foundType)
+        private Object GetElementNoThrow (string name, out Type foundType)
         {
             int index = FindElement(name);
             if (index == -1)
@@ -522,7 +419,7 @@ namespace System.Runtime.Serialization
         //
 // [System.Security.SecuritySafeCritical]
   // auto-generated
-        public Object GetValuestring name, Type type)
+        public Object GetValue (string name, Type type)
         {
 
             if ((object)type == null)
@@ -533,7 +430,7 @@ namespace System.Runtime.Serialization
 
             RuntimeType rt = type as RuntimeType;
             if (rt == null)
-                throw ArgumentException(Environment.GetResourcestring("Argument_MustBeRuntimeType"));
+                throw ArgumentException(Environment.GetResourceString("Argument_MustBeRuntimeType"));
 
             Type foundType;
             Object value;
@@ -562,7 +459,7 @@ namespace System.Runtime.Serialization
 // [System.Runtime.InteropServices.ComVisible(true)]
 
         // 
-        internal Object GetValueNoThrowstring name, Type type)
+        internal Object GetValueNoThrow (string name, Type type)
         {
             Type foundType;
             Object value;
@@ -592,7 +489,7 @@ namespace System.Runtime.Serialization
             return m_converter.Convert(value, type);
         }
 
-        public bool GetBooleanstring name)
+        public bool GetBoolean (string name)
         {
             Type foundType;
             Object value;
@@ -605,7 +502,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToBoolean(value);
         }
 
-        public char GetCharstring name)
+        public char GetChar (string name)
         {
             Type foundType;
             Object value;
@@ -619,7 +516,7 @@ namespace System.Runtime.Serialization
         }
 // [CLSCompliant(false)]
 
-        public sbyte GetSBytestring name)
+        public sbyte GetSByte (string name)
         {
             Type foundType;
             Object value;
@@ -632,7 +529,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToSByte(value);
         }
 
-        public byte GetBytestring name)
+        public byte GetByte (string name)
         {
             Type foundType;
             Object value;
@@ -645,7 +542,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToByte(value);
         }
 
-        public short GetInt16string name)
+        public short GetInt16 (string name)
         {
             Type foundType;
             Object value;
@@ -659,7 +556,7 @@ namespace System.Runtime.Serialization
         }
 // [CLSCompliant(false)]
 
-        public ushort GetUInt16string name)
+        public ushort GetUInt16 (string name)
         {
             Type foundType;
             Object value;
@@ -672,7 +569,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToUInt16(value);
         }
 
-        public int Getint32string name)
+        public int Getint32 (string name)
         {
             Type foundType;
             Object value;
@@ -686,7 +583,7 @@ namespace System.Runtime.Serialization
         }
 // [CLSCompliant(false)]
 
-        public uint GetUint32string name)
+        public uint GetUint32 (string name)
         {
             Type foundType;
             Object value;
@@ -699,7 +596,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToUint32(value);
         }
 
-        public long GetInt64string name)
+        public long GetInt64 (string name)
         {
             Type foundType;
             Object value;
@@ -713,7 +610,7 @@ namespace System.Runtime.Serialization
         }
 // [CLSCompliant(false)]
 
-        public ulong GetUInt64string name)
+        public ulong GetUInt64 (string name)
         {
             Type foundType;
             Object value;
@@ -726,7 +623,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToUInt64(value);
         }
 
-        public float GetSinglestring name)
+        public float GetSingle(string name)
         {
             Type foundType;
             Object value;
@@ -740,7 +637,7 @@ namespace System.Runtime.Serialization
         }
 
 
-        public double GetDoublestring name)
+        public double GetDouble(string name)
         {
             Type foundType;
             Object value;
@@ -753,7 +650,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToDouble(value);
         }
 
-        public decimal GetDecimalstring name)
+        public decimal GetDecimal(string name)
         {
             Type foundType;
             Object value;
@@ -766,7 +663,7 @@ namespace System.Runtime.Serialization
             return m_converter.ToDecimal(value);
         }
 
-        public DateTime GetDateTimestring name)
+        public DateTime GetDateTime(string name)
         {
             Type foundType;
             Object value;
@@ -779,17 +676,17 @@ namespace System.Runtime.Serialization
             return m_converter.ToDateTime(value);
         }
 
-        publicstring Getstringstring name)
+        public string GetString(string name)
         {
             Type foundType;
             Object value;
 
             value = GetElement(name, out foundType);
-            if (Object.ReferenceEquals(foundType, typeofstring)) || value == null)
+            if (Object.ReferenceEquals(foundType, typeof (string)) || value == null)
             {
-                returnstring)value;
+                return (string)value;
             }
-            return m_converter.Tostring(value);
+            return m_converter.ToString(value);
         }
 
         internal string[] MemberNames

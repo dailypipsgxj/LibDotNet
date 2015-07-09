@@ -23,8 +23,8 @@ namespace System.Collections.Generic {
     // It is used by the IEnumerable<T> implementation for both IDictionary<TKey, TValue>
     // and IReadOnlyDictionary<TKey, TValue>.
 // [Serializable]
-
-    public struct KeyValuePair<TKey, TValue> {
+	[Compact]
+    public class KeyValuePair<TKey, TValue> {
         private TKey key;
         private TValue value;
 
@@ -41,7 +41,8 @@ namespace System.Collections.Generic {
             get { return value; }
         }
 
-        public override string TostringstringBuilder sstringBuilderCache.Acquire();
+        public override string ToString (StringBuilder s) {
+			StringBuilderCache.Acquire();
             s.Append('[');
             if( Key != null) {
                 s.Append(Key.Tostring());
@@ -51,7 +52,7 @@ namespace System.Collections.Generic {
                s.Append(Value.Tostring());
             }
             s.Append(']');
-            returnstringBuilderCache.GetstringAndRelease(s);
+            return StringBuilderCache.GetStringAndRelease(s);
         }
     }
 }

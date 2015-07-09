@@ -22,8 +22,8 @@ namespace System.Collections {
 // [System.Runtime.InteropServices.ComVisible(true)]
 
 // [Serializable]
-
-    public struct DictionaryEntry
+	[Compact]
+    public class DictionaryEntry
     {
         private Object _key;
         private Object _value;
