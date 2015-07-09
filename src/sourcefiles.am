@@ -22,6 +22,17 @@ LIBDOTNET_SOURCES = \
 	System/Collections/ReadOnlyCollectionBase.vala \
 	System/Collections/KeyValuePairs.vala \
 	System/Collections/DictionaryBase.vala \
+	System/Collections/icollection.vala \
+	System/Collections/icomparer.vala \
+	System/Collections/idictionary.vala \
+	System/Collections/idictionaryenumerator.vala \
+	System/Collections/ienumerable.vala \
+	System/Collections/ienumerator.vala \
+	System/Collections/iequalitycomparer.vala \
+	System/Collections/ihashcodeprovider.vala \
+	System/Collections/ilist.vala \
+	System/Collections/istructuralcomparable.vala \
+	System/Collections/istructuralequatable.vala \
 	System/Collections/Specialized/CollectionsUtil.vala \
 	System/Collections/Generic/SortedDictionary.vala \
 	System/Collections/Generic/Stack.vala \
@@ -30,6 +41,18 @@ LIBDOTNET_SOURCES = \
 	System/Collections/Generic/Queue.vala \
 	System/Collections/Generic/SortedSet.vala \
 	System/Collections/Generic/LinkedList.vala \
+	System/Collections/Generic/icollection.vala \
+	System/Collections/Generic/ICollectionDebugView.vala \
+	System/Collections/Generic/icomparer.vala \
+	System/Collections/Generic/idictionary.vala \
+	System/Collections/Generic/IDictionaryDebugView.vala \
+	System/Collections/Generic/ienumerable.vala \
+	System/Collections/Generic/ienumerator.vala \
+	System/Collections/Generic/iequalitycomparer.vala \
+	System/Collections/Generic/ilist.vala \
+	System/Collections/Generic/ireadonlycollection.vala \
+	System/Collections/Generic/ireadonlydictionary.vala \
+	System/Collections/Generic/ireadonlylist.vala \
 	System/Linq/Errors.vala \
 	System/Linq/Enumerable.vala \
 	System/IO/InvalidDataException.vala \
