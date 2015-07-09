@@ -31,6 +31,7 @@ LIBDOTNET_SOURCES = \
 	System/Collections/ilist.vala \
 	System/Collections/istructuralcomparable.vala \
 	System/Collections/istructuralequatable.vala \
+	System/Collections/DictionaryEntry.vala \
 	System/Collections/Specialized/CollectionsUtil.vala \
 	System/Collections/Generic/Dictionary.vala \
 	System/Collections/Generic/SortedDictionary.vala \
@@ -39,6 +40,7 @@ LIBDOTNET_SOURCES = \
 	System/Collections/Generic/HashSet.vala \
 	System/Collections/Generic/Queue.vala \
 	System/Collections/Generic/SortedSet.vala \
+	System/Collections/Generic/KeyValuePair.vala \
 	System/Collections/Generic/LinkedList.vala \
 	System/Collections/Generic/icollection.vala \
 	System/Collections/Generic/ICollectionDebugView.vala \
@@ -59,5 +61,7 @@ LIBDOTNET_SOURCES = \
 	System/Diagnostics/Diagnostics.vala \
 	System/Runtime/Runtime.vala \
 	System/Runtime/Serialization/iserializable.vala \
+	System/Runtime/Serialization/ideserializationcallback.vala \
+	System/Runtime/Serialization/SerializationInfo.vala \
 	System/Security/Security.vala \
 	System/Threading/Threading.vala 
