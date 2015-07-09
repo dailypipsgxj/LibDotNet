@@ -115,6 +115,7 @@ DIST_COMMON = $(top_srcdir)/src/sourcefiles.am $(srcdir)/Makefile.in \
 	System/Collections/istructuralcomparable.c \
 	System/Collections/istructuralequatable.c \
 	System/Collections/Specialized/CollectionsUtil.c \
+	System/Collections/Generic/Dictionary.c \
 	System/Collections/Generic/SortedDictionary.c \
 	System/Collections/Generic/Stack.c \
 	System/Collections/Generic/SortedList.c \
@@ -219,6 +220,7 @@ am__objects_1 = System/Text/RegularExpressions/RegexMatch.lo \
 	System/Collections/istructuralcomparable.lo \
 	System/Collections/istructuralequatable.lo \
 	System/Collections/Specialized/CollectionsUtil.lo \
+	System/Collections/Generic/Dictionary.lo \
 	System/Collections/Generic/SortedDictionary.lo \
 	System/Collections/Generic/Stack.lo \
 	System/Collections/Generic/SortedList.lo \
@@ -510,6 +512,7 @@ LIBDOTNET_SOURCES = \
 	System/Collections/istructuralcomparable.vala \
 	System/Collections/istructuralequatable.vala \
 	System/Collections/Specialized/CollectionsUtil.vala \
+	System/Collections/Generic/Dictionary.vala \
 	System/Collections/Generic/SortedDictionary.vala \
 	System/Collections/Generic/Stack.vala \
 	System/Collections/Generic/SortedList.vala \
@@ -756,6 +759,9 @@ System/Collections/Generic/$(am__dirstamp):
 System/Collections/Generic/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) System/Collections/Generic/$(DEPDIR)
 	@: > System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
+System/Collections/Generic/Dictionary.lo:  \
+	System/Collections/Generic/$(am__dirstamp) \
+	System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
 System/Collections/Generic/SortedDictionary.lo:  \
 	System/Collections/Generic/$(am__dirstamp) \
 	System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
@@ -927,6 +933,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/ilist.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/istructuralcomparable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/istructuralequatable.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/Dictionary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/HashSet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/ICollectionDebugView.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/IDictionaryDebugView.Plo@am__quote@
@@ -1165,6 +1172,11 @@ $(srcdir)/System/Collections/Specialized/CollectionsUtil.c: $(srcdir)/libdotnet_
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
+$(srcdir)/System/Collections/Generic/Dictionary.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
 $(srcdir)/System/Collections/Generic/SortedDictionary.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -1310,9 +1322,9 @@ $(srcdir)/libdotnet.h: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
-$(srcdir)/libdotnet_la_vala.stamp: System/Text/RegularExpressions/RegexMatch.vala System/Text/RegularExpressions/RegexMatchCollection.vala System/Text/RegularExpressions/Regex.vala System/Text/RegularExpressions/RegexGroup.vala System/Text/RegularExpressions/RegexOptions.vala System/Text/RegularExpressions/RegexCode.vala System/Text/RegularExpressions/RegexGroupCollection.vala System/Text/RegularExpressions/RegexTree.vala System/Text/RegularExpressions/RegexCaptureCollection.vala System/Text/RegularExpressions/RegexMatchTimeoutException.vala System/Text/RegularExpressions/RegexCapture.vala System/Collections/Hashtable.vala System/Collections/Stack.vala System/Collections/CollectionBase.vala System/Collections/StructuralComparisons.vala System/Collections/Comparer.vala System/Collections/SortedList.vala System/Collections/Queue.vala System/Collections/CaseInsensitiveComparer.vala System/Collections/ArrayList.vala System/Collections/ReadOnlyCollectionBase.vala System/Collections/KeyValuePairs.vala System/Collections/DictionaryBase.vala System/Collections/icollection.vala System/Collections/icomparer.vala System/Collections/idictionary.vala System/Collections/idictionaryenumerator.vala System/Collections/ienumerable.vala System/Collections/ienumerator.vala System/Collections/iequalitycomparer.vala System/Collections/ihashcodeprovider.vala System/Collections/ilist.vala System/Collections/istructuralcomparable.vala System/Collections/istructuralequatable.vala System/Collections/Specialized/CollectionsUtil.vala System/Collections/Generic/SortedDictionary.vala System/Collections/Generic/Stack.vala System/Collections/Generic/SortedList.vala System/Collections/Generic/HashSet.vala System/Collections/Generic/Queue.vala System/Collections/Generic/SortedSet.vala System/Collections/Generic/LinkedList.vala System/Collections/Generic/icollection.vala System/Collections/Generic/ICollectionDebugView.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/IDictionaryDebugView.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Linq/Errors.vala System/Linq/Enumerable.vala System/IO/InvalidDataException.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala
+$(srcdir)/libdotnet_la_vala.stamp: System/Text/RegularExpressions/RegexMatch.vala System/Text/RegularExpressions/RegexMatchCollection.vala System/Text/RegularExpressions/Regex.vala System/Text/RegularExpressions/RegexGroup.vala System/Text/RegularExpressions/RegexOptions.vala System/Text/RegularExpressions/RegexCode.vala System/Text/RegularExpressions/RegexGroupCollection.vala System/Text/RegularExpressions/RegexTree.vala System/Text/RegularExpressions/RegexCaptureCollection.vala System/Text/RegularExpressions/RegexMatchTimeoutException.vala System/Text/RegularExpressions/RegexCapture.vala System/Collections/Hashtable.vala System/Collections/Stack.vala System/Collections/CollectionBase.vala System/Collections/StructuralComparisons.vala System/Collections/Comparer.vala System/Collections/SortedList.vala System/Collections/Queue.vala System/Collections/CaseInsensitiveComparer.vala System/Collections/ArrayList.vala System/Collections/ReadOnlyCollectionBase.vala System/Collections/KeyValuePairs.vala System/Collections/DictionaryBase.vala System/Collections/icollection.vala System/Collections/icomparer.vala System/Collections/idictionary.vala System/Collections/idictionaryenumerator.vala System/Collections/ienumerable.vala System/Collections/ienumerator.vala System/Collections/iequalitycomparer.vala System/Collections/ihashcodeprovider.vala System/Collections/ilist.vala System/Collections/istructuralcomparable.vala System/Collections/istructuralequatable.vala System/Collections/Specialized/CollectionsUtil.vala System/Collections/Generic/Dictionary.vala System/Collections/Generic/SortedDictionary.vala System/Collections/Generic/Stack.vala System/Collections/Generic/SortedList.vala System/Collections/Generic/HashSet.vala System/Collections/Generic/Queue.vala System/Collections/Generic/SortedSet.vala System/Collections/Generic/LinkedList.vala System/Collections/Generic/icollection.vala System/Collections/Generic/ICollectionDebugView.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/IDictionaryDebugView.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Linq/Errors.vala System/Linq/Enumerable.vala System/IO/InvalidDataException.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(libdotnet_la_VALAFLAGS) $(VALAFLAGS) -C System/Text/RegularExpressions/RegexMatch.vala System/Text/RegularExpressions/RegexMatchCollection.vala System/Text/RegularExpressions/Regex.vala System/Text/RegularExpressions/RegexGroup.vala System/Text/RegularExpressions/RegexOptions.vala System/Text/RegularExpressions/RegexCode.vala System/Text/RegularExpressions/RegexGroupCollection.vala System/Text/RegularExpressions/RegexTree.vala System/Text/RegularExpressions/RegexCaptureCollection.vala System/Text/RegularExpressions/RegexMatchTimeoutException.vala System/Text/RegularExpressions/RegexCapture.vala System/Collections/Hashtable.vala System/Collections/Stack.vala System/Collections/CollectionBase.vala System/Collections/StructuralComparisons.vala System/Collections/Comparer.vala System/Collections/SortedList.vala System/Collections/Queue.vala System/Collections/CaseInsensitiveComparer.vala System/Collections/ArrayList.vala System/Collections/ReadOnlyCollectionBase.vala System/Collections/KeyValuePairs.vala System/Collections/DictionaryBase.vala System/Collections/icollection.vala System/Collections/icomparer.vala System/Collections/idictionary.vala System/Collections/idictionaryenumerator.vala System/Collections/ienumerable.vala System/Collections/ienumerator.vala System/Collections/iequalitycomparer.vala System/Collections/ihashcodeprovider.vala System/Collections/ilist.vala System/Collections/istructuralcomparable.vala System/Collections/istructuralequatable.vala System/Collections/Specialized/CollectionsUtil.vala System/Collections/Generic/SortedDictionary.vala System/Collections/Generic/Stack.vala System/Collections/Generic/SortedList.vala System/Collections/Generic/HashSet.vala System/Collections/Generic/Queue.vala System/Collections/Generic/SortedSet.vala System/Collections/Generic/LinkedList.vala System/Collections/Generic/icollection.vala System/Collections/Generic/ICollectionDebugView.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/IDictionaryDebugView.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Linq/Errors.vala System/Linq/Enumerable.vala System/IO/InvalidDataException.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(libdotnet_la_VALAFLAGS) $(VALAFLAGS) -C System/Text/RegularExpressions/RegexMatch.vala System/Text/RegularExpressions/RegexMatchCollection.vala System/Text/RegularExpressions/Regex.vala System/Text/RegularExpressions/RegexGroup.vala System/Text/RegularExpressions/RegexOptions.vala System/Text/RegularExpressions/RegexCode.vala System/Text/RegularExpressions/RegexGroupCollection.vala System/Text/RegularExpressions/RegexTree.vala System/Text/RegularExpressions/RegexCaptureCollection.vala System/Text/RegularExpressions/RegexMatchTimeoutException.vala System/Text/RegularExpressions/RegexCapture.vala System/Collections/Hashtable.vala System/Collections/Stack.vala System/Collections/CollectionBase.vala System/Collections/StructuralComparisons.vala System/Collections/Comparer.vala System/Collections/SortedList.vala System/Collections/Queue.vala System/Collections/CaseInsensitiveComparer.vala System/Collections/ArrayList.vala System/Collections/ReadOnlyCollectionBase.vala System/Collections/KeyValuePairs.vala System/Collections/DictionaryBase.vala System/Collections/icollection.vala System/Collections/icomparer.vala System/Collections/idictionary.vala System/Collections/idictionaryenumerator.vala System/Collections/ienumerable.vala System/Collections/ienumerator.vala System/Collections/iequalitycomparer.vala System/Collections/ihashcodeprovider.vala System/Collections/ilist.vala System/Collections/istructuralcomparable.vala System/Collections/istructuralequatable.vala System/Collections/Specialized/CollectionsUtil.vala System/Collections/Generic/Dictionary.vala System/Collections/Generic/SortedDictionary.vala System/Collections/Generic/Stack.vala System/Collections/Generic/SortedList.vala System/Collections/Generic/HashSet.vala System/Collections/Generic/Queue.vala System/Collections/Generic/SortedSet.vala System/Collections/Generic/LinkedList.vala System/Collections/Generic/icollection.vala System/Collections/Generic/ICollectionDebugView.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/IDictionaryDebugView.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Linq/Errors.vala System/Linq/Enumerable.vala System/IO/InvalidDataException.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -1541,6 +1553,7 @@ maintainer-clean-generic:
 	-rm -f $(srcdir)/System/Collections/CollectionBase.c
 	-rm -f $(srcdir)/System/Collections/Comparer.c
 	-rm -f $(srcdir)/System/Collections/DictionaryBase.c
+	-rm -f $(srcdir)/System/Collections/Generic/Dictionary.c
 	-rm -f $(srcdir)/System/Collections/Generic/HashSet.c
 	-rm -f $(srcdir)/System/Collections/Generic/ICollectionDebugView.c
 	-rm -f $(srcdir)/System/Collections/Generic/IDictionaryDebugView.c
@@ -1606,6 +1619,7 @@ maintainer-clean-generic:
 	-rm -f System/Collections/CollectionBase.c
 	-rm -f System/Collections/Comparer.c
 	-rm -f System/Collections/DictionaryBase.c
+	-rm -f System/Collections/Generic/Dictionary.c
 	-rm -f System/Collections/Generic/HashSet.c
 	-rm -f System/Collections/Generic/ICollectionDebugView.c
 	-rm -f System/Collections/Generic/IDictionaryDebugView.c

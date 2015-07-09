@@ -5,7 +5,7 @@
 // result when searching a string for a regular expression.
 
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace System.Text.RegularExpressions

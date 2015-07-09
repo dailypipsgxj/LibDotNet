@@ -34,6 +34,7 @@ LIBDOTNET_SOURCES = \
 	System/Collections/istructuralcomparable.vala \
 	System/Collections/istructuralequatable.vala \
 	System/Collections/Specialized/CollectionsUtil.vala \
+	System/Collections/Generic/Dictionary.vala \
 	System/Collections/Generic/SortedDictionary.vala \
 	System/Collections/Generic/Stack.vala \
 	System/Collections/Generic/SortedList.vala \

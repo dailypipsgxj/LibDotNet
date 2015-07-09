@@ -15,7 +15,7 @@ using System.Diagnostics;
 namespace System.Collections
 {
 // [DebuggerDisplay("{_value}", Name = "[{_key}]")]
-    internal class KeyValuePairs
+    public class KeyValuePairs
     {
 // [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 

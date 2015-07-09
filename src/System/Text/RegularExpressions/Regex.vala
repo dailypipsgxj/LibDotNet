@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-//using System.Threading;
+using System.Threading;
 
 namespace System.Text.RegularExpressions
 {
@@ -281,7 +281,7 @@ namespace System.Text.RegularExpressions
             {
                 result = new int[_caps.Count];
 
-                foreach (KeyValuePair<int, int> kvp in _caps)
+                foreach (KeyValuePairs<int, int> kvp in _caps)
                 {
                     result[kvp.Value] = kvp.Key;
                 }
@@ -526,6 +526,7 @@ namespace System.Text.RegularExpressions
         /*
          * Internal worker called by all the public APIs
          */
+         /*
         internal Match Run(bool quick, int prevlen, string input, int beginning, int length, int startat)
         {
             Match match;
@@ -565,6 +566,7 @@ namespace System.Text.RegularExpressions
 #endif
             return match;
         }
+        */
 
         /*
          * Find code cache based on options+pattern
