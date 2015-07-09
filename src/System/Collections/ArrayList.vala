@@ -37,10 +37,9 @@ namespace System.Collections
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class ArrayList : IList
+    public class ArrayList : Gee.ArrayList, IList
     {
         private Object[] _items;
-// [ContractPublicPropertyName("Count")]
 
         private int _size;
         private int _version;
@@ -51,45 +50,23 @@ namespace System.Collections
         // Copy of Array.MaxArrayLength
         internal const int MaxArrayLength = 0X7FEFFFFF;
 
-        // Note: this constructor is a bogus constructor that does nothing
-        // and is for use only with SyncArrayList.
-        internal ArrayList(bool trash)
-        {
-        }
-
-        // Constructs a ArrayList. The list is initially empty and has a capacity
-        // of zero. Upon adding the first element to the list the capacity is
-        // increased to _defaultCapacity, and then increased in multiples of two as required.
-        public ArrayList()
-        {
-            _items = Array.Empty<Object>();
-        }
 
         // Constructs a ArrayList with a given initial capacity. The list is
         // initially empty, but will have room for the given number of elements
         // before any reallocations are required.
         // 
-        public ArrayList(int capacity)
+        public ArrayList(int capacity = _defaultCapacity)
         {
-            if (capacity < 0) throw ArgumentOutOfRangeException("capacity", SR.Format(SR.ArgumentOutOfRange_MustBeNonNegNum, "capacity"));
-            Contract.EndContractBlock();
-
-            if (capacity == 0)
-                _items = Array.Empty<Object>();
-            else
-                _items = new Object[capacity];
+			base ();
         }
 
         // Constructs a ArrayList, copying the contents of the given collection. The
         // size and capacity of the new list will both be equal to the size of the
         // given collection.
         // 
-        public ArrayList(ICollection c)
+        public ArrayList.WithCollection(ICollection c)
         {
-            if (c == null)
-                throw ArgumentNullException("c", SR.ArgumentNull_Collection);
-            Contract.EndContractBlock();
-
+			base();
             int count = c.Count;
             if (count == 0)
             {
@@ -259,7 +236,7 @@ namespace System.Collections
         // The method uses the Array.BinarySearch method to perform the
         // search.
         // 
-        public virtual int BinarySearch(int index, int count, Object value, IComparer comparer)
+        public virtual int BinarySearch(int index = 0, int count = Count, Object value, IComparer? comparer = null)
         {
             if (index < 0)
                 throw ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_NeedNonNegNum);
@@ -272,18 +249,6 @@ namespace System.Collections
             Contract.EndContractBlock();
 
             return Array.BinarySearch((Array)_items, index, count, value, comparer);
-        }
-
-        public virtual int BinarySearch(Object value)
-        {
-            Contract.Ensures(Contract.Result<int>() < Count);
-            return BinarySearch(0, Count, value, null);
-        }
-
-        public virtual int BinarySearch(Object value, IComparer comparer)
-        {
-            Contract.Ensures(Contract.Result<int>() < Count);
-            return BinarySearch(0, Count, value, comparer);
         }
 
 
@@ -337,19 +302,8 @@ namespace System.Collections
         // Copies this ArrayList into array, which must be of a 
         // compatible array type.  
         //
-        public virtual void CopyTo(Array array)
+        public virtual void CopyTo(Array array, int arrayIndex = 0)
         {
-            CopyTo(array, 0);
-        }
-
-        // Copies this ArrayList into array, which must be of a 
-        // compatible array type.  
-        //
-        public virtual void CopyTo(Array array, int arrayIndex)
-        {
-            if ((array != null) && (array.Rank != 1))
-                throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
-            Contract.EndContractBlock();
             // Delegate rest of error checking to Array.Copy.
             Array.Copy(_items, 0, array, arrayIndex, _size);
         }
@@ -358,7 +312,7 @@ namespace System.Collections
         // 
         // The method uses the Array.Copy method to copy the elements.
         // 
-        public virtual void CopyTo(int index, Array array, int arrayIndex, int count)
+        public virtual void CopyToIndex(int index, Array array, int arrayIndex, int count)
         {
             if (_size - index < count)
                 throw ArgumentException(SR.Argument_InvalidOffLen);
@@ -398,78 +352,21 @@ namespace System.Collections
             return new FixedSizeList(list);
         }
 
-        // Returns a list wrapper that is fixed at the current size.  Operations
-        // that add or remove items will fail, however, replacing items is allowed.
-        //
-        public static ArrayList FixedSize(ArrayList list)
-        {
-            if (list == null)
-                throw ArgumentNullException("list");
-            Contract.Ensures(Contract.Result<ArrayList>() != null);
-            Contract.EndContractBlock();
-            return new FixedSizeArrayList(list);
-        }
-
-        // Returns an enumerator for this list with the given
-        // permission for removal of elements. If modifications made to the list 
-        // while an enumeration is in progress, the MoveNext and 
-        // GetObject methods of the enumerator will throw an exception.
-        //
-        public virtual IEnumerator GetEnumerator()
-        {
-            Contract.Ensures(Contract.Result<IEnumerator>() != null);
-            return new ArrayListEnumeratorSimple(this);
-        }
 
         // Returns an enumerator for a section of this list with the given
         // permission for removal of elements. If modifications made to the list 
         // while an enumeration is in progress, the MoveNext and 
         // GetObject methods of the enumerator will throw an exception.
         //
-        public virtual IEnumerator GetEnumerator(int index, int count)
+        public virtual IEnumerator GetEnumerator(int index =-1, int count = -1)
         {
-            if (index < 0)
-                throw ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_NeedNonNegNum);
-            if (count < 0)
-                throw ArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_NeedNonNegNum);
+            if (index < 0 && count < 0)
+				return new ArrayListEnumeratorSimple(this);
+
             if (_size - index < count)
                 throw ArgumentException(SR.Argument_InvalidOffLen);
-            Contract.Ensures(Contract.Result<IEnumerator>() != null);
-            Contract.EndContractBlock();
 
             return new ArrayListEnumerator(this, index, count);
-        }
-
-        // Returns the index of the first occurrence of a given value in a range of
-        // this list. The list is searched forwards from beginning to end.
-        // The elements of the list are compared to the given value using the
-        // Object.Equals method.
-        // 
-        // This method uses the Array.IndexOf method to perform the
-        // search.
-        // 
-        public virtual int IndexOf(Object value)
-        {
-            Contract.Ensures(Contract.Result<int>() < Count);
-            return Array.IndexOf((Array)_items, value, 0, _size);
-        }
-
-        // Returns the index of the first occurrence of a given value in a range of
-        // this list. The list is searched forwards, starting at index
-        // startIndex and ending at count number of elements. The
-        // elements of the list are compared to the given value using the
-        // Object.Equals method.
-        // 
-        // This method uses the Array.IndexOf method to perform the
-        // search.
-        // 
-        public virtual int IndexOf(Object value, int startIndex)
-        {
-            if (startIndex > _size)
-                throw ArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
-            Contract.Ensures(Contract.Result<int>() < Count);
-            Contract.EndContractBlock();
-            return Array.IndexOf((Array)_items, value, startIndex, _size - startIndex);
         }
 
         // Returns the index of the first occurrence of a given value in a range of
@@ -481,7 +378,7 @@ namespace System.Collections
         // This method uses the Array.IndexOf method to perform the
         // search.
         // 
-        public virtual int IndexOf(Object value, int startIndex, int count)
+        public virtual int IndexOf(Object value, int startIndex = 0, int count = 0)
         {
             if (startIndex > _size)
                 throw ArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
@@ -544,38 +441,6 @@ namespace System.Collections
         }
 
         // Returns the index of the last occurrence of a given value in a range of
-        // this list. The list is searched backwards, starting at the end 
-        // and ending at the first element in the list. The elements of the list 
-        // are compared to the given value using the Object.Equals method.
-        // 
-        // This method uses the Array.LastIndexOf method to perform the
-        // search.
-        // 
-        public virtual int LastIndexOf(Object value)
-        {
-            Contract.Ensures(Contract.Result<int>() < _size);
-            return LastIndexOf(value, _size - 1, _size);
-        }
-
-        // Returns the index of the last occurrence of a given value in a range of
-        // this list. The list is searched backwards, starting at index
-        // startIndex and ending at the first element in the list. The 
-        // elements of the list are compared to the given value using the 
-        // Object.Equals method.
-        // 
-        // This method uses the Array.LastIndexOf method to perform the
-        // search.
-        // 
-        public virtual int LastIndexOf(Object value, int startIndex)
-        {
-            if (startIndex >= _size)
-                throw ArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
-            Contract.Ensures(Contract.Result<int>() < Count);
-            Contract.EndContractBlock();
-            return LastIndexOf(value, startIndex, startIndex + 1);
-        }
-
-        // Returns the index of the last occurrence of a given value in a range of
         // this list. The list is searched backwards, starting at index
         // startIndex and upto count elements. The elements of
         // the list are compared to the given value using the Object.Equals
@@ -584,7 +449,7 @@ namespace System.Collections
         // This method uses the Array.LastIndexOf method to perform the
         // search.
         // 
-        public virtual int LastIndexOf(Object value, int startIndex, int count)
+        public virtual int LastIndexOf(Object value, int startIndex = _size, int count =  1)
         {
             if (Count != 0 && (startIndex < 0 || count < 0))
                 throw ArgumentOutOfRangeException((startIndex < 0 ? "startIndex" : "count"), SR.ArgumentOutOfRange_NeedNonNegNum);
@@ -615,18 +480,7 @@ namespace System.Collections
             return new ReadOnlyList(list);
         }
 
-        // Returns a read-only ArrayList wrapper for the given ArrayList.
-        //
-        public static ArrayList ReadOnly(ArrayList list)
-        {
-            if (list == null)
-                throw ArgumentNullException("list");
-            Contract.Ensures(Contract.Result<ArrayList>() != null);
-            Contract.EndContractBlock();
-            return new ReadOnlyArrayList(list);
-        }
-
-        // Removes the element at the given index. The size of the list is
+         // Removes the element at the given index. The size of the list is
         // decreased by one.
         // 
         public virtual void Remove(Object obj)
@@ -634,7 +488,7 @@ namespace System.Collections
             Contract.Ensures(Count >= 0);
 
             int index = IndexOf(obj);
-            Debug.Assert(index >= 0 || !(obj is Int32), "You passed an Int32 to Remove that wasn't in the ArrayList." + Environment.NewLine + "Did you mean RemoveAt?  int: " + obj + "  Count: " + Count);
+            Debug.Assert(index >= 0 || !(obj is int32), "You passed an int32 to Remove that wasn't in the ArrayList." + Environment.NewLine + "Did you mean RemoveAt?  int: " + obj + "  Count: " + Count);
             if (index >= 0)
                 RemoveAt(index);
         }
@@ -700,12 +554,6 @@ namespace System.Collections
             return list;
         }
 
-        // Reverses the elements in this list.
-        public virtual void Reverse()
-        {
-            Reverse(0, Count);
-        }
-
         // Reverses the elements in a range of this list. Following a call to this
         // method, an element in the range given by index and count
         // which was previously located at index i will now be located at
@@ -714,7 +562,7 @@ namespace System.Collections
         // This method uses the Array.Reverse method to reverse the
         // elements.
         // 
-        public virtual void Reverse(int index, int count)
+        public virtual void Reverse(int index = 0, int count = Count)
         {
             if (index < 0)
                 throw ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_NeedNonNegNum);
@@ -755,20 +603,6 @@ namespace System.Collections
             return new Range(this, index, count);
         }
 
-        // Sorts the elements in this list.  Uses the default comparer and 
-        // Array.Sort.
-        public virtual void Sort()
-        {
-            Sort(0, Count, Comparer.Default);
-        }
-
-        // Sorts the elements in this list.  Uses Array.Sort with the
-        // provided comparer.
-        public virtual void Sort(IComparer comparer)
-        {
-            Sort(0, Count, comparer);
-        }
-
         // Sorts the elements in a section of this list. The sort compares the
         // elements to each other using the given IComparer interface. If
         // comparer is null, the elements are compared to each other using
@@ -777,7 +611,7 @@ namespace System.Collections
         // 
         // This method uses the Array.Sort method to sort the elements.
         // 
-        public virtual void Sort(int index, int count, IComparer comparer)
+        public virtual void Sort(int index = 0, int count = Count, IComparer? comparer = null)
         {
             if (index < 0)
                 throw ArgumentOutOfRangeException("index", SR.ArgumentOutOfRange_NeedNonNegNum);
@@ -802,20 +636,9 @@ namespace System.Collections
             return new SyncIList(list);
         }
 
-        // Returns a thread-safe wrapper around a ArrayList.
-        //
-        public static ArrayList Synchronized(ArrayList list)
-        {
-            if (list == null)
-                throw ArgumentNullException("list");
-            Contract.Ensures(Contract.Result<ArrayList>() != null);
-            Contract.EndContractBlock();
-            return new SyncArrayList(list);
-        }
-
         // ToArray returns a new Object array containing the contents of the ArrayList.
         // This requires copying the ArrayList, which is an O(n) operation.
-        public virtual Object[] ToArray()
+        public virtual Object[] ToObjectArray()
         {
             Contract.Ensures(Contract.Result<Object[]>() != null);
 
@@ -991,7 +814,7 @@ namespace System.Collections
                 _list.CopyTo(array, index);
             }
 
-            public override void CopyTo(int index, Array array, int arrayIndex, int count)
+            public override void CopyToIndex(int index, Array array, int arrayIndex, int count)
             {
                 if (array == null)
                     throw ArgumentNullException("array");
@@ -1012,12 +835,7 @@ namespace System.Collections
                     array.SetValue(_list[i], arrayIndex++);
             }
 
-            public override IEnumerator GetEnumerator()
-            {
-                return _list.GetEnumerator();
-            }
-
-            public override IEnumerator GetEnumerator(int index, int count)
+            public override IEnumerator GetEnumerator(int index = 0, int count = Count)
             {
                 if (index < 0 || count < 0)
                     throw ArgumentOutOfRangeException((index < 0 ? "index" : "count"), SR.ArgumentOutOfRange_NeedNonNegNum);
@@ -1028,18 +846,7 @@ namespace System.Collections
                 return new IListWrapperEnumWrapper(this, index, count);
             }
 
-            public override int IndexOf(Object value)
-            {
-                return _list.IndexOf(value);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int IndexOf(Object value, int startIndex)
-            {
-                return IndexOf(value, startIndex, _list.Count - startIndex);
-            }
-
-            public override int IndexOf(Object value, int startIndex, int count)
+            public override int IndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 if (startIndex < 0 || startIndex > Count) throw ArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
                 if (count < 0 || startIndex > Count - count) throw ArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_Count);
@@ -1097,19 +904,7 @@ namespace System.Collections
                 }
             }
 
-            public override int LastIndexOf(Object value)
-            {
-                return LastIndexOf(value, _list.Count - 1, _list.Count);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex)
-            {
-                return LastIndexOf(value, startIndex, startIndex + 1);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex, int count)
+            public override int LastIndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 if (_list.Count == 0)
                     return -1;
@@ -1236,7 +1031,7 @@ namespace System.Collections
             }
 
 
-            public override Object[] ToArray()
+            public override Object[] ToObjectArray()
             {
                 if (Count == 0)
                     return Array.Empty<Object>();
@@ -1272,11 +1067,8 @@ namespace System.Collections
                 private int _initialCount;      // for reset
                 private bool _firstCall;        // firstCall to MoveNext
 
-                private IListWrapperEnumWrapper()
-                {
-                }
 
-                internal IListWrapperEnumWrapper(IListWrapper listWrapper, int startIndex, int count)
+                public IListWrapperEnumWrapper(IListWrapper listWrapper, int startIndex, int count)
                 {
                     _en = listWrapper.GetEnumerator();
                     _initialStartIndex = startIndex;
@@ -1412,15 +1204,8 @@ namespace System.Collections
                 }
             }
 
-            public override int BinarySearch(Object value)
-            {
-                lock (_root)
-                {
-                    return _list.BinarySearch(value);
-                }
-            }
 
-            public override int BinarySearch(Object value, IComparer comparer)
+            public override int BinarySearch(Object value, IComparer? comparer = null)
             {
                 lock (_root)
                 {
@@ -1429,7 +1214,7 @@ namespace System.Collections
             }
 // [SuppressMessage("Microsoft.Contracts", "CC1055")]
   // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int BinarySearch(int index, int count, Object value, IComparer comparer)
+            public override int BinarySearchFromIndex(int index, int count, Object value, IComparer? comparer = null)
             {
                 lock (_root)
                 {
@@ -1461,24 +1246,8 @@ namespace System.Collections
                 }
             }
 
-            public override void CopyTo(Array array)
-            {
-                lock (_root)
-                {
-                    _list.CopyTo(array);
-                }
-            }
 
-            public override void CopyTo(Array array, int index)
-            {
-                lock (_root)
-                {
-                    _list.CopyTo(array, index);
-                }
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override void CopyTo(int index, Array array, int arrayIndex, int count)
+            public override void CopyTo(int index, Array array, int arrayIndex = 0, int count = Count)
             {
                 lock (_root)
                 {
@@ -1486,16 +1255,7 @@ namespace System.Collections
                 }
             }
 
-            public override IEnumerator GetEnumerator()
-            {
-                lock (_root)
-                {
-                    return _list.GetEnumerator();
-                }
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override IEnumerator GetEnumerator(int index, int count)
+            public override IEnumerator GetEnumerator(int index = 0, int count = Count)
             {
                 lock (_root)
                 {
@@ -1503,25 +1263,7 @@ namespace System.Collections
                 }
             }
 
-            public override int IndexOf(Object value)
-            {
-                lock (_root)
-                {
-                    return _list.IndexOf(value);
-                }
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int IndexOf(Object value, int startIndex)
-            {
-                lock (_root)
-                {
-                    return _list.IndexOf(value, startIndex);
-                }
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int IndexOf(Object value, int startIndex, int count)
+            public override int IndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 lock (_root)
                 {
@@ -1536,8 +1278,7 @@ namespace System.Collections
                     _list.Insert(index, value);
                 }
             }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
+
             public override void InsertRange(int index, ICollection c)
             {
                 lock (_root)
@@ -1546,25 +1287,7 @@ namespace System.Collections
                 }
             }
 
-            public override int LastIndexOf(Object value)
-            {
-                lock (_root)
-                {
-                    return _list.LastIndexOf(value);
-                }
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex)
-            {
-                lock (_root)
-                {
-                    return _list.LastIndexOf(value, startIndex);
-                }
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex, int count)
+            public override int LastIndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 lock (_root)
                 {
@@ -1624,15 +1347,7 @@ namespace System.Collections
                 }
             }
 
-            public override void Sort()
-            {
-                lock (_root)
-                {
-                    _list.Sort();
-                }
-            }
-
-            public override void Sort(IComparer comparer)
+            public override void Sort(IComparer? comparer = null)
             {
                 lock (_root)
                 {
@@ -1641,7 +1356,7 @@ namespace System.Collections
             }
 // [SuppressMessage("Microsoft.Contracts", "CC1055")]
   // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override void Sort(int index, int count, IComparer comparer)
+            public override void SortFromIndex(int index, int count, IComparer comparer)
             {
                 lock (_root)
                 {
@@ -1649,15 +1364,6 @@ namespace System.Collections
                 }
             }
 
-            public override Object[] ToArray()
-            {
-                lock (_root)
-                {
-                    return _list.ToArray();
-                }
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
             public override Array ToArray(Type type)
             {
                 lock (_root)
@@ -1987,35 +1693,17 @@ namespace System.Collections
             }
 // [SuppressMessage("Microsoft.Contracts", "CC1055")]
   // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override void CopyTo(int index, Array array, int arrayIndex, int count)
+            public override void CopyToIndex(int index, Array array, int arrayIndex, int count)
             {
                 _list.CopyTo(index, array, arrayIndex, count);
             }
 
-            public override IEnumerator GetEnumerator()
-            {
-                return _list.GetEnumerator();
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override IEnumerator GetEnumerator(int index, int count)
+            public override IEnumerator GetEnumerator(int index = 0, int count = Count)
             {
                 return _list.GetEnumerator(index, count);
             }
 
-            public override int IndexOf(Object value)
-            {
-                return _list.IndexOf(value);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int IndexOf(Object value, int startIndex)
-            {
-                return _list.IndexOf(value, startIndex);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int IndexOf(Object value, int startIndex, int count)
+            public override int IndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 return _list.IndexOf(value, startIndex, count);
             }
@@ -2031,19 +1719,7 @@ namespace System.Collections
                 throw NotSupportedException(SR.NotSupported_FixedSizeCollection);
             }
 
-            public override int LastIndexOf(Object value)
-            {
-                return _list.LastIndexOf(value);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex)
-            {
-                return _list.LastIndexOf(value, startIndex);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex, int count)
+            public override int LastIndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 return _list.LastIndexOf(value, startIndex, count);
             }
@@ -2096,12 +1772,6 @@ namespace System.Collections
                 _version = _list._version;
             }
 
-            public override Object[] ToArray()
-            {
-                return _list.ToArray();
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
             public override Array ToArray(Type type)
             {
                 return _list.ToArray(type);
@@ -2291,41 +1961,17 @@ namespace System.Collections
                 return _list.Contains(obj);
             }
 
-            public override void CopyTo(Array array, int index)
-            {
-                _list.CopyTo(array, index);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override void CopyTo(int index, Array array, int arrayIndex, int count)
+            public override void CopyTo(int index, Array array, int arrayIndex = 0, int count = Count)
             {
                 _list.CopyTo(index, array, arrayIndex, count);
             }
 
-            public override IEnumerator GetEnumerator()
-            {
-                return _list.GetEnumerator();
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override IEnumerator GetEnumerator(int index, int count)
+            public override IEnumerator GetEnumerator(int index = 0, int count = Count)
             {
                 return _list.GetEnumerator(index, count);
             }
 
-            public override int IndexOf(Object value)
-            {
-                return _list.IndexOf(value);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int IndexOf(Object value, int startIndex)
-            {
-                return _list.IndexOf(value, startIndex);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int IndexOf(Object value, int startIndex, int count)
+            public override int IndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 return _list.IndexOf(value, startIndex, count);
             }
@@ -2341,19 +1987,7 @@ namespace System.Collections
                 throw NotSupportedException(SR.NotSupported_ReadOnlyCollection);
             }
 
-            public override int LastIndexOf(Object value)
-            {
-                return _list.LastIndexOf(value);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex)
-            {
-                return _list.LastIndexOf(value, startIndex);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex, int count)
+            public override int LastIndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 return _list.LastIndexOf(value, startIndex, count);
             }
@@ -2403,12 +2037,6 @@ namespace System.Collections
                 throw NotSupportedException(SR.NotSupported_ReadOnlyCollection);
             }
 
-            public override Object[] ToArray()
-            {
-                return _list.ToArray();
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
             public override Array ToArray(Type type)
             {
                 return _list.ToArray(type);
@@ -2622,7 +2250,7 @@ namespace System.Collections
                 _baseList.CopyTo(_baseIndex, array, index, _baseSize);
             }
 
-            public override void CopyTo(int index, Array array, int arrayIndex, int count)
+            public override void CopyToIndex(int index, Array array, int arrayIndex, int count)
             {
                 if (array == null)
                     throw ArgumentNullException("array");
@@ -2664,12 +2292,7 @@ namespace System.Collections
                 get { return _baseList.IsSynchronized; }
             }
 
-            public override IEnumerator GetEnumerator()
-            {
-                return GetEnumerator(0, _baseSize);
-            }
-
-            public override IEnumerator GetEnumerator(int index, int count)
+            public override IEnumerator GetEnumerator(int index = 0, int count = Count)
             {
                 if (index < 0 || count < 0)
                     throw ArgumentOutOfRangeException((index < 0 ? "index" : "count"), SR.ArgumentOutOfRange_NeedNonNegNum);
@@ -2702,29 +2325,7 @@ namespace System.Collections
             }
 
 
-            public override int IndexOf(Object value)
-            {
-                InternalUpdateRange();
-                int i = _baseList.IndexOf(value, _baseIndex, _baseSize);
-                if (i >= 0) return i - _baseIndex;
-                return -1;
-            }
-
-            public override int IndexOf(Object value, int startIndex)
-            {
-                if (startIndex < 0)
-                    throw ArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
-                if (startIndex > _baseSize)
-                    throw ArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
-                Contract.EndContractBlock();
-
-                InternalUpdateRange();
-                int i = _baseList.IndexOf(value, _baseIndex + startIndex, _baseSize - startIndex);
-                if (i >= 0) return i - _baseIndex;
-                return -1;
-            }
-
-            public override int IndexOf(Object value, int startIndex, int count)
+            public override int IndexOf(Object value, int startIndex = 0, int count = 0)
             {
                 if (startIndex < 0 || startIndex > _baseSize)
                     throw ArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
@@ -2769,22 +2370,7 @@ namespace System.Collections
                 }
             }
 
-            public override int LastIndexOf(Object value)
-            {
-                InternalUpdateRange();
-                int i = _baseList.LastIndexOf(value, _baseIndex + _baseSize - 1, _baseSize);
-                if (i >= 0) return i - _baseIndex;
-                return -1;
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex)
-            {
-                return LastIndexOf(value, startIndex, startIndex + 1);
-            }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Skip extra error checking to avoid *potential* AppCompat problems.
-            public override int LastIndexOf(Object value, int startIndex, int count)
+            public override int LastIndexOf(Object value, int startIndex = 0, int count = Count)
             {
                 InternalUpdateRange();
                 if (_baseSize == 0)
@@ -2884,17 +2470,6 @@ namespace System.Collections
 				_baseList[_baseIndex + index] = value;
 				InternalUpdateVersion();
 			}
-
-            public override Object[] ToArray()
-            {
-                InternalUpdateRange();
-                if (_baseSize == 0)
-                    return Array.Empty<Object>();
-                Object[] array = new Object[_baseSize];
-                Array.Copy(_baseList._items, _baseIndex, array, 0, _baseSize);
-                return array;
-            }
-// [SecuritySafeCritical]
 
             public override Array ToArray(Type type)
             {

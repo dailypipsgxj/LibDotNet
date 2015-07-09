@@ -77,15 +77,17 @@ namespace System.Text.RegularExpressions
             return _captures[i];
         }
 
-        bool ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return false; }
-        }ObjectICollection.SyncRoot
+        }
+        
+        Object SyncRoot
         {
             get { return _group; }
         }
 
-        void ICollection.CopyTo(Array array, int arrayIndex)
+        void CopyTo(Array array, int arrayIndex)
         {
             if (array == null)
                 throw ArgumentNullException("array");
@@ -130,12 +132,9 @@ namespace System.Text.RegularExpressions
 
                     return _collection[_index];
                 }
-            }ObjectIEnumerator.Current
-            {
-                get { return Current; }
             }
-
-            void IEnumerator.Reset()
+            
+            void Reset()
             {
                 _index = -1;
             }

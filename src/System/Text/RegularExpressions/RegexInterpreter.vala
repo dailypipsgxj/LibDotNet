@@ -257,7 +257,7 @@ namespace System.Text.RegularExpressions
             return (_caseInsensitive ? _culture.TextInfo.ToLower(ch) : ch);
         }
 
-        private bool Stringmatch(String str)
+        private bool stringmatch(string str)
         {
             int c;
             int pos;
@@ -360,7 +360,7 @@ namespace System.Text.RegularExpressions
         protected override bool FindFirstChar()
         {
             int i;
-            String set;
+            string set;
 
             if (0 != (_code._anchors & (RegexFCD.Beginning | RegexFCD.Start | RegexFCD.EndZ | RegexFCD.End)))
             {
@@ -893,7 +893,7 @@ namespace System.Text.RegularExpressions
 
                     case RegexCode.Multi:
                         {
-                            if (!Stringmatch(_code._strings[Operand(0)]))
+                            if (!stringmatch(_code._strings[Operand(0)]))
                                 break;
 
                             Advance(1);
@@ -960,7 +960,7 @@ namespace System.Text.RegularExpressions
                             if (Forwardchars() < c)
                                 break;
 
-                            String set = _code._strings[Operand(0)];
+                            string set = _code._strings[Operand(0)];
 
                             while (c-- > 0)
                                 if (!RegexCharClass.CharInClass(Forwardcharnext(), set))
@@ -1029,7 +1029,7 @@ namespace System.Text.RegularExpressions
                             if (c > Forwardchars())
                                 c = Forwardchars();
 
-                            String set = _code._strings[Operand(0)];
+                            string set = _code._strings[Operand(0)];
                             int i;
 
                             for (i = c; i > 0; i--)

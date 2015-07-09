@@ -10,7 +10,7 @@ namespace System.Collections.Generic
 // [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class LinkedList<T> : ICollection<T>, System.Collections.ICollection, IReadOnlyCollection<T>
+    public class LinkedList<T> : Gee.LinkedList, ICollection<T>, System.Collections.ICollection, IReadOnlyCollection<T>
     {
         // This LinkedList is a doubly-Linked circular list.
         internal LinkedListNode<T> head;
@@ -422,7 +422,7 @@ namespace System.Collections.Generic
             {
                 // No need to use reflection to verify that the types are compatible because it isn't 100% correct and we can rely 
                 // on the runtime validation during the cast that happens below (i.e. we will get an ArrayTypeMismatchException).
-                object[] objects = array as object[];
+                Object[] objects = array as Object[];
                 if (objects == null)
                 {
                     throw ArgumentException(SR.Invalid_Array_Type);
@@ -452,7 +452,8 @@ namespace System.Collections.Generic
         }
 
         // [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-        public struct Enumerator : IEnumerator<T>, System.Collections.IEnumerator
+        [Compact]
+        public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
             private LinkedList<T> _list;
             private LinkedListNode<T> _node;

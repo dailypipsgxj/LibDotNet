@@ -88,14 +88,14 @@ namespace System.Text.RegularExpressions
                     case RegexNode.Onelazy:
                         if (curNode._m > 0)
                         {
-                            string pref = String.Empty.PadRight(curNode._m, curNode._ch);
+                            string pref = string.Empty.PadRight(curNode._m, curNode._ch);
                             return new RegexPrefix(pref, 0 != (curNode._options & RegexOptions.IgnoreCase));
                         }
                         else
                             return RegexPrefix.Empty;
 
                     case RegexNode.One:
-                        return new RegexPrefix(curNode._ch.ToString(), 0 != (curNode._options & RegexOptions.IgnoreCase));
+                        return new RegexPrefix(curNode._ch.Tostring(), 0 != (curNode._options & RegexOptions.IgnoreCase));
 
                     case RegexNode.Multi:
                         return new RegexPrefix(curNode._str, 0 != (curNode._options & RegexOptions.IgnoreCase));
@@ -201,9 +201,9 @@ namespace System.Text.RegularExpressions
         }
 
 #if DEBUG
-        internal static String AnchorDescription(int anchors)
+        internal static string AnchorDescription(int anchors)
         {
-            StringBuilder sb = new StringBuilder();
+            stringBuilder sb = new stringBuilder();
 
             if (0 != (anchors & Beginning)) sb.Append(", Beginning");
             if (0 != (anchors & Start)) sb.Append(", Start");
@@ -215,7 +215,7 @@ namespace System.Text.RegularExpressions
             if (0 != (anchors & EndZ)) sb.Append(", EndZ");
 
             if (sb.Length >= 2)
-                return (sb.ToString(2, sb.Length - 2));
+                return (sb.Tostring(2, sb.Length - 2));
 
             return "None";
         }
@@ -520,7 +520,7 @@ namespace System.Text.RegularExpressions
                     break;
 
                 default:
-                    throw ArgumentException(SR.Format(SR.UnexpectedOpcode, NodeType.ToString(CultureInfo.CurrentCulture)));
+                    throw ArgumentException(SR.Format(SR.UnexpectedOpcode, NodeType.Tostring(CultureInfo.CurrentCulture)));
             }
         }
     }
@@ -557,7 +557,7 @@ namespace System.Text.RegularExpressions
             _nullable = nullable;
         }
 
-        internal RegexFC(String charClass, bool nullable, bool caseInsensitive)
+        internal RegexFC(string charClass, bool nullable, bool caseInsensitive)
         {
             _cc = RegexCharClass.Parse(charClass);
 
@@ -591,12 +591,12 @@ namespace System.Text.RegularExpressions
             return true;
         }
 
-        internal String GetFirstChars(CultureInfo culture)
+        internal string GetFirstChars(CultureInfo culture)
         {
             if (_caseInsensitive)
                 _cc.AddLowercase(culture);
 
-            return _cc.ToStringClass();
+            return _cc.TostringClass();
         }
 
         internal bool IsCaseInsensitive()
@@ -607,18 +607,18 @@ namespace System.Text.RegularExpressions
 
     internal class RegexPrefix
     {
-        internal String _prefix;
+        internal string _prefix;
         internal bool _caseInsensitive;
 
-        internal static RegexPrefix _empty = new RegexPrefix(String.Empty, false);
+        internal static RegexPrefix _empty = new RegexPrefix(string.Empty, false);
 
-        internal RegexPrefix(String prefix, bool ci)
+        internal RegexPrefix(string prefix, bool ci)
         {
             _prefix = prefix;
             _caseInsensitive = ci;
         }
 
-        internal String Prefix
+        internal string Prefix
         {
             get
             {

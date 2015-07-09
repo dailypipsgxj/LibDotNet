@@ -13452,7 +13452,7 @@ CC="$lt_save_CC"
 
 
 
-pkg_modules="gobject-2.0 "
+pkg_modules="gobject-2.0 gee-0.8"
 
 
 
@@ -13583,12 +13583,12 @@ if test -n "$LIBDOTNET_CFLAGS"; then
     pkg_cv_LIBDOTNET_CFLAGS="$LIBDOTNET_CFLAGS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gobject-2.0 \""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gobject-2.0 ") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gobject-2.0, gee-0.8\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gobject-2.0, gee-0.8") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_LIBDOTNET_CFLAGS=`$PKG_CONFIG --cflags "gobject-2.0 " 2>/dev/null`
+  pkg_cv_LIBDOTNET_CFLAGS=`$PKG_CONFIG --cflags "gobject-2.0, gee-0.8" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes 
 else
   pkg_failed=yes
@@ -13600,12 +13600,12 @@ if test -n "$LIBDOTNET_LIBS"; then
     pkg_cv_LIBDOTNET_LIBS="$LIBDOTNET_LIBS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gobject-2.0 \""; } >&5
-  ($PKG_CONFIG --exists --print-errors "gobject-2.0 ") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gobject-2.0, gee-0.8\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "gobject-2.0, gee-0.8") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_LIBDOTNET_LIBS=`$PKG_CONFIG --libs "gobject-2.0 " 2>/dev/null`
+  pkg_cv_LIBDOTNET_LIBS=`$PKG_CONFIG --libs "gobject-2.0, gee-0.8" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes 
 else
   pkg_failed=yes
@@ -13626,14 +13626,14 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        LIBDOTNET_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "gobject-2.0 " 2>&1`
+	        LIBDOTNET_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "gobject-2.0, gee-0.8" 2>&1`
         else 
-	        LIBDOTNET_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "gobject-2.0 " 2>&1`
+	        LIBDOTNET_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "gobject-2.0, gee-0.8" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$LIBDOTNET_PKG_ERRORS" >&5
 
-	as_fn_error $? "Package requirements (gobject-2.0 ) were not met:
+	as_fn_error $? "Package requirements (gobject-2.0, gee-0.8) were not met:
 
 $LIBDOTNET_PKG_ERRORS
 
@@ -13665,9 +13665,6 @@ else
 $as_echo "yes" >&6; }
 	
 fi
-
-
-
 
 
 ac_config_files="$ac_config_files Makefile src/libdotnet-0.1.pc src/Makefile po/Makefile.in"

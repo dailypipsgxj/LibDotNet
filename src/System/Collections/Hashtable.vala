@@ -14,9 +14,9 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-using System.Runtime;
-using System.Runtime.CompilerServices;
-using System.Threading;
+//using System.Runtime;
+//using System.Runtime.CompilerServices;
+//using System.Threading;
 
 namespace System.Collections
 {
@@ -57,7 +57,7 @@ namespace System.Collections
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class Hashtable : IDictionary
+    public class Hashtable : Gee.HashMap, IDictionary
     {
         /*
           This Hashtable uses double hashing.  There are hashsize buckets in the 
@@ -110,16 +110,16 @@ namespace System.Collections
            -- 
         */
 
-        internal const Int32 HashPrime = 101;
-        private const Int32 InitialSize = 3;
-        private const String LoadFactorName = "LoadFactor";
-        private const String VersionName = "Version";
-        private const String ComparerName = "Comparer";
-        private const String HashCodeProviderName = "HashCodeProvider";
-        private const String HashSizeName = "HashSize";  // Must save buckets.Length
-        private const String KeysName = "Keys";
-        private const String ValuesName = "Values";
-        private const String KeyComparerName = "KeyComparer";
+        internal const int32 HashPrime = 101;
+        private const int32 InitialSize = 3;
+        private const string LoadFactorName = "LoadFactor";
+        private const string VersionName = "Version";
+        private const string ComparerName = "Comparer";
+        private const string HashCodeProviderName = "HashCodeProvider";
+        private const string HashSizeName = "HashSize";  // Must save buckets.Length
+        private const string KeysName = "Keys";
+        private const string ValuesName = "Values";
+        private const string KeyComparerName = "KeyComparer";
 
         // Deleted entries have their key set to buckets
 
@@ -149,7 +149,7 @@ namespace System.Collections
         private ICollection _keys;
         private ICollection _values;
 
-        private IEqualityComparer _keycomparer;
+        private IEqualityComparer? _keycomparer;
         private Object _syncRoot;
 
         protected IEqualityComparer EqualityComparer
@@ -160,102 +160,20 @@ namespace System.Collections
             }
         }
 
-        // Note: this constructor is a bogus constructor that does nothing
-        // and is for use only with SyncHashtable.
-        internal Hashtable(bool trash)
-        {
-        }
-
-        // Constructs a new hashtable. The hashtable is created with an initial
-        // capacity of zero and a load factor of 1.0.
-        public Hashtable(){
-			this(0, 1.0f);
-        }
-
-        // Constructs a new hashtable with the given initial capacity and a load
-        // factor of 1.0. The capacity argument serves as an indication of
-        // the number of entries the hashtable will contain. When this number (or
-        // an approximation) is known, specifying it in the constructor can
-        // eliminate a number of resizing operations that would otherwise be
-        // performed when elements are added to the hashtable.
-        // 
-        public Hashtable(int capacity){
-			this(capacity, 1.0f);
-        }
-
-        // Constructs a new hashtable with the given initial capacity and load
-        // factor. The capacity argument serves as an indication of the
-        // number of entries the hashtable will contain. When this number (or an
-        // approximation) is known, specifying it in the constructor can eliminate
-        // a number of resizing operations that would otherwise be performed when
-        // elements are added to the hashtable. The loadFactor argument
-        // indicates the maximum ratio of hashtable entries to hashtable buckets.
-        // Smaller load factors cause faster average lookup times at the cost of
-        // increased memory consumption. A load factor of 1.0 generally provides
-        // the best balance between speed and size.
-        // 
-        public Hashtable(int capacity, float loadFactor)
-        {
-            if (capacity < 0)
-                throw ArgumentOutOfRangeException("capacity %s", SR.ArgumentOutOfRange_NeedNonNegNum);
-            if (!(loadFactor >= 0.1f && loadFactor <= 1.0f))
-                throw ArgumentOutOfRangeException("loadFactor %s, %i", SR.Format(SR.ArgumentOutOfRange_HashtableLoadFactor, .1, 1.0));
-            Contract.EndContractBlock();
-
-            // Based on perf work, .72 is the optimal load factor for this table.  
-            _loadFactor = 0.72f * loadFactor;
-
-            double rawsize = capacity / _loadFactor;
-            if (rawsize > Int32.MaxValue)
-                throw ArgumentException(SR.Arg_HTCapacityOverflow);
-
-            // Avoid awfully small sizes
-            int hashsize = (rawsize > InitialSize) ? HashHelpers.GetPrime((int)rawsize) : InitialSize;
-            _buckets = new bucket[hashsize];
-
-            _loadsize = (int)(_loadFactor * hashsize);
-            _isWriterInProgress = false;
-            // Based on the current algorithm, loadsize must be less than hashsize.
-            Debug.Assert(_loadsize < hashsize, "Invalid hashtable loadsize!");
-        }
-
-        public Hashtable(int capacity, float loadFactor, IEqualityComparer equalityComparer){
-			this(capacity, loadFactor);
+        public Hashtable(IEqualityComparer? equalityComparer = null){
             _keycomparer = equalityComparer;
+			base(null, equalityComparer);
         }
 
-        public Hashtable(IEqualityComparer equalityComparer){
-			this(0, 1.0f, equalityComparer);
-        }
-
-        public Hashtable(int capacity, IEqualityComparer equalityComparer){
-			this(capacity, 1.0f, equalityComparer);
-        }
-
-        // Constructs a new hashtable containing a copy of the entries in the given
-        // dictionary. The hashtable is created with a load factor of 1.0.
-        // 
-        public Hashtable(IDictionary d){
-			this(d, 1.0f);
+        public Hashtable.WithCapacity(int capacity = 0, float loadFactor = 1.0f, IEqualityComparer? equalityComparer = null){
+			this(equalityComparer);
         }
 
         // Constructs a new hashtable containing a copy of the entries in the given
         // dictionary. The hashtable is created with the given load factor.
         // 
-        public Hashtable(IDictionary d, float loadFactor){
-			this(d, loadFactor, (IEqualityComparer)null);
-        }
-
-        public Hashtable(IDictionary d, IEqualityComparer equalityComparer){
-			this(d, 1.0f, equalityComparer);
-        }
-
-        public Hashtable(IDictionary d, float loadFactor, IEqualityComparer equalityComparer){
-			this((d != null ? d.Count : 0), loadFactor, equalityComparer);
-            if (d == null)
-                throw ArgumentNullException("d", SR.ArgumentNull_Dictionary);
-            Contract.EndContractBlock();
-
+        public Hashtable.WithDictionary (IDictionary d, float loadFactor = 1.0f, IEqualityComparer? equalityComparer = null){
+			this(equalityComparer);
             IDictionaryEnumerator e = d.GetEnumerator();
             while (e.MoveNext()) Add(e.Key, e.Value);
         }
@@ -602,15 +520,10 @@ namespace System.Collections
             rehash(rawsize, false);
         }
 
-        // We occasionally need to rehash the table to clean up the collision bits.
-        private void rehash()
-        {
-            rehash(_buckets.Length, false);
-        }
 
         private void UpdateVersion()
         {
-            // Version might become negative when version is Int32.MaxValue, but the oddity will be still be correct. 
+            // Version might become negative when version is int32.MaxValue, but the oddity will be still be correct. 
             // So we don't need to special case this. 
             _version++;
         }
@@ -758,152 +671,9 @@ namespace System.Collections
         // Inserts an entry into this hashtable. This method is called from the Set
         // and Add methods. If the add parameter is true and the given key already
         // exists in the hashtable, an exception is thrown.
-        private void Insert(Object key, Object nvalue, bool add)
+        private void Insert(Object key, Object nvalue, bool add = true)
         {
-            if (key == null)
-            {
-                throw ArgumentNullException("key", SR.ArgumentNull_Key);
-            }
-            Contract.EndContractBlock();
-            if (_count >= _loadsize)
-            {
-                expand();
-            }
-            else if (_occupancy > _loadsize && _count > 100)
-            {
-                rehash();
-            }
-
-            uint seed;
-            uint incr;
-            // Assume we only have one thread writing concurrently.  Modify
-            // buckets to contain new data, as long as we insert in the right order.
-            uint hashcode = InitHash(key, _buckets.Length, out seed, out incr);
-            int ntry = 0;
-            int emptySlotNumber = -1; // We use the empty slot number to cache the first empty slot. We chose to reuse slots
-            // create by remove that have the collision bit set over using up new slots.
-            int bucketNumber = (int)(seed % (uint)_buckets.Length);
-            do
-            {
-                // Set emptySlot number to current bucket if it is the first available bucket that we have seen
-                // that once contained an entry and also has had a collision.
-                // We need to search this entire collision chain because we have to ensure that there are no 
-                // duplicate entries in the table.
-                if (emptySlotNumber == -1 && (_buckets[bucketNumber].key == _buckets) && (_buckets[bucketNumber].hash_coll < 0))//(((buckets[bucketNumber].hash_coll & unchecked(0x80000000))!=0)))
-                    emptySlotNumber = bucketNumber;
-
-                // Insert the key/value pair into this bucket if this bucket is empty and has never contained an entry
-                // OR
-                // This bucket once contained an entry but there has never been a collision
-                if ((_buckets[bucketNumber].key == null) ||
-                    (_buckets[bucketNumber].key == _buckets && ((_buckets[bucketNumber].hash_coll & unchecked(0x80000000)) == 0)))
-                {
-                    // If we have found an available bucket that has never had a collision, but we've seen an available
-                    // bucket in the past that has the collision bit set, use the previous bucket instead
-                    if (emptySlotNumber != -1) // Reuse slot
-                        bucketNumber = emptySlotNumber;
-
-                    // We pretty much have to insert in this order.  Don't set hash
-                    // code until the value & key are set appropriately.
-                    _isWriterInProgress = true;
-                    _buckets[bucketNumber].val = nvalue;
-                    _buckets[bucketNumber].key = key;
-                    _buckets[bucketNumber].hash_coll |= (int)hashcode;
-                    _count++;
-                    UpdateVersion();
-                    _isWriterInProgress = false;
-#if FEATURE_RANDOMIZED_STRING_HASHING
-                    if (ntry > HashHelpers.HashCollisionThreshold && HashHelpers.IsWellKnownEqualityComparer(_keycomparer))
-                    {
-                        // PERF: We don't want to rehash if _keycomparer is already a RandomizedObjectEqualityComparer since in some
-                        // cases there may not be any strings in the hashtable and we wouldn't get any mixing.
-                        if (_keycomparer == null || !(_keycomparer is System.Collections.Generic.RandomizedObjectEqualityComparer))
-                        {
-                            _keycomparer = HashHelpers.GetRandomizedEqualityComparer(_keycomparer);
-                            rehash(buckets.Length, true);
-                        }
-                    }
-#endif
-                    return;
-                }
-
-                // The current bucket is in use
-                // OR
-                // it is available, but has had the collision bit set and we have already found an available bucket
-                if (((_buckets[bucketNumber].hash_coll & 0x7FFFFFFF) == hashcode) &&
-                    KeyEquals(_buckets[bucketNumber].key, key))
-                {
-                    if (add)
-                    {
-                        throw ArgumentException(SR.Format(SR.Argument_AddingDuplicate__, _buckets[bucketNumber].key, key));
-                    }
-                    _isWriterInProgress = true;
-                    _buckets[bucketNumber].val = nvalue;
-                    UpdateVersion();
-                    _isWriterInProgress = false;
-
-#if FEATURE_RANDOMIZED_STRING_HASHING
-                    if (ntry > HashHelpers.HashCollisionThreshold && HashHelpers.IsWellKnownEqualityComparer(_keycomparer))
-                    {
-                        // PERF: We don't want to rehash if _keycomparer is already a RandomizedObjectEqualityComparer since in some
-                        // cases there may not be any strings in the hashtable and we wouldn't get any mixing.
-                        if (_keycomparer == null || !(_keycomparer is System.Collections.Generic.RandomizedObjectEqualityComparer))
-                        {
-                            _keycomparer = HashHelpers.GetRandomizedEqualityComparer(_keycomparer);
-                            rehash(buckets.Length, true);
-                        }
-                    }
-#endif
-                    return;
-                }
-
-                // The current bucket is full, and we have therefore collided.  We need to set the collision bit
-                // unless we have remembered an available slot previously.
-                if (emptySlotNumber == -1)
-                {// We don't need to set the collision bit here since we already have an empty slot
-                    if (_buckets[bucketNumber].hash_coll >= 0)
-                    {
-                        _buckets[bucketNumber].hash_coll |= unchecked((int)0x80000000);
-                        _occupancy++;
-                    }
-                }
-
-                bucketNumber = (int)(((long)bucketNumber + incr) % (uint)_buckets.Length);
-            } while (++ntry < _buckets.Length);
-
-            // This code is here if and only if there were no buckets without a collision bit set in the entire table
-            if (emptySlotNumber != -1)
-            {
-                // We pretty much have to insert in this order.  Don't set hash
-                // code until the value & key are set appropriately.
-                _isWriterInProgress = true;
-                _buckets[emptySlotNumber].val = nvalue;
-                _buckets[emptySlotNumber].key = key;
-                _buckets[emptySlotNumber].hash_coll |= (int)hashcode;
-                _count++;
-                UpdateVersion();
-                _isWriterInProgress = false;
-
-#if FEATURE_RANDOMIZED_STRING_HASHING
-                if (buckets.Length > HashHelpers.HashCollisionThreshold && HashHelpers.IsWellKnownEqualityComparer(_keycomparer))
-                {
-                    // PERF: We don't want to rehash if _keycomparer is already a RandomizedObjectEqualityComparer since in some
-                    // cases there may not be any strings in the hashtable and we wouldn't get any mixing.
-                    if (_keycomparer == null || !(_keycomparer is System.Collections.Generic.RandomizedObjectEqualityComparer))
-                    {
-                        _keycomparer = HashHelpers.GetRandomizedEqualityComparer(_keycomparer);
-                        rehash(buckets.Length, true);
-                    }
-                }
-#endif
-                return;
-            }
-
-            // If you see this assert, make sure load factor & count are reasonable.
-            // Then verify that our double hash function (h2, described at top of file)
-            // meets the requirements described above. You should never see this assert.
-            Debug.Fail("hash table insert failed!  Load factor too high, or our double hashing function is incorrect.");
-            throw InvalidOperationException(SR.InvalidOperation_HashInsertFailed);
+			set (key, nvalue);
         }
 
         private void putEntry(bucket[] newBuckets, Object key, Object nvalue, int hashcode)
@@ -1381,7 +1151,7 @@ namespace System.Collections
     {
 #if FEATURE_RANDOMIZED_STRING_HASHING
         public const int HashCollisionThreshold = 100;
-        public static bool s_UseRandomizedStringHashing = String.UseRandomizedHashing();
+        public static bool s_UseRandomizedstringHashing = string.UseRandomizedHashing();
 #endif
         // Table of prime numbers to use as hash table sizes. 
         // A typical resize algorithm would pick the smallest prime number in this array
@@ -1430,7 +1200,7 @@ namespace System.Collections
 
             //outside of our predefined table. 
             //compute the hard way. 
-            for (int i = (min | 1); i < Int32.MaxValue; i += 2)
+            for (int i = (min | 1); i < int32.MaxValue; i += 2)
             {
                 if (IsPrime(i) && ((i - 1) % Hashtable.HashPrime != 0))
                     return i;
@@ -1461,12 +1231,12 @@ namespace System.Collections
 #if FEATURE_RANDOMIZED_STRING_HASHING
         public static bool IsWellKnownEqualityComparer(Objectcomparer)
         {
-            return (comparer == null || comparer == System.Collections.Generic.EqualityComparer<string>.Default || comparer is IWellKnownStringEqualityComparer);
+            return (comparer == null || comparer == System.Collections.Generic.EqualityComparer<string>.Default || comparer is IWellKnownstringEqualityComparer);
         }
 
         public static IEqualityComparer GetRandomizedEqualityComparer(Objectcomparer)
         {
-            Debug.Assert(comparer == null || comparer == System.Collections.Generic.EqualityComparer<string>.Default || comparer is IWellKnownStringEqualityComparer);
+            Debug.Assert(comparer == null || comparer == System.Collections.Generic.EqualityComparer<string>.Default || comparer is IWellKnownstringEqualityComparer);
 
             if (comparer == null)
             {
@@ -1475,10 +1245,10 @@ namespace System.Collections
 
             if (comparer == System.Collections.Generic.EqualityComparer<string>.Default)
             {
-                return new System.Collections.Generic.RandomizedStringEqualityComparer();
+                return new System.Collections.Generic.RandomizedstringEqualityComparer();
             }
 
-            IWellKnownStringEqualityComparer cmp = comparer as IWellKnownStringEqualityComparer;
+            IWellKnownstringEqualityComparer cmp = comparer as IWellKnownstringEqualityComparer;
 
             if (cmp != null)
             {
@@ -1497,7 +1267,7 @@ namespace System.Collections
                 return null;
             }
 
-            IWellKnownStringEqualityComparer cmp = comparer as IWellKnownStringEqualityComparer;
+            IWellKnownstringEqualityComparer cmp = comparer as IWellKnownstringEqualityComparer;
 
             if (cmp != null)
             {

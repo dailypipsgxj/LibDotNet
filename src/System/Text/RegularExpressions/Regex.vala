@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Threading;
+//using System.Threading;
 
 namespace System.Text.RegularExpressions
 {
@@ -17,7 +17,7 @@ namespace System.Text.RegularExpressions
     /// contains static methods that allow use of regular expressions without instantiating
     /// a Regex  ly.
     /// </summary>
-    public class Regex
+    public class Regex : GLib.Regex
     {
         internal string _pattern;                   // The string pattern provided
         internal RegexOptions _roptions;            // the top-level options from the options string
@@ -26,7 +26,7 @@ namespace System.Text.RegularExpressions
 
         // We need this because time is queried using Environment.TickCount for performance reasons
         // (Environment.TickCount returns milliseconds as an int and cycles):
-        private static   TimeSpan MaximumMatchTimeout = TimeSpan.FromMilliseconds(Int32.MaxValue - 1);
+        private static   TimeSpan MaximumMatchTimeout = TimeSpan.FromMilliseconds(int32.MaxValue - 1);
 
         // InfiniteMatchTimeout specifies that match timeout is switched OFF. It allows for faster code paths
         // compared to simply having a very large timeout.
@@ -47,10 +47,10 @@ namespace System.Text.RegularExpressions
         // *********** } match timeout fields ***********
 
 
-        internal Dictionary<Int32, Int32> _caps;            // if captures are sparse, this is the hashtable capnum->index
-        internal Dictionary<String, Int32> _capnames;       // if named captures are used, this maps names->index
+        internal Dictionary<int32, int32> _caps;            // if captures are sparse, this is the hashtable capnum->index
+        internal Dictionary<string, int32> _capnames;       // if named captures are used, this maps names->index
 
-        internal String[] _capslist;                        // if captures are sparse or named captures are used, this is the sorted list of names
+        internal string[] _capslist;                        // if captures are sparse or named captures are used, this is the sorted list of names
         internal int _capsize;                              // the size of the capture array
 
         internal ExclusiveReference _runnerref;             // cached runner
@@ -63,99 +63,69 @@ namespace System.Text.RegularExpressions
 
         internal const int MaxOptionShift = 10;
 
-        protected Regex()
-        {
-            _internalMatchTimeout = DefaultMatchTimeout;
-        }
-
-        /// <summary>
-        /// Creates and compiles a regular expressionObjectfor the specified regular
-        /// expression.
-        /// </summary>
-        public Regex(String pattern){
-			this(pattern, RegexOptions.None, DefaultMatchTimeout, false);
-        }
 
         /// <summary>
         /// Creates and compiles a regular expressionObjectfor the
         /// specified regular expression with options that modify the pattern.
         /// </summary>
-        public Regex(String pattern, RegexOptions options){
-			this(pattern, options, DefaultMatchTimeout, false);
-        }
 
-        public Regex(String pattern, RegexOptions options, TimeSpan matchTimeout){
-			this(pattern, options, matchTimeout, false);
-        }
-
-        private Regex(String pattern, RegexOptions options, TimeSpan matchTimeout, bool useCache)
+        public Regex(string pattern, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout, bool useCache = false)
         {
-            RegexTree tree;
-            CachedCodeEntry cached = null;
-            string cultureKey = null;
-
-            if (pattern == null)
-                throw ArgumentNullException("pattern");
             if (options < RegexOptions.None || (((int)options) >> MaxOptionShift) != 0)
-                throw ArgumentOutOfRangeException("options");
-            if ((options & RegexOptions.ECMAScript) != 0
-             && (options & ~(RegexOptions.ECMAScript |
-                             RegexOptions.IgnoreCase |
-                             RegexOptions.Multiline |
-                             RegexOptions.CultureInvariant
-#if DEBUG
-                           | RegexOptions.Debug
-#endif
-                                               )) != 0)
                 throw ArgumentOutOfRangeException("options");
 
             ValidateMatchTimeout(matchTimeout);
 
-            // Try to look up this regex in the cache.  We do this regardless of whether useCache is true since there's
-            // really no reason not to.
-            if ((options & RegexOptions.CultureInvariant) != 0)
-                cultureKey = CultureInfo.InvariantCulture.ToString(); // "English (United States)"
-            else
-                cultureKey = CultureInfo.CurrentCulture.ToString();
-
-            var key = new CachedCodeEntryKey(options, cultureKey, pattern);
-            cached = LookupCachedAndUpdate(key);
-
+			RegexCompileFlags flags = ConvertOptions (options);
+			
             _pattern = pattern;
             _roptions = options;
-
             _internalMatchTimeout = matchTimeout;
+			
+			//public Regex (string pattern, RegexCompileFlags compile_options = 0, RegexMatchFlags match_options = 0) throws RegexError
+			base(pattern, flags);
+			
+			_capsize = get_capture_count ();
+			
+		}
 
-            if (cached == null)
-            {
-                // Parse the input
-                tree = RegexParser.Parse(pattern, _roptions);
 
-                // Extract the relevant information
-                _capnames = tree._capnames;
-                _capslist = tree._capslist;
-                _code = RegexWriter.Write(tree);
-                _caps = _code._caps;
-                _capsize = _code._capsize;
+		internal RegexCompileFlags ConvertOptions (RegexOptions options)
+		{
+			RegexCompileFlags flags = 0;
 
-                InitializeReferences();
+			if ((options & RegexOptions.None) !=  RegexOptions.None)
+			{
+				if ((options & RegexOptions.IgnoreCase) ==  RegexOptions.IgnoreCase)
+					flags |=  RegexCompileFlags.CASELESS;
+				if ((options & RegexOptions.Multiline) ==  RegexOptions.Multiline)
+					flags |=  RegexCompileFlags.MULTILINE;
+					
+				if ((options & RegexOptions.ExplicitCapture) ==  RegexOptions.ExplicitCapture)
+					//flags |=  0;
+					
+				if ((options & RegexOptions.Compiled) ==  RegexOptions.Compiled)
+					flags |=  RegexCompileFlags.OPTIMIZE;
+					
+				if ((options & RegexOptions.Singleline) ==  RegexOptions.Singleline)
+					flags |=  RegexCompileFlags.DOTALL;
+				
+				if ((options & RegexOptions.IgnorePatternWhitespace) ==  RegexOptions.IgnorePatternWhitespace)
+					flags |=  RegexCompileFlags.EXTENDED;
+					
+				if ((options & RegexOptions.RightToLeft) ==  RegexOptions.RightToLeft)
+					//flags |=  0;
+					
+				if ((options & RegexOptions.ECMAScript) ==  RegexOptions.ECMAScript)
+					flags |=  RegexCompileFlags.JAVASCRIPT_COMPAT;
 
-                tree = null;
-                if (useCache)
-                    cached = CacheCode(key);
-            }
-            else
-            {
-                _caps = cached._caps;
-                _capnames = cached._capnames;
-                _capslist = cached._capslist;
-                _capsize = cached._capsize;
-                _code = cached._code;
-                _runnerref = cached._runnerref;
-                _replref = cached._replref;
-                _refsInitialized = true;
-            }
-        }
+				if ((options & RegexOptions.CultureInvariant) ==  RegexOptions.CultureInvariant)
+					//flags |=  0;
+					
+				return flags;
+			}
+			
+		}
 
         // Note: "&lt;" is the XML entity for smaller ("<").
         /// <summary>
@@ -186,27 +156,18 @@ namespace System.Text.RegularExpressions
         /// additional metacharacters, developers should depend on Escape to escape those
         /// characters as well.)
         /// </summary>
-        public static String Escape(String str)
+        public static string Escape(string str)
         {
-            if (str == null)
-                throw ArgumentNullException("str");
-
-            return RegexParser.Escape(str);
+            return escape_string(str);
         }
 
         /// <summary>
         /// Unescapes any escaped characters in the input string.
         /// </summary>
-// [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unescape", Justification = "Already shipped since v1 - can't fix without causing a breaking change")]
-
-        public static String Unescape(String str)
+        public static string Unescape(string str)
         {
-            if (str == null)
-                throw ArgumentNullException("str");
-
-            return RegexParser.Unescape(str);
+            return Uri.unescape_string (str);
         }
-// [SuppressMessage("Microsoft.Concurrency", "CA8001", Justification = "Reviewed for thread-safety")]
 
         public static int CacheSize
         {
@@ -220,14 +181,6 @@ namespace System.Text.RegularExpressions
                     throw ArgumentOutOfRangeException("value");
 
                 s_cacheSize = value;
-                if (s_livecode.Count > s_cacheSize)
-                {
-                    lock (s_livecode)
-                    {
-                        while (s_livecode.Count > s_cacheSize)
-                            s_livecode.RemoveLast();
-                    }
-                }
             }
         }
 
@@ -262,7 +215,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the regular expression pattern passed into the constructor
         /// </summary>
-        public override string ToString()
+        public override string Tostring()
         {
             return _pattern;
         }
@@ -277,25 +230,25 @@ namespace System.Text.RegularExpressions
         /// Returns the GroupNameCollection for the regular expression. This collection contains the
         /// set of strings used to name capturing groups in the expression.
         /// </summary>
-        public String[] GetGroupNames()
+        public string[] GetGroupNames()
         {
-            String[] result;
+            string[] result;
 
             if (_capslist == null)
             {
                 int max = _capsize;
-                result = new String[max];
+                result = new string[max];
 
                 for (int i = 0; i < max; i++)
                 {
-                    result[i] = Convert.ToString(i, CultureInfo.InvariantCulture);
+                    result[i] = i.to_string();
                 }
             }
             else
             {
-                result = new String[_capslist.Length];
+                result = new string[_capslist.Length];
 
-                System.Array.Copy(_capslist, 0, result, 0, _capslist.Length);
+                //System.Array.Copy(_capslist, 0, result, 0, _capslist.Length);
             }
 
             return result;
@@ -347,21 +300,21 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Retrieves a group name that corresponds to a group number.
         /// </summary>
-        public String GroupNameFromNumber(int i)
+        public string GroupNameFromNumber(int i)
         {
             if (_capslist == null)
             {
                 if (i >= 0 && i < _capsize)
-                    return i.ToString(CultureInfo.InvariantCulture);
+                    return i.to_string();
 
-                return String.Empty;
+                return "";
             }
             else
             {
                 if (_caps != null)
                 {
                     if (!_caps.ContainsKey(i))
-                        return String.Empty;
+                        return "";
 
                     i = _caps[i];
                 }
@@ -369,7 +322,7 @@ namespace System.Text.RegularExpressions
                 if (i >= 0 && i < _capslist.Length)
                     return _capslist[i];
 
-                return String.Empty;
+                return "";
             }
         }
 
@@ -383,51 +336,9 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns a group number that corresponds to a group name.
         /// </summary>
-        public int GroupNumberFromName(String name)
+        public int GroupNumberFromName(string name)
         {
-            int result = -1;
-
-            if (name == null)
-                throw ArgumentNullException("name");
-
-            // look up name if we have a hashtable of names
-            if (_capnames != null)
-            {
-                if (!_capnames.ContainsKey(name))
-                    return -1;
-
-                return _capnames[name];
-            }
-
-            // convert to an int if it looks like a number
-            result = 0;
-            for (int i = 0; i < name.Length; i++)
-            {
-                char ch = name[i];
-
-                if (ch > '9' || ch < '0')
-                    return -1;
-
-                result *= 10;
-                result += (ch - '0');
-            }
-
-            // return int if it's in range
-            if (result >= 0 && result < _capsize)
-                return result;
-
-            return -1;
-        }
-
-        /*
-         * Static version of simple IsMatch call
-         */
-        /// <summary>
-        /// Searches the input string for one or more occurrences of the text supplied in the given pattern.
-        /// </summary>
-        public static bool IsMatch(String input, String pattern)
-        {
-            return IsMatch(input, pattern, RegexOptions.None, DefaultMatchTimeout);
+			return get_string_number (name);
         }
 
         /*
@@ -438,31 +349,14 @@ namespace System.Text.RegularExpressions
         /// supplied in the pattern parameter with matching options supplied in the options
         /// parameter.
         /// </summary>
-        public static bool IsMatch(String input, String pattern, RegexOptions options)
-        {
-            return IsMatch(input, pattern, options, DefaultMatchTimeout);
-        }
-
-        public static bool IsMatch(String input, String pattern, RegexOptions options, TimeSpan matchTimeout)
-        {
-            return new Regex(pattern, options, matchTimeout, true).IsMatch(input);
-        }
-
-        /*
-         * Returns true if the regex finds a match within the specified string
-         */
-        /// <summary>
-        /// Searches the input string for one or more matches using the previous pattern,
-        /// options, and starting position.
-        /// </summary>
-        public bool IsMatch(String input)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return IsMatch(input, UseOptionR() ? input.Length : 0);
-        }
-
+		public static bool IsMatch(	string input,
+									string pattern,
+									RegexOptions options = RegexOptions.None,
+									TimeSpan matchTimeout = DefaultMatchTimeout)
+		{
+			RegexCompileFlags flags = ConvertOptions (options);
+			return match_simple (pattern, input, flags);
+		}
         /*
          * Returns true if the regex finds a match after the specified position
          * (proceeding leftward if the regex is leftward and rightward otherwise)
@@ -471,25 +365,13 @@ namespace System.Text.RegularExpressions
         /// Searches the input string for one or more matches using the previous pattern and options,
         /// with a new starting position.
         /// </summary>
-        public bool IsMatch(String input, int startat)
+        /*
+        public bool IsMatch(string input)
+        public bool IsMatch(string input, int startat)
         {
-            if (input == null)
-                throw ArgumentNullException("input");
-
             return (null == Run(true, -1, input, 0, input.Length, startat));
         }
-
-        /*
-         * Static version of simple Match call
-         */
-        /// <summary>
-        /// Searches the input string for one or more occurrences of the text
-        /// supplied in the pattern parameter.
-        /// </summary>
-        public static Match Match(String input, String pattern)
-        {
-            return Match(input, pattern, RegexOptions.None, DefaultMatchTimeout);
-        }
+        */
 
         /*
          * Static version of simple Match call
@@ -499,48 +381,14 @@ namespace System.Text.RegularExpressions
         /// supplied in the pattern parameter. Matching is modified with an option
         /// string.
         /// </summary>
-        public static Match Match(String input, String pattern, RegexOptions options)
+
+        public static Match Match(string input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout)
         {
-            return Match(input, pattern, options, DefaultMatchTimeout);
+            GLib.Regex re;
+			RegexCompileFlags flags = ConvertOptions (options);
+			re = new Regex (pattern, flags);
+			return new Match (re, 0, input);
         }
-
-
-        public static Match Match(String input, String pattern, RegexOptions options, TimeSpan matchTimeout)
-        {
-            return new Regex(pattern, options, matchTimeout, true).Match(input);
-        }
-
-        /*
-         * Finds the first match for the regular expression starting at the beginning
-         * of the string (or at the end of the string if the regex is leftward)
-         */
-        /// <summary>
-        /// Matches a regular expression with a string and returns
-        /// the precise result as a RegexMatch object.
-        /// </summary>
-        public Match Match(String input)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Match(input, UseOptionR() ? input.Length : 0);
-        }
-
-        /*
-         * Finds the first match, starting at the specified position
-         */
-        /// <summary>
-        /// Matches a regular expression with a string and returns
-        /// the precise result as a RegexMatch object.
-        /// </summary>
-        public Match Match(String input, int startat)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Run(false, -1, input, 0, input.Length, startat);
-        }
-
         /*
          * Finds the first match, restricting the search to the specified interval of
          * the char array.
@@ -549,118 +397,58 @@ namespace System.Text.RegularExpressions
         /// Matches a regular expression with a string and returns the precise result as a
         /// RegexMatch object.
         /// </summary>
-        public Match Match(String input, int beginning, int length)
+        /*
+        public Match Match(string input)
+        public Match Match(string input, int startat)
+        public Match Match(string input, int beginning, int length)
         {
             if (input == null)
                 throw ArgumentNullException("input");
 
             return Run(false, -1, input, beginning, length, UseOptionR() ? beginning + length : beginning);
         }
-
+        */
         /*
          * Static version of simple Matches call
          */
         /// <summary>
         /// Returns all the successful matches as if Match were called iteratively numerous times.
         /// </summary>
-        public static MatchCollection Matches(String input, String pattern)
+        public static MatchCollection Matches(string input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout)
         {
-            return Matches(input, pattern, RegexOptions.None, DefaultMatchTimeout);
-        }
-
-        /*
-         * Static version of simple Matches call
-         */
-        /// <summary>
-        /// Returns all the successful matches as if Match were called iteratively numerous times.
-        /// </summary>
-        public static MatchCollection Matches(String input, String pattern, RegexOptions options)
-        {
-            return Matches(input, pattern, options, DefaultMatchTimeout);
-        }
-
-        public static MatchCollection Matches(String input, String pattern, RegexOptions options, TimeSpan matchTimeout)
-        {
-            return new Regex(pattern, options, matchTimeout, true).Matches(input);
-        }
-
-        /*
-         * Finds the first match for the regular expression starting at the beginning
-         * of the string Enumerator(or at the end of the string if the regex is leftward)
-         */
-        /// <summary>
-        /// Returns all the successful matches as if Match was called iteratively numerous times.
-        /// </summary>
-        public MatchCollection Matches(String input)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Matches(input, UseOptionR() ? input.Length : 0);
-        }
-
+            GLib.Regex re;
+			RegexCompileFlags flags = ConvertOptions (options);
+			re = new Regex (pattern, flags);
+			return new MatchCollection(re, input, 0, input.Length);
+		}
         /*
          * Finds the first match, starting at the specified position
          */
         /// <summary>
         /// Returns all the successful matches as if Match was called iteratively numerous times.
         /// </summary>
-        public MatchCollection Matches(String input, int startat)
+        /*
+        public MatchCollection Matches(string input)
+        public MatchCollection Matches(string input, int startat)
         {
             if (input == null)
                 throw ArgumentNullException("input");
 
             return new MatchCollection(this, input, 0, input.Length, startat);
         }
-
-        /// <summary>
-        /// Replaces all occurrences of the pattern with the <paramref name="replacement"/> pattern, starting at
-        /// the first character in the input string.
-        /// </summary>
-        public static String Replace(String input, String pattern, String replacement)
-        {
-            return Replace(input, pattern, replacement, RegexOptions.None, DefaultMatchTimeout);
-        }
-
+        */
         /// <summary>
         /// Replaces all occurrences of
         /// the <paramref name="pattern "/>with the <paramref name="replacement "/>
         /// pattern, starting at the first character in the input string.
         /// </summary>
-        public static String Replace(String input, String pattern, String replacement, RegexOptions options)
+
+        public static string Replace(string input, string pattern, string replacement, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout)
         {
-            return Replace(input, pattern, replacement, options, DefaultMatchTimeout);
-        }
-
-        public static String Replace(String input, String pattern, String replacement, RegexOptions options, TimeSpan matchTimeout)
-        {
-            return new Regex(pattern, options, matchTimeout, true).Replace(input, replacement);
-        }
-
-        /// <summary>
-        /// Replaces all occurrences of the previously defined pattern with the
-        /// <paramref name="replacement"/> pattern, starting at the first character in the
-        /// input string.
-        /// </summary>
-        public String Replace(String input, String replacement)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Replace(input, replacement, -1, UseOptionR() ? input.Length : 0);
-        }
-
-        /// <summary>
-        /// Replaces all occurrences of the previously defined pattern with the
-        /// <paramref name="replacement"/> pattern, starting at the first character in the
-        /// input string.
-        /// </summary>
-        public String Replace(String input, String replacement, int count)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Replace(input, replacement, count, UseOptionR() ? input.Length : 0);
+			GLib.Regex re;
+			RegexCompileFlags flags = ConvertOptions (options);
+			re = new Regex (pattern, flags);
+			return re.replace (input, input.length, 0, replacement);
         }
 
         /// <summary>
@@ -668,7 +456,10 @@ namespace System.Text.RegularExpressions
         /// <paramref name="replacement"/> pattern, starting at the character position
         /// <paramref name="startat"/>.
         /// </summary>
-        public String Replace(String input, String replacement, int count, int startat)
+        /*
+        public string Replace(string input, string replacement)
+        public string Replace(string input, string replacement, int count)
+        public string Replace(string input, string replacement, int count, int startat)
         {
             if (input == null)
                 throw ArgumentNullException("input");
@@ -686,140 +477,56 @@ namespace System.Text.RegularExpressions
 
             return repl.Replace(this, input, count, startat);
         }
-
-        /// <summary>
-        /// Replaces all occurrences of the <paramref name="pattern"/> with the recent
-        /// replacement pattern.
-        /// </summary>
-        public static String Replace(String input, String pattern, MatchEvaluator evaluator)
-        {
-            return Replace(input, pattern, evaluator, RegexOptions.None, DefaultMatchTimeout);
-        }
-
+        */
         /// <summary>
         /// Replaces all occurrences of the <paramref name="pattern"/> with the recent
         /// replacement pattern, starting at the first character.
         /// </summary>
-        public static String Replace(String input, String pattern, MatchEvaluator evaluator, RegexOptions options)
-        {
-            return Replace(input, pattern, evaluator, options, DefaultMatchTimeout);
-        }
-
-        public static String Replace(String input, String pattern, MatchEvaluator evaluator, RegexOptions options, TimeSpan matchTimeout)
+		/*
+        public static string ReplaceWithEval(string input, string pattern, MatchEvaluator evaluator, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout)
         {
             return new Regex(pattern, options, matchTimeout, true).Replace(input, evaluator);
         }
-
-        /// <summary>
-        /// Replaces all occurrences of the previously defined pattern with the recent
-        /// replacement pattern, starting at the first character position.
-        /// </summary>
-        public String Replace(String input, MatchEvaluator evaluator)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Replace(input, evaluator, -1, UseOptionR() ? input.Length : 0);
-        }
-
-        /// <summary>
-        /// Replaces all occurrences of the previously defined pattern with the recent
-        /// replacement pattern, starting at the first character position.
-        /// </summary>
-        public String Replace(String input, MatchEvaluator evaluator, int count)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Replace(input, evaluator, count, UseOptionR() ? input.Length : 0);
-        }
+        */
 
         /// <summary>
         /// Replaces all occurrences of the previously defined pattern with the recent
         /// replacement pattern, starting at the character position
         /// <paramref name="startat"/>.
         /// </summary>
-        public String Replace(String input, MatchEvaluator evaluator, int count, int startat)
+        /*
+        public string Replace(string input, MatchEvaluator evaluator, int count = 0, int startat = 0)
         {
             if (input == null)
                 throw ArgumentNullException("input");
 
             return RegexReplacement.Replace(evaluator, this, input, count, startat);
         }
-
-        /// <summary>
-        /// Splits the <paramref name="input "/>string at the position defined
-        /// by <paramref name="pattern"/>.
-        /// </summary>
-        public static String[] Split(String input, String pattern)
-        {
-            return Split(input, pattern, RegexOptions.None, DefaultMatchTimeout);
-        }
+        */
 
         /// <summary>
         /// Splits the <paramref name="input "/>string at the position defined by <paramref name="pattern"/>.
         /// </summary>
-        public static String[] Split(String input, String pattern, RegexOptions options)
+        public static string[] Split(string input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout)
         {
-            return Split(input, pattern, options, DefaultMatchTimeout);
-        }
-
-        public static String[] Split(String input, String pattern, RegexOptions options, TimeSpan matchTimeout)
-        {
-            return new Regex(pattern, options, matchTimeout, true).Split(input);
+			RegexCompileFlags flags = ConvertOptions (options);
+			return split_simple (pattern, input, flags);
         }
 
         /// <summary>
         /// Splits the <paramref name="input"/> string at the position defined by a
         /// previous pattern.
         /// </summary>
-        public String[] Split(String input)
+        public string[] SplitFull(string input, int count = -1, int startat = 0)
         {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return Split(input, 0, UseOptionR() ? input.Length : 0);
-        }
-
-        /// <summary>
-        /// Splits the <paramref name="input"/> string at the position defined by a
-        /// previous pattern.
-        /// </summary>
-        public String[] Split(String input, int count)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return RegexReplacement.Split(this, input, count, UseOptionR() ? input.Length : 0);
-        }
-
-        /// <summary>
-        /// Splits the <paramref name="input"/> string at the position defined by a
-        /// previous pattern.
-        /// </summary>
-        public String[] Split(String input, int count, int startat)
-        {
-            if (input == null)
-                throw ArgumentNullException("input");
-
-            return RegexReplacement.Split(this, input, count, startat);
-        }
-
-        internal void InitializeReferences()
-        {
-            if (_refsInitialized)
-                throw NotSupportedException(SR.OnlyAllowedOnce);
-
-            _refsInitialized = true;
-            _runnerref = new ExclusiveReference();
-            _replref = new SharedReference();
+			return split_full (input, count, startat);
         }
 
 
         /*
          * Internal worker called by all the public APIs
          */
-        internal Match Run(bool quick, int prevlen, String input, int beginning, int length, int startat)
+        internal Match Run(bool quick, int prevlen, string input, int beginning, int length, int startat)
         {
             Match match;
             RegexRunner runner = null;
@@ -946,7 +653,7 @@ namespace System.Text.RegularExpressions
     /*
      * Callback class
      */
-    public delegate String MatchEvaluator(Match match);
+    public delegate string MatchEvaluator(Match match);
 
     /*
      * Used as a key for CacheCodeEntry
@@ -966,12 +673,7 @@ namespace System.Text.RegularExpressions
 
         public override bool Equals(Object obj)
         {
-            return obj is CachedCodeEntryKey && Equals((CachedCodeEntryKey)obj);
-        }
-
-        public bool Equals(CachedCodeEntryKey other)
-        {
-            return this == other;
+            return obj is CachedCodeEntryKey && this == ((CachedCodeEntryKey)obj);
         }
 
 /*
@@ -1000,14 +702,14 @@ namespace System.Text.RegularExpressions
     {
         internal CachedCodeEntryKey _key;
         internal RegexCode _code;
-        internal Dictionary<Int32, Int32> _caps;
-        internal Dictionary<String, Int32> _capnames;
-        internal String[] _capslist;
+        internal Dictionary<int32, int32> _caps;
+        internal Dictionary<string, int32> _capnames;
+        internal string[] _capslist;
         internal int _capsize;
         internal ExclusiveReference _runnerref;
         internal SharedReference _replref;
 
-        internal CachedCodeEntry(CachedCodeEntryKey key, Dictionary<String, Int32> capnames, String[] capslist, RegexCode code, Dictionary<Int32, Int32> caps, int capsize, ExclusiveReference runner, SharedReference repl)
+        internal CachedCodeEntry(CachedCodeEntryKey key, Dictionary<string, int32> capnames, string[] capslist, RegexCode code, Dictionary<int32, int32> caps, int capsize, ExclusiveReference runner, SharedReference repl)
         {
             _key = key;
             _capnames = capnames;

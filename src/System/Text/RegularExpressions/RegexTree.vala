@@ -10,7 +10,7 @@ namespace System.Text.RegularExpressions
 {
     internal class RegexTree
     {
-        internal RegexTree(RegexNode root, Dictionary<Int32, Int32> caps, Int32[] capnumlist, int captop, Dictionary<String, Int32> capnames, String[] capslist, RegexOptions opts)
+        internal RegexTree(RegexNode root, Dictionary<int32, int32> caps, int32[] capnumlist, int captop, Dictionary<string, int32> capnames, string[] capslist, RegexOptions opts)
         {
             _root = root;
             _caps = caps;
@@ -22,10 +22,10 @@ namespace System.Text.RegularExpressions
         }
 
         internal   RegexNode _root;
-        internal   Dictionary<Int32, Int32> _caps;
-        internal   Int32[] _capnumlist;
-        internal   Dictionary<String, Int32> _capnames;
-        internal   String[] _capslist;
+        internal   Dictionary<int32, int32> _caps;
+        internal   int32[] _capnumlist;
+        internal   Dictionary<string, int32> _capnames;
+        internal   string[] _capslist;
         internal   RegexOptions _options;
         internal   int _captop;
 

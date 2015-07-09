@@ -45,6 +45,8 @@ def processFile (path):
 		data = re.sub('\s*(object)\s* ', " Object ", data)
 		data = re.sub('\#region', "", data)
 		data = re.sub('\#endregion', "", data)
+		data = re.sub('[\s\W]*String', "string", data)
+		data = re.sub('Int32', "int32", data)
 		data = re.sub(ur'\s*: base\s*\(([\w\W\s\S[\].=&\':/*]*?)\)\s*?\s*(?={){', baseReplace, data)
 		data = re.sub(ur'\s*: this\s*\(([\w\W\s\S[\].=&\':/*]*?)\)\s*?\s*(?={){', thisReplace, data)
 		data = re.sub(ur'\n\s*(\[[\w\W\S\s]*?\])', attrReplace, data)

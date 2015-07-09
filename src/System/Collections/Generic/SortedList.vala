@@ -51,7 +51,7 @@ namespace System.Collections.Generic
 // [DebuggerDisplay("Count = {Count}")]
 
     public class SortedList<TKey, TValue> :
-        IDictionary<TKey, TValue>, System.Collections.IDictionary, IReadOnlyDictionary<TKey, TValue>
+        Gee.TreeMap<TKey, TValue>, IDictionary<TKey, TValue>, System.Collections.IDictionary, IReadOnlyDictionary<TKey, TValue>
     {
         private TKey[] _keys;
         private TValue[] _values;
@@ -70,47 +70,15 @@ namespace System.Collections.Generic
         // required. The elements of the sorted list are ordered according to the
         // IComparable interface, which must be implemented by the keys of
         // all entries added to the sorted list.
-        public SortedList()
+        public SortedList(IComparer<TKey>* comparer = null)
         {
             _keys = Array.Empty<TKey>();
             _values = Array.Empty<TValue>();
             _size = 0;
-            _comparer = Comparer<TKey>.Default;
+            _comparer = (comparer == null) ? Comparer<TKey>.Default : comparer;
+            base (comparer);
         }
 
-        // Constructs a new sorted list. The sorted list is initially empty and has
-        // a capacity of zero. Upon adding the first element to the sorted list the
-        // capacity is increased to 16, and then increased in multiples of two as
-        // required. The elements of the sorted list are ordered according to the
-        // IComparable interface, which must be implemented by the keys of
-        // all entries added to the sorted list.
-        //
-        public SortedList(int capacity)
-        {
-            if (capacity < 0)
-                throw ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNumRequired);
-            _keys = new TKey[capacity];
-            _values = new TValue[capacity];
-            _comparer = Comparer<TKey>.Default;
-        }
-
-        // Constructs a new sorted list with a given IComparer
-        // implementation. The sorted list is initially empty and has a capacity of
-        // zero. Upon adding the first element to the sorted list the capacity is
-        // increased to 16, and then increased in multiples of two as required. The
-        // elements of the sorted list are ordered according to the given
-        // IComparer implementation. If comparer is null, the
-        // elements are compared to each other using the IComparable
-        // interface, which in that case must be implemented by the keys of all
-        // entries added to the sorted list.
-        // 
-        public SortedList(IComparer<TKey> comparer){
-			this();
-            if (comparer != null)
-            {
-                _comparer = comparer;
-            }
-        }
 
         // Constructs a new sorted dictionary with a given IComparer
         // implementation and a given initial capacity. The sorted list is
@@ -121,19 +89,9 @@ namespace System.Collections.Generic
         // the IComparable interface, which in that case must be implemented
         // by the keys of all entries added to the sorted list.
         // 
-        public SortedList(int capacity, IComparer<TKey> comparer){
+        public SortedList.WithCapacity(int capacity = DefaultCapacity, IComparer<TKey>* comparer = null){
 			this(comparer);
             Capacity = capacity;
-        }
-
-        // Constructs a new sorted list containing a copy of the entries in the
-        // given dictionary. The elements of the sorted list are ordered according
-        // to the IComparable interface, which must be implemented by the
-        // keys of all entries in the the given dictionary as well as keys
-        // subsequently added to the sorted list.
-        // 
-        public SortedList(IDictionary<TKey, TValue> dictionary){
-			this(dictionary, null);
         }
 
         // Constructs a new sorted list containing a copy of the entries in the
@@ -144,7 +102,7 @@ namespace System.Collections.Generic
         // by the keys of all entries in the the given dictionary as well as keys
         // subsequently added to the sorted list.
         // 
-        public SortedList(IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer){
+        public SortedList.WithDictionary(IDictionary<TKey, TValue> dictionary, IComparer<TKey>? comparer = null){
 			this((dictionary != null ? dictionary.Count : 0), comparer);
             if (dictionary == null)
                 throw ArgumentNullException("dictionary");
@@ -167,27 +125,11 @@ namespace System.Collections.Generic
             Insert(~i, key, value);
         }
 
-        void Add(KeyValuePair<TKey, TValue> keyValuePair)
-        {
-            Add(keyValuePair.Key, keyValuePair.Value);
-        }
-
-        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> keyValuePair)
+        bool Contains(KeyValuePair<TKey, TValue> keyValuePair)
         {
             int index = IndexOfKey(keyValuePair.Key);
             if (index >= 0 && EqualityComparer<TValue>.Default.Equals(_values[index], keyValuePair.Value))
             {
-                return true;
-            }
-            return false;
-        }
-
-        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> keyValuePair)
-        {
-            int index = IndexOfKey(keyValuePair.Key);
-            if (index >= 0 && EqualityComparer<TValue>.Default.Equals(_values[index], keyValuePair.Value))
-            {
-                RemoveAt(index);
                 return true;
             }
             return false;
@@ -243,34 +185,6 @@ namespace System.Collections.Generic
             }
         }
 
-        void System.Collections.IDictionary.Add(Object key, Object value)
-        {
-            if (key == null)
-            {
-                throw ArgumentNullException("key");
-            }
-
-            if (value == null && !(default(TValue) == null))
-                throw ArgumentNullException("value");
-
-            try
-            {
-                TKey tempKey = (TKey)key;
-
-                try
-                {
-                    Add(tempKey, (TValue)value);
-                }
-                catch (InvalidCastException e)
-                {
-                    throw ArgumentException(SR.Format(SR.Arg_WrongType, value, typeof(TValue)), "value");
-                }
-            }
-            catch (InvalidCastException e)
-            {
-                throw ArgumentException(SR.Format(SR.Arg_WrongType, key, typeof(TKey)), "key");
-            }
-        }
 
         // Returns the number of entries in this sorted list.
         // 
@@ -321,28 +235,23 @@ namespace System.Collections.Generic
             return _valueList;
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
+        bool IsReadOnly
         {
             get { return false; }
         }
 
-        bool System.Collections.IDictionary.IsReadOnly
+        bool IsFixedSize
         {
             get { return false; }
         }
 
-        bool System.Collections.IDictionary.IsFixedSize
-        {
-            get { return false; }
-        }
-
-        bool System.Collections.ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get { return false; }
         }
 
         // Synchronization root for this object.
-        Object System.Collections.ICollection.SyncRoot
+        Object SyncRoot
         {
             get
             {
@@ -366,15 +275,6 @@ namespace System.Collections.Generic
         }
 
 
-        bool System.Collections.IDictionary.Contains(Object key)
-        {
-            if (IsCompatibleKey(key))
-            {
-                return ContainsKey((TKey)key);
-            }
-            return false;
-        }
-
         // Checks if this sorted list contains an entry with the given key.
         // 
         public bool ContainsKey(TKey key)
@@ -394,7 +294,7 @@ namespace System.Collections.Generic
         }
 
         // Copies the values in this SortedList to an array.
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
             if (array == null)
             {
@@ -418,7 +318,7 @@ namespace System.Collections.Generic
             }
         }
 
-        void System.Collections.ICollection.CopyTo(Array array, int arrayIndex)
+        void CopyToArray(Array array, int arrayIndex)
         {
             if (array == null)
             {
@@ -455,7 +355,7 @@ namespace System.Collections.Generic
             }
             else
             {
-                object[] objects = array as object[];
+                Object[] objects = array as Object[];
                 if (objects == null)
                 {
                     throw ArgumentException(SR.Argument_InvalidArrayType);
@@ -468,7 +368,7 @@ namespace System.Collections.Generic
                         objects[i + arrayIndex] = new KeyValuePair<TKey, TValue>(_keys[i], _values[i]);
                     }
                 }
-                catch (ArrayTypeMismatchException)
+                catch (ArrayTypeMismatchException e)
                 {
                     throw ArgumentException(SR.Argument_InvalidArrayType);
                 }
@@ -506,21 +406,6 @@ namespace System.Collections.Generic
             return new Enumerator(this, Enumerator.KeyValuePair);
         }
 
-        IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
-        {
-            return new Enumerator(this, Enumerator.KeyValuePair);
-        }
-
-        System.Collections.IDictionaryEnumerator System.Collections.IDictionary.GetEnumerator()
-        {
-            return new Enumerator(this, Enumerator.DictEntry);
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(this, Enumerator.KeyValuePair);
-        }
-
 
         // Returns the key of the entry at the given index.
         // 
@@ -535,68 +420,26 @@ namespace System.Collections.Generic
         // given key is not found, the returned value is null.
         // 
         public TValue get (TKey key) {
-		{
-                int i = IndexOfKey(key);
-                if (i >= 0)
-                    return _values[i];
+			int i = IndexOfKey(key);
+			if (i >= 0)
+				return _values[i];
 
-                throw KeyNotFoundException();
-                // return default(TValue);
-            }
-            set
-            {
-                if (((Object)key) == null) throw ArgumentNullException("key");
-                int i = Array.BinarySearch<TKey>(_keys, 0, _size, key, _comparer);
-                if (i >= 0)
-                {
-                    _values[i] = value;
-                    _version++;
-                    return;
-                }
-                Insert(~i, key, value);
-            }
-        }
+			throw KeyNotFoundException();
+			// return default(TValue);
+		}
 
-        Object System.Collections.IDictionary. get (Object key) {
-		{
-                if (IsCompatibleKey(key))
-                {
-                    int i = IndexOfKey((TKey)key);
-                    if (i >= 0)
-                    {
-                        return _values[i];
-                    }
-                }
+        public void set (TKey key) {
+			if (((Object)key) == null) throw ArgumentNullException("key");
+			int i = Array.BinarySearch<TKey>(_keys, 0, _size, key, _comparer);
+			if (i >= 0)
+			{
+				_values[i] = value;
+				_version++;
+				return;
+			}
+			Insert(~i, key, value);
+		}
 
-                return null;
-            }
-            set
-            {
-                if (!IsCompatibleKey(key))
-                {
-                    throw ArgumentNullException("key");
-                }
-
-                if (value == null && !(default(TValue) == null))
-                    throw ArgumentNullException("value");
-
-                try
-                {
-                    TKey tempKey = (TKey)key;
-                    try
-                    { get (tempKey] = (TValue)value;
-                    }
-                    catch (InvalidCastException)
-                    {
-                        throw ArgumentException(SR.Format(SR.Arg_WrongType, value, typeof(TValue)), "value");
-                    }
-                }
-                catch (InvalidCastException)
-                {
-                    throw ArgumentException(SR.Format(SR.Arg_WrongType, key, typeof(TKey)), "key");
-                }
-            }
-        }
 
         // Returns the index of the entry with a given key in this sorted list. The
         // key is located through a binary search, and thus the average execution
@@ -681,14 +524,6 @@ namespace System.Collections.Generic
             return i >= 0;
         }
 
-        void System.Collections.IDictionary.Remove(Object key)
-        {
-            if (IsCompatibleKey(key))
-            {
-                Remove((TKey)key);
-            }
-        }
-
         // Sets the capacity of this sorted list to the size of the sorted list.
         // This method can be used to minimize a sorted list's memory overhead once
         // it is known that no new elements will be added to the sorted list. To
@@ -707,7 +542,7 @@ namespace System.Collections.Generic
             }
         }
 
-        private static bool IsCompatibleKey(Objectkey)
+        private static bool IsCompatibleKey(Object key)
         {
             if (key == null)
             {
@@ -717,8 +552,8 @@ namespace System.Collections.Generic
             return (key is TKey);
         }
 
-        /// <include file='doc\SortedList.uex' path='docs/doc[@for="SortedListEnumerator"]/*' />
-        private struct Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>, System.Collections.IDictionaryEnumerator
+        [Compact]
+        private class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>, System.Collections.IDictionaryEnumerator
         {
             private SortedList<TKey, TValue> _sortedList;
             private TKey _key;
@@ -748,7 +583,7 @@ namespace System.Collections.Generic
             }
 
 
-            Object System.Collections.IDictionaryEnumerator.Key
+            Object Key
             {
                 get
                 {
@@ -779,7 +614,7 @@ namespace System.Collections.Generic
                 return false;
             }
 
-            DictionaryEntry System.Collections.IDictionaryEnumerator.Entry
+            DictionaryEntry Entry
             {
                 get
                 {
@@ -800,27 +635,8 @@ namespace System.Collections.Generic
                 }
             }
 
-            Object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    if (_index == 0 || (_index == _sortedList.Count + 1))
-                    {
-                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
 
-                    if (_getEnumeratorRetType == DictEntry)
-                    {
-                        return new System.Collections.DictionaryEntry(_key, _value);
-                    }
-                    else
-                    {
-                        return new KeyValuePair<TKey, TValue>(_key, _value);
-                    }
-                }
-            }
-
-            Object System.Collections.IDictionaryEnumerator.Value
+            Object Value
             {
                 get
                 {
@@ -833,7 +649,7 @@ namespace System.Collections.Generic
                 }
             }
 
-            void System.Collections.IEnumerator.Reset()
+            void Reset()
             {
                 if (_version != _sortedList._version)
                 {
@@ -892,18 +708,6 @@ namespace System.Collections.Generic
                 }
             }
 
-            Object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    if (_index == 0 || (_index == _sortedList.Count + 1))
-                    {
-                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
-
-                    return _currentKey;
-                }
-            }
 
             void System.Collections.IEnumerator.Reset()
             {
@@ -962,20 +766,7 @@ namespace System.Collections.Generic
                 }
             }
 
-            Object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    if (_index == 0 || (_index == _sortedList.Count + 1))
-                    {
-                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
-
-                    return _currentValue;
-                }
-            }
-
-            void System.Collections.IEnumerator.Reset()
+            void Reset()
             {
                 if (_version != _sortedList._version)
                 {
@@ -1008,12 +799,12 @@ namespace System.Collections.Generic
                 get { return true; }
             }
 
-            bool System.Collections.ICollection.IsSynchronized
+            bool IsSynchronized
             {
                 get { return false; }
             }
 
-            Object System.Collections.ICollection.SyncRoot
+            Object SyncRoot
             {
                 get { return ((ICollection)_dict).SyncRoot; }
             }
@@ -1039,46 +830,21 @@ namespace System.Collections.Generic
                 Array.Copy(_dict._keys, 0, array, arrayIndex, _dict.Count);
             }
 
-            void System.Collections.ICollection.CopyTo(Array array, int arrayIndex)
-            {
-                if (array != null && array.Rank != 1)
-                    throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
-
-                try
-                {
-                    // defer error checking to Array.Copy
-                    Array.Copy(_dict._keys, 0, array, arrayIndex, _dict.Count);
-                }
-                catch (ArrayTypeMismatchException)
-                {
-                    throw ArgumentException(SR.Argument_InvalidArrayType);
-                }
-            }
-
             public void Insert(int index, TKey value)
             {
                 throw NotSupportedException(SR.NotSupported_SortedListNestedWrite);
             }
 
-            public TKey this[int index) {
-		{
+            public TKey get(int index) {
                     return _dict.GetKey(index);
-                }
-                set
-                {
-                    throw NotSupportedException(SR.NotSupported_KeyCollectionSet);
-                }
             }
+
 
             public IEnumerator<TKey> GetEnumerator()
             {
                 return new SortedListKeyEnumerator(_dict);
             }
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return new SortedListKeyEnumerator(_dict);
-            }
 
             public int IndexOf(TKey key)
             {
@@ -1125,12 +891,12 @@ namespace System.Collections.Generic
                 get { return true; }
             }
 
-            bool System.Collections.ICollection.IsSynchronized
+            bool IsSynchronized
             {
                 get { return false; }
             }
 
-            Object System.Collections.ICollection.SyncRoot
+            Object SyncRoot
             {
                 get { return ((ICollection)_dict).SyncRoot; }
             }
@@ -1156,43 +922,16 @@ namespace System.Collections.Generic
                 Array.Copy(_dict._values, 0, array, arrayIndex, _dict.Count);
             }
 
-            void System.Collections.ICollection.CopyTo(Array array, int arrayIndex)
-            {
-                if (array != null && array.Rank != 1)
-                    throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
-
-                try
-                {
-                    // defer error checking to Array.Copy
-                    Array.Copy(_dict._values, 0, array, arrayIndex, _dict.Count);
-                }
-                catch (ArrayTypeMismatchException)
-                {
-                    throw ArgumentException(SR.Argument_InvalidArrayType);
-                }
-            }
-
             public void Insert(int index, TValue value)
             {
                 throw NotSupportedException(SR.NotSupported_SortedListNestedWrite);
             }
 
             public TValue get (int index) {
-		{
-                    return _dict.GetByIndex(index);
-                }
-                set
-                {
-                    throw NotSupportedException(SR.NotSupported_SortedListNestedWrite);
-                }
+                return _dict.GetByIndex(index);
             }
 
             public IEnumerator<TValue> GetEnumerator()
-            {
-                return new SortedListValueEnumerator(_dict);
-            }
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
             {
                 return new SortedListValueEnumerator(_dict);
             }

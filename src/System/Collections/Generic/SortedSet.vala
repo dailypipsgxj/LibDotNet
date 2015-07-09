@@ -31,7 +31,7 @@ namespace System.Collections.Generic
     // For a detailed description of the algorithm, take a look at "Algorithm" by Rebert Sedgewick.
     //
 
-    internal delegate bool TreeWalkPredicate<T>(SortedSet<T>.Node node);
+    internal delegate bool TreeWalkPredicate<T>(SortedSet.Node node);
 
     internal enum TreeRotation
     {
@@ -46,7 +46,7 @@ namespace System.Collections.Generic
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class SortedSet<T> : ISet<T>, ICollection<T>, ICollection, IReadOnlyCollection<T>
+    public class SortedSet<T> : Gee.TreeMap<T>, ISet<T>, ICollection<T>, ICollection, IReadOnlyCollection<T>
     {
         private Node _root;
         private IComparer<T> _comparer;
@@ -56,12 +56,8 @@ namespace System.Collections.Generic
 
         internal const int StackAllocThreshold = 100;
 
-        public SortedSet()
-        {
-            _comparer = Comparer<T>.Default;
-        }
 
-        public SortedSet(IComparer<T> comparer)
+        public SortedSet(IComparer<T>? comparer = null)
         {
             if (comparer == null)
             {
@@ -74,86 +70,8 @@ namespace System.Collections.Generic
         }
 
 
-        public SortedSet(IEnumerable<T> collection){
-			this(collection, Comparer<T>.Default); }
-
-        public SortedSet(IEnumerable<T> collection, IComparer<T> comparer){
+        public SortedSet.FromCollection(IEnumerable<T> collection, IComparer<T>? comparer = null){
 			this(comparer);
-            if (collection == null)
-            {
-                throw ArgumentNullException("collection");
-            }
-
-            // these are   type checks in the mould of HashSet. It would have worked better
-            // with something like an ISorted<T> (we could make this work for SortedList.Keys etc)
-            SortedSet<T> baseSortedSet = collection as SortedSet<T>;
-            SortedSet<T> baseTreeSubSet = collection as TreeSubSet;
-            if (baseSortedSet != null && baseTreeSubSet == null && AreComparersEqual(this, baseSortedSet))
-            {
-                //breadth first traversal to recreate nodes
-                if (baseSortedSet.Count == 0)
-                {
-                    return;
-                }
-
-                //pre order way to replicate nodes
-                Stack<Node> theirStack = new Stack<SortedSet<T>.Node>(2 * log2(baseSortedSet.Count) + 2);
-                Stack<Node> myStack = new Stack<SortedSet<T>.Node>(2 * log2(baseSortedSet.Count) + 2);
-                Node theirCurrent = baseSortedSet._root;
-                Node myCurrent = (theirCurrent != null ? new SortedSet<T>.Node(theirCurrent.Item, theirCurrent.IsRed) : null);
-                _root = myCurrent;
-                while (theirCurrent != null)
-                {
-                    theirStack.Push(theirCurrent);
-                    myStack.Push(myCurrent);
-                    myCurrent.Left = (theirCurrent.Left != null ? new SortedSet<T>.Node(theirCurrent.Left.Item, theirCurrent.Left.IsRed) : null);
-                    theirCurrent = theirCurrent.Left;
-                    myCurrent = myCurrent.Left;
-                }
-                while (theirStack.Count != 0)
-                {
-                    theirCurrent = theirStack.Pop();
-                    myCurrent = myStack.Pop();
-                    Node theirRight = theirCurrent.Right;
-                    Node myRight = null;
-                    if (theirRight != null)
-                    {
-                        myRight = new SortedSet<T>.Node(theirRight.Item, theirRight.IsRed);
-                    }
-                    myCurrent.Right = myRight;
-
-                    while (theirRight != null)
-                    {
-                        theirStack.Push(theirRight);
-                        myStack.Push(myRight);
-                        myRight.Left = (theirRight.Left != null ? new SortedSet<T>.Node(theirRight.Left.Item, theirRight.Left.IsRed) : null);
-                        theirRight = theirRight.Left;
-                        myRight = myRight.Left;
-                    }
-                }
-                _count = baseSortedSet._count;
-            }
-            else
-            {
-                int count;
-                T[] els = EnumerableHelpers.ToArray(collection, out count);
-                if (count > 0)
-                {
-                    Array.Sort(els, 0, count, _comparer);
-                    int index = 1;
-                    for (int i = 1; i < count; i++)
-                    {
-                        if (comparer.Compare(els[i], els[i - 1]) != 0)
-                        {
-                            els[index++] = els[i];
-                        }
-                    }
-                    count = index;
-
-                    _root = ConstructRootFromSortedArray(els, 0, count - 1, null);
-                    _count = count;
-                }
-            }
         }
 
         private void AddAllElements(IEnumerable<T> collection)
@@ -195,13 +113,8 @@ namespace System.Collections.Generic
         // Return true if the entire tree has been walked. 
         // Otherwise returns false.
         //
-        internal bool InOrderTreeWalk(TreeWalkPredicate<T> action)
-        {
-            return InOrderTreeWalk(action, false);
-        }
-
         // Allows for the change in traversal direction. Reverse visits nodes in descending order 
-        internal virtual bool InOrderTreeWalk(TreeWalkPredicate<T> action, bool reverse)
+        internal virtual bool InOrderTreeWalk(TreeWalkPredicate<T> action, bool reverse = false)
         {
             if (_root == null)
             {
@@ -292,7 +205,7 @@ namespace System.Collections.Generic
             }
         }
 
-        bool ICollection<T>.IsReadOnly
+        bool IsReadOnly
         {
             get
             {
@@ -300,13 +213,15 @@ namespace System.Collections.Generic
             }
         }
 
-        bool ICollection.IsSynchronized
+        bool IsSynchronized
         {
             get
             {
                 return false;
             }
-        }ObjectICollection.SyncRoot
+        }
+        
+        Object SyncRoot
         {
             get
             {
@@ -318,8 +233,6 @@ namespace System.Collections.Generic
             }
         }
 
-        Subclass helpers
-
         //virtual function for subclass that needs to update count
         internal virtual void VersionCheck() { }
 
@@ -330,7 +243,6 @@ namespace System.Collections.Generic
             return true;
         }
 
-        ICollection<T> Members
         /// <summary>
         /// Add the value ITEM to the tree, returns true if added, false if duplicate 
         /// </summary>
@@ -338,11 +250,6 @@ namespace System.Collections.Generic
         public bool Add(T item)
         {
             return AddIfNotPresent(item);
-        }
-
-        void ICollection<T>.Add(T item)
-        {
-            AddIfNotPresent(item);
         }
 
 
@@ -607,13 +514,7 @@ namespace System.Collections.Generic
         }
 
 
-
-
-        public void CopyTo(T[] array) { CopyTo(array, 0, Count); }
-
-        public void CopyTo(T[] array, int index) { CopyTo(array, index, Count); }
-
-        public void CopyTo(T[] array, int index, int count)
+       public void CopyTo(T[] array, int index = 0, int count = Count)
         {
             if (array == null)
             {
@@ -640,7 +541,7 @@ namespace System.Collections.Generic
             //upper bound
             count += index;
 
-            InOrderTreeWalk(delegate (Node node)
+            InOrderTreeWalk((node) =>
             {
                 if (index >= count)
                 {
@@ -688,7 +589,7 @@ namespace System.Collections.Generic
             }
             else
             {
-                object[] objects = array as object[];
+                Object[] objects = array as Object[];
                 if (objects == null)
                 {
                     throw ArgumentException(SR.Argument_InvalidArrayType);
@@ -696,9 +597,9 @@ namespace System.Collections.Generic
 
                 try
                 {
-                    InOrderTreeWalk(delegate (Node node) { objects[index++] = node.Item; return true; });
+                    InOrderTreeWalk((node) => { objects[index++] = node.Item; return true; });
                 }
-                catch (ArrayTypeMismatchException)
+                catch (ArrayTypeMismatchException e)
                 {
                     throw ArgumentException(SR.Argument_InvalidArrayType);
                 }
@@ -707,27 +608,11 @@ namespace System.Collections.Generic
 
         
 
-        IEnumerable<T> members
         public Enumerator GetEnumerator()
         {
             return new Enumerator(this);
         }
 
-
-
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-        
-
-        Tree Specific Operations
 
         private static Node GetSibling(Node node, Node parent)
         {
@@ -900,13 +785,7 @@ namespace System.Collections.Generic
             return -1;
         }
 
-
-
-        internal Node FindRange(T from, T to)
-        {
-            return FindRange(from, to, true, true);
-        }
-        internal Node FindRange(T from, T to, bool lowerBoundActive, bool upperBoundActive)
+        internal Node FindRange(T from, T to, bool lowerBoundActive = true, bool upperBoundActive = true)
         {
             Node current = _root;
             while (current != null)
@@ -1073,10 +952,6 @@ namespace System.Collections.Generic
             return newArray;
         }
 
-
-        
-
-        ISet Members
 
         /// <summary>
         /// Transform this set into its union with the IEnumerable OTHER            
@@ -1437,7 +1312,7 @@ namespace System.Collections.Generic
         }
 
         //OTHER must be a sorted array
-        internal void SymmetricExceptWithSameEC(T[] other)
+        internal void SymmetricExceptWithSameECFromArray(T[] other)
         {
             if (other.Length == 0)
             {
@@ -1722,10 +1597,10 @@ namespace System.Collections.Generic
         /// because unfoundCount must be 0.</param>
         /// <returns></returns>
         // <SecurityKernel Critical="True" Ring="0">
-        // <UsesUnsafeCode Name="Local bitArrayPtr of type: Int32*" />
-        // <ReferencesCritical Name="Method: BitHelper..ctor(System.Int32*,System.Int32)" Ring="1" />
-        // <ReferencesCritical Name="Method: BitHelper.IsMarked(System.Int32):System.Boolean" Ring="1" />
-        // <ReferencesCritical Name="Method: BitHelper.MarkBit(System.Int32):System.Void" Ring="1" />
+        // <UsesUnsafeCode Name="Local bitArrayPtr of type: int32*" />
+        // <ReferencesCritical Name="Method: BitHelper..ctor(System.int32*,System.int32)" Ring="1" />
+        // <ReferencesCritical Name="Method: BitHelper.IsMarked(System.int32):System.Boolean" Ring="1" />
+        // <ReferencesCritical Name="Method: BitHelper.MarkBit(System.int32):System.Void" Ring="1" />
         // </SecurityKernel>
         private   ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
         {
@@ -1753,7 +1628,7 @@ namespace System.Collections.Generic
             BitHelper bitHelper;
             if (intArrayLength <= StackAllocThreshold)
             {
-                int* bitArrayPtr = stackalloc int[intArrayLength];
+                int* bitArrayPtr = int[intArrayLength];
                 bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
             }
             else
@@ -1801,7 +1676,7 @@ namespace System.Collections.Generic
             }
             List<T> matches = new List<T>(this.Count);
 
-            BreadthFirstTreeWalk(delegate (Node n)
+            BreadthFirstTreeWalk((n) =>
             {
                 if (match(n.Item))
                 {
@@ -1822,18 +1697,12 @@ namespace System.Collections.Generic
             return actuallyRemoved;
         }
 
-
-        
-
-        ISorted Members
-
-
         public T Min
         {
             get
             {
                 T ret = default(T);
-                InOrderTreeWalk(delegate (SortedSet<T>.Node n) { ret = n.Item; return false; });
+                InOrderTreeWalk((n) => { ret = n.Item; return false; });
                 return ret;
             }
         }
@@ -1843,7 +1712,7 @@ namespace System.Collections.Generic
             get
             {
                 T ret = default(T);
-                InOrderTreeWalk(delegate (SortedSet<T>.Node n) { ret = n.Item; return false; }, true);
+                InOrderTreeWalk((n) => { ret = n.Item; return false; }, true);
                 return ret;
             }
         }
@@ -1894,12 +1763,12 @@ namespace System.Collections.Generic
         internal class TreeSubSet : SortedSet<T>
         {
             private SortedSet<T> _underlying;
-            private T _min,_max;
+            private T _max;
             //these exist for unbounded collections
             //for instance, you could allow this subset to be defined for i>10. The set will throw if
             //anything <=10 is added, but there is no upperbound. These features Head(), Tail(), were punted
             //in the spec, and are not available, but the framework is there to make them available at some point.
-            private bool _lBoundActive,_uBoundActive;
+            private bool _uBoundActive;
             //used to see if the count is out of date            
 
 
@@ -1976,7 +1845,7 @@ namespace System.Collections.Generic
                 }
 
                 List<T> toRemove = new List<T>();
-                BreadthFirstTreeWalk(delegate (Node n) { toRemove.Add(n.Item); return true; });
+                BreadthFirstTreeWalk((n) => { toRemove.Add(n.Item); return true; });
                 while (toRemove.Count != 0)
                 {
                     _underlying.Remove(toRemove[toRemove.Count - 1]);
@@ -2094,7 +1963,7 @@ namespace System.Collections.Generic
                 return true;
             }
 
-            internal override SortedSet<T>.Node FindNode(T item)
+            internal override SortedSet.Node FindNode(T item)
             {
                 if (!IsWithinRange(item))
                 {
@@ -2139,7 +2008,7 @@ namespace System.Collections.Generic
                     _root = _underlying.FindRange(_min, _max, _lBoundActive, _uBoundActive);
                     _version = _underlying._version;
                     _count = 0;
-                    InOrderTreeWalk(delegate (Node n) { _count++; return true; });
+                    InOrderTreeWalk((n) => { _count++; return true; });
                 }
             }
 
@@ -2198,36 +2067,20 @@ namespace System.Collections.Generic
             }
         }
 // [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-
-        public struct Enumerator : IEnumerator<T>, IEnumerator
+		[Compact]
+        public class Enumerator : IEnumerator<T>, IEnumerator
         {
             private SortedSet<T> _tree;
             private int _version;
 
 
-            private Stack<SortedSet<T>.Node> _stack;
-            private SortedSet<T>.Node _current;
-            private static SortedSet<T>.Node s_dummyNode = new SortedSet<T>.Node(default(T));
+            private Stack<SortedSet.Node> _stack;
+            private SortedSet.Node _current;
+            private static SortedSet.Node s_dummyNode = new SortedSet.Node(default(T));
 
             private bool _reverse;
 
-            internal Enumerator(SortedSet<T> set)
-            {
-                _tree = set;
-                //this is a hack to make sure that the underlying subset has not been changed since
-                //TODO: more elegant way to ensure failfast on concurrency failures
-                _tree.VersionCheck();
-
-                _version = _tree._version;
-
-                // 2lg(n + 1) is the maximum height
-                _stack = new Stack<SortedSet<T>.Node>(2 * (int)SortedSet<T>.log2(set.Count + 1));
-                _current = null;
-                _reverse = false;
-                Intialize();
-            }
-
-            internal Enumerator(SortedSet<T> set, bool reverse)
+            internal Enumerator(SortedSet<T> set, bool reverse = false)
             {
                 _tree = set;
                 //this is a hack to make sure that the underlying subset has not been changed since
@@ -2236,7 +2089,7 @@ namespace System.Collections.Generic
                 _version = _tree._version;
 
                 // 2lg(n + 1) is the maximum height
-                _stack = new Stack<SortedSet<T>.Node>(2 * (int)SortedSet<T>.log2(set.Count + 1));
+                _stack = new Stack<SortedSet.Node>(2 * (int)SortedSet.log2(set.Count + 1));
                 _current = null;
                 _reverse = reverse;
                 Intialize();
@@ -2245,7 +2098,7 @@ namespace System.Collections.Generic
             private void Intialize()
             {
                 _current = null;
-                SortedSet<T>.Node node = _tree._root;
+                SortedSet.Node node = _tree._root;
                 Node next = null, other = null;
                 while (node != null)
                 {
@@ -2285,7 +2138,7 @@ namespace System.Collections.Generic
                 }
 
                 _current = _stack.Pop();
-                SortedSet<T>.Node node = (_reverse ? _current.Left : _current.Right);
+                SortedSet.Node node = (_reverse ? _current.Left : _current.Right);
                 Node next = null, other = null;
                 while (node != null)
                 {
@@ -2322,19 +2175,8 @@ namespace System.Collections.Generic
                     }
                     return default(T);
                 }
-            }ObjectIEnumerator.Current
-            {
-                get
-                {
-                    if (_current == null)
-                    {
-                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
-
-                    return _current.Item;
-                }
             }
-
+            
             internal bool NotStartedOrEnded
             {
                 get
@@ -2364,12 +2206,11 @@ namespace System.Collections.Generic
 
         internal struct ElementCount
         {
-            internal int uniqueCount;
-            internal int unfoundCount;
+            int uniqueCount;
+            int unfoundCount;
         }
         
 
-        misc
         // used for set checking operations (using enumerables) that rely on counting
         private static int log2(int value)
         {
@@ -2397,20 +2238,11 @@ namespace System.Collections.Generic
         private IComparer<T> _comparer;
         private IEqualityComparer<T> _eqComparer;
 
-        public SortedSetEqualityComparer(){
-			this(null, null); }
-
-        public SortedSetEqualityComparer(IComparer<T> comparer){
-			this(comparer, null); }
-
-        public SortedSetEqualityComparer(IEqualityComparer<T> memberEqualityComparer){
-			this(null, memberEqualityComparer); }
-
         /// <summary>
         /// Create a new SetEqualityComparer, given a comparer for member order and another for member equality (these
         /// must be consistent in their definition of equality)
         /// </summary>        
-        public SortedSetEqualityComparer(IComparer<T> comparer, IEqualityComparer<T> memberEqualityComparer)
+        public SortedSetEqualityComparer(IComparer<T>? comparer = null, IEqualityComparer<T>? memberEqualityComparer = null)
         {
             if (comparer == null)
                 _comparer = Comparer<T>.Default;
@@ -2443,20 +2275,5 @@ namespace System.Collections.Generic
             return hashCode;
         }
 
-        // Equals method for the comparer itself. 
-        public override bool Equals(Object obj)
-        {
-            SortedSetEqualityComparer<T> comparer = obj as SortedSetEqualityComparer<T>;
-            if (comparer == null)
-            {
-                return false;
-            }
-            return (_comparer == comparer._comparer);
-        }
-
-        public override int GetHashCode()
-        {
-            return _comparer.GetHashCode() ^ _eqComparer.GetHashCode();
-        }
     }
 }

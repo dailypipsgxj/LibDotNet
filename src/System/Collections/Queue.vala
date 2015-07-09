@@ -22,7 +22,7 @@ namespace System.Collections
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class Queue : ICollection
+    public class Queue : Gee.PriorityQueue, ICollection
     {
         private Object[] _array;
         private int _head;       // First valid element in the queue
@@ -35,23 +35,10 @@ namespace System.Collections
         private const int _MinimumGrow = 4;
         private const int _ShrinkThreshold = 32;
 
-        // Creates a queue with room for capacity objects. The default initial
-        // capacity and grow factor are used.
-        public Queue(){
-			this(32, (float)2.0);
-        }
-
-        // Creates a queue with room for capacity objects. The default grow factor
-        // is used.
-        //
-        public Queue(int capacity){
-			this(capacity, (float)2.0);
-        }
-
         // Creates a queue with room for capacity objects. When full, the new
         // capacity is set to the old capacity * growFactor.
         //
-        public Queue(int capacity, float growFactor)
+        public Queue(int capacity = 32, float growFactor = 2.0)
         {
             if (capacity < 0)
                 throw ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNum);
@@ -64,16 +51,14 @@ namespace System.Collections
             _tail = 0;
             _size = 0;
             _growFactor = (int)(growFactor * 100);
+            base();
         }
 
         // Fills a Queue with the elements of an ICollection.  Uses the enumerator
         // to get each of the elements.
         //
-        public Queue(ICollection col){
-			this((col == null ? 32 : col.Count));
-            if (col == null)
-                throw ArgumentNullException("col");
-            Contract.EndContractBlock();
+        public Queue.WithCollection(ICollection col){
+			this(col.Count);
             IEnumerator en = col.GetEnumerator();
             while (en.MoveNext())
                 Enqueue(en.Current);

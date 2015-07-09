@@ -20,12 +20,12 @@ namespace System.Collections.Specialized
             return new Hashtable(StringComparer.CurrentCultureIgnoreCase);
         }
 
-        public static Hashtable CreateCaseInsensitiveHashtable(int capacity)
+        public static Hashtable CreateCaseInsensitiveHashtableWithCapacity(int capacity)
         {
-            return new Hashtable(capacity, StringComparer.CurrentCultureIgnoreCase);
+            return new Hashtable.WithCapacity(capacity, StringComparer.CurrentCultureIgnoreCase);
         }
 
-        public static Hashtable CreateCaseInsensitiveHashtable(IDictionary d)
+        public static Hashtable CreateCaseInsensitiveHashtableFromDictionary(IDictionary d)
         {
             return new Hashtable(d, StringComparer.CurrentCultureIgnoreCase);
         }

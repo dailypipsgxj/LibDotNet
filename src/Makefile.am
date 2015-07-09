@@ -20,7 +20,8 @@ libdotnet_la_SOURCES = $(LIBDOTNET_SOURCES)
 libdotnet_la_LDFLAGS = 
 	
 libdotnet_la_VALAFLAGS =  \
-	--library libdotnet-0.1 --vapi libdotnet-0.1.vapi -H libdotnet.h
+	--library libdotnet-0.1 --vapi libdotnet-0.1.vapi -H libdotnet.h \
+	--pkg gobject-2.0 --pkg gee-0.8
 
 libdotnet_la_LIBADD = $(LIBDOTNET_LIBS)
 

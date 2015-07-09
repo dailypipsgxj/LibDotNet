@@ -14,11 +14,11 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Capture
     {
-        internal String _text;
+        internal string _text;
         internal int _index;
         internal int _length;
 
-        internal Capture(String text, int i, int l)
+        internal Capture(string text, int i, int l)
         {
             _text = text;
             _index = i;
@@ -61,7 +61,7 @@ namespace System.Text.RegularExpressions
         {
             get
             {
-                return _text.Substring(_index, _length);
+                return _text.SubString(_index, _length);
             }
         }
 
@@ -71,7 +71,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the substring that was matched.
         /// </summary>
-        override public String ToString()
+        public override string ToString()
         {
             return Value;
         }
@@ -79,7 +79,7 @@ namespace System.Text.RegularExpressions
         /*
          * The original string
          */
-        internal String GetOriginalString()
+        internal string GetOriginalString()
         {
             return _text;
         }
@@ -87,21 +87,21 @@ namespace System.Text.RegularExpressions
         /*
          * The substring to the left of the capture
          */
-        internal String GetLeftSubstring()
+        internal string GetLeftSubString()
         {
-            return _text.Substring(0, _index);
+            return _text.SubString(0, _index);
         }
 
         /*
          * The substring to the right of the capture
          */
-        internal String GetRightSubstring()
+        internal string GetRightSubString()
         {
-            return _text.Substring(_index + _length, _text.Length - _index - _length);
+            return _text.SubString(_index + _length, _text.Length - _index - _length);
         }
 
 #if DEBUG
-        internal virtual String Description()
+        internal virtual string Description()
         {
             StringBuilder Sb = new StringBuilder();
 

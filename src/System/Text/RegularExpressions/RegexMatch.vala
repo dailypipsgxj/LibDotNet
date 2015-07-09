@@ -35,7 +35,7 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Match : Group
     {
-        internal static Match s_empty = new Match(null, 1, String.Empty, 0, 0, 0);
+        internal static Match s_empty = new Match(null, 1, string.Empty, 0, 0, 0);
         internal GroupCollection _groupcoll;
 
         // input to the match
@@ -62,7 +62,7 @@ namespace System.Text.RegularExpressions
             }
         }
 
-        internal Match(Regex regex, int capcount, String text, int begpos, int len, int startpos){
+        internal Match(Regex regex, int capcount, string text, int begpos, int len, int startpos){
 			base(text, new int[2], 0);
             _regex = regex;
             _matchcount = new int[capcount];
@@ -82,7 +82,7 @@ namespace System.Text.RegularExpressions
         /*
          * Nonpublic set-text method
          */
-        internal virtual void Reset(Regex regex, String text, int textbeg, int textend, int textstart)
+        internal virtual void Reset(Regex regex, string text, int textbeg, int textend, int textstart)
         {
             _regex = regex;
             _text = text;
@@ -125,37 +125,22 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the expansion of the passed replacement pattern. For
         /// example, if the replacement pattern is ?$1$2?, Result returns the concatenation
-        /// of Group(1).ToString() and Group(2).ToString().
+        /// of Group(1).Tostring() and Group(2).Tostring().
         /// </summary>
-        public virtual String Result(String replacement)
+        public virtual string Result(string replacement)
         {
-            RegexReplacement repl;
 
-            if (replacement == null)
-                throw ArgumentNullException("replacement");
-
-            if (_regex == null)
-                throw NotSupportedException(SR.NoResultOnFailed);
-
-            repl = (RegexReplacement)_regex._replref.Get();
-
-            if (repl == null || !repl.Pattern.Equals(replacement))
-            {
-                repl = RegexParser.ParseReplacement(replacement, _regex._caps, _regex._capsize, _regex._capnames, _regex._roptions);
-                _regex._replref.Cache(repl);
-            }
-
-            return repl.Replacement(this);
+            return replacement;
         }
 
         /*
          * Used by the replacement code
          */
-        internal virtual String GroupToStringImpl(int groupnum)
+        internal virtual string GroupTostringImpl(int groupnum)
         {
             int c = _matchcount[groupnum];
             if (c == 0)
-                return String.Empty;
+                return string.Empty;
 
             int[] matches = _matches[groupnum];
 
@@ -165,9 +150,9 @@ namespace System.Text.RegularExpressions
         /*
          * Used by the replacement code
          */
-        internal String LastGroupToStringImpl()
+        internal string LastGroupTostringImpl()
         {
-            return GroupToStringImpl(_matchcount.Length - 1);
+            return GroupTostringImpl(_matchcount.Length - 1);
         }
 
 
@@ -378,16 +363,16 @@ namespace System.Text.RegularExpressions
 
             for (i = 0; i < _matchcount.Length; i++)
             {
-                System.Diagnostics.Debug.WriteLine("Capnum " + i.ToString(CultureInfo.InvariantCulture) + ":");
+                System.Diagnostics.Debug.WriteLine("Capnum " + i.Tostring(CultureInfo.InvariantCulture) + ":");
 
                 for (j = 0; j < _matchcount[i]; j++)
                 {
-                    String text = "";
+                    string text = "";
 
                     if (_matches[i][j * 2] >= 0)
                         text = _text.Substring(_matches[i][j * 2], _matches[i][j * 2 + 1]);
 
-                    System.Diagnostics.Debug.WriteLine("  (" + _matches[i][j * 2].ToString(CultureInfo.InvariantCulture) + "," + _matches[i][j * 2 + 1].ToString(CultureInfo.InvariantCulture) + ") " + text);
+                    System.Diagnostics.Debug.WriteLine("  (" + _matches[i][j * 2].Tostring(CultureInfo.InvariantCulture) + "," + _matches[i][j * 2 + 1].Tostring(CultureInfo.InvariantCulture) + ") " + text);
                 }
             }
         }
@@ -402,13 +387,13 @@ namespace System.Text.RegularExpressions
     internal class MatchSparse : Match
     {
         // the lookup hashtable
-        internal Dictionary<Int32, Int32> _caps = new Dictionary<Int32, Int32> ();
+        internal Gee.HashMap<int32, int32> _caps = new Gee.HashMap<int32, int32> ();
 
         /*
          * Nonpublic constructor
          */
-        internal MatchSparse(Regex regex, Dictionary<Int32, Int32> caps, int capcount,
-                             String text, int begpos, int len, int startpos){
+        internal MatchSparse(Regex regex, Dictionary<int32, int32> caps, int capcount,
+                             string text, int begpos, int len, int startpos){
 			base(regex, capcount, text, begpos, len, startpos);
             _caps = caps;
         }
@@ -431,7 +416,7 @@ namespace System.Text.RegularExpressions
             {
                 foreach (KeyValuePair<int, int> kvp in _caps)
                 {
-                    System.Diagnostics.Debug.WriteLine("Slot " + kvp.Key.ToString() + " -> " + kvp.Value.ToString());
+                    System.Diagnostics.Debug.WriteLine("Slot " + kvp.Key.Tostring() + " -> " + kvp.Value.Tostring());
                 }
             }
 

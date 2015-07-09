@@ -20,9 +20,7 @@ namespace System.Collections.Generic
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class Stack<T> : IEnumerable<T>,
-        System.Collections.ICollection,
-        IReadOnlyCollection<T>
+    public class Stack<T> : Gee.LinkedList<T>, IEnumerable<T>,System.Collections.ICollection, IReadOnlyCollection<T>
     {
         private T[] _array;     // Storage for stack elements
         private int _size;           // Number of items in the stack.
@@ -31,27 +29,20 @@ namespace System.Collections.Generic
 
         private const int DefaultCapacity = 4;
 
-        /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.Stack"]/*' />
-        public Stack()
-        {
-            _array = Array.Empty<T>();
-        }
-
         // Create a stack with a specific initial capacity.  The initial capacity
         // must be a non-negative number.
-        /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.Stack1"]/*' />
-        public Stack(int capacity)
+        public Stack(int capacity = DefaultCapacity)
         {
             if (capacity < 0)
                 throw ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNumRequired);
-            _array = new T[capacity];
+			base ();
         }
 
         // Fills a Stack with the contents of a particular collection.  The items are
         // pushed onto the stack in the same order they are read by the enumerator.
         //
         /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.Stack2"]/*' />
-        public Stack(IEnumerable<T> collection)
+        public Stack.FromCollection(IEnumerable<T> collection)
         {
             if (collection == null)
                 throw ArgumentNullException("collection");
@@ -71,7 +62,7 @@ namespace System.Collections.Generic
         }
 
         /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.SyncRoot"]/*' />
-        Object System.Collections.ICollection.SyncRoot
+        Object SyncRoot
         {
             get
             {
@@ -185,13 +176,6 @@ namespace System.Collections.Generic
             }
         }
 
-        // Returns an IEnumerator for this Stack.
-        /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.GetEnumerator"]/*' />
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-
         /// <include file='doc\Stack.uex' path='docs/doc[@for="Stack.IEnumerable.GetEnumerator"]/*' />
         /// <internalonly/>
         IEnumerator<T> GetEnumerator()
@@ -265,8 +249,8 @@ namespace System.Collections.Generic
 
         /// <include file='doc\Stack.uex' path='docs/doc[@for="StackEnumerator"]/*' />
 // [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-
-        public struct Enumerator : IEnumerator<T>, System.Collections.IEnumerator
+		[Compact]
+        public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
             private Stack<T> _stack;
             private int _index;

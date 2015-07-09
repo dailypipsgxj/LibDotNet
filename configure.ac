@@ -54,12 +54,9 @@ AM_CONDITIONAL(NATIVE_WIN32, test x"$native_win32" = "xyes")
 LT_INIT([win32-dll])
 
 
-pkg_modules="gobject-2.0 "
+pkg_modules="gobject-2.0 gee-0.8"
 AC_SUBST(pkg_modules)
-PKG_CHECK_MODULES(LIBDOTNET, [gobject-2.0 ])
-
-
-
+PKG_CHECK_MODULES(LIBDOTNET, [gobject-2.0, gee-0.8])
 
 
 AC_OUTPUT([

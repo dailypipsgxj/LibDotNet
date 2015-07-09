@@ -1,6 +1,4 @@
 LIBDOTNET_SOURCES = \
-	System/Text/RegularExpressions/RegexFCD.vala \
-	System/Text/RegularExpressions/RegexNode.vala \
 	System/Text/RegularExpressions/RegexMatch.vala \
 	System/Text/RegularExpressions/RegexMatchCollection.vala \
 	System/Text/RegularExpressions/Regex.vala \
@@ -8,15 +6,8 @@ LIBDOTNET_SOURCES = \
 	System/Text/RegularExpressions/RegexOptions.vala \
 	System/Text/RegularExpressions/RegexCode.vala \
 	System/Text/RegularExpressions/RegexGroupCollection.vala \
-	System/Text/RegularExpressions/RegexParser.vala \
 	System/Text/RegularExpressions/RegexTree.vala \
-	System/Text/RegularExpressions/RegexWriter.vala \
-	System/Text/RegularExpressions/RegexReplacement.vala \
-	System/Text/RegularExpressions/RegexInterpreter.vala \
-	System/Text/RegularExpressions/RegexRunner.vala \
-	System/Text/RegularExpressions/RegexCharClass.vala \
 	System/Text/RegularExpressions/RegexCaptureCollection.vala \
-	System/Text/RegularExpressions/RegexBoyerMoore.vala \
 	System/Text/RegularExpressions/RegexMatchTimeoutException.vala \
 	System/Text/RegularExpressions/RegexCapture.vala \
 	System/Collections/Hashtable.vala \
@@ -33,17 +24,17 @@ LIBDOTNET_SOURCES = \
 	System/Collections/DictionaryBase.vala \
 	System/Collections/Specialized/CollectionsUtil.vala \
 	System/Collections/Generic/SortedDictionary.vala \
-	System/Collections/Generic/QueueDebugView.vala \
 	System/Collections/Generic/Stack.vala \
-	System/Collections/Generic/StackDebugView.vala \
 	System/Collections/Generic/SortedList.vala \
 	System/Collections/Generic/HashSet.vala \
 	System/Collections/Generic/Queue.vala \
 	System/Collections/Generic/SortedSet.vala \
-	System/Collections/Generic/IDictionaryDebugView.vala \
-	System/Collections/Generic/BitHelper.vala \
-	System/Collections/Generic/ICollectionDebugView.vala \
 	System/Collections/Generic/LinkedList.vala \
 	System/Linq/Errors.vala \
 	System/Linq/Enumerable.vala \
-	System/IO/InvalidDataException.vala
+	System/IO/InvalidDataException.vala \
+	System/Globalization/Globalization.vala \
+	System/Diagnostics/Diagnostics.vala \
+	System/Runtime/Runtime.vala \
+	System/Security/Security.vala \
+	System/Threading/Threading.vala 

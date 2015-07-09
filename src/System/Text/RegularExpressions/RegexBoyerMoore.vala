@@ -21,7 +21,7 @@ namespace System.Text.RegularExpressions
         private   int[] _positive;
         private   int[] _negativeASCII;
         private   int[][] _negativeUnicode;
-        private   String _pattern;
+        private   string _pattern;
         private   int _lowASCII;
         private   int _highASCII;
         private   bool _rightToLeft;
@@ -32,7 +32,7 @@ namespace System.Text.RegularExpressions
         /// Constructs a Boyer-Moore state machine for searching for the string
         /// pattern. The string must not be zero-length.
         /// </summary>
-        internal RegexBoyerMoore(String pattern, bool caseInsensitive, bool rightToLeft, CultureInfo culture)
+        internal RegexBoyerMoore(string pattern, bool caseInsensitive, bool rightToLeft, CultureInfo culture)
         {
             // Sorry, you just can't use Boyer-Moore to find an empty pattern.
             // We're doing this for your own protection. (Really, for speed.)
@@ -52,10 +52,10 @@ namespace System.Text.RegularExpressions
             // consistent.
             if (caseInsensitive)
             {
-                StringBuilder sb = StringBuilderCache.Acquire(pattern.Length);
+                stringBuilder sb = stringBuilderCache.Acquire(pattern.Length);
                 for (int i = 0; i < pattern.Length; i++)
                     sb.Append(culture.TextInfo.ToLower(pattern[i]));
-                pattern = StringBuilderCache.GetStringAndRelease(sb);
+                pattern = stringBuilderCache.GetstringAndRelease(sb);
             }
 
             _pattern = pattern;
@@ -240,14 +240,14 @@ namespace System.Text.RegularExpressions
             }
             else
             {
-                return (0 == String.CompareOrdinal(_pattern, 0, text, index, _pattern.Length));
+                return (0 == string.CompareOrdinal(_pattern, 0, text, index, _pattern.Length));
             }
         }
 
         /// <summary>
         /// When a regex is anchored, we can do a quick IsMatch test instead of a Scan
         /// </summary>
-        internal bool IsMatch(String text, int index, int beglimit, int endlimit)
+        internal bool IsMatch(string text, int index, int beglimit, int endlimit)
         {
             if (!_rightToLeft)
             {
@@ -273,7 +273,7 @@ namespace System.Text.RegularExpressions
         /// The direction and case-sensitivity of the match is determined
         /// by the arguments to the RegexBoyerMoore constructor.
         /// </summary>
-        internal int Scan(String text, int index, int beglimit, int endlimit)
+        internal int Scan(string text, int index, int beglimit, int endlimit)
         {
             int test;
             int test2;
@@ -372,21 +372,21 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Used when dumping for debugging.
         /// </summary>
-        public override String ToString()
+        public override string Tostring()
         {
             return _pattern;
         }
 
 #if DEBUG
-        public String Dump(String indent)
+        public string Dump(string indent)
         {
-            StringBuilder sb = new StringBuilder();
+            stringBuilder sb = new stringBuilder();
 
             sb.Append(indent + "BM Pattern: " + _pattern + "\n");
             sb.Append(indent + "Positive: ");
             for (int i = 0; i < _positive.Length; i++)
             {
-                sb.Append(_positive[i].ToString(CultureInfo.InvariantCulture) + " ");
+                sb.Append(_positive[i].Tostring(CultureInfo.InvariantCulture) + " ");
             }
             sb.Append("\n");
 
@@ -397,12 +397,12 @@ namespace System.Text.RegularExpressions
                 {
                     if (_negativeASCII[i] != _pattern.Length)
                     {
-                        sb.Append(indent + "  " + Regex.Escape(Convert.ToString((char)i, CultureInfo.InvariantCulture)) + " " + _negativeASCII[i].ToString(CultureInfo.InvariantCulture) + "\n");
+                        sb.Append(indent + "  " + Regex.Escape(Convert.Tostring((char)i, CultureInfo.InvariantCulture)) + " " + _negativeASCII[i].Tostring(CultureInfo.InvariantCulture) + "\n");
                     }
                 }
             }
 
-            return sb.ToString();
+            return sb.Tostring();
         }
 #endif
     }

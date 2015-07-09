@@ -8,9 +8,9 @@ using System.Threading;
 
 namespace System.Linq
 {
-    public static class Enumerable
+    public class Enumerable
     {
-        public static IEnumerable<TSource> Where<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static IEnumerable<TSource> Where<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -20,24 +20,17 @@ namespace System.Linq
             return new WhereEnumerableIterator<TSource>(source, predicate);
         }
 
-        public static IEnumerable<TSource> Where<TSource>(this IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (predicate == null) throw Error.ArgumentNull("predicate");
-            return WhereIterator<TSource>(source, predicate);
-        }
-
         private static IEnumerable<TSource> WhereIterator<TSource>(IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
         {
             int index = -1;
             foreach (TSource element in source)
             {
-                checked { index++; }
+                //checked = { index++; }
                 if (predicate(element, index)) yield return element;
             }
         }
 
-        public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        public static IEnumerable<TResult> Select<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (selector == null) throw Error.ArgumentNull("selector");
@@ -47,19 +40,13 @@ namespace System.Linq
             return new WhereSelectEnumerableIterator<TSource, TResult>(source, null, selector);
         }
 
-        public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (selector == null) throw Error.ArgumentNull("selector");
-            return SelectIterator<TSource, TResult>(source, selector);
-        }
 
         private static IEnumerable<TResult> SelectIterator<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
         {
             int index = -1;
             foreach (TSource element in source)
             {
-                checked { index++; }
+                //checked { index++; }
                 yield return selector(element, index);
             }
         }
@@ -147,17 +134,9 @@ namespace System.Linq
             public virtual TSource[] ToArray()
             {
                 return new Buffer<TSource>(this, queryInterfaces: false).ToArray();
-            }ObjectIEnumerator.Current
-            {
-                get { return Current; }
             }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
-
-            void IEnumerator.Reset()
+            
+            void Reset()
             {
                 throw NotImplemented.ByDesign;
             }
@@ -194,7 +173,7 @@ namespace System.Linq
                     case 1:
                         _enumerator = _source.GetEnumerator();
                         state = 2;
-                        goto case 2;
+                        //goto case 2;
                     case 2:
                         while (_enumerator.MoveNext())
                         {
@@ -275,7 +254,7 @@ namespace System.Linq
         {
             private List<TSource> _source;
             private Func<TSource, bool> _predicate;
-            private List<TSource>.Enumerator _enumerator;
+            private List.Enumerator _enumerator;
 
             public WhereListIterator(List<TSource> source, Func<TSource, bool> predicate)
             {
@@ -295,7 +274,7 @@ namespace System.Linq
                     case 1:
                         _enumerator = _source.GetEnumerator();
                         state = 2;
-                        goto case 2;
+                        //goto case 2;
                     case 2:
                         while (_enumerator.MoveNext())
                         {
@@ -357,7 +336,7 @@ namespace System.Linq
                     case 1:
                         _enumerator = _source.GetEnumerator();
                         state = 2;
-                        goto case 2;
+                        //goto case 2;
                     case 2:
                         while (_enumerator.MoveNext())
                         {
@@ -456,7 +435,7 @@ namespace System.Linq
             private List<TSource> _source;
             private Func<TSource, bool> _predicate;
             private Func<TSource, TResult> _selector;
-            private List<TSource>.Enumerator _enumerator;
+            private List.Enumerator _enumerator;
 
             public WhereSelectListIterator(List<TSource> source, Func<TSource, bool> predicate, Func<TSource, TResult> selector)
             {
@@ -477,7 +456,7 @@ namespace System.Linq
                     case 1:
                         _enumerator = _source.GetEnumerator();
                         state = 2;
-                        goto case 2;
+                        //goto case 2;
                     case 2:
                         while (_enumerator.MoveNext())
                         {
@@ -521,89 +500,9 @@ namespace System.Linq
             }
         }
 
-        //public static IEnumerable<TSource> Where<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate) {
-        //    if (source == null) throw Error.ArgumentNull("source");
-        //    if (predicate == null) throw Error.ArgumentNull("predicate");
-        //    return WhereIterator<TSource>(source, predicate);
-        //}
 
-        //static IEnumerable<TSource> WhereIterator<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate) {
-        //    foreach (TSource element in source) {
-        //        if (predicate(element)) yield return element;
-        //    }
-        //}
 
-        //public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector) {
-        //    if (source == null) throw Error.ArgumentNull("source");
-        //    if (selector == null) throw Error.ArgumentNull("selector");
-        //    return SelectIterator<TSource, TResult>(source, selector);
-        //}
-
-        //static IEnumerable<TResult> SelectIterator<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector) {
-        //    foreach (TSource element in source) {
-        //        yield return selector(element);
-        //    }
-        //}
-
-        public static IEnumerable<TResult> SelectMany<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, IEnumerable<TResult>> selector)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (selector == null) throw Error.ArgumentNull("selector");
-            return SelectManyIterator<TSource, TResult>(source, selector);
-        }
-
-        private static IEnumerable<TResult> SelectManyIterator<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, IEnumerable<TResult>> selector)
-        {
-            foreach (TSource element in source)
-            {
-                foreach (TResult subElement in selector(element))
-                {
-                    yield return subElement;
-                }
-            }
-        }
-
-        public static IEnumerable<TResult> SelectMany<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, IEnumerable<TResult>> selector)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (selector == null) throw Error.ArgumentNull("selector");
-            return SelectManyIterator<TSource, TResult>(source, selector);
-        }
-
-        private static IEnumerable<TResult> SelectManyIterator<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, int, IEnumerable<TResult>> selector)
-        {
-            int index = -1;
-            foreach (TSource element in source)
-            {
-                checked { index++; }
-                foreach (TResult subElement in selector(element, index))
-                {
-                    yield return subElement;
-                }
-            }
-        }
-        public static IEnumerable<TResult> SelectMany<TSource, TCollection, TResult>(this IEnumerable<TSource> source, Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (collectionSelector == null) throw Error.ArgumentNull("collectionSelector");
-            if (resultSelector == null) throw Error.ArgumentNull("resultSelector");
-            return SelectManyIterator<TSource, TCollection, TResult>(source, collectionSelector, resultSelector);
-        }
-
-        private static IEnumerable<TResult> SelectManyIterator<TSource, TCollection, TResult>(IEnumerable<TSource> source, Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
-        {
-            int index = -1;
-            foreach (TSource element in source)
-            {
-                checked { index++; }
-                foreach (TCollection subElement in collectionSelector(element, index))
-                {
-                    yield return resultSelector(element, subElement);
-                }
-            }
-        }
-
-        public static IEnumerable<TResult> SelectMany<TSource, TCollection, TResult>(this IEnumerable<TSource> source, Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
+        public static IEnumerable<TResult> SelectMany<TSource, TCollection, TResult>( IEnumerable<TSource> source, Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (collectionSelector == null) throw Error.ArgumentNull("collectionSelector");
@@ -622,7 +521,7 @@ namespace System.Linq
             }
         }
 
-        public static IEnumerable<TSource> Take<TSource>(this IEnumerable<TSource> source, int count)
+        public static IEnumerable<TSource> Take<TSource>( IEnumerable<TSource> source, int count)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return TakeIterator<TSource>(source, count);
@@ -640,23 +539,7 @@ namespace System.Linq
             }
         }
 
-        public static IEnumerable<TSource> TakeWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (predicate == null) throw Error.ArgumentNull("predicate");
-            return TakeWhileIterator<TSource>(source, predicate);
-        }
-
-        private static IEnumerable<TSource> TakeWhileIterator<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
-        {
-            foreach (TSource element in source)
-            {
-                if (!predicate(element)) break;
-                yield return element;
-            }
-        }
-
-        public static IEnumerable<TSource> TakeWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
+        public static IEnumerable<TSource> TakeWhile<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -668,13 +551,13 @@ namespace System.Linq
             int index = -1;
             foreach (TSource element in source)
             {
-                checked { index++; }
+                //checked { index++; }
                 if (!predicate(element, index)) break;
                 yield return element;
             }
         }
 
-        public static IEnumerable<TSource> Skip<TSource>(this IEnumerable<TSource> source, int count)
+        public static IEnumerable<TSource> Skip<TSource>( IEnumerable<TSource> source, int count)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return SkipIterator<TSource>(source, count);
@@ -682,39 +565,14 @@ namespace System.Linq
 
         private static IEnumerable<TSource> SkipIterator<TSource>(IEnumerable<TSource> source, int count)
         {
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                while (count > 0 && e.MoveNext()) count--;
-                if (count <= 0)
+            IEnumerator<TSource> e = source.GetEnumerator();
+            while (count > 0 && e.MoveNext()) count--;
+            if (count <= 0)
                 {
                     while (e.MoveNext()) yield return e.Current;
                 }
-            }
         }
 
-        public static IEnumerable<TSource> SkipWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (predicate == null) throw Error.ArgumentNull("predicate");
-            return SkipWhileIterator<TSource>(source, predicate);
-        }
-
-        private static IEnumerable<TSource> SkipWhileIterator<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
-        {
-            bool yielding = false;
-            foreach (TSource element in source)
-            {
-                if (!yielding && !predicate(element)) yielding = true;
-                if (yielding) yield return element;
-            }
-        }
-
-        public static IEnumerable<TSource> SkipWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (predicate == null) throw Error.ArgumentNull("predicate");
-            return SkipWhileIterator<TSource>(source, predicate);
-        }
 
         private static IEnumerable<TSource> SkipWhileIterator<TSource>(IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
         {
@@ -722,23 +580,13 @@ namespace System.Linq
             bool yielding = false;
             foreach (TSource element in source)
             {
-                checked { index++; }
+                //checked { index++; }
                 if (!yielding && !predicate(element, index)) yielding = true;
                 if (yielding) yield return element;
             }
         }
 
-        public static IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
-        {
-            if (outer == null) throw Error.ArgumentNull("outer");
-            if (inner == null) throw Error.ArgumentNull("inner");
-            if (outerKeySelector == null) throw Error.ArgumentNull("outerKeySelector");
-            if (innerKeySelector == null) throw Error.ArgumentNull("innerKeySelector");
-            if (resultSelector == null) throw Error.ArgumentNull("resultSelector");
-            return JoinIterator<TOuter, TInner, TKey, TResult>(outer, inner, outerKeySelector, innerKeySelector, resultSelector, null);
-        }
-
-        public static IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        public static IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>( IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
         {
             if (outer == null) throw Error.ArgumentNull("outer");
             if (inner == null) throw Error.ArgumentNull("inner");
@@ -764,17 +612,7 @@ namespace System.Linq
             }
         }
 
-        public static IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector)
-        {
-            if (outer == null) throw Error.ArgumentNull("outer");
-            if (inner == null) throw Error.ArgumentNull("inner");
-            if (outerKeySelector == null) throw Error.ArgumentNull("outerKeySelector");
-            if (innerKeySelector == null) throw Error.ArgumentNull("innerKeySelector");
-            if (resultSelector == null) throw Error.ArgumentNull("resultSelector");
-            return GroupJoinIterator<TOuter, TInner, TKey, TResult>(outer, inner, outerKeySelector, innerKeySelector, resultSelector, null);
-        }
-
-        public static IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        public static IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>( IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
         {
             if (outer == null) throw Error.ArgumentNull("outer");
             if (inner == null) throw Error.ArgumentNull("inner");
@@ -793,91 +631,35 @@ namespace System.Linq
             }
         }
 
-        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            return new OrderedEnumerable<TSource, TKey>(source, keySelector, null, false);
-        }
-
-        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>( IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
             return new OrderedEnumerable<TSource, TKey>(source, keySelector, comparer, false);
         }
 
-        public static IOrderedEnumerable<TSource> OrderByDescending<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            return new OrderedEnumerable<TSource, TKey>(source, keySelector, null, true);
-        }
-
-        public static IOrderedEnumerable<TSource> OrderByDescending<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        public static IOrderedEnumerable<TSource> OrderByDescending<TSource, TKey>( IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
             return new OrderedEnumerable<TSource, TKey>(source, keySelector, comparer, true);
         }
 
-        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            return source.CreateOrderedEnumerable<TKey>(keySelector, null, false);
-        }
-
-        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>( IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return source.CreateOrderedEnumerable<TKey>(keySelector, comparer, false);
         }
 
-        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            return source.CreateOrderedEnumerable<TKey>(keySelector, null, true);
-        }
 
-        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>( IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return source.CreateOrderedEnumerable<TKey>(keySelector, comparer, true);
         }
 
-        public static IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            return new GroupedEnumerable<TSource, TKey, TSource>(source, keySelector, IdentityFunction<TSource>.Instance, null);
-        }
-
-        public static IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
-        {
-            return new GroupedEnumerable<TSource, TKey, TSource>(source, keySelector, IdentityFunction<TSource>.Instance, comparer);
-        }
-
-        public static IEnumerable<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
-        {
-            return new GroupedEnumerable<TSource, TKey, TElement>(source, keySelector, elementSelector, null);
-        }
-
-        public static IEnumerable<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
-        {
-            return new GroupedEnumerable<TSource, TKey, TElement>(source, keySelector, elementSelector, comparer);
-        }
-
-        public static IEnumerable<TResult> GroupBy<TSource, TKey, TResult>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector)
-        {
-            return new GroupedEnumerable<TSource, TKey, TSource, TResult>(source, keySelector, IdentityFunction<TSource>.Instance, resultSelector, null);
-        }
-
-        public static IEnumerable<TResult> GroupBy<TSource, TKey, TElement, TResult>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
-        {
-            return new GroupedEnumerable<TSource, TKey, TElement, TResult>(source, keySelector, elementSelector, resultSelector, null);
-        }
-
-        public static IEnumerable<TResult> GroupBy<TSource, TKey, TResult>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
-        {
-            return new GroupedEnumerable<TSource, TKey, TSource, TResult>(source, keySelector, IdentityFunction<TSource>.Instance, resultSelector, comparer);
-        }
-
-        public static IEnumerable<TResult> GroupBy<TSource, TKey, TElement, TResult>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        public static IEnumerable<TResult> GroupBy<TSource, TKey, TElement, TResult>( IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
         {
             return new GroupedEnumerable<TSource, TKey, TElement, TResult>(source, keySelector, elementSelector, resultSelector, comparer);
         }
 
-        public static IEnumerable<TSource> Concat<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
+        public static IEnumerable<TSource> Concat<TSource>( IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             if (first == null) throw Error.ArgumentNull("first");
             if (second == null) throw Error.ArgumentNull("second");
@@ -890,7 +672,7 @@ namespace System.Linq
             foreach (TSource element in second) yield return element;
         }
 
-        public static IEnumerable<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
+        public static IEnumerable<TResult> Zip<TFirst, TSecond, TResult>( IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
         {
             if (first == null) throw Error.ArgumentNull("first");
             if (second == null) throw Error.ArgumentNull("second");
@@ -900,20 +682,14 @@ namespace System.Linq
 
         private static IEnumerable<TResult> ZipIterator<TFirst, TSecond, TResult>(IEnumerable<TFirst> first, IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
         {
-            using (IEnumerator<TFirst> e1 = first.GetEnumerator())
-            using (IEnumerator<TSecond> e2 = second.GetEnumerator())
+            IEnumerator<TFirst> e1 = first.GetEnumerator();
+            IEnumerator<TSecond> e2 = second.GetEnumerator();
                 while (e1.MoveNext() && e2.MoveNext())
                     yield return resultSelector(e1.Current, e2.Current);
         }
 
 
-        public static IEnumerable<TSource> Distinct<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            return DistinctIterator<TSource>(source, null);
-        }
-
-        public static IEnumerable<TSource> Distinct<TSource>(this IEnumerable<TSource> source, IEqualityComparer<TSource> comparer)
+        public static IEnumerable<TSource> Distinct<TSource>( IEnumerable<TSource> source, IEqualityComparer<TSource> comparer)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return DistinctIterator<TSource>(source, comparer);
@@ -926,14 +702,7 @@ namespace System.Linq
                 if (set.Add(element)) yield return element;
         }
 
-        public static IEnumerable<TSource> Union<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
-        {
-            if (first == null) throw Error.ArgumentNull("first");
-            if (second == null) throw Error.ArgumentNull("second");
-            return UnionIterator<TSource>(first, second, null);
-        }
-
-        public static IEnumerable<TSource> Union<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
+        public static IEnumerable<TSource> Union<TSource>( IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
         {
             if (first == null) throw Error.ArgumentNull("first");
             if (second == null) throw Error.ArgumentNull("second");
@@ -949,14 +718,7 @@ namespace System.Linq
                 if (set.Add(element)) yield return element;
         }
 
-        public static IEnumerable<TSource> Intersect<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
-        {
-            if (first == null) throw Error.ArgumentNull("first");
-            if (second == null) throw Error.ArgumentNull("second");
-            return IntersectIterator<TSource>(first, second, null);
-        }
-
-        public static IEnumerable<TSource> Intersect<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
+        public static IEnumerable<TSource> Intersect<TSource>( IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
         {
             if (first == null) throw Error.ArgumentNull("first");
             if (second == null) throw Error.ArgumentNull("second");
@@ -971,14 +733,7 @@ namespace System.Linq
                 if (set.Remove(element)) yield return element;
         }
 
-        public static IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
-        {
-            if (first == null) throw Error.ArgumentNull("first");
-            if (second == null) throw Error.ArgumentNull("second");
-            return ExceptIterator<TSource>(first, second, null);
-        }
-
-        public static IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
+        public static IEnumerable<TSource> Except<TSource>( IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
         {
             if (first == null) throw Error.ArgumentNull("first");
             if (second == null) throw Error.ArgumentNull("second");
@@ -993,7 +748,7 @@ namespace System.Linq
                 if (set.Add(element)) yield return element;
         }
 
-        public static IEnumerable<TSource> Reverse<TSource>(this IEnumerable<TSource> source)
+        public static IEnumerable<TSource> Reverse<TSource>( IEnumerable<TSource> source)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return ReverseIterator<TSource>(source);
@@ -1005,18 +760,13 @@ namespace System.Linq
             for (int i = buffer.count - 1; i >= 0; i--) yield return buffer.items[i];
         }
 
-        public static bool SequenceEqual<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
+        public static bool SequenceEqual<TSource>( IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
         {
-            return SequenceEqual<TSource>(first, second, null);
-        }
-
-        public static bool SequenceEqual<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
-        {
-            if (comparer == null) comparer = EqualityComparer<TSource>.Default;
+            if (comparer == null) comparer = EqualityComparer.Default;
             if (first == null) throw Error.ArgumentNull("first");
             if (second == null) throw Error.ArgumentNull("second");
-            using (IEnumerator<TSource> e1 = first.GetEnumerator())
-            using (IEnumerator<TSource> e2 = second.GetEnumerator())
+            IEnumerator<TSource> e1 = first.GetEnumerator();
+            IEnumerator<TSource> e2 = second.GetEnumerator();
             {
                 while (e1.MoveNext())
                 {
@@ -1027,39 +777,24 @@ namespace System.Linq
             return true;
         }
 
-        public static IEnumerable<TSource> AsEnumerable<TSource>(this IEnumerable<TSource> source)
+        public static IEnumerable<TSource> AsEnumerable<TSource>( IEnumerable<TSource> source)
         {
             return source;
         }
 
-        public static TSource[] ToArray<TSource>(this IEnumerable<TSource> source)
+        public static TSource[] ToArray<TSource>( IEnumerable<TSource> source)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return new Buffer<TSource>(source).ToArray();
         }
 
-        public static List<TSource> ToList<TSource>(this IEnumerable<TSource> source)
+        public static List<TSource> ToList<TSource>( IEnumerable<TSource> source)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return new List<TSource>(source);
         }
 
-        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            return ToDictionary<TSource, TKey, TSource>(source, keySelector, IdentityFunction<TSource>.Instance, null);
-        }
-
-        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
-        {
-            return ToDictionary<TSource, TKey, TSource>(source, keySelector, IdentityFunction<TSource>.Instance, comparer);
-        }
-
-        public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
-        {
-            return ToDictionary<TSource, TKey, TElement>(source, keySelector, elementSelector, null);
-        }
-
-        public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
+        public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>( IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (keySelector == null) throw Error.ArgumentNull("keySelector");
@@ -1069,32 +804,12 @@ namespace System.Linq
             return d;
         }
 
-        public static ILookup<TKey, TSource> ToLookup<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            return Lookup<TKey, TSource>.Create(source, keySelector, IdentityFunction<TSource>.Instance, null);
-        }
-
-        public static ILookup<TKey, TSource> ToLookup<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
-        {
-            return Lookup<TKey, TSource>.Create(source, keySelector, IdentityFunction<TSource>.Instance, comparer);
-        }
-
-        public static ILookup<TKey, TElement> ToLookup<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
-        {
-            return Lookup<TKey, TElement>.Create(source, keySelector, elementSelector, null);
-        }
-
-        public static ILookup<TKey, TElement> ToLookup<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
+        public static ILookup<TKey, TElement> ToLookup<TSource, TKey, TElement>( IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
         {
             return Lookup<TKey, TElement>.Create(source, keySelector, elementSelector, comparer);
         }
 
-        public static IEnumerable<TSource> DefaultIfEmpty<TSource>(this IEnumerable<TSource> source)
-        {
-            return DefaultIfEmpty(source, default(TSource));
-        }
-
-        public static IEnumerable<TSource> DefaultIfEmpty<TSource>(this IEnumerable<TSource> source, TSource defaultValue)
+        public static IEnumerable<TSource> DefaultIfEmpty<TSource>( IEnumerable<TSource> source, TSource defaultValue)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return DefaultIfEmptyIterator<TSource>(source, defaultValue);
@@ -1102,23 +817,21 @@ namespace System.Linq
 
         private static IEnumerable<TSource> DefaultIfEmptyIterator<TSource>(IEnumerable<TSource> source, TSource defaultValue)
         {
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                if (e.MoveNext())
-                {
-                    do
-                    {
-                        yield return e.Current;
-                    } while (e.MoveNext());
-                }
-                else
-                {
-                    yield return defaultValue;
-                }
-            }
+            IEnumerator<TSource> e = source.GetEnumerator();
+			if (e.MoveNext())
+			{
+				do
+				{
+					yield return e.Current;
+				} while (e.MoveNext());
+			}
+			else
+			{
+				yield return defaultValue;
+			}
         }
 
-        public static IEnumerable<TResult> OfType<TResult>(this IEnumerable source)
+        public static IEnumerable<TResult> OfType<TResult>( IEnumerable source)
         {
             if (source == null) throw Error.ArgumentNull("source");
             return OfTypeIterator<TResult>(source);
@@ -1126,13 +839,13 @@ namespace System.Linq
 
         private static IEnumerable<TResult> OfTypeIterator<TResult>(IEnumerable source)
         {
-            foreach (Objectobj in source)
+            foreach (Object obj in source)
             {
                 if (obj is TResult) yield return (TResult)obj;
             }
         }
 
-        public static IEnumerable<TResult> Cast<TResult>(this IEnumerable source)
+        public static IEnumerable<TResult> Cast<TResult>( IEnumerable source)
         {
             IEnumerable<TResult> typedSource = source as IEnumerable<TResult>;
             if (typedSource != null) return typedSource;
@@ -1142,28 +855,11 @@ namespace System.Linq
 
         private static IEnumerable<TResult> CastIterator<TResult>(IEnumerable source)
         {
-            foreach (Objectobj in source) yield return (TResult)obj;
+            foreach (Object obj in source) yield return (TResult)obj;
         }
 
-        public static TSource First<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            IList<TSource> list = source as IList<TSource>;
-            if (list != null)
-            {
-                if (list.Count > 0) return list[0];
-            }
-            else
-            {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
-                {
-                    if (e.MoveNext()) return e.Current;
-                }
-            }
-            throw Error.NoElements();
-        }
 
-        public static TSource First<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static TSource First<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1174,25 +870,8 @@ namespace System.Linq
             throw Error.NoMatch();
         }
 
-        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            IList<TSource> list = source as IList<TSource>;
-            if (list != null)
-            {
-                if (list.Count > 0) return list[0];
-            }
-            else
-            {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
-                {
-                    if (e.MoveNext()) return e.Current;
-                }
-            }
-            return default(TSource);
-        }
 
-        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static TSource FirstOrDefault<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1203,34 +882,7 @@ namespace System.Linq
             return default(TSource);
         }
 
-        public static TSource Last<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            IList<TSource> list = source as IList<TSource>;
-            if (list != null)
-            {
-                int count = list.Count;
-                if (count > 0) return list[count - 1];
-            }
-            else
-            {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
-                {
-                    if (e.MoveNext())
-                    {
-                        TSource result;
-                        do
-                        {
-                            result = e.Current;
-                        } while (e.MoveNext());
-                        return result;
-                    }
-                }
-            }
-            throw Error.NoElements();
-        }
-
-        public static TSource Last<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static TSource Last<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1248,34 +900,7 @@ namespace System.Linq
             throw Error.NoMatch();
         }
 
-        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            IList<TSource> list = source as IList<TSource>;
-            if (list != null)
-            {
-                int count = list.Count;
-                if (count > 0) return list[count - 1];
-            }
-            else
-            {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
-                {
-                    if (e.MoveNext())
-                    {
-                        TSource result;
-                        do
-                        {
-                            result = e.Current;
-                        } while (e.MoveNext());
-                        return result;
-                    }
-                }
-            }
-            return default(TSource);
-        }
-
-        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static TSource LastOrDefault<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1290,31 +915,8 @@ namespace System.Linq
             return result;
         }
 
-        public static TSource Single<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            IList<TSource> list = source as IList<TSource>;
-            if (list != null)
-            {
-                switch (list.Count)
-                {
-                    case 0: throw Error.NoElements();
-                    case 1: return list[0];
-                }
-            }
-            else
-            {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
-                {
-                    if (!e.MoveNext()) throw Error.NoElements();
-                    TSource result = e.Current;
-                    if (!e.MoveNext()) return result;
-                }
-            }
-            throw Error.MoreThanOneElement();
-        }
 
-        public static TSource Single<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static TSource Single<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1325,7 +927,7 @@ namespace System.Linq
                 if (predicate(element))
                 {
                     result = element;
-                    checked { count++; }
+                    //checked { count++; }
                 }
             }
             switch (count)
@@ -1336,31 +938,7 @@ namespace System.Linq
             throw Error.MoreThanOneMatch();
         }
 
-        public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            IList<TSource> list = source as IList<TSource>;
-            if (list != null)
-            {
-                switch (list.Count)
-                {
-                    case 0: return default(TSource);
-                    case 1: return list[0];
-                }
-            }
-            else
-            {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
-                {
-                    if (!e.MoveNext()) return default(TSource);
-                    TSource result = e.Current;
-                    if (!e.MoveNext()) return result;
-                }
-            }
-            throw Error.MoreThanOneElement();
-        }
-
-        public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static TSource SingleOrDefault<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1371,7 +949,7 @@ namespace System.Linq
                 if (predicate(element))
                 {
                     result = element;
-                    checked { count++; }
+                    //checked { count++; }
                 }
             }
             switch (count)
@@ -1382,24 +960,22 @@ namespace System.Linq
             throw Error.MoreThanOneMatch();
         }
 
-        public static TSource ElementAt<TSource>(this IEnumerable<TSource> source, int index)
+        public static TSource ElementAt<TSource>( IEnumerable<TSource> source, int index)
         {
             if (source == null) throw Error.ArgumentNull("source");
             IList<TSource> list = source as IList<TSource>;
             if (list != null) return list[index];
             if (index < 0) throw Error.ArgumentOutOfRange("index");
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                while (true)
-                {
-                    if (!e.MoveNext()) throw Error.ArgumentOutOfRange("index");
-                    if (index == 0) return e.Current;
-                    index--;
-                }
-            }
+            IEnumerator<TSource> e = source.GetEnumerator();
+			while (true)
+			{
+				if (!e.MoveNext()) throw Error.ArgumentOutOfRange("index");
+				if (index == 0) return e.Current;
+				index--;
+			}
         }
 
-        public static TSource ElementAtOrDefault<TSource>(this IEnumerable<TSource> source, int index)
+        public static TSource ElementAtOrDefault<TSource>( IEnumerable<TSource> source, int index)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (index >= 0)
@@ -1411,15 +987,13 @@ namespace System.Linq
                 }
                 else
                 {
-                    using (IEnumerator<TSource> e = source.GetEnumerator())
-                    {
-                        while (true)
-                        {
-                            if (!e.MoveNext()) break;
-                            if (index == 0) return e.Current;
-                            index--;
-                        }
-                    }
+                    IEnumerator<TSource> e = source.GetEnumerator();
+					while (true)
+					{
+						if (!e.MoveNext()) break;
+						if (index == 0) return e.Current;
+						index--;
+					}
                 }
             }
             return default(TSource);
@@ -1428,7 +1002,7 @@ namespace System.Linq
         public static IEnumerable<int> Range(int start, int count)
         {
             long max = ((long)start) + count - 1;
-            if (count < 0 || max > Int32.MaxValue) throw Error.ArgumentOutOfRange("count");
+            if (count < 0 || max > int32.MaxValue) throw Error.ArgumentOutOfRange("count");
             return RangeIterator(start, count);
         }
 
@@ -1453,16 +1027,7 @@ namespace System.Linq
             return EmptyEnumerable<TResult>.Instance;
         }
 
-        public static bool Any<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                return e.MoveNext();
-            }
-        }
-
-        public static bool Any<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static bool Any<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1473,7 +1038,7 @@ namespace System.Linq
             return false;
         }
 
-        public static bool All<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static bool All<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
@@ -1484,107 +1049,47 @@ namespace System.Linq
             return true;
         }
 
-        public static int Count<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            ICollection<TSource> collectionoft = source as ICollection<TSource>;
-            if (collectionoft != null) return collectionoft.Count;
-            ICollection collection = source as ICollection;
-            if (collection != null) return collection.Count;
-            int count = 0;
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                checked
-                {
-                    while (e.MoveNext()) count++;
-                }
-            }
-            return count;
-        }
-
-        public static int Count<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static int Count<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
             int count = 0;
             foreach (TSource element in source)
             {
-                checked
-                {
+                //checked
+                //{
                     if (predicate(element)) count++;
-                }
+                //}
             }
             return count;
         }
 
-        public static long LongCount<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long count = 0;
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                checked
-                {
-                    while (e.MoveNext()) count++;
-                }
-            }
-            return count;
-        }
-
-        public static long LongCount<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static long LongCount<TSource>( IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (predicate == null) throw Error.ArgumentNull("predicate");
             long count = 0;
             foreach (TSource element in source)
             {
-                checked
-                {
+                //checked
+                //{
                     if (predicate(element)) count++;
-                }
+                //}
             }
             return count;
         }
 
-        public static bool Contains<TSource>(this IEnumerable<TSource> source, TSource value)
-        {
-            ICollection<TSource> collection = source as ICollection<TSource>;
-            if (collection != null) return collection.Contains(value);
-            return Contains<TSource>(source, value, null);
-        }
 
-        public static bool Contains<TSource>(this IEnumerable<TSource> source, TSource value, IEqualityComparer<TSource> comparer)
+        public static bool Contains<TSource>( IEnumerable<TSource> source, TSource value, IEqualityComparer<TSource> comparer)
         {
-            if (comparer == null) comparer = EqualityComparer<TSource>.Default;
+            if (comparer == null) comparer = EqualityComparer.Default;
             if (source == null) throw Error.ArgumentNull("source");
             foreach (TSource element in source)
                 if (comparer.Equals(element, value)) return true;
             return false;
         }
 
-        public static TSource Aggregate<TSource>(this IEnumerable<TSource> source, Func<TSource, TSource, TSource> func)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (func == null) throw Error.ArgumentNull("func");
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                if (!e.MoveNext()) throw Error.NoElements();
-                TSource result = e.Current;
-                while (e.MoveNext()) result = func(result, e.Current);
-                return result;
-            }
-        }
-
-        public static TAccumulate Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (func == null) throw Error.ArgumentNull("func");
-            TAccumulate result = seed;
-            foreach (TSource element in source) result = func(result, element);
-            return result;
-        }
-
-        public static TResult Aggregate<TSource, TAccumulate, TResult>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult Aggregate<TSource, TAccumulate, TResult>( IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (func == null) throw Error.ArgumentNull("func");
@@ -1594,910 +1099,28 @@ namespace System.Linq
             return resultSelector(result);
         }
 
-        public static int Sum(this IEnumerable<int> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            int sum = 0;
-            checked
-            {
-                foreach (int v in source) sum += v;
-            }
-            return sum;
-        }
-
-        public static int? Sum(this IEnumerable<int?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            int sum = 0;
-            checked
-            {
-                foreach (int? v in source)
-                {
-                    if (v != null) sum += v.GetValueOrDefault();
-                }
-            }
-            return sum;
-        }
-
-        public static long Sum(this IEnumerable<long> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long sum = 0;
-            checked
-            {
-                foreach (long v in source) sum += v;
-            }
-            return sum;
-        }
-
-        public static long? Sum(this IEnumerable<long?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long sum = 0;
-            checked
-            {
-                foreach (long? v in source)
-                {
-                    if (v != null) sum += v.GetValueOrDefault();
-                }
-            }
-            return sum;
-        }
-
-        public static float Sum(this IEnumerable<float> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            foreach (float v in source) sum += v;
-            return (float)sum;
-        }
-
-        public static float? Sum(this IEnumerable<float?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            foreach (float? v in source)
-            {
-                if (v != null) sum += v.GetValueOrDefault();
-            }
-            return (float)sum;
-        }
-
-        public static double Sum(this IEnumerable<double> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            foreach (double v in source) sum += v;
-            return sum;
-        }
-
-        public static double? Sum(this IEnumerable<double?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            foreach (double? v in source)
-            {
-                if (v != null) sum += v.GetValueOrDefault();
-            }
-            return sum;
-        }
-
-        public static decimal Sum(this IEnumerable<decimal> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal sum = 0;
-            foreach (decimal v in source) sum += v;
-            return sum;
-        }
-
-        public static decimal? Sum(this IEnumerable<decimal?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal sum = 0;
-            foreach (decimal? v in source)
-            {
-                if (v != null) sum += v.GetValueOrDefault();
-            }
-            return sum;
-        }
-
-        public static int Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
+        public static int Sum<TSource>( IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return Enumerable.Sum(Enumerable.Select(source, selector));
         }
 
-        public static int? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static long Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static long? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static float Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static float? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static double Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static double? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static decimal Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static decimal? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
-        {
-            return Enumerable.Sum(Enumerable.Select(source, selector));
-        }
-
-        public static int Min(this IEnumerable<int> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            int value = 0;
-            bool hasValue = false;
-            foreach (int x in source)
-            {
-                if (hasValue)
-                {
-                    if (x < value) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static int? Min(this IEnumerable<int?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            int? value = null;
-            foreach (int? x in source)
-            {
-                if (value == null || x < value)
-                    value = x;
-            }
-            return value;
-        }
-
-        public static long Min(this IEnumerable<long> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long value = 0;
-            bool hasValue = false;
-            foreach (long x in source)
-            {
-                if (hasValue)
-                {
-                    if (x < value) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static long? Min(this IEnumerable<long?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long? value = null;
-            foreach (long? x in source)
-            {
-                if (value == null || x < value) value = x;
-            }
-            return value;
-        }
-
-        public static float Min(this IEnumerable<float> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            float value = 0;
-            bool hasValue = false;
-            foreach (float x in source)
-            {
-                if (hasValue)
-                {
-                    // Normally NaN < anything is false, as is anything < NaN
-                    // However, this leads to some irksome outcomes in Min and Max.
-                    // If we use those semantics then Min(NaN, 5.0) is NaN, but
-                    // Min(5.0, NaN) is 5.0!  To fix this, we impose a total
-                    // ordering where NaN is smaller than every value, including
-                    // negative infinity.
-                    if (x < value || System.Single.IsNaN(x)) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static float? Min(this IEnumerable<float?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            float? value = null;
-            foreach (float? x in source)
-            {
-                if (x == null) continue;
-                if (value == null || x < value || System.Single.IsNaN((float)x)) value = x;
-            }
-            return value;
-        }
-
-        public static double Min(this IEnumerable<double> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double value = 0;
-            bool hasValue = false;
-            foreach (double x in source)
-            {
-                if (hasValue)
-                {
-                    if (x < value || System.Double.IsNaN(x)) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static double? Min(this IEnumerable<double?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double? value = null;
-            foreach (double? x in source)
-            {
-                if (x == null) continue;
-                if (value == null || x < value || System.Double.IsNaN((double)x)) value = x;
-            }
-            return value;
-        }
-
-        public static decimal Min(this IEnumerable<decimal> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal value = 0;
-            bool hasValue = false;
-            foreach (decimal x in source)
-            {
-                if (hasValue)
-                {
-                    if (x < value) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static decimal? Min(this IEnumerable<decimal?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal? value = null;
-            foreach (decimal? x in source)
-            {
-                if (value == null || x < value) value = x;
-            }
-            return value;
-        }
-
-        public static TSource Min<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            Comparer<TSource> comparer = Comparer<TSource>.Default;
-            TSource value = default(TSource);
-            if (value == null)
-            {
-                foreach (TSource x in source)
-                {
-                    if (x != null && (value == null || comparer.Compare(x, value) < 0))
-                        value = x;
-                }
-                return value;
-            }
-            else
-            {
-                bool hasValue = false;
-                foreach (TSource x in source)
-                {
-                    if (hasValue)
-                    {
-                        if (comparer.Compare(x, value) < 0)
-                            value = x;
-                    }
-                    else
-                    {
-                        value = x;
-                        hasValue = true;
-                    }
-                }
-                if (hasValue) return value;
-                throw Error.NoElements();
-            }
-        }
-
-        public static int Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
+        public static int Min<TSource>( IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return Enumerable.Min(Enumerable.Select(source, selector));
         }
 
-        public static int? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static long Min<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static long? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static float Min<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static float? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static double Min<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static double? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static decimal Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static decimal? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static TResult Min<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
-        {
-            return Enumerable.Min(Enumerable.Select(source, selector));
-        }
-
-        public static int Max(this IEnumerable<int> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            int value = 0;
-            bool hasValue = false;
-            foreach (int x in source)
-            {
-                if (hasValue)
-                {
-                    if (x > value) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static int? Max(this IEnumerable<int?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            int? value = null;
-            foreach (int? x in source)
-            {
-                if (value == null || x > value) value = x;
-            }
-            return value;
-        }
-
-        public static long Max(this IEnumerable<long> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long value = 0;
-            bool hasValue = false;
-            foreach (long x in source)
-            {
-                if (hasValue)
-                {
-                    if (x > value) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static long? Max(this IEnumerable<long?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long? value = null;
-            foreach (long? x in source)
-            {
-                if (value == null || x > value) value = x;
-            }
-            return value;
-        }
-
-        public static double Max(this IEnumerable<double> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double value = 0;
-            bool hasValue = false;
-            foreach (double x in source)
-            {
-                if (hasValue)
-                {
-                    if (x > value || System.Double.IsNaN(value)) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static double? Max(this IEnumerable<double?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double? value = null;
-            foreach (double? x in source)
-            {
-                if (x == null) continue;
-                if (value == null || x > value || System.Double.IsNaN((double)value)) value = x;
-            }
-            return value;
-        }
-
-        public static float Max(this IEnumerable<float> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            float value = 0;
-            bool hasValue = false;
-            foreach (float x in source)
-            {
-                if (hasValue)
-                {
-                    if (x > value || System.Double.IsNaN(value)) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static float? Max(this IEnumerable<float?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            float? value = null;
-            foreach (float? x in source)
-            {
-                if (x == null) continue;
-                if (value == null || x > value || System.Single.IsNaN((float)value)) value = x;
-            }
-            return value;
-        }
-
-        public static decimal Max(this IEnumerable<decimal> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal value = 0;
-            bool hasValue = false;
-            foreach (decimal x in source)
-            {
-                if (hasValue)
-                {
-                    if (x > value) value = x;
-                }
-                else
-                {
-                    value = x;
-                    hasValue = true;
-                }
-            }
-            if (hasValue) return value;
-            throw Error.NoElements();
-        }
-
-        public static decimal? Max(this IEnumerable<decimal?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal? value = null;
-            foreach (decimal? x in source)
-            {
-                if (value == null || x > value) value = x;
-            }
-            return value;
-        }
-
-        public static TSource Max<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            Comparer<TSource> comparer = Comparer<TSource>.Default;
-            TSource value = default(TSource);
-            if (value == null)
-            {
-                foreach (TSource x in source)
-                {
-                    if (x != null && (value == null || comparer.Compare(x, value) > 0))
-                        value = x;
-                }
-                return value;
-            }
-            else
-            {
-                bool hasValue = false;
-                foreach (TSource x in source)
-                {
-                    if (hasValue)
-                    {
-                        if (comparer.Compare(x, value) > 0)
-                            value = x;
-                    }
-                    else
-                    {
-                        value = x;
-                        hasValue = true;
-                    }
-                }
-                if (hasValue) return value;
-                throw Error.NoElements();
-            }
-        }
-
-        public static int Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
+        public static int Max<TSource>( IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return Enumerable.Max(Enumerable.Select(source, selector));
         }
 
-        public static int? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
 
-        public static long Max<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static long? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static float Max<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static float? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static double Max<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static double? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static decimal Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static decimal? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static TResult Max<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
-        {
-            return Enumerable.Max(Enumerable.Select(source, selector));
-        }
-
-        public static double Average(this IEnumerable<int> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (int v in source)
-                {
-                    sum += v;
-                    count++;
-                }
-            }
-            if (count > 0) return (double)sum / count;
-            throw Error.NoElements();
-        }
-
-        public static double? Average(this IEnumerable<int?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (int? v in source)
-                {
-                    if (v != null)
-                    {
-                        sum += v.GetValueOrDefault();
-                        count++;
-                    }
-                }
-            }
-            if (count > 0) return (double)sum / count;
-            return null;
-        }
-
-        public static double Average(this IEnumerable<long> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (long v in source)
-                {
-                    sum += v;
-                    count++;
-                }
-            }
-            if (count > 0) return (double)sum / count;
-            throw Error.NoElements();
-        }
-
-        public static double? Average(this IEnumerable<long?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            long sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (long? v in source)
-                {
-                    if (v != null)
-                    {
-                        sum += v.GetValueOrDefault();
-                        count++;
-                    }
-                }
-            }
-            if (count > 0) return (double)sum / count;
-            return null;
-        }
-
-        public static float Average(this IEnumerable<float> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (float v in source)
-                {
-                    sum += v;
-                    count++;
-                }
-            }
-            if (count > 0) return (float)(sum / count);
-            throw Error.NoElements();
-        }
-
-        public static float? Average(this IEnumerable<float?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (float? v in source)
-                {
-                    if (v != null)
-                    {
-                        sum += v.GetValueOrDefault();
-                        count++;
-                    }
-                }
-            }
-            if (count > 0) return (float)(sum / count);
-            return null;
-        }
-
-        public static double Average(this IEnumerable<double> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (double v in source)
-                {
-                    sum += v;
-                    count++;
-                }
-            }
-            if (count > 0) return sum / count;
-            throw Error.NoElements();
-        }
-
-        public static double? Average(this IEnumerable<double?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            double sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (double? v in source)
-                {
-                    if (v != null)
-                    {
-                        sum += v.GetValueOrDefault();
-                        count++;
-                    }
-                }
-            }
-            if (count > 0) return sum / count;
-            return null;
-        }
-
-        public static decimal Average(this IEnumerable<decimal> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (decimal v in source)
-                {
-                    sum += v;
-                    count++;
-                }
-            }
-            if (count > 0) return sum / count;
-            throw Error.NoElements();
-        }
-
-        public static decimal? Average(this IEnumerable<decimal?> source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            decimal sum = 0;
-            long count = 0;
-            checked
-            {
-                foreach (decimal? v in source)
-                {
-                    if (v != null)
-                    {
-                        sum += v.GetValueOrDefault();
-                        count++;
-                    }
-                }
-            }
-            if (count > 0) return sum / count;
-            return null;
-        }
-
-        public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
+        public static double Average<TSource>( IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return Enumerable.Average(Enumerable.Select(source, selector));
         }
 
-        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static float Average<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static float? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static decimal Average<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-
-        public static decimal? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
-        {
-            return Enumerable.Average(Enumerable.Select(source, selector));
-        }
-    }
-
+	}
     //
     // This is a more memory-intensive EmptyEnumerable<TElement> that allocates a new Enumerator each time. Unfortunately, we have to retain it
     // for desktop platforms to avoid breaking scenarios that serialize an empty enumerable on 4.5 and deserialize it on 4.0.
@@ -2517,20 +1140,19 @@ namespace System.Linq
 
     public interface IOrderedEnumerable<TElement> : IEnumerable<TElement>
     {
-        IOrderedEnumerable<TElement> CreateOrderedEnumerable<TKey>(Func<TElement, TKey> keySelector, IComparer<TKey> comparer, bool descending);
+        public abstract IOrderedEnumerable<TElement> CreateOrderedEnumerable<TKey>(Func<TElement, TKey> keySelector, IComparer<TKey> comparer, bool descending);
     }
 
-    public interface IGrouping<out TKey, out TElement> : IEnumerable<TElement>
+    public interface IGrouping<TKey, TElement> : IEnumerable<TElement>
     {
-        TKey Key { get; }
+        public abstract TKey Key { get; }
     }
 
     public interface ILookup<TKey, TElement> : IEnumerable<IGrouping<TKey, TElement>>
     {
-        int Count { get; }
-        IEnumerable<TElement> get (TKey key) {
-		; }
-        bool Contains(TKey key);
+        public abstract int Count { get; }
+        public abstract IEnumerable<TElement> get (TKey key) {  }
+        public abstract bool Contains(TKey key);
     }
 
     public class Lookup<TKey, TElement> : IEnumerable<IGrouping<TKey, TElement>>, ILookup<TKey, TElement>
@@ -2577,12 +1199,10 @@ namespace System.Linq
         }
 
         public IEnumerable<TElement> get (TKey key) {
-		{
-                Grouping<TKey, TElement> grouping = GetGrouping(key, false);
-                if (grouping != null) return grouping;
-                return EmptyEnumerable<TElement>.Instance;
-            }
-        }
+			Grouping<TKey, TElement> grouping = GetGrouping(key, false);
+			if (grouping != null) return grouping;
+			return EmptyEnumerable<TElement>.Instance;
+		}
 
         public bool Contains(TKey key)
         {
@@ -2614,11 +1234,6 @@ namespace System.Linq
                     yield return resultSelector(g.key, g.elements);
                 } while (g != _lastGrouping);
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
 
         internal int InternalGetHashCode(TKey key)
@@ -2660,7 +1275,7 @@ namespace System.Linq
 
         private void Resize()
         {
-            int newSize = checked(_count * 2 + 1);
+            int newSize = (_count * 2 + 1);
             Grouping<TKey, TElement>[] newGroupings = new Grouping<TKey, TElement>[newSize];
             Grouping<TKey, TElement> g = _lastGrouping;
             do
@@ -2695,21 +1310,9 @@ namespace System.Linq
         {
         }
 
-        internal void Add(TElement element)
-        {
-            if (elements.Length == count) Array.Resize(ref elements, checked(count * 2));
-            elements[count] = element;
-            count++;
-        }
-
         public IEnumerator<TElement> GetEnumerator()
         {
             for (int i = 0; i < count; i++) yield return elements[i];
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
 
         // DDB195907: implement IGrouping<>.Key  ly
@@ -2719,66 +1322,60 @@ namespace System.Linq
             get { return key; }
         }
 
-        int ICollection<TElement>.Count
+        int Count
         {
             get { return count; }
         }
 
-        bool ICollection<TElement>.IsReadOnly
+        bool IsReadOnly
         {
             get { return true; }
         }
 
-        void ICollection<TElement>.Add(TElement item)
+        void Add(TElement item)
         {
             throw Error.NotSupported();
         }
 
-        void ICollection<TElement>.Clear()
+        void Clear()
         {
             throw Error.NotSupported();
         }
 
-        bool ICollection<TElement>.Contains(TElement item)
+        bool Contains(TElement item)
         {
             return Array.IndexOf(elements, item, 0, count) >= 0;
         }
 
-        void ICollection<TElement>.CopyTo(TElement[] array, int arrayIndex)
+        void CopyTo(TElement[] array, int arrayIndex)
         {
             Array.Copy(elements, 0, array, arrayIndex, count);
         }
 
-        bool ICollection<TElement>.Remove(TElement item)
+        bool Remove(TElement item)
         {
             throw Error.NotSupported();
         }
 
-        int IList<TElement>.IndexOf(TElement item)
+        int IndexOf(TElement item)
         {
             return Array.IndexOf(elements, item, 0, count);
         }
 
-        void IList<TElement>.Insert(int index, TElement item)
+        void Insert(int index, TElement item)
         {
             throw Error.NotSupported();
         }
 
-        void IList<TElement>.RemoveAt(int index)
+        void RemoveAt(int index)
         {
             throw Error.NotSupported();
         }
 
-        TElement IList<TElement>. get (int index) {
-		{
-                if (index < 0 || index >= count) throw Error.ArgumentOutOfRange("index");
-                return elements[index];
-            }
-            set
-            {
-                throw Error.NotSupported();
-            }
-        }
+        TElement get (int index) {
+			if (index < 0 || index >= count) throw Error.ArgumentOutOfRange("index");
+			return elements[index];
+		}
     }
 
     internal class Set<TElement>
@@ -2870,7 +1467,7 @@ namespace System.Linq
 
         private void Resize()
         {
-            int newSize = checked(_count * 2 + 1);
+            int newSize = (_count * 2 + 1);
             int[] newBuckets = new int[newSize];
             Slot[] newSlots = new Slot[newSize];
             Array.Copy(_slots, 0, newSlots, 0, _count);
@@ -2925,39 +1522,6 @@ namespace System.Linq
             return lookup.ApplyResultSelector(_resultSelector).GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-    }
-
-    internal class GroupedEnumerable<TSource, TKey, TElement> : IEnumerable<IGrouping<TKey, TElement>>
-    {
-        private IEnumerable<TSource> _source;
-        private Func<TSource, TKey> _keySelector;
-        private Func<TSource, TElement> _elementSelector;
-        private IEqualityComparer<TKey> _comparer;
-
-        public GroupedEnumerable(IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (keySelector == null) throw Error.ArgumentNull("keySelector");
-            if (elementSelector == null) throw Error.ArgumentNull("elementSelector");
-            _source = source;
-            _keySelector = keySelector;
-            _elementSelector = elementSelector;
-            _comparer = comparer;
-        }
-
-        public IEnumerator<IGrouping<TKey, TElement>> GetEnumerator()
-        {
-            return Lookup<TKey, TElement>.Create<TSource>(_source, _keySelector, _elementSelector, _comparer).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
     }
 
     internal abstract class OrderedEnumerable<TElement> : IOrderedEnumerable<TElement>
@@ -2978,12 +1542,7 @@ namespace System.Linq
 
         internal abstract EnumerableSorter<TElement> GetEnumerableSorter(EnumerableSorter<TElement> next);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        IOrderedEnumerable<TElement> IOrderedEnumerable<TElement>.CreateOrderedEnumerable<TKey>(Func<TElement, TKey> keySelector, IComparer<TKey> comparer, bool descending)
+        IOrderedEnumerable<TElement> CreateOrderedEnumerable<TKey>(Func<TElement, TKey> keySelector, IComparer<TKey> comparer, bool descending)
         {
             OrderedEnumerable<TElement, TKey> result = new OrderedEnumerable<TElement, TKey>(source, keySelector, comparer, descending);
             result.parent = this;
@@ -2991,81 +1550,6 @@ namespace System.Linq
         }
     }
 
-    internal class OrderedEnumerable<TElement, TKey> : OrderedEnumerable<TElement>
-    {
-        internal OrderedEnumerable<TElement> parent;
-        internal Func<TElement, TKey> keySelector;
-        internal IComparer<TKey> comparer;
-        internal bool descending;
-
-        internal OrderedEnumerable(IEnumerable<TElement> source, Func<TElement, TKey> keySelector, IComparer<TKey> comparer, bool descending)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (keySelector == null) throw Error.ArgumentNull("keySelector");
-            this.source = source;
-            this.parent = null;
-            this.keySelector = keySelector;
-            this.comparer = comparer != null ? comparer : Comparer<TKey>.Default;
-            this.descending = descending;
-        }
-
-        internal override EnumerableSorter<TElement> GetEnumerableSorter(EnumerableSorter<TElement> next)
-        {
-            EnumerableSorter<TElement> sorter = new EnumerableSorter<TElement, TKey>(keySelector, comparer, descending, next);
-            if (parent != null) sorter = parent.GetEnumerableSorter(sorter);
-            return sorter;
-        }
-    }
-
-    internal abstract class EnumerableSorter<TElement>
-    {
-        internal abstract void ComputeKeys(TElement[] elements, int count);
-
-        internal abstract int CompareKeys(int index1, int index2);
-
-        internal int[] Sort(TElement[] elements, int count)
-        {
-            ComputeKeys(elements, count);
-            int[] map = new int[count];
-            for (int i = 0; i < count; i++) map[i] = i;
-            QuickSort(map, 0, count - 1);
-            return map;
-        }
-
-        private void QuickSort(int[] map, int left, int right)
-        {
-            do
-            {
-                int i = left;
-                int j = right;
-                int x = map[i + ((j - i) >> 1)];
-                do
-                {
-                    while (i < map.Length && CompareKeys(x, map[i]) > 0) i++;
-                    while (j >= 0 && CompareKeys(x, map[j]) < 0) j--;
-                    if (i > j) break;
-                    if (i < j)
-                    {
-                        int temp = map[i];
-                        map[i] = map[j];
-                        map[j] = temp;
-                    }
-                    i++;
-                    j--;
-                } while (i <= j);
-                if (j - left <= right - i)
-                {
-                    if (left < j) QuickSort(map, left, j);
-                    left = i;
-                }
-                else
-                {
-                    if (i < right) QuickSort(map, i, right);
-                    right = j;
-                }
-            } while (left < right);
-        }
-    }
 
     internal class EnumerableSorter<TElement, TKey> : EnumerableSorter<TElement>
     {
@@ -3145,7 +1629,7 @@ namespace System.Linq
                     }
                     else if (items.Length == count)
                     {
-                        Array.Resize(ref items, checked(count * 2));
+                        Array.Resize(ref items, (count * 2));
                     }
                     items[count] = item;
                     count++;
@@ -3224,57 +1708,9 @@ namespace System.Linq
         {
             get
             {
-                return Strings.EmptyEnumerable;
+                return strings.EmptyEnumerable;
             }
         }
     }
 
-    internal class SystemCore_EnumerableDebugView
-    {
-        public SystemCore_EnumerableDebugView(IEnumerable enumerable)
-        {
-            if (enumerable == null)
-            {
-                throw ArgumentNullException("enumerable");
-            }
-
-            _enumerable = enumerable;
-            _count = 0;
-            _cachedCollection = null;
-        }
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.RootHidden)]
-
-        public object[] Items
-        {
-            get
-            {
-                List<object> tempList = new List<object>();
-                IEnumerator currentEnumerator = _enumerable.GetEnumerator();
-
-                if (currentEnumerator != null)
-                {
-                    for (_count = 0; currentEnumerator.MoveNext(); _count++)
-                    {
-                        tempList.Add(currentEnumerator.Current);
-                    }
-                }
-                if (_count == 0)
-                {
-                    throw SystemCore_EnumerableDebugViewEmptyException();
-                }
-                _cachedCollection = new object[_count];
-                tempList.CopyTo(_cachedCollection, 0);
-                return _cachedCollection;
-            }
-        }
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-
-        private IEnumerable _enumerable;
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-
-        private object[] _cachedCollection;
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-
-        private int _count;
-    }
 }

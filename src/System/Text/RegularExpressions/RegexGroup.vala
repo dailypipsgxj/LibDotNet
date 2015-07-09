@@ -14,13 +14,13 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Group : Capture
     {
-        // the empty groupObjectinternal static Group _emptygroup = new Group(String.Empty, Array.Empty<int>(), 0);
+        // the empty groupObjectinternal static Group _emptygroup = new Group(string.Empty, Array.Empty<int>(), 0);
 
         internal int[] _caps;
         internal int _capcount;
         internal CaptureCollection _capcoll;
 
-        internal Group(String text, int[] caps, int capcount){
+        internal Group(string text, int[] caps, int capcount){
 			base(text, capcount == 0 ? 0 : caps[(capcount - 1) * 2],
                capcount == 0 ? 0 : caps[(capcount * 2) - 1]);
             _caps = caps;

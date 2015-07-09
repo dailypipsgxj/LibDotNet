@@ -51,7 +51,7 @@ namespace System.Collections.Generic
     //[DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
     //[DebuggerDisplay("Count = {Count}")]
     //[SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "By design")]
-    public class HashSet<T> : ICollection<T>, ISet<T>, IReadOnlyCollection<T>
+    public class HashSet<T> : Gee.HashSet<T>, ICollection<T>, ISet<T>, IReadOnlyCollection<T>
     {
         // store lower 31 bits of hash code
         private const int Lower31BitMask = 0x7FFFFFFF;
@@ -74,10 +74,7 @@ namespace System.Collections.Generic
 
         //Constructors
 
-        public HashSet(){
-			this(EqualityComparer<T>.Default); }
-
-        public HashSet(IEqualityComparer<T> comparer)
+        public HashSet(IEqualityComparer<T>? comparer = null)
         {
             if (comparer == null)
             {
@@ -89,10 +86,8 @@ namespace System.Collections.Generic
             _count = 0;
             _freeList = -1;
             _version = 0;
+            base ();
         }
-
-        public HashSet(IEnumerable<T> collection){
-			this(collection, EqualityComparer<T>.Default); }
 
         /// <summary>
         /// Implementation Notes:
@@ -101,7 +96,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="collection"></param>
         /// <param name="comparer"></param>
-        public HashSet(IEnumerable<T> collection, IEqualityComparer<T> comparer){
+        public HashSet.FromCollection(IEnumerable<T> collection, IEqualityComparer<T>? comparer = null){
 			this(comparer);
             if (collection == null)
             {
@@ -130,17 +125,7 @@ namespace System.Collections.Generic
 
         //
 
-        //ICollection<T> methods
 
-        /// <summary>
-        /// Add item to this hashset. This is the   implementation of the ICollection<T>
-        /// interface. The other Add method returns bool indicating whether item was added.
-        /// </summary>
-        /// <param name="item">item to add</param>
-        void ICollection<T>.Add(T item)
-        {
-            AddIfNotPresent(item);
-        }
 
         /// <summary>
         /// Remove all items from this set. This clears the elements but not the underlying 
@@ -184,16 +169,6 @@ namespace System.Collections.Generic
             }
             // either _buckets is null or wasn't found
             return false;
-        }
-
-        /// <summary>
-        /// Copy items in this hashset to array, starting at arrayIndex
-        /// </summary>
-        /// <param name="array">array to add items to</param>
-        /// <param name="arrayIndex">index to start at</param>
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            CopyTo(array, arrayIndex, _count);
         }
 
         /// <summary>
@@ -711,9 +686,7 @@ namespace System.Collections.Generic
             }
         }
 
-        public void CopyTo(T[] array) { CopyTo(array, 0, _count); }
-
-        public void CopyTo(T[] array, int arrayIndex, int count)
+        public void CopyTo(T[] array, int arrayIndex = 0, int count = Count)
         {
             if (array == null)
             {
@@ -856,9 +829,6 @@ namespace System.Collections.Generic
             }
         }
 
-        
-
-        Helper methods
 
         /// <summary>
         /// Initializes buckets and slots arrays. Uses suggested capacity by finding next prime
@@ -1082,7 +1052,7 @@ namespace System.Collections.Generic
             BitHelper bitHelper;
             if (intArrayLength <= StackAllocThreshold)
             {
-                int* bitArrayPtr = stackalloc int[intArrayLength];
+                int* bitArrayPtr = int[intArrayLength];
                 bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
             }
             else
@@ -1179,10 +1149,10 @@ namespace System.Collections.Generic
             BitHelper itemsAddedFromOther;
             if (intArrayLength <= StackAllocThreshold / 2)
             {
-                int* itemsToRemovePtr = stackalloc int[intArrayLength];
+                int* itemsToRemovePtr = int[intArrayLength];
                 itemsToRemove = new BitHelper(itemsToRemovePtr, intArrayLength);
 
-                int* itemsAddedFromOtherPtr = stackalloc int[intArrayLength];
+                int* itemsAddedFromOtherPtr =  int[intArrayLength];
                 itemsAddedFromOther = new BitHelper(itemsAddedFromOtherPtr, intArrayLength);
             }
             else
@@ -1333,7 +1303,7 @@ namespace System.Collections.Generic
             BitHelper bitHelper;
             if (intArrayLength <= StackAllocThreshold)
             {
-                int* bitArrayPtr = stackalloc int[intArrayLength];
+                int* bitArrayPtr = int[intArrayLength];
                 bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
             }
             else
@@ -1480,18 +1450,19 @@ namespace System.Collections.Generic
         // used for set checking operations (using enumerables) that rely on counting
         internal struct ElementCount
         {
-            internal int uniqueCount;
-            internal int unfoundCount;
+            int uniqueCount;
+            int unfoundCount;
         }
 
         internal struct Slot
         {
-            internal int hashCode;      // Lower 31 bits of hash code, -1 if unused
-            internal T value;
-            internal int next;          // Index of next entry, -1 if last
+            int hashCode;      // Lower 31 bits of hash code, -1 if unused
+            T value;
+            int next;          // Index of next entry, -1 if last
         }
 
-        public struct Enumerator : IEnumerator<T>, System.Collections.IEnumerator
+		[Compact]
+        public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
             private HashSet<T> _set;
             private int _index;
@@ -1540,19 +1511,7 @@ namespace System.Collections.Generic
                 }
             }
 
-            Object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    if (_index == 0 || _index == _set._lastIndex + 1)
-                    {
-                        throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
-                    return Current;
-                }
-            }
-
-            void System.Collections.IEnumerator.Reset()
+           void Reset()
             {
                 if (_version != _set._version)
                 {

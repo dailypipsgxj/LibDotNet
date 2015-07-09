@@ -66,7 +66,7 @@ namespace System.Collections
 // [Obsolete("Non-generic collections have been deprecated. Please use collections in System.Collections.Generic.")]
 
 #endif
-    public class SortedList : IDictionary
+    public class SortedList : Gee.HashSet, IDictionary
     {
         private Object[] _keys;
         private Object[] _values;
@@ -79,56 +79,6 @@ namespace System.Collections
 
         private const int _defaultCapacity = 16;
 
-        // Constructs a new sorted list. The sorted list is initially empty and has
-        // a capacity of zero. Upon adding the first element to the sorted list the
-        // capacity is increased to 16, and then increased in multiples of two as
-        // required. The elements of the sorted list are ordered according to the
-        // IComparable interface, which must be implemented by the keys of
-        // all entries added to the sorted list.
-        public SortedList()
-        {
-            Init();
-        }
-        private void Init()
-        {
-            _keys = Array.Empty<Object>();
-            _values = Array.Empty<Object>();
-            _size = 0;
-            _comparer = new Comparer(CultureInfo.CurrentCulture);
-        }
-
-        // Constructs a new sorted list. The sorted list is initially empty and has
-        // a capacity of zero. Upon adding the first element to the sorted list the
-        // capacity is increased to 16, and then increased in multiples of two as
-        // required. The elements of the sorted list are ordered according to the
-        // IComparable interface, which must be implemented by the keys of
-        // all entries added to the sorted list.
-        //
-        public SortedList(int initialCapacity)
-        {
-            if (initialCapacity < 0)
-                throw ArgumentOutOfRangeException("initialCapacity", SR.ArgumentOutOfRange_NeedNonNegNum);
-            Contract.EndContractBlock();
-            _keys = new Object[initialCapacity];
-            _values = new Object[initialCapacity];
-            _comparer = new Comparer(CultureInfo.CurrentCulture);
-        }
-
-        // Constructs a new sorted list with a given IComparer
-        // implementation. The sorted list is initially empty and has a capacity of
-        // zero. Upon adding the first element to the sorted list the capacity is
-        // increased to 16, and then increased in multiples of two as required. The
-        // elements of the sorted list are ordered according to the given
-        // IComparer implementation. If comparer is null, the
-        // elements are compared to each other using the IComparable
-        // interface, which in that case must be implemented by the keys of all
-        // entries added to the sorted list.
-        // 
-        public SortedList(IComparer comparer){
-			this();
-            if (comparer != null) _comparer = comparer;
-        }
-
         // Constructs a new sorted list with a given IComparer
         // implementation and a given initial capacity. The sorted list is
         // initially empty, but will have room for the given number of elements
@@ -138,19 +88,10 @@ namespace System.Collections
         // the IComparable interface, which in that case must be implemented
         // by the keys of all entries added to the sorted list.
         // 
-        public SortedList(IComparer comparer, int capacity){
-			this(comparer);
+        public SortedList(IComparer? comparer = null, int capacity = _defaultCapacity){
+            if (comparer != null) _comparer = comparer;
             Capacity = capacity;
-        }
-
-        // Constructs a new sorted list containing a copy of the entries in the
-        // given dictionary. The elements of the sorted list are ordered according
-        // to the IComparable interface, which must be implemented by the
-        // keys of all entries in the the given dictionary as well as keys
-        // subsequently added to the sorted list.
-        // 
-        public SortedList(IDictionary d){
-			this(d, null);
+            base (null, _comparer);
         }
 
         // Constructs a new sorted list containing a copy of the entries in the
@@ -161,11 +102,8 @@ namespace System.Collections
         // by the keys of all entries in the the given dictionary as well as keys
         // subsequently added to the sorted list.
         // 
-        public SortedList(IDictionary d, IComparer comparer){
-			this(comparer, (d != null ? d.Count : 0));
-            if (d == null)
-                throw ArgumentNullException("d", SR.ArgumentNull_Dictionary);
-            Contract.EndContractBlock();
+        public SortedList.FromDictionary(IDictionary d, IComparer? comparer = null){
+			this (comparer);
             d.Keys.CopyTo(_keys, 0);
             d.Values.CopyTo(_values, 0);
 

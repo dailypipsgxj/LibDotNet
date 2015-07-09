@@ -22,20 +22,10 @@ namespace System.Collections
         public static   Comparer Default = new Comparer(CultureInfo.CurrentCulture);
         public static   Comparer DefaultInvariant = new Comparer(CultureInfo.InvariantCulture);
 
-        private const String CompareInfoName = "CompareInfo";
-
-        private Comparer()
-        {
-            _compareInfo = null;
-        }
+        private const string CompareInfoName = "CompareInfo";
 
         public Comparer(CultureInfo culture)
         {
-            if (culture == null)
-            {
-                throw ArgumentNullException("culture");
-            }
-            Contract.EndContractBlock();
             _compareInfo = culture.CompareInfo;
         }
 
@@ -52,8 +42,8 @@ namespace System.Collections
             if (b == null) return 1;
             if (_compareInfo != null)
             {
-                String sa = a as String;
-                String sb = b as String;
+                string sa = a as string;
+                string sb = b as string;
                 if (sa != null && sb != null)
                     return _compareInfo.Compare(sa, sb);
             }

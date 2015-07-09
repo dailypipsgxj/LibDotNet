@@ -22,7 +22,7 @@ namespace System.Text.RegularExpressions
         // cache of Group objects fed to the user
         private Group[] _groups;
 
-        internal GroupCollection(Match match, Dictionary<int, int> caps)
+        public GroupCollection(Match match, Dictionary<int, int> caps)
         {
             _match = match;
             _captureMap = caps;
@@ -41,6 +41,7 @@ namespace System.Text.RegularExpressions
             return GetGroup(groupnum);
         }
 
+		/*
         public Group get (string groupname) {
 		{
                 if (_match._regex == null)
@@ -49,6 +50,7 @@ namespace System.Text.RegularExpressions
                 return GetGroup(_match._regex.GroupNumberFromName(groupname));
             }
         }
+        */
 
         /// <summary>
         /// Provides an enumerator in the same order as Item[].
@@ -101,12 +103,14 @@ namespace System.Text.RegularExpressions
         bool IsSynchronized
         {
             get { return false; }
-        }ObjectICollection.SyncRoot
+        }
+        
+        Object SyncRoot
         {
             get { return _match; }
         }
 
-        void ICollection.CopyTo(Array array, int arrayIndex)
+        void CopyTo(Array array, int arrayIndex)
         {
             if (array == null)
                 throw ArgumentNullException("array");
@@ -153,12 +157,7 @@ namespace System.Text.RegularExpressions
                 }
             }
             
-            Object IEnumerator.Current
-            {
-                get { return Current; }
-            }
-
-            void IEnumerator.Reset()
+            void Reset()
             {
                 _index = -1;
             }

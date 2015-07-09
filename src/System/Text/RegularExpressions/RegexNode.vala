@@ -104,7 +104,7 @@ namespace System.Text.RegularExpressions
 
         internal List<RegexNode> _children;
 
-        internal String _str;
+        internal string _str;
         internal char _ch;
         internal int _m;
         internal int _n;
@@ -125,7 +125,7 @@ namespace System.Text.RegularExpressions
             _ch = ch;
         }
 
-        internal RegexNode(int type, RegexOptions options, String str)
+        internal RegexNode(int type, RegexOptions options, string str)
         {
             _type = type;
             _options = options;
@@ -284,12 +284,12 @@ namespace System.Text.RegularExpressions
 
                 u = child;
                 if (u._m > 0)
-                    u._m = min = ((Int32.MaxValue - 1) / u._m < min) ? Int32.MaxValue : u._m * min;
+                    u._m = min = ((int32.MaxValue - 1) / u._m < min) ? int32.MaxValue : u._m * min;
                 if (u._n > 0)
-                    u._n = max = ((Int32.MaxValue - 1) / u._n < max) ? Int32.MaxValue : u._n * max;
+                    u._n = max = ((int32.MaxValue - 1) / u._n < max) ? int32.MaxValue : u._n * max;
             }
 
-            return min == Int32.MaxValue ? new RegexNode(Nothing, _options) : u;
+            return min == int32.MaxValue ? new RegexNode(Nothing, _options) : u;
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace System.Text.RegularExpressions
                         }
 
                         prev._type = RegexNode.Set;
-                        prev._str = prevCharClass.ToStringClass();
+                        prev._str = prevCharClass.TostringClass();
                     }
                     else if (at._type == RegexNode.Nothing)
                     {
@@ -448,7 +448,7 @@ namespace System.Text.RegularExpressions
         {
             // Eliminate empties and concat adjacent strings/chars
 
-            bool wasLastString;
+            bool wasLaststring;
             RegexOptions optionsLast;
             RegexOptions optionsAt;
             int i;
@@ -457,7 +457,7 @@ namespace System.Text.RegularExpressions
             if (_children == null)
                 return new RegexNode(RegexNode.Empty, _options);
 
-            wasLastString = false;
+            wasLaststring = false;
             optionsLast = 0;
 
             for (i = 0, j = 0; i < _children.Count; i++, j++)
@@ -485,9 +485,9 @@ namespace System.Text.RegularExpressions
                     // Cannot merge strings if L or I options differ
                     optionsAt = at._options & (RegexOptions.RightToLeft | RegexOptions.IgnoreCase);
 
-                    if (!wasLastString || optionsLast != optionsAt)
+                    if (!wasLaststring || optionsLast != optionsAt)
                     {
-                        wasLastString = true;
+                        wasLaststring = true;
                         optionsLast = optionsAt;
                         continue;
                     }
@@ -497,20 +497,20 @@ namespace System.Text.RegularExpressions
                     if (prev._type == RegexNode.One)
                     {
                         prev._type = RegexNode.Multi;
-                        prev._str = Convert.ToString(prev._ch, CultureInfo.InvariantCulture);
+                        prev._str = Convert.Tostring(prev._ch, CultureInfo.InvariantCulture);
                     }
 
                     if ((optionsAt & RegexOptions.RightToLeft) == 0)
                     {
                         if (at._type == RegexNode.One)
-                            prev._str += at._ch.ToString();
+                            prev._str += at._ch.Tostring();
                         else
                             prev._str += at._str;
                     }
                     else
                     {
                         if (at._type == RegexNode.One)
-                            prev._str = at._ch.ToString() + prev._str;
+                            prev._str = at._ch.Tostring() + prev._str;
                         else
                             prev._str = at._str + prev._str;
                     }
@@ -521,7 +521,7 @@ namespace System.Text.RegularExpressions
                 }
                 else
                 {
-                    wasLastString = false;
+                    wasLaststring = false;
                 }
             }
 
@@ -585,7 +585,7 @@ namespace System.Text.RegularExpressions
         }
 
 #if DEBUG
-        internal static String[] TypeStr = new String[] {
+        internal static string[] TypeStr = new string[] {
             "Onerep", "Notonerep", "Setrep",
             "Oneloop", "Notoneloop", "Setloop",
             "Onelazy", "Notonelazy", "Setlazy",
@@ -600,9 +600,9 @@ namespace System.Text.RegularExpressions
             "Capture", "Group", "Require", "Prevent", "Greedy",
             "Testref", "Testgroup"};
 
-        internal String Description()
+        internal string Description()
         {
-            StringBuilder ArgSb = new StringBuilder();
+            stringBuilder ArgSb = new stringBuilder();
 
             ArgSb.Append(TypeStr[_type]);
 
@@ -632,14 +632,14 @@ namespace System.Text.RegularExpressions
                     ArgSb.Append("(Ch = " + RegexCharClass.CharDescription(_ch) + ")");
                     break;
                 case Capture:
-                    ArgSb.Append("(index = " + _m.ToString(CultureInfo.InvariantCulture) + ", unindex = " + _n.ToString(CultureInfo.InvariantCulture) + ")");
+                    ArgSb.Append("(index = " + _m.Tostring(CultureInfo.InvariantCulture) + ", unindex = " + _n.Tostring(CultureInfo.InvariantCulture) + ")");
                     break;
                 case Ref:
                 case Testref:
-                    ArgSb.Append("(index = " + _m.ToString(CultureInfo.InvariantCulture) + ")");
+                    ArgSb.Append("(index = " + _m.Tostring(CultureInfo.InvariantCulture) + ")");
                     break;
                 case Multi:
-                    ArgSb.Append("(String = " + _str + ")");
+                    ArgSb.Append("(string = " + _str + ")");
                     break;
                 case Set:
                 case Setloop:
@@ -658,14 +658,14 @@ namespace System.Text.RegularExpressions
                 case Setlazy:
                 case Loop:
                 case Lazyloop:
-                    ArgSb.Append("(Min = " + _m.ToString(CultureInfo.InvariantCulture) + ", Max = " + (_n == Int32.MaxValue ? "inf" : Convert.ToString(_n, CultureInfo.InvariantCulture)) + ")");
+                    ArgSb.Append("(Min = " + _m.Tostring(CultureInfo.InvariantCulture) + ", Max = " + (_n == int32.MaxValue ? "inf" : Convert.Tostring(_n, CultureInfo.InvariantCulture)) + ")");
                     break;
             }
 
-            return ArgSb.ToString();
+            return ArgSb.Tostring();
         }
 
-        internal const String Space = "                                ";
+        internal const string Space = "                                ";
 
         internal void Dump()
         {

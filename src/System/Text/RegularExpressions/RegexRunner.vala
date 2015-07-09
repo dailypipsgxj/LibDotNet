@@ -24,7 +24,7 @@ namespace System.Text.RegularExpressions
         protected int _runtextend;         // end of text to search
         protected int _runtextstart;       // starting point for search
 
-        protected String _runtext;         // text to search
+        protected string _runtext;         // text to search
         protected int _runtextpos;         // current position in text
 
         protected int[] _runtrack;         // The backtracking stack.  Opcodes use this to store data regarding 
@@ -54,9 +54,9 @@ namespace System.Text.RegularExpressions
 
         protected int _runtrackcount;      // count of states that may do backtracking
 
-        protected Match _runmatch;         // resultObjectprotected Regex _runregex;         // regexObjectprivate Int32 _timeout;            // timeout in milliseconds (needed for actual)        
+        protected Match _runmatch;         // resultObjectprotected Regex _runregex;         // regexObjectprivate int32 _timeout;            // timeout in milliseconds (needed for actual)        
         private bool _ignoreTimeout;
-        private Int32 _timeoutOccursAt;
+        private int32 _timeoutOccursAt;
 
 
         // We have determined this value in a series of experiments where x86 retail
@@ -79,12 +79,12 @@ namespace System.Text.RegularExpressions
         /// and we could use a separate method Skip() that will quickly scan past
         /// any characters that we know can't match.
         /// </summary>
-        protected Match Scan(Regex regex, String text, int textbeg, int textend, int textstart, int prevlen, bool quick)
+        protected Match Scan(Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick)
         {
             return Scan(regex, text, textbeg, textend, textstart, prevlen, quick, regex.MatchTimeout);
         }
 
-        internal Match Scan(Regex regex, String text, int textbeg, int textend, int textstart, int prevlen, bool quick, TimeSpan timeout)
+        internal Match Scan(Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick, TimeSpan timeout)
         {
             int bump;
             int stoppos;
@@ -96,8 +96,8 @@ namespace System.Text.RegularExpressions
 
             _ignoreTimeout = (Regex.InfiniteMatchTimeout == timeout);
             _timeout = _ignoreTimeout
-                                    ? (Int32)Regex.InfiniteMatchTimeout.TotalMilliseconds
-                                    : (Int32)(timeout.TotalMilliseconds + 0.5); // Round
+                                    ? (int32)Regex.InfiniteMatchTimeout.TotalMilliseconds
+                                    : (int32)(timeout.TotalMilliseconds + 0.5); // Round
 
             _runregex = regex;
             _runtext = text;
@@ -128,8 +128,8 @@ namespace System.Text.RegularExpressions
                 if (_runregex.Debug)
                 {
                     Debug.WriteLine("");
-                    Debug.WriteLine("Search range: from " + _runtextbeg.ToString(CultureInfo.InvariantCulture) + " to " + _runtextend.ToString(CultureInfo.InvariantCulture));
-                    Debug.WriteLine("Firstchar search starting at " + _runtextpos.ToString(CultureInfo.InvariantCulture) + " stopping at " + stoppos.ToString(CultureInfo.InvariantCulture));
+                    Debug.WriteLine("Search range: from " + _runtextbeg.Tostring(CultureInfo.InvariantCulture) + " to " + _runtextend.Tostring(CultureInfo.InvariantCulture));
+                    Debug.WriteLine("Firstchar search starting at " + _runtextpos.Tostring(CultureInfo.InvariantCulture) + " stopping at " + stoppos.Tostring(CultureInfo.InvariantCulture));
                 }
 #endif
                 if (FindFirstChar())
@@ -144,7 +144,7 @@ namespace System.Text.RegularExpressions
 #if DEBUG
                     if (_runregex.Debug)
                     {
-                        Debug.WriteLine("Executing engine starting at " + _runtextpos.ToString(CultureInfo.InvariantCulture));
+                        Debug.WriteLine("Executing engine starting at " + _runtextpos.Tostring(CultureInfo.InvariantCulture));
                         Debug.WriteLine("");
                     }
 #endif
@@ -226,7 +226,7 @@ namespace System.Text.RegularExpressions
             {
                 Debug.WriteLine("");
                 Debug.WriteLine("RegEx match timeout occurred!");
-                Debug.WriteLine("Specified timeout:       " + TimeSpan.FromMilliseconds(_timeout).ToString());
+                Debug.WriteLine("Specified timeout:       " + TimeSpan.FromMilliseconds(_timeout).Tostring());
                 Debug.WriteLine("Timeout check frequency: " + TimeoutCheckFrequency);
                 Debug.WriteLine("Search pattern:          " + _runregex._pattern);
                 Debug.WriteLine("Input:                   " + _runtext);
@@ -362,13 +362,13 @@ namespace System.Text.RegularExpressions
                    (index < endpos && RegexCharClass.IsECMAWordChar(_runtext[index]));
         }
 
-        protected static bool CharInSet(char ch, String set, String category)
+        protected static bool CharInSet(char ch, string set, string category)
         {
-            string charClass = RegexCharClass.ConvertOldStringsToClass(set, category);
+            string charClass = RegexCharClass.ConvertOldstringsToClass(set, category);
             return RegexCharClass.CharInClass(ch, charClass);
         }
 
-        protected static bool CharInClass(char ch, String charClass)
+        protected static bool CharInClass(char ch, string charClass)
         {
             return RegexCharClass.CharInClass(ch, charClass);
         }
@@ -561,9 +561,9 @@ namespace System.Text.RegularExpressions
             Debug.WriteLine("Stack: " + StackDescription(_runstack, _runstackpos));
         }
 
-        internal static String StackDescription(int[] a, int index)
+        internal static string StackDescription(int[] a, int index)
         {
-            var sb = new StringBuilder();
+            var sb = new stringBuilder();
 
             sb.Append(a.Length - index);
             sb.Append('/');
@@ -583,12 +583,12 @@ namespace System.Text.RegularExpressions
 
             sb.Append(')');
 
-            return sb.ToString();
+            return sb.Tostring();
         }
 
-        internal virtual String TextposDescription()
+        internal virtual string TextposDescription()
         {
-            var sb = new StringBuilder();
+            var sb = new stringBuilder();
             int remaining;
 
             sb.Append(_runtextpos);
@@ -619,7 +619,7 @@ namespace System.Text.RegularExpressions
                 sb.Append('$');
             }
 
-            return sb.ToString();
+            return sb.Tostring();
         }
 #endif
     }

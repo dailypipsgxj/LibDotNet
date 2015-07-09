@@ -24,7 +24,7 @@ namespace System.Collections
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class Stack : ICollection
+    public class Stack : Gee.LinkedList, ICollection
     {
         private Object[] _array;     // Storage for stack elements
 // [ContractPublicPropertyName("Count")]
@@ -35,34 +35,23 @@ namespace System.Collections
 
         private const int _defaultCapacity = 10;
 
-        public Stack()
-        {
-            _array = new Object[_defaultCapacity];
-            _size = 0;
-            _version = 0;
-        }
-
         // Create a stack with a specific initial capacity.  The initial capacity
         // must be a non-negative number.
-        public Stack(int initialCapacity)
+        public Stack(int initialCapacity = _defaultCapacity)
         {
             if (initialCapacity < 0)
                 throw ArgumentOutOfRangeException("initialCapacity", SR.ArgumentOutOfRange_NeedNonNegNum);
             Contract.EndContractBlock();
-            if (initialCapacity < _defaultCapacity)
-                initialCapacity = _defaultCapacity;  // Simplify doubling logic in Push.
-            _array = new Object[initialCapacity];
             _size = 0;
             _version = 0;
+            base();
         }
 
         // Fills a Stack with the contents of a particular collection.  The items are
         // pushed onto the stack in the same order they are read by the enumerator.
         //
-        public Stack(ICollection col){
+        public Stack.WithCollection(ICollection col){
 			this((col == null ? 32 : col.Count));
-            if (col == null)
-                throw ArgumentNullException("col");
             Contract.EndContractBlock();
             IEnumerator en = col.GetEnumerator();
             while (en.MoveNext())
@@ -147,7 +136,7 @@ namespace System.Collections
             Contract.EndContractBlock();
 
             int i = 0;
-            object[] objArray = array as object[];
+            Object[] objArray = array as Object[];
             if (objArray != null)
             {
                 while (i < _size)

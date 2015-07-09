@@ -20,8 +20,10 @@ namespace System.Collections.Generic
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class Queue<T> : IEnumerable<T>,
-        System.Collections.ICollection,
+    public class Queue<T> :
+		Gee.PriorityQueue<T>,
+		IEnumerable<T>,
+		System.Collections.ICollection,
         IReadOnlyCollection<T>
     {
         private T[] _array;
@@ -35,19 +37,11 @@ namespace System.Collections.Generic
         private const int GrowFactor = 200;  // double each time
         private const int DefaultCapacity = 4;
 
-        // Creates a queue with room for capacity objects. The default initial
-        // capacity and grow factor are used.
-        /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.Queue"]/*' />
-        public Queue()
-        {
-            _array = Array.Empty<T>();
-        }
-
         // Creates a queue with room for capacity objects. The default grow factor
         // is used.
         //
         /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.Queue1"]/*' />
-        public Queue(int capacity)
+        public Queue(int capacity = DefaultCapacity)
         {
             if (capacity < 0)
                 throw ArgumentOutOfRangeException("capacity", SR.ArgumentOutOfRange_NeedNonNegNumRequired);
@@ -58,20 +52,18 @@ namespace System.Collections.Generic
         // to get each of the elements.
         //
         /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.Queue3"]/*' />
-        public Queue(IEnumerable<T> collection)
+        public Queue.FromCollection(IEnumerable<T> collection)
         {
             if (collection == null)
                 throw ArgumentNullException("collection");
 
             _array = new T[DefaultCapacity];
 
-            using (IEnumerator<T> en = collection.GetEnumerator())
-            {
-                while (en.MoveNext())
+            IEnumerator<T> en = collection.GetEnumerator();
+            while (en.MoveNext())
                 {
                     Enqueue(en.Current);
                 }
-            }
         }
 
 
@@ -193,7 +185,7 @@ namespace System.Collections.Generic
                     Array.Copy(_array, 0, array, index + _array.Length - _head, numToCopy);
                 }
             }
-            catch (ArrayTypeMismatchException)
+            catch (ArrayTypeMismatchException e)
             {
                 throw ArgumentException(SR.Argument_InvalidArrayType);
             }
@@ -225,18 +217,6 @@ namespace System.Collections.Generic
         // 
         /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.GetEnumerator"]/*' />
         public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-
-        /// <include file='doc\Queue.uex' path='docs/doc[@for="Queue.IEnumerable.GetEnumerator"]/*' />
-        /// <internalonly/>
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return new Enumerator(this);
         }
@@ -365,8 +345,8 @@ namespace System.Collections.Generic
         // made to the list while an enumeration is in progress.
         /// <include file='doc\Queue.uex' path='docs/doc[@for="QueueEnumerator"]/*' />
 // [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-
-        public struct Enumerator : IEnumerator<T>,
+		[Compact]
+        public class Enumerator : IEnumerator<T>,
             System.Collections.IEnumerator
         {
             private Queue<T> _q;
@@ -426,22 +406,7 @@ namespace System.Collections.Generic
                 }
             }
 
-            Object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    if (_index < 0)
-                    {
-                        if (_index == -1)
-                            throw InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
-                        else
-                            throw InvalidOperationException(SR.InvalidOperation_EnumEnded);
-                    }
-                    return _currentElement;
-                }
-            }
-
-            void System.Collections.IEnumerator.Reset()
+            void Reset()
             {
                 if (_version != _q._version) throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
                 _index = -1;
