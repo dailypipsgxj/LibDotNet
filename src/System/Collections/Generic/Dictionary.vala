@@ -80,10 +80,10 @@ namespace System.Collections.Generic {
         private Object _syncRoot;
         
         // constants for serialization
-        private conststring VersionName = "Version";
-        private conststring HashSizeName = "HashSize";  // Must save buckets.Length
-        private conststring KeyValuePairsName = "KeyValuePairs";
-        private conststring ComparerName = "Comparer";
+        private const string VersionName = "Version";
+        private const string HashSizeName = "HashSize";  // Must save buckets.Length
+        private const string KeyValuePairsName = "KeyValuePairs";
+        private const string ComparerName = "Comparer";
 
 
         public Dictionary(int capacity = 4, IEqualityComparer<TKey>? comparer = null) {

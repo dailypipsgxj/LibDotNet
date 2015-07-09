@@ -14,10 +14,10 @@ namespace System.Text.RegularExpressions
     /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
-    public class GroupCollection : ICollection
+    public class GroupCollection : System.Collections.ICollection
     {
-        private   Match _match;
-        private   Dictionary<int, int> _captureMap;
+        private Match _match;
+        private Dictionary<int, int> _captureMap;
 
         // cache of Group objects fed to the user
         private Group[] _groups;
@@ -55,7 +55,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Provides an enumerator in the same order as Item[].
         /// </summary>
-        public IEnumerator GetEnumerator()
+        public System.Collections.IEnumerator GetEnumerator()
         {
             return new Enumerator(this);
         }
@@ -121,7 +121,7 @@ namespace System.Text.RegularExpressions
             }
         }
 
-        private class Enumerator : IEnumerator
+        private class Enumerator : System.Collections.IEnumerator
         {
             private   GroupCollection _collection;
             private int _index;

@@ -5,7 +5,6 @@ LIBDOTNET_SOURCES = \
 	System/Text/RegularExpressions/RegexGroup.vala \
 	System/Text/RegularExpressions/RegexOptions.vala \
 	System/Text/RegularExpressions/RegexGroupCollection.vala \
-	System/Text/RegularExpressions/RegexTree.vala \
 	System/Text/RegularExpressions/RegexCaptureCollection.vala \
 	System/Text/RegularExpressions/RegexMatchTimeoutException.vala \
 	System/Text/RegularExpressions/RegexCapture.vala \
@@ -59,5 +58,6 @@ LIBDOTNET_SOURCES = \
 	System/Globalization/Globalization.vala \
 	System/Diagnostics/Diagnostics.vala \
 	System/Runtime/Runtime.vala \
+	System/Runtime/Serialization/iserializable.vala \
 	System/Security/Security.vala \
 	System/Threading/Threading.vala 
