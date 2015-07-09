@@ -33,44 +33,43 @@ namespace System.Collections {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
         // in the Dictionary.
-        Object get (Object key) {
-		;
-            set;
-        }
+        abstract Object get (Object key) {}
+
+        abstract void set (Object key) {}
     
         // Returns a collections of the keys in this dictionary.
-        ICollection Keys {
+        abstract ICollection Keys {
             get;
         }
     
         // Returns a collections of the values in this dictionary.
-        ICollection Values {
+        abstract ICollection Values {
             get;
         }
     
         // Returns whether this dictionary contains a particular key.
         //
-        bool Contains(Object key);
+        abstract bool Contains(Object key);
     
         // Adds a key-value pair to the dictionary.
         // 
-        void Add(Object key, Object value);
+        abstract void Add(Object key, Object value);
     
         // Removes all pairs from the dictionary.
-        void Clear();
+        abstract void Clear();
     
-        bool IsReadOnly 
+        abstract bool IsReadOnly 
         { get; }
 
-        bool IsFixedSize
+        abstract bool IsFixedSize
         { get; }
 
         // Returns an IDictionaryEnumerator for this dictionary.
-        new IDictionaryEnumerator GetEnumerator();
+        abstract new IDictionaryEnumerator GetEnumerator();
     
         // Removes a particular key from the dictionary.
         //
-        void Remove(Object key);
+        abstract void Remove(Object key);
     }
 
 #if CONTRACTS_FULL

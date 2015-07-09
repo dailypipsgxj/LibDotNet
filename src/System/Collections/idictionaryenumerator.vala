@@ -55,7 +55,7 @@ namespace System.Collections {
         // GetKey with no intervening calls to GetNext will return
         // the same object.
         // 
-        Object Key {
+        abstract Object Key {
             get; 
         }
         
@@ -65,7 +65,7 @@ namespace System.Collections {
         // to GetValue with no intervening calls to GetNext will
         // return the same object.
         // 
-        Object Value {
+        abstract Object Value {
             get;
         }
         
@@ -74,7 +74,7 @@ namespace System.Collections {
         // copy as much as possible into the Array.  The number of elements
         // copied is returned.
         // 
-        DictionaryEntry Entry {
+        abstract DictionaryEntry Entry {
             get; 
         }
     }

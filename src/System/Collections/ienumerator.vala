@@ -33,7 +33,7 @@ namespace System.Collections {
         // element of the enumeration, and the first call to MoveNext 
         // brings the first element of the enumeration into view.
         // 
-        bool MoveNext();
+        abstract bool MoveNext();
     
         // Returns the current element of the enumeration. The returned value is
         // undefined before the first call to MoveNext and following a
@@ -41,7 +41,7 @@ namespace System.Collections {
         // GetCurrent with no intervening calls to MoveNext 
         // will return the same object.
         // 
-        Object Current {
+        abstract Object Current {
             get; 
         }
     
@@ -51,6 +51,6 @@ namespace System.Collections {
         // IEnumerator will be invalid, just as it would have been if you had called
         // MoveNext or Current.
         //
-        void Reset();
+        abstract void Reset();
     }
 }
