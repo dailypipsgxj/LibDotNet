@@ -31,34 +31,33 @@ namespace System.Collections.Generic {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
         // in the Dictionary.
-        TValue get (TKey key) {
-		;
-            set;
-        }
+        abstract TValue get (TKey key) {}
+
+        abstract void set (TKey key) {}
     
         // Returns a collections of the keys in this dictionary.
-        ICollection<TKey> Keys {
+        abstract ICollection<TKey> Keys {
             get;
         }
     
         // Returns a collections of the values in this dictionary.
-        ICollection<TValue> Values {
+        abstract ICollection<TValue> Values {
             get;
         }
     
         // Returns whether this dictionary contains a particular key.
         //
-        bool ContainsKey(TKey key);
+        abstract bool ContainsKey(TKey key);
     
         // Adds a key-value pair to the dictionary.
         // 
-        void Add(TKey key, TValue value);
+        abstract void Add(TKey key, TValue value);
     
         // Removes a particular key from the dictionary.
         //
-        bool Remove(TKey key);
+        abstract bool Remove(TKey key);
 
-        bool TryGetValue(TKey key, out TValue value);
+        abstract bool TryGetValue(TKey key, out TValue value);
     }
 
 #if CONTRACTS_FULL

@@ -27,10 +27,9 @@ namespace System.Collections.Generic
         bool ContainsKey(TKey key);
         bool TryGetValue(TKey key, out TValue value);
 
-        TValue get (TKey key) {
-		; }
-        IEnumerable<TKey> Keys { get; }
-        IEnumerable<TValue> Values { get; }
+        abstract TValue get (TKey key) {}
+        abstract IEnumerable<TKey> Keys { get; }
+        abstract IEnumerable<TValue> Values { get; }
     }
 
 #if CONTRACTS_FULL

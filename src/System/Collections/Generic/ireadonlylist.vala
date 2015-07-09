@@ -33,7 +33,7 @@ namespace System.Collections.Generic
 
 #endif
     // If we ever implement more interfaces on IReadOnlyList, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
-    public interface IReadOnlyList<out T> : IReadOnlyCollection<T>
+    public interface IReadOnlyList<T> : IReadOnlyCollection<T>
     {
         T get (int index) {
 		; }

@@ -33,9 +33,9 @@ namespace System.Collections.Generic
 
 #endif
     // If we ever implement more interfaces on IReadOnlyCollection, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
-    public interface IReadOnlyCollection<out T> : IEnumerable<T>
+    public interface IReadOnlyCollection<T> : IEnumerable<T>
     {
-        int Count { get; }
+        abstract int Count { get; }
     }
 
 #if CONTRACTS_FULL

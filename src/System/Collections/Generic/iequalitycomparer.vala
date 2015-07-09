@@ -12,10 +12,10 @@ namespace System.Collections.Generic {
     // The generic IEqualityComparer interface implements methods to if check two objects are equal
     // and generate Hashcode for an object.
     // It is use in Dictionary class.  
-    public interface IEqualityComparer<in T>
+    public interface IEqualityComparer<T>
     {
-        bool Equals(T x, T y);
-        int GetHashCode(T obj);                
+        abstract bool Equals(T x, T y);
+        abstract int GetHashCode(T obj);                
     }
 }
 

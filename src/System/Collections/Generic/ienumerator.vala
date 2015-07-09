@@ -20,7 +20,7 @@ namespace System.Collections.Generic {
 
     // Base interface for all generic enumerators, providing a simple approach
     // to iterating over a collection.
-    public interface IEnumerator<out T> : IDisposable, IEnumerator
+    public interface IEnumerator<T> : IDisposable, IEnumerator
     {    
         // Returns the current element of the enumeration. The returned value is
         // undefined before the first call to MoveNext and following a
@@ -29,7 +29,7 @@ namespace System.Collections.Generic {
         // will return the same object.
         // 
         /// <include file='doc\IEnumerator.uex' path='docs/doc[@for="IEnumerator.Current"]/*' />
-        new T Current {
+        abstract new T Current {
             get; 
         }
     }
