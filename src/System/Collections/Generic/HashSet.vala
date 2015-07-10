@@ -611,12 +611,6 @@ namespace System.Collections.Generic
         /// <param name="capacity"></param>
         private void Initialize(int capacity)
         {
-            Debug.Assert(_buckets == null, "Initialize was called but _buckets was non-null");
-
-            int size = HashHelpers.GetPrime(capacity);
-
-            _buckets = new int[size];
-            _slots = new Slot[size];
         }
 
         /// <summary>
@@ -628,16 +622,6 @@ namespace System.Collections.Generic
         /// <param name="sizeSuggestion"></param>
         private void IncreaseCapacity()
         {
-            Debug.Assert(_buckets != null, "IncreaseCapacity called on a set with no elements");
-
-            int newSize = HashHelpers.ExpandPrime(size);
-            if (newSize <= size)
-            {
-                throw ArgumentException(SR.Arg_HSCapacityOverflow);
-            }
-
-            // Able to increase capacity; copy elements to larger array and rehash
-            SetCapacity(newSize, false);
         }
 
         /// <summary>
@@ -647,36 +631,6 @@ namespace System.Collections.Generic
         /// </summary>
         private void SetCapacity(int newSize, bool forceNewHashCodes)
         {
-            Debug.Assert(HashHelpers.IsPrime(newSize), "New size is not prime!");
-
-            Debug.Assert(_buckets != null, "SetCapacity called on a set with no elements");
-
-            Slot[] newSlots = new Slot[newSize];
-            if (_slots != null)
-            {
-                Array.Copy(_slots, 0, newSlots, 0, _lastIndex);
-            }
-
-            if (forceNewHashCodes)
-            {
-                for (int i = 0; i < _lastIndex; i++)
-                {
-                    if (newSlots[i].hashCode != -1)
-                    {
-                        newSlots[i].hashCode = InternalGetHashCode(newSlots[i].value);
-                    }
-                }
-            }
-
-            int[] newBuckets = new int[newSize];
-            for (int i = 0; i < _lastIndex; i++)
-            {
-                int bucket = newSlots[i].hashCode % newSize;
-                newSlots[i].next = newBuckets[bucket] - 1;
-                newBuckets[bucket] = i + 1;
-            }
-            _slots = newSlots;
-            _buckets = newBuckets;
         }
 
         /// <summary>
@@ -745,16 +699,12 @@ namespace System.Collections.Generic
         /// <param name="other"></param>
         private void IntersectWithHashSetWithSameEC(HashSet<T> other)
         {
-            for (int i = 0; i < _lastIndex; i++)
+            foreach (T item in this)
             {
-                if (_slots[i].hashCode >= 0)
-                {
-                    T item = _slots[i].value;
-                    if (!other.Contains(item))
+                  if (!other.Contains(item))
                     {
                         Remove(item);
                     }
-                }
             }
         }
 
@@ -765,69 +715,14 @@ namespace System.Collections.Generic
         /// This attempts to allocate on the stack, if below StackAllocThreshold.
         /// </summary>
         /// <param name="other"></param>
-        private   void IntersectWithEnumerable(IEnumerable<T> other)
+        private void IntersectWithEnumerable(IEnumerable<T> other)
         {
-            Debug.Assert(_buckets != null, "_buckets shouldn't be null; callers should check first");
-
-            // keep track of current last index; don't want to move past the end of our bit array
-            // (could happen if another thread is modifying the collection)
-            int originalLastIndex = _lastIndex;
-            int intArrayLength = BitHelper.ToIntArrayLength(originalLastIndex);
-
-            BitHelper bitHelper;
-            if (intArrayLength <= StackAllocThreshold)
-            {
-                int* bitArrayPtr = int[intArrayLength];
-                bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
-            }
-            else
-            {
-                int[] bitArray = new int[intArrayLength];
-                bitHelper = new BitHelper(bitArray, intArrayLength);
-            }
-
             // mark if contains: find index of in slots array and mark corresponding element in bit array
             foreach (T item in other)
             {
-                int index = InternalIndexOf(item);
-                if (index >= 0)
-                {
-                    bitHelper.MarkBit(index);
-                }
-            }
-
-            // if anything unmarked, remove it. Perf can be optimized here if BitHelper had a 
-            // FindFirstUnmarked method.
-            for (int i = 0; i < originalLastIndex; i++)
-            {
-                if (_slots[i].hashCode >= 0 && !bitHelper.IsMarked(i))
-                {
-                    Remove(_slots[i].value);
-                }
             }
         }
 
-        /// <summary>
-        /// Used internally by set operations which have to rely on bit array marking. This is like
-        /// Contains but returns index in slots array. 
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        private int InternalIndexOf(T item)
-        {
-            Debug.Assert(_buckets != null, "_buckets was null; callers should check first");
-
-            int hashCode = InternalGetHashCode(item);
-            for (int i = _buckets[hashCode % _buckets.Length] - 1; i >= 0; i = _slots[i].next)
-            {
-                if ((_slots[i].hashCode) == hashCode && _comparer.Equals(_slots[i].value, item))
-                {
-                    return i;
-                }
-            }
-            // wasn't found
-            return -1;
-        }
 
         /// <summary>
         /// if other is a set, we can assume it doesn't have duplicate elements, so use this
@@ -865,64 +760,13 @@ namespace System.Collections.Generic
         ///
         /// </summary>
         /// <param name="other"></param>
-        private   void SymmetricExceptWithEnumerable(IEnumerable<T> other)
+        private void SymmetricExceptWithEnumerable(IEnumerable<T> other)
         {
-            int originalLastIndex = _lastIndex;
-            int intArrayLength = BitHelper.ToIntArrayLength(originalLastIndex);
-
-            BitHelper itemsToRemove;
-            BitHelper itemsAddedFromOther;
-            if (intArrayLength <= StackAllocThreshold / 2)
-            {
-                int* itemsToRemovePtr = int[intArrayLength];
-                itemsToRemove = new BitHelper(itemsToRemovePtr, intArrayLength);
-
-                int* itemsAddedFromOtherPtr =  int[intArrayLength];
-                itemsAddedFromOther = new BitHelper(itemsAddedFromOtherPtr, intArrayLength);
-            }
-            else
-            {
-                int[] itemsToRemoveArray = new int[intArrayLength];
-                itemsToRemove = new BitHelper(itemsToRemoveArray, intArrayLength);
-
-                int[] itemsAddedFromOtherArray = new int[intArrayLength];
-                itemsAddedFromOther = new BitHelper(itemsAddedFromOtherArray, intArrayLength);
-            }
 
             foreach (T item in other)
             {
-                int location = 0;
-                bool added = AddOrGetLocation(item, out location);
-                if (added)
-                {
-                    // wasn't already present in collection; flag it as something not to remove
-                    // *NOTE* if location is out of range, we should ignore. BitHelper will
-                    // detect that it's out of bounds and not try to mark it. But it's 
-                    // expected that location could be out of bounds because adding the item
-                    // will increase _lastIndex as soon as all the free spots are filled.
-                    itemsAddedFromOther.MarkBit(location);
-                }
-                else
-                {
-                    // already there...if not added from other, mark for remove. 
-                    // *NOTE* Even though BitHelper will check that location is in range, we want 
-                    // to check here. There's no point in checking items beyond originalLastIndex
-                    // because they could not have been in the original collection
-                    if (location < originalLastIndex && !itemsAddedFromOther.IsMarked(location))
-                    {
-                        itemsToRemove.MarkBit(location);
-                    }
-                }
             }
 
-            // if anything marked, remove it
-            for (int i = 0; i < originalLastIndex; i++)
-            {
-                if (itemsToRemove.IsMarked(i))
-                {
-                    Remove(_slots[i].value);
-                }
-            }
         }
 
         /// <summary>
@@ -937,43 +781,18 @@ namespace System.Collections.Generic
         /// <returns></returns>
         private bool AddOrGetLocation(T value, out int location)
         {
-            Debug.Assert(_buckets != null, "_buckets is null, callers should have checked");
-
-            int hashCode = InternalGetHashCode(value);
-            int bucket = hashCode % _buckets.Length;
-            for (int i = _buckets[bucket] - 1; i >= 0; i = _slots[i].next)
-            {
-                if (_slots[i].hashCode == hashCode && _comparer.Equals(_slots[i].value, value))
-                {
-                    location = i;
-                    return false; //already present
-                }
-            }
-            int index;
-            if (_freeList >= 0)
-            {
-                index = _freeList;
-                _freeList = _slots[index].next;
-            }
-            else
-            {
-                if (_lastIndex == _slots.Length)
-                {
-                    IncreaseCapacity();
-                    // this will change during resize
-                    bucket = hashCode % _buckets.Length;
-                }
-                index = _lastIndex;
-                _lastIndex++;
-            }
-            _slots[index].hashCode = hashCode;
-            _slots[index].value = value;
-            _slots[index].next = _buckets[bucket] - 1;
-            _buckets[bucket] = index + 1;
-            size++;
-            _version++;
-            location = index;
-            return true;
+			if (contains (value)) {
+				for (int i = 0; i < size; i++) {
+					if (this[i] == value) {
+						location = i;
+						return false;
+					}
+				}
+			} else {
+				location = size;
+				add (value);
+				return true;
+			}
         }
 
         /// <summary>
@@ -1000,7 +819,7 @@ namespace System.Collections.Generic
         /// <param name="returnIfUnfound">Allows us to finish faster for equals and proper superset
         /// because unfoundCount must be 0.</param>
         /// <returns></returns>
-        private   ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
+        private ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
         {
             ElementCount result;
 
@@ -1020,23 +839,6 @@ namespace System.Collections.Generic
             }
 
 
-            Debug.Assert((_buckets != null) && (size > 0), "_buckets was null but count greater than 0");
-
-            int originalLastIndex = _lastIndex;
-            int intArrayLength = BitHelper.ToIntArrayLength(originalLastIndex);
-
-            BitHelper bitHelper;
-            if (intArrayLength <= StackAllocThreshold)
-            {
-                int* bitArrayPtr = int[intArrayLength];
-                bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
-            }
-            else
-            {
-                int[] bitArray = new int[intArrayLength];
-                bitHelper = new BitHelper(bitArray, intArrayLength);
-            }
-
             // count of items in other not found in this
             int unfoundCount = 0;
             // count of unique items in other found in this
@@ -1044,24 +846,6 @@ namespace System.Collections.Generic
 
             foreach (T item in other)
             {
-                int index = InternalIndexOf(item);
-                if (index >= 0)
-                {
-                    if (!bitHelper.IsMarked(index))
-                    {
-                        // item hasn't been seen yet
-                        bitHelper.MarkBit(index);
-                        uniqueFoundCount++;
-                    }
-                }
-                else
-                {
-                    unfoundCount++;
-                    if (returnIfUnfound)
-                    {
-                        break;
-                    }
-                }
             }
 
             result.uniqueCount = uniqueFoundCount;

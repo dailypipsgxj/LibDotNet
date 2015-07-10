@@ -14,9 +14,9 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-//using System.Runtime;
-//using System.Runtime.CompilerServices;
-//using System.Threading;
+using System.Runtime;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace System.Collections
 {
@@ -225,23 +225,7 @@ namespace System.Collections
         // Removes all entries from this hashtable.
         public virtual void Clear()
         {
-            Debug.Assert(!_isWriterInProgress, "Race condition detected in usages of Hashtable - multiple threads appear to be writing to a Hashtable instance simultaneously!  Don't do that - use Hashtable.Synchronized.");
-
-            if (_count == 0 && _occupancy == 0)
-                return;
-
-            _isWriterInProgress = true;
-            for (int i = 0; i < _buckets.Length; i++)
-            {
-                _buckets[i].hash_coll = 0;
-                _buckets[i].key = null;
-                _buckets[i].val = null;
-            }
-
-            _count = 0;
-            _occupancy = 0;
-            UpdateVersion();
-            _isWriterInProgress = false;
+			clear ();
         }
 
         // Clone returns a virtually identical copy of this hash table.  This does
@@ -249,24 +233,7 @@ namespace System.Collections
         // to those Objects.
         public virtual Object Clone()
         {
-            bucket[] lbuckets = _buckets;
-            Hashtable ht = new Hashtable(_count, _keycomparer);
-            ht._version = _version;
-            ht._loadFactor = _loadFactor;
-            ht._count = 0;
 
-            int bucket = lbuckets.Length;
-            while (bucket > 0)
-            {
-                bucket--;
-                Object keyv = lbuckets[bucket].key;
-                if ((keyv != null) && (keyv != lbuckets))
-                {
-                    ht[keyv] = lbuckets[bucket].val;
-                }
-            }
-
-            return ht;
         }
 
         // Checks if this hashtable contains the given key.
@@ -280,37 +247,8 @@ namespace System.Collections
         // 
         public virtual bool ContainsKey(Object key)
         {
-            if (key == null)
-            {
-                throw ArgumentNullException("key", SR.ArgumentNull_Key);
-            }
-            Contract.EndContractBlock();
-
-            uint seed;
-            uint incr;
-            // Take a snapshot of buckets, in case another thread resizes table
-            bucket[] lbuckets = _buckets;
-            uint hashcode = InitHash(key, lbuckets.Length, out seed, out incr);
-            int ntry = 0;
-
-            bucket b;
-            int bucketNumber = (int)(seed % (uint)lbuckets.Length);
-            do
-            {
-                b = lbuckets[bucketNumber];
-                if (b.key == null)
-                {
-                    return false;
-                }
-                if (((b.hash_coll & 0x7FFFFFFF) == hashcode) &&
-                    KeyEquals(b.key, key))
-                    return true;
-                bucketNumber = (int)(((long)bucketNumber + incr) % (uint)lbuckets.Length);
-            } while (b.hash_coll < 0 && ++ntry < lbuckets.Length);
-            return false;
+			return has_key (key);
         }
-
-
 
         // Checks if this hashtable contains an entry with the given value. The
         // values of the entries of the hashtable are compared to the given value
@@ -320,23 +258,7 @@ namespace System.Collections
         // 
         public virtual bool ContainsValue(Object value)
         {
-            if (value == null)
-            {
-                for (int i = _buckets.Length; --i >= 0;)
-                {
-                    if (_buckets[i].key != null && _buckets[i].key != _buckets && _buckets[i].val == null)
-                        return true;
-                }
-            }
-            else
-            {
-                for (int i = _buckets.Length; --i >= 0;)
-                {
-                    Object val = _buckets[i].val;
-                    if (val != null && val.Equals(value)) return true;
-                }
-            }
-            return false;
+            return (value in values);
         }
 
         // Copies the keys of this hashtable to a given array starting at a given
@@ -344,17 +266,9 @@ namespace System.Collections
         // the KeyCollection class.
         private void CopyKeys(Array array, int arrayIndex)
         {
-            Contract.Requires(array != null);
-            Contract.Requires(array.Rank == 1);
-
-            bucket[] lbuckets = _buckets;
-            for (int i = lbuckets.Length; --i >= 0;)
+            foreach (var key in keys)
             {
-                Object keyv = lbuckets[i].key;
-                if ((keyv != null) && (keyv != _buckets))
-                {
-                    array.SetValue(keyv, arrayIndex++);
-                }
+				array.SetValue(key, arrayIndex++);
             }
         }
 
@@ -363,18 +277,10 @@ namespace System.Collections
         // the KeyCollection class.
         private void CopyEntries(Array array, int arrayIndex)
         {
-            Contract.Requires(array != null);
-            Contract.Requires(array.Rank == 1);
-
-            bucket[] lbuckets = _buckets;
-            for (int i = lbuckets.Length; --i >= 0;)
+            foreach (var ent in entries)
             {
-                Object keyv = lbuckets[i].key;
-                if ((keyv != null) && (keyv != _buckets))
-                {
-                    DictionaryEntry entry = new DictionaryEntry(keyv, lbuckets[i].val);
-                    array.SetValue(entry, arrayIndex++);
-                }
+				DictionaryEntry entry = new DictionaryEntry(ent.key, ent.value);
+				array.SetValue(entry, arrayIndex++);
             }
         }
 
@@ -382,15 +288,12 @@ namespace System.Collections
         // a given index.  Note that this only copies values, and not keys.
         public virtual void CopyTo(Array array, int arrayIndex)
         {
-            if (array == null)
-                throw ArgumentNullException("array", SR.ArgumentNull_Array);
             if (array.Rank != 1)
                 throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
             if (arrayIndex < 0)
                 throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
             if (array.Length - arrayIndex < Count)
                 throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
-            Contract.EndContractBlock();
             CopyEntries(array, arrayIndex);
         }
 
@@ -400,16 +303,12 @@ namespace System.Collections
 
         internal virtual KeyValuePairs[] ToKeyValuePairsArray()
         {
-            KeyValuePairs[] array = new KeyValuePairs[_count];
+            KeyValuePairs[] array = new KeyValuePairs[size];
             int index = 0;
-            bucket[] lbuckets = _buckets;
-            for (int i = lbuckets.Length; --i >= 0;)
+            
+            foreach (var ent in entries)
             {
-                Object keyv = lbuckets[i].key;
-                if ((keyv != null) && (keyv != _buckets))
-                {
-                    array[index++] = new KeyValuePairs(keyv, lbuckets[i].val);
-                }
+				array[index++] = new KeyValuePairs(ent.key, ent.value);
             }
 
             return array;
@@ -421,17 +320,9 @@ namespace System.Collections
         // the ValueCollection class.
         private void CopyValues(Array array, int arrayIndex)
         {
-            Contract.Requires(array != null);
-            Contract.Requires(array.Rank == 1);
-
-            bucket[] lbuckets = _buckets;
-            for (int i = lbuckets.Length; --i >= 0;)
+            foreach (var value in values)
             {
-                Object keyv = lbuckets[i].key;
-                if ((keyv != null) && (keyv != _buckets))
-                {
-                    array.SetValue(lbuckets[i].val, arrayIndex++);
-                }
+				array.SetValue(value, arrayIndex++);
             }
         }
 
@@ -440,128 +331,15 @@ namespace System.Collections
         // 
         public virtual Object get(Object key)
         {
-			if (key == null)
-			{
-				throw ArgumentNullException("key", SR.ArgumentNull_Key);
-			}
-			Contract.EndContractBlock();
-
-			uint seed;
-			uint incr;
-
-
-			// Take a snapshot of buckets, in case another thread does a resize
-			bucket[] lbuckets = _buckets;
-			uint hashcode = InitHash(key, lbuckets.Length, out seed, out incr);
-			int ntry = 0;
-
-			bucket b;
-			int bucketNumber = (int)(seed % (uint)lbuckets.Length);
-			do
-			{
-				int currentversion;
-
-				//     A read operation on hashtable has three steps:
-				//        (1) calculate the hash and find the slot number.
-				//        (2) compare the hashcode, if equal, go to step 3. Otherwise end.
-				//        (3) compare the key, if equal, go to step 4. Otherwise end.
-				//        (4) return the value contained in the bucket.
-				//     After step 3 and before step 4. A writer can kick in a remove the old item and add a new one 
-				//     in the same bucket. So in the reader we need to check if the hash table is modified during above steps.
-				//
-				// Writers (Insert, Remove, Clear) will set 'isWriterInProgress' flag before it starts modifying 
-				// the hashtable and will ckear the flag when it is done.  When the flag is cleared, the 'version'
-				// will be increased.  We will repeat the reading if a writer is in progress or done with the modification 
-				// during the read.
-				//
-				// Our memory model guarantee if we pick up the change in bucket from another processor, 
-				// we will see the 'isWriterProgress' flag to be true or 'version' is changed in the reader.
-				//                    
-				SpinWait spin = SpinWait();
-				while (true)
-				{
-					// this is read, following memory accesses can not be moved ahead of it.
-					currentversion = _version;
-					b = lbuckets[bucketNumber];
-
-					if (!_isWriterInProgress && (currentversion == _version))
-						break;
-
-					spin.SpinOnce();
-				}
-
-				if (b.key == null)
-				{
-					return null;
-				}
-				if (((b.hash_coll & 0x7FFFFFFF) == hashcode) &&
-					KeyEquals(b.key, key))
-					return b.val;
-				bucketNumber = (int)(((long)bucketNumber + incr) % (uint)lbuckets.Length);
-			} while (b.hash_coll < 0 && ++ntry < lbuckets.Length);
-			return null;
+			base.get (key);
         }
 
         public virtual void set(Object key) {
                Insert(key, value, false);
         }
 
-
-        // Increases the bucket count of this hashtable. This method is called from
-        // the Insert method when the actual load factor of the hashtable reaches
-        // the upper limit specified when the hashtable was constructed. The number
-        // of buckets in the hashtable is increased to the smallest prime number
-        // that is larger than twice the current number of buckets, and the entries
-        // in the hashtable are redistributed into the new buckets using the cached
-        // hashcodes.
-        private void expand()
-        {
-            int rawsize = HashHelpers.ExpandPrime(_buckets.Length);
-            rehash(rawsize, false);
-        }
-
-
-        private void UpdateVersion()
-        {
-            // Version might become negative when version is int32.MaxValue, but the oddity will be still be correct. 
-            // So we don't need to special case this. 
-            _version++;
-        }
-
         private void rehash(int newsize, bool forceNewHashCode)
         {
-            // reset occupancy
-            _occupancy = 0;
-
-            // Don't replace any internal state until we've finished adding to the 
-            // new bucket[].  This serves two purposes: 
-            //   1) Allow concurrent readers to see valid hashtable contents 
-            //      at all times
-            //   2) Protect against an OutOfMemoryException while allocating this 
-            //      new bucket[].
-            bucket[] newBuckets = new bucket[newsize];
-
-            // rehash table into new buckets
-            int nb;
-            for (nb = 0; nb < _buckets.Length; nb++)
-            {
-                bucket oldb = _buckets[nb];
-                if ((oldb.key != null) && (oldb.key != _buckets))
-                {
-                    int hashcode = ((forceNewHashCode ? GetHash(oldb.key) : oldb.hash_coll) & 0x7FFFFFFF);
-                    putEntry(newBuckets, oldb.key, oldb.val, hashcode);
-                }
-            }
-
-            // New bucket[] is good to go - replace buckets and other internal state.
-            _isWriterInProgress = true;
-            _buckets = newBuckets;
-            _loadsize = (int)(_loadFactor * newsize);
-            UpdateVersion();
-            _isWriterInProgress = false;
-            // minimum size of hashtable is 3 now and maximum loadFactor is 0.72 now.
-            Debug.Assert(_loadsize < newsize, "Our current implementation means this is not possible.");
-            return;
         }
 
         // Returns an enumerator for this hashtable.
@@ -609,26 +387,6 @@ namespace System.Collections
         public virtual bool IsSynchronized
         {
             get { return false; }
-        }
-
-        // Internal method to compare two keys.  If you have provided an IComparer
-        // instance in the constructor, this method will call comparer.Compare(item, key).
-        // Otherwise, it will call item.Equals(key).
-        // 
-        protected virtual bool KeyEquals(Object item, Object key)
-        {
-            Debug.Assert(key != null, "key can't be null here!");
-            if (Object.ReferenceEquals(_buckets, item))
-            {
-                return false;
-            }
-
-            if (Object.ReferenceEquals(item, key))
-                return true;
-
-            if (_keycomparer != null)
-                return _keycomparer.Equals(item, key);
-            return item == null ? false : item.Equals(key);
         }
 
         // Returns a collection representing the keys of this hashtable. The order
@@ -708,46 +466,7 @@ namespace System.Collections
         // 
         public virtual void Remove(Object key)
         {
-            if (key == null)
-            {
-                throw ArgumentNullException("key", SR.ArgumentNull_Key);
-            }
-            Contract.EndContractBlock();
-            Debug.Assert(!_isWriterInProgress, "Race condition detected in usages of Hashtable - multiple threads appear to be writing to a Hashtable instance simultaneously!  Don't do that - use Hashtable.Synchronized.");
-
-            uint seed;
-            uint incr;
-            // Assuming only one concurrent writer, write directly into buckets.
-            uint hashcode = InitHash(key, _buckets.Length, out seed, out incr);
-            int ntry = 0;
-
-            bucket b;
-            int bn = (int)(seed % (uint)_buckets.Length);  // bucketNumber
-            do
-            {
-                b = _buckets[bn];
-                if (((b.hash_coll & 0x7FFFFFFF) == hashcode) &&
-                    KeyEquals(b.key, key))
-                {
-                    _isWriterInProgress = true;
-                    // Clear hash_coll field, then key, then value
-                    _buckets[bn].hash_coll &= unchecked((int)0x80000000);
-                    if (_buckets[bn].hash_coll != 0)
-                    {
-                        _buckets[bn].key = _buckets;
-                    }
-                    else
-                    {
-                        _buckets[bn].key = null;
-                    }
-                    _buckets[bn].val = null;  // FreeObjectreferences sooner & simplify ContainsValue.
-                    _count--;
-                    UpdateVersion();
-                    _isWriterInProgress = false;
-                    return;
-                }
-                bn = (int)(((long)bn + incr) % (uint)_buckets.Length);
-            } while (b.hash_coll < 0 && ++ntry < _buckets.Length);
+			remove (key);
         }
 
         // Returns theObjectto synchronize on for this hash table.
@@ -767,22 +486,19 @@ namespace System.Collections
         // 
         public virtual int Count
         {
-            get { return _count; }
+            get { return size; }
         }
 
         // Returns a thread-safe wrapper for a Hashtable.
         //
         public static Hashtable Synchronized(Hashtable table)
         {
-            if (table == null)
-                throw ArgumentNullException("table");
-            Contract.EndContractBlock();
             return new SyncHashtable(table);
         }
 
         // Implements a Collection for the keys of a hashtable. An instance of this
         // class is created by the GetKeys method of a hashtable.
-        private class KeyCollection : ICollection
+        private class KeyCollection : Gee.Set, ICollection
         {
             private Hashtable _hashtable;
 
@@ -822,13 +538,13 @@ namespace System.Collections
 
             public virtual int Count
             {
-                get { return _hashtable._count; }
+                get { return _hashtable.size; }
             }
         }
 
         // Implements a Collection for the values of a hashtable. An instance of
         // this class is created by the GetValues method of a hashtable.
-        private class ValueCollection : ICollection
+        private class ValueCollection : Gee.Collection, ICollection
         {
             private Hashtable _hashtable;
 

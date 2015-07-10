@@ -1621,53 +1621,15 @@ namespace System.Collections.Generic
                 return result;
             }
 
-
-            int originalLastIndex = Count;
-            int intArrayLength = BitHelper.ToIntArrayLength(originalLastIndex);
-
-            BitHelper bitHelper;
-            if (intArrayLength <= StackAllocThreshold)
-            {
-                int* bitArrayPtr = int[intArrayLength];
-                bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
-            }
-            else
-            {
-                int[] bitArray = new int[intArrayLength];
-                bitHelper = new BitHelper(bitArray, intArrayLength);
-            }
-
-            // count of items in other not found in this
-            int unfoundCount = 0;
-            // count of unique items in other found in this
-            int uniqueFoundCount = 0;
-
             foreach (T item in other)
             {
-                int index = InternalIndexOf(item);
-                if (index >= 0)
-                {
-                    if (!bitHelper.IsMarked(index))
-                    {
-                        // item hasn't been seen yet
-                        bitHelper.MarkBit(index);
-                        uniqueFoundCount++;
-                    }
-                }
-                else
-                {
-                    unfoundCount++;
-                    if (returnIfUnfound)
-                    {
-                        break;
-                    }
-                }
             }
 
             result.uniqueCount = uniqueFoundCount;
             result.unfoundCount = unfoundCount;
             return result;
         }
+
         public int RemoveWhere(Predicate<T> match)
         {
             if (match == null)
@@ -1872,7 +1834,7 @@ namespace System.Collections.Generic
                 return true;
             }
 
-            internal override bool InOrderTreeWalk(TreeWalkPredicate<T> action, Boolean reverse)
+            internal override bool InOrderTreeWalk(TreeWalkPredicate<T> action, bool reverse)
             {
                 VersionCheck();
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -254,7 +254,7 @@ namespace System.Linq
         {
             private List<TSource> _source;
             private Func<TSource, bool> _predicate;
-            private List.Enumerator _enumerator;
+            //private List.Enumerator _enumerator;
 
             public WhereListIterator(List<TSource> source, Func<TSource, bool> predicate)
             {
@@ -272,7 +272,7 @@ namespace System.Linq
                 switch (state)
                 {
                     case 1:
-                        _enumerator = _source.GetEnumerator();
+                        //_enumerator = _source.GetEnumerator();
                         state = 2;
                         //goto case 2;
                     case 2:
@@ -435,7 +435,7 @@ namespace System.Linq
             private List<TSource> _source;
             private Func<TSource, bool> _predicate;
             private Func<TSource, TResult> _selector;
-            private List.Enumerator _enumerator;
+            //private List.Enumerator _enumerator;
 
             public WhereSelectListIterator(List<TSource> source, Func<TSource, bool> predicate, Func<TSource, TResult> selector)
             {
@@ -454,7 +454,7 @@ namespace System.Linq
                 switch (state)
                 {
                     case 1:
-                        _enumerator = _source.GetEnumerator();
+                        //_enumerator = _source.GetEnumerator();
                         state = 2;
                         //goto case 2;
                     case 2:
@@ -1551,7 +1551,7 @@ namespace System.Linq
     }
 
 
-    internal class EnumerableSorter<TElement, TKey> : EnumerableSorter<TElement>
+    internal class EnumerableSorter<TElement, TKey>
     {
         internal Func<TElement, TKey> keySelector;
         internal IComparer<TKey> comparer;
@@ -1701,16 +1701,10 @@ namespace System.Linq
 
         private int _count;
     }
-
-    internal class SystemCore_EnumerableDebugViewEmptyException : Exception
+    
+    internal errordomain SystemCore_EnumerableDebugViewEmptyException
     {
-        public string Empty
-        {
-            get
-            {
-                return strings.EmptyEnumerable;
-            }
-        }
+		EmptyEnumerable;
     }
 
 }

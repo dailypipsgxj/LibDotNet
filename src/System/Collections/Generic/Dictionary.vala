@@ -216,7 +216,7 @@ namespace System.Collections.Generic {
             return new Enumerator(this, Enumerator.KeyValuePair);
         }
 
-
+/*
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context) {
             if (info==null) {
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.info);
@@ -232,7 +232,7 @@ namespace System.Collections.Generic {
                 info.AddValue(KeyValuePairsName, array, typeof(KeyValuePair<TKey, TValue>[]));
             }
         }
-
+*/
         private int FindEntry(TKey key) {
             if( key == null) {
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
@@ -317,71 +317,10 @@ namespace System.Collections.Generic {
         }
 
         public virtual void OnDeserialization(Object sender) {
-            SerializationInfo siInfo;
-            HashHelpers.SerializationInfoTable.TryGetValue(this, out siInfo);
-            
-            if (siInfo==null) {
-                // It might be necessary to call OnDeserialization from a container if the container Object also implements
-                // OnDeserialization. However, remoting will call OnDeserialization again.
-                // We can return immediately if this function is called twice. 
-                // Note we set remove the serialization info from the table at the end of this method.
-                return;
-            }            
-            
-            int realVersion = siInfo.Getint32(VersionName);
-            int hashsize = siInfo.Getint32(HashSizeName);
-            comparer   = (IEqualityComparer<TKey>)siInfo.GetValue(ComparerName, typeof(IEqualityComparer<TKey>));
-            
-            if( hashsize != 0) {
-                buckets = new int[hashsize];
-                for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
-                entries = new Entry[hashsize];
-                freeList = -1;
 
-                KeyValuePair<TKey, TValue>[] array = (KeyValuePair<TKey, TValue>[]) 
-                    siInfo.GetValue(KeyValuePairsName, typeof(KeyValuePair<TKey, TValue>[]));
-
-                if (array==null) {
-                    ThrowHelper.ThrowSerializationException(ExceptionResource.Serialization_MissingKeys);
-                }
-
-                for (int i=0; i<array.Length; i++) {
-                    if ( array[i].Key == null) {
-                        ThrowHelper.ThrowSerializationException(ExceptionResource.Serialization_NullKey);
-                    }
-                    Insert(array[i].Key, array[i].Value, true);
-                }
-            }
-            else {
-                buckets = null;
-            }
-
-            version = realVersion;
-            HashHelpers.SerializationInfoTable.Remove(this);
         }
 
         private void Resize(int newSize, bool forceNewHashCodes) {
-            Contract.Assert(newSize >= entries.Length);
-            int[] newBuckets = new int[newSize];
-            for (int i = 0; i < newBuckets.Length; i++) newBuckets[i] = -1;
-            Entry[] newEntries = new Entry[newSize];
-            Array.Copy(entries, 0, newEntries, 0, count);
-            if(forceNewHashCodes) {
-                for (int i = 0; i < count; i++) {
-                    if(newEntries[i].hashCode != -1) {
-                        newEntries[i].hashCode = (comparer.GetHashCode(newEntries[i].key) & 0x7FFFFFFF);
-                    }
-                }
-            }
-            for (int i = 0; i < count; i++) {
-                if (newEntries[i].hashCode >= 0) {
-                    int bucket = newEntries[i].hashCode % newSize;
-                    newEntries[i].next = newBuckets[bucket];
-                    newBuckets[bucket] = i;
-                }
-            }
-            buckets = newBuckets;
-            entries = newEntries;
         }
 
 

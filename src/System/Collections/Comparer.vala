@@ -16,17 +16,16 @@ using System.Diagnostics.Contracts;
 
 namespace System.Collections
 {
-    public class Comparer : IComparer
+    public class Comparer : Gee.Comparable, IComparer
     {
-        private CompareInfo _compareInfo;
-        public static   Comparer Default = new Comparer(CultureInfo.CurrentCulture);
-        public static   Comparer DefaultInvariant = new Comparer(CultureInfo.InvariantCulture);
+        public static Comparer Default = new Comparer();
+        public static Comparer DefaultInvariant = new Comparer();
 
         private const string CompareInfoName = "CompareInfo";
 
-        public Comparer(CultureInfo culture)
+        public Comparer()
         {
-            _compareInfo = culture.CompareInfo;
+
         }
 
         // Compares two Objects by calling CompareTo.
@@ -40,13 +39,6 @@ namespace System.Collections
             if (a == b) return 0;
             if (a == null) return -1;
             if (b == null) return 1;
-            if (_compareInfo != null)
-            {
-                string sa = a as string;
-                string sb = b as string;
-                if (sa != null && sb != null)
-                    return _compareInfo.Compare(sa, sb);
-            }
 
             IComparable ia = a as IComparable;
             if (ia != null)

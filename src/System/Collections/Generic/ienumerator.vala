@@ -20,7 +20,7 @@ namespace System.Collections.Generic {
 
     // Base interface for all generic enumerators, providing a simple approach
     // to iterating over a collection.
-    public interface IEnumerator<T> : IDisposable, IEnumerator
+    public interface IEnumerator<T> : IDisposable, System.Collections.IEnumerator
     {    
         // Returns the current element of the enumeration. The returned value is
         // undefined before the first call to MoveNext and following a

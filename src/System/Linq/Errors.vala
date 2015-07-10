@@ -5,8 +5,11 @@ using System;
 
 namespace System.Linq
 {
+	
+
     internal class Error
     {
+		/*
         internal static Exception ArgumentNull(string s) { return new ArgumentNullException(s); }
 
         internal static Exception ArgumentOutOfRange(string s) { return new ArgumentOutOfRangeException(s); }
@@ -20,6 +23,7 @@ namespace System.Linq
         internal static Exception NoMatch() { return new InvalidOperationException(strings.NoMatch); }
 
         internal static Exception NotSupported() { return new NotSupportedException(); }
+        */
     }
 
     internal class strings

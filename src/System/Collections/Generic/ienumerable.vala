@@ -34,7 +34,7 @@ namespace System.Collections.Generic {
 // [ContractClass(typeof(IEnumerableContract<>))]
 
 #endif // CONTRACTS_FULL
-    public interface IEnumerable<T> : IEnumerable
+    public interface IEnumerable<T> : System.Collections.IEnumerable
     {
         // Returns an IEnumerator for this enumerable Object.  The enumerator provides
         // a simple way to access all the contents of a collection.

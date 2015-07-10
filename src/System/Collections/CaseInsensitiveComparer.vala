@@ -17,29 +17,21 @@ using System.Diagnostics.Contracts;
 
 namespace System.Collections
 {
-    public class CaseInsensitiveComparer : IComparer
+    public class CaseInsensitiveComparer : Gee.Comparable, IComparer
     {
-        private CompareInfo _compareInfo;
+        //private CompareInfo _compareInfo;
         private static CaseInsensitiveComparer s_InvariantCaseInsensitiveComparer;
 
 
-        public CaseInsensitiveComparer(CultureInfo? culture = null)
+        public CaseInsensitiveComparer()
         {
-            if (culture == null)
-            {
-                throw ArgumentNullException("culture");
-            }
-            Contract.EndContractBlock();
-            _compareInfo = culture.CompareInfo;
         }
 
         public static CaseInsensitiveComparer Default
         {
             get
             {
-                Contract.Ensures(Contract.Result<CaseInsensitiveComparer>() != null);
-
-                return new CaseInsensitiveComparer(CultureInfo.CurrentCulture);
+                return new CaseInsensitiveComparer();
             }
         }
 
@@ -47,11 +39,10 @@ namespace System.Collections
         {
             get
             {
-                Contract.Ensures(Contract.Result<CaseInsensitiveComparer>() != null);
 
                 if (s_InvariantCaseInsensitiveComparer == null)
                 {
-                    s_InvariantCaseInsensitiveComparer = new CaseInsensitiveComparer(CultureInfo.InvariantCulture);
+                    s_InvariantCaseInsensitiveComparer = new CaseInsensitiveComparer();
                 }
                 return s_InvariantCaseInsensitiveComparer;
             }
@@ -73,5 +64,10 @@ namespace System.Collections
             else
                 return Comparer.Default.Compare(a, b);
         }
+        
+        public int compare_to (Object a)
+        {
+			Compare (this, a);
+		}
     }
 }

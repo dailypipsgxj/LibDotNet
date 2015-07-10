@@ -5,15 +5,7 @@ using System;
 
 namespace System.IO
 {
-    public class InvalidDataException : Exception
-    {
-
-        public InvalidDataException(string? message = null, Exception? innerException = null){
-			if (string == null) {
-				base(SR.GenericInvalidData);
-			} else {
-				base(message, innerException);
-			}
-        }
-    }
+	errordomain InvalidDataException {
+		GenericInvalidData
+	}
 }

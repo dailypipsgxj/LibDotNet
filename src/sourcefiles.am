@@ -65,12 +65,11 @@ LIBDOTNET_SOURCES = \
 	System/Runtime/Runtime.vala \
 	System/Runtime/Serialization/iserializable.vala \
 	System/Runtime/Serialization/ideserializationcallback.vala \
-	System/Runtime/Serialization/SerializationInfo.vala \
-	System/Runtime/Serialization/StreamingContext.vala \
 	System/Security/Security.vala \
 	System/Threading/Threading.vala \
 	System/iequatable.vala \
 	System/Nullable.vala \
 	System/idisposable.vala \
 	System/ArrayTypeMismatchException.vala \
-	System/action.vala
+	System/action.vala \
+	System/icomparable.vala
