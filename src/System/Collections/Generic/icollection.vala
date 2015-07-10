@@ -36,24 +36,24 @@ namespace System.Collections.Generic {
     public interface ICollection<T> : IEnumerable<T>
     {
         // Number of items in the collections.        
-        abstract int Count { get; }
+        public abstract int Count { get; }
 
-        abstract bool IsReadOnly { get; }
+        public abstract bool IsReadOnly { get; }
 
-        abstract void Add(T item);
+        public abstract void Add(T item);
 
-        abstract void Clear();
+        public abstract void Clear();
 
-        abstract bool Contains(T item); 
+        public abstract bool Contains(T item); 
                 
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        abstract void CopyTo(T[] array, int arrayIndex);
+        public abstract void CopyTo(T[] array, int arrayIndex);
                 
         //void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int count);
 
-        abstract bool Remove(T item);
+        public abstract bool Remove(T item);
     }
 
 #if CONTRACTS_FULL

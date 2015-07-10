@@ -35,7 +35,7 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Match : Group
     {
-        internal static Match s_empty = new Match(null, 1, string.Empty, 0, 0, 0);
+        internal static Match s_empty = new Match(null, 1, "", 0, 0, 0);
         internal GroupCollection _groupcoll;
 
         // input to the match

@@ -26,7 +26,7 @@ namespace System.Text.RegularExpressions
 
         // We need this because time is queried using Environment.TickCount for performance reasons
         // (Environment.TickCount returns milliseconds as an int and cycles):
-        private static   TimeSpan MaximumMatchTimeout = TimeSpan.FromMilliseconds(int32.MaxValue - 1);
+        private static TimeSpan MaximumMatchTimeout = (int32.MAX-1)/1000; //TimeSpan.FromMilliseconds(int32.MaxValue - 1);
 
         // InfiniteMatchTimeout specifies that match timeout is switched OFF. It allows for faster code paths
         // compared to simply having a very large timeout.
@@ -36,13 +36,13 @@ namespace System.Text.RegularExpressions
         //       There may in theory be a SKU that has RegEx, but no multithreading.
         // We create a public Regex.InfiniteMatchTimeout constant, which for consistency uses the save underlying
         // value as Timeout.InfiniteTimeSpan creating an implementation detail dependency only.
-        public static   TimeSpan InfiniteMatchTimeout = Timeout.InfiniteTimeSpan;
+        public static TimeSpan InfiniteMatchTimeout = -1;
 
         internal TimeSpan _internalMatchTimeout;   // timeout for the execution of this regex
 
         // DefaultMatchTimeout specifies the match timeout to use if no other timeout was specified
         // by one means or another. Typically, it is set to InfiniteMatchTimeout.
-        internal static   TimeSpan DefaultMatchTimeout = InfiniteMatchTimeout;
+        internal static TimeSpan DefaultMatchTimeout = -1;
 
         // *********** } match timeout fields ***********
 
@@ -72,7 +72,7 @@ namespace System.Text.RegularExpressions
         public Regex(string pattern, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout, bool useCache = false)
         {
             if (options < RegexOptions.None || (((int)options) >> MaxOptionShift) != 0)
-                throw ArgumentOutOfRangeException("options");
+                throw ArgumentOutOfRangeException.ARGUMENTOUTOFRANGE("options");
 
             ValidateMatchTimeout(matchTimeout);
 
@@ -144,7 +144,7 @@ namespace System.Text.RegularExpressions
             if (TimeSpan.Zero < matchTimeout && matchTimeout <= MaximumMatchTimeout)
                 return;
 
-            throw ArgumentOutOfRangeException("matchTimeout");
+            throw ArgumentOutOfRangeException.ARGUMENTOUTOFRANGE("matchTimeout");
         }
 
         /// <summary>

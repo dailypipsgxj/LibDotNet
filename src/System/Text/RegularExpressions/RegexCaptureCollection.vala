@@ -18,7 +18,7 @@ namespace System.Text.RegularExpressions
     /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
-    public class CaptureCollection : ICollection
+    public class CaptureCollection : ICollection, IEnumerable
     {
         private   Group _group;
         private   int _capcount;
@@ -62,7 +62,7 @@ namespace System.Text.RegularExpressions
                 return _group;
 
             if (i >= _capcount || i < 0)
-                throw ArgumentOutOfRangeException("i");
+                throw new ArgumentOutOfRangeException.ARGUMENTOUTOFRANGE("i");
 
             // first time a capture is accessed, compute them all
             if (_captures == null)
@@ -84,17 +84,17 @@ namespace System.Text.RegularExpressions
         
         Object SyncRoot
         {
-            get { return _group; }
+            get { return (Object)_group; }
         }
 
-        void CopyTo(Array array, int arrayIndex)
+        void CopyTo(Array<Object> array, int arrayIndex)
         {
             if (array == null)
-                throw ArgumentNullException("array");
+                throw new ArgumentNullException.POINTER("array");
 
             for (int i = arrayIndex, j = 0; j < Count; i++, j++)
             {
-                array.SetValue(this[j], i);
+                array.insert_val(i, (Object)this[j]);
             }
         }
 
@@ -105,8 +105,6 @@ namespace System.Text.RegularExpressions
 
             internal Enumerator(CaptureCollection collection)
             {
-                Debug.Assert(collection != null, "collection cannot be null.");
-
                 _collection = collection;
                 _index = -1;
             }
@@ -125,10 +123,10 @@ namespace System.Text.RegularExpressions
 
             public Capture Current
             {
-                get
+                owned get
                 {
                     if (_index < 0 || _index >= _collection.Count)
-                        throw InvalidOperationException(SR.EnumNotStarted);
+                        throw new InvalidOperationException.INVALIDOPERATION("SR.EnumNotStarted");
 
                     return _collection[_index];
                 }

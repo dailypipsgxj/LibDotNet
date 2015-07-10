@@ -24,10 +24,10 @@ namespace System.Collections.Generic
 #endif
     public interface IReadOnlyDictionary<TKey, TValue> : IReadOnlyCollection<KeyValuePair<TKey, TValue>>
     {
-        bool ContainsKey(TKey key);
-        bool TryGetValue(TKey key, out TValue value);
+        public abstract bool ContainsKey(TKey key);
+        public abstract bool TryGetValue(TKey key, out TValue value);
 
-        abstract TValue get (TKey key) {}
+        //public abstract TValue get (TKey key) {}
         abstract IEnumerable<TKey> Keys { get; }
         abstract IEnumerable<TValue> Values { get; }
     }

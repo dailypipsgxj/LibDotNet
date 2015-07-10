@@ -55,7 +55,6 @@ namespace System.Collections.Generic {
     public class Dictionary<TKey,TValue>:
 		Gee.HashMap<TKey,TValue>,
 		IDictionary<TKey,TValue>,
-		IDictionary,
 		IReadOnlyDictionary<TKey, TValue>,
 		ISerializable,
 		IDeserializationCallback  {
@@ -68,14 +67,15 @@ namespace System.Collections.Generic {
         }
 
         private int[] buckets;
-        private Entry[] entries;
+        private Entry[] _entries;
         private int count;
         private int version;
         private int freeList;
         private int freeCount;
+        
         private IEqualityComparer<TKey> comparer;
-        private KeyCollection keys;
-        private ValueCollection values;
+        private KeyCollection _keys;
+        private ValueCollection _values;
         private Object _syncRoot;
         
         // constants for serialization
@@ -107,12 +107,11 @@ namespace System.Collections.Generic {
         }
         
         public int Count {
-            get { return count - freeCount; }
+            get { return size; }
         }
 
         public KeyCollection Keys {
             get {
-                Contract.Ensures(Contract.Result<KeyCollection>() != null);
                 if (keys == null) keys = new KeyCollection(this);
                 return keys;
             }
@@ -120,7 +119,6 @@ namespace System.Collections.Generic {
 
         public ValueCollection Values {
             get {
-                Contract.Ensures(Contract.Result<ValueCollection>() != null);
                 if (values == null) values = new ValueCollection(this);
                 return values;
             }
@@ -128,9 +126,9 @@ namespace System.Collections.Generic {
 
 
         public TValue get (TKey key) {
-			int i = FindEntry(key);
-			if (i >= 0) return entries[i].value;
-			ThrowHelper.ThrowKeyNotFoundException();
+			if (has_key(key)) {
+				return base.get(key);
+			}
 			return default(TValue);
 		}
 
@@ -143,53 +141,34 @@ namespace System.Collections.Generic {
         }
 
 
-        bool Contains(KeyValuePair<TKey, TValue> keyValuePair) {
+        bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair>? comparer = null) {
+			
+            /*
             int i = FindEntry(keyValuePair.Key);
             if( i >= 0 && EqualityComparer<TValue>.Default.Equals(entries[i].value, keyValuePair.Value)) {
                 return true;
             }
             return false;
+            */
         }
 
-        bool Remove(KeyValuePair<TKey, TValue> keyValuePair) {
-            int i = FindEntry(keyValuePair.Key);
-            if( i >= 0 && EqualityComparer<TValue>.Default.Equals(entries[i].value, keyValuePair.Value)) {
-                Remove(keyValuePair.Key);
-                return true;
-            }
-            return false;
+        bool Remove(TKey key, TValue? value = null) {
+			unset(key, value);
         }
 
         public void Clear() {
-            if (count > 0) {
-                for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
-                Array.Clear(entries, 0, count);
-                freeList = -1;
-                count = 0;
-                freeCount = 0;
-                version++;
-            }
+			clear();
         }
 
         public bool ContainsKey(TKey key) {
-            return FindEntry(key) >= 0;
+            return has_key(key);
         }
 
         public bool ContainsValue(TValue value) {
-            if (value == null) {
-                for (int i = 0; i < count; i++) {
-                    if (entries[i].hashCode >= 0 && entries[i].value == null) return true;
-                }
-            }
-            else {
-                EqualityComparer<TValue> c = EqualityComparer.Default;
-                for (int i = 0; i < count; i++) {
-                    if (entries[i].hashCode >= 0 && c.Equals(entries[i].value, value)) return true;
-                }
-            }
-            return false;
+            return (value in values);
         }
-
+		
+		/*
         public void CopyTo(KeyValuePair<TKey,TValue>[] array, int index) {
             if (array == null) {
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
@@ -211,7 +190,8 @@ namespace System.Collections.Generic {
                 }
             }
         }
-
+		*/
+		
         public Enumerator GetEnumerator() {
             return new Enumerator(this, Enumerator.KeyValuePair);
         }
@@ -233,87 +213,8 @@ namespace System.Collections.Generic {
             }
         }
 */
-        private int FindEntry(TKey key) {
-            if( key == null) {
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
-            }
-
-            if (buckets != null) {
-                int hashCode = comparer.GetHashCode(key) & 0x7FFFFFFF;
-                for (int i = buckets[hashCode % buckets.Length]; i >= 0; i = entries[i].next) {
-                    if (entries[i].hashCode == hashCode && comparer.Equals(entries[i].key, key)) return i;
-                }
-            }
-            return -1;
-        }
-
-        private void Initialize(int capacity) {
-            int size = HashHelpers.GetPrime(capacity);
-            buckets = new int[size];
-            for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
-            entries = new Entry[size];
-            freeList = -1;
-        }
-
         private void Insert(TKey key, TValue value, bool add) {
-        
-            if( key == null ) {
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
-            }
-
-            if (buckets == null) Initialize(0);
-            int hashCode = comparer.GetHashCode(key) & 0x7FFFFFFF;
-            int targetBucket = hashCode % buckets.Length;
-
-#if FEATURE_RANDOMIZED_STRING_HASHING
-            int collisionCount = 0;
-#endif
-
-            for (int i = buckets[targetBucket]; i >= 0; i = entries[i].next) {
-                if (entries[i].hashCode == hashCode && comparer.Equals(entries[i].key, key)) {
-                    if (add) { 
-                        ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_AddingDuplicate);
-                    }
-                    entries[i].value = value;
-                    version++;
-                    return;
-                } 
-
-#if FEATURE_RANDOMIZED_STRING_HASHING
-                collisionCount++;
-#endif
-            }
-            int index;
-            if (freeCount > 0) {
-                index = freeList;
-                freeList = entries[index].next;
-                freeCount--;
-            }
-            else {
-                if (count == entries.Length)
-                {
-                    Resize();
-                    targetBucket = hashCode % buckets.Length;
-                }
-                index = count;
-                count++;
-            }
-
-            entries[index].hashCode = hashCode;
-            entries[index].next = buckets[targetBucket];
-            entries[index].key = key;
-            entries[index].value = value;
-            buckets[targetBucket] = index;
-            version++;
-
-#if FEATURE_RANDOMIZED_STRING_HASHING
-            if(collisionCount > HashHelpers.HashCollisionThreshold && HashHelpers.IsWellKnownEqualityComparer(comparer)) 
-            {
-                comparer = (IEqualityComparer<TKey>) HashHelpers.GetRandomizedEqualityComparer(comparer);
-                Resize(entries.Length, true);
-            }
-#endif
-
+			base.set (key, value);
         }
 
         public virtual void OnDeserialization(Object sender) {
@@ -325,9 +226,8 @@ namespace System.Collections.Generic {
 
 
         public bool TryGetValue(TKey key, out TValue value) {
-            int i = FindEntry(key);
-            if (i >= 0) {
-                value = entries[i].value;
+            if (has_key(key)) {
+                value = base.get(key);
                 return true;
             }
             value = default(TValue);
@@ -339,9 +239,8 @@ namespace System.Collections.Generic {
         // This allows them to continue getting that behavior with minimal code delta. This is basically
         // TryGetValue without the out param
         internal TValue GetValueOrDefault(TKey key) {
-            int i = FindEntry(key);
-            if (i >= 0) {
-                return entries[i].value;
+            if (has_key(key)) {
+                return base.get(key);
             }
             return default(TValue);
         }
@@ -350,17 +249,13 @@ namespace System.Collections.Generic {
             get { return false; }
         }
 
-
-   
+  
         bool IsSynchronized {
             get { return false; }
         }
         
         Object SyncRoot { 
             get { 
-                if( _syncRoot == null) {
-                    System.Threading.Interlocked.CompareExchange<Object>(ref _syncRoot, new Object(), null);    
-                }
                 return _syncRoot; 
             }
         }
@@ -369,18 +264,14 @@ namespace System.Collections.Generic {
             get { return false; }
         }
 
-   
-        private static bool IsCompatibleKey( Object key) {
-            if( key == null) {
-                    ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);                          
-                }
+  
+        private static bool IsCompatibleKey(Object key) {
             return (key is TKey); 
         }
-    
+  
     
 		[Compact]
-        public class Enumerator: IEnumerator<KeyValuePair<TKey,TValue>>,
-            IDictionaryEnumerator
+        public class Enumerator: IEnumerator<KeyValuePair<TKey,TValue>>, IDictionaryEnumerator
         {
             private Dictionary<TKey,TValue> dictionary;
             private int version;
@@ -465,20 +356,12 @@ namespace System.Collections.Generic {
                 }
             }
         }
-// [DebuggerTypeProxy(typeof(Mscorlib_DictionaryKeyCollectionDebugView<,>))]
 
-// [DebuggerDisplay("Count = {Count}")]
-        
-// [Serializable]
-
-        public class KeyCollection: ICollection<TKey>, ICollection
+        public class KeyCollection: ICollection<TKey>
         {
             private Dictionary<TKey,TValue> dictionary;
 
             public KeyCollection(Dictionary<TKey,TValue> dictionary) {
-                if (dictionary == null) {
-                    ThrowHelper.ThrowArgumentNullException(ExceptionArgument.dictionary);
-                }
                 this.dictionary = dictionary;
             }
 
@@ -538,7 +421,7 @@ namespace System.Collections.Generic {
             Object SyncRoot { 
                 get { return ((ICollection)dictionary).SyncRoot; }
             }
-// [Serializable]
+
 			[Compact]
             public class Enumerator : IEnumerator<TKey>, System.Collections.IEnumerator
             {
@@ -593,11 +476,6 @@ namespace System.Collections.Generic {
                 }
             }                        
         }
-// [DebuggerTypeProxy(typeof(Mscorlib_DictionaryValueCollectionDebugView<,>))]
-
-// [DebuggerDisplay("Count = {Count}")]
-
-// [Serializable]
 
         public class ValueCollection: ICollection<TValue>, ICollection
         {

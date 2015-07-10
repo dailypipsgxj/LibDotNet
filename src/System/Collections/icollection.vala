@@ -20,11 +20,6 @@ namespace System.Collections {
 
     // Base interface for all collections, defining enumerators, size, and 
     // synchronization methods.
-#if CONTRACTS_FULL
-// [ContractClass(typeof(ICollectionContract))]
-
-#endif // CONTRACTS_FULL
-// [System.Runtime.InteropServices.ComVisible(true)]
 
     public interface ICollection : IEnumerable
     {
@@ -32,10 +27,10 @@ namespace System.Collections {
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        abstract void CopyTo(Array array, int index);
+        public abstract void CopyTo(Array array, int index);
         
         // Number of items in the collections.
-        abstract int Count { get; }
+        public abstract int Count { get; }
         
         
         // SyncRoot will return an Object to use for synchronization 
@@ -71,7 +66,7 @@ namespace System.Collections {
         // that the this pointer may not be sufficient for collections that 
         // wrap other collections;  those should return the underlying 
         // collection's SyncRoot property.
-        abstract Object SyncRoot { get; }
+        public abstract Object SyncRoot { get; }
             
         // Is this collection synchronized (i.e., thread-safe)?  If you want a 
         // thread-safe collection, you can use SyncRoot as an Object to 
@@ -79,41 +74,8 @@ namespace System.Collections {
         // collections in System.Collections, you could call the static 
         // Synchronized method to get a thread-safe wrapper around the 
         // underlying collection.
-        abstract bool IsSynchronized
+        public abstract bool IsSynchronized
         { get; }
     }
 
-#if CONTRACTS_FULL
-// [ContractClassFor(typeof(ICollection))]
-
-    internal abstract class ICollectionContract : ICollection
-    {
-        void ICollection.CopyTo(Array array, int index)
-        {
-        }
-
-        int ICollection.Count { 
-            get {
-                Contract.Ensures(Contract.Result<int>() >= 0);
-                return default(int);
-            }
-        }
-
-        Object ICollection.SyncRoot {
-            get {
-                Contract.Ensures(Contract.Result<Object>() != null);
-                return default(Object);
-            }
-        }
-
-        bool ICollection.IsSynchronized {
-            get { return default(bool); }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return default(IEnumerator);
-        }
-    }
-#endif // CONTRACTS_FULL
 }

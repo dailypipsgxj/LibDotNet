@@ -1,0 +1,13 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+includedir=${prefix}/include/libdotnet-0.1
+
+Name: libdotnet
+Description: Sample library created by Anjuta project wizard.
+Version: 0.1
+Requires: gobject-2.0 gee-0.8
+Libs: -L${libdir} -llibdotnet
+Cflags: -I${includedir}

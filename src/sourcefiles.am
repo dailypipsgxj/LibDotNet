@@ -70,6 +70,6 @@ LIBDOTNET_SOURCES = \
 	System/iequatable.vala \
 	System/Nullable.vala \
 	System/idisposable.vala \
-	System/ArrayTypeMismatchException.vala \
+	System/Exceptions.vala \
 	System/action.vala \
 	System/icomparable.vala

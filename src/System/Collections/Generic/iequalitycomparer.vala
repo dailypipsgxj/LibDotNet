@@ -14,8 +14,8 @@ namespace System.Collections.Generic {
     // It is use in Dictionary class.  
     public interface IEqualityComparer<T>
     {
-        abstract bool Equals(T x, T y);
-        abstract int GetHashCode(T obj);                
+        public abstract bool Equals(T x, T y);
+        public abstract int GetHashCode(T obj);                
     }
 }
 

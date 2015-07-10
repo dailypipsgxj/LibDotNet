@@ -1,3 +1,0 @@
-errordomain ArrayTypeMismatchException {
-	ARRAYTYPEMISMATCH
-}
