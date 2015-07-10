@@ -157,12 +157,6 @@ namespace System.Collections.Generic
         /// <param name="other">enumerable with items to add</param>
         public void UnionWith(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
-
             foreach (T item in other)
             {
                 AddIfNotPresent(item);
@@ -185,14 +179,8 @@ namespace System.Collections.Generic
         /// <param name="other">enumerable with items to add </param>
         public void IntersectWith(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
-
             // intersection of anything with empty set is empty set, so return if count is 0
-            if (_count == 0)
+            if (size == 0)
             {
                 return;
             }
@@ -227,14 +215,7 @@ namespace System.Collections.Generic
         /// <param name="other">enumerable with items to remove</param>
         public void ExceptWith(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
-
-            // this is already the enpty set; return
-            if (_count == 0)
+            if (size == 0)
             {
                 return;
             }
@@ -259,14 +240,8 @@ namespace System.Collections.Generic
         /// <param name="other">enumerable with items to XOR</param>
         public void SymmetricExceptWith(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
-
             // if set is empty, then symmetric difference is other
-            if (_count == 0)
+            if (size == 0)
             {
                 UnionWith(other);
                 return;
@@ -311,14 +286,8 @@ namespace System.Collections.Generic
         /// <returns>true if this is a subset of other; false if not</returns>
         public bool IsSubsetOf(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
-
             // The empty set is a subset of any set
-            if (_count == 0)
+            if (size == 0)
             {
                 return true;
             }
@@ -329,7 +298,7 @@ namespace System.Collections.Generic
             if (otherAsSet != null && AreEqualityComparersEqual(this, otherAsSet))
             {
                 // if this has more elements then it can't be a subset
-                if (_count > otherAsSet.Count)
+                if (size > otherAsSet.Count)
                 {
                     return false;
                 }
@@ -341,7 +310,7 @@ namespace System.Collections.Generic
             else
             {
                 ElementCount result = CheckUniqueAndUnfoundElements(other, false);
-                return (result.uniqueCount == _count && result.unfoundCount >= 0);
+                return (result.uniqueCount == size && result.unfoundCount >= 0);
             }
         }
 
@@ -362,17 +331,11 @@ namespace System.Collections.Generic
         /// <returns>true if this is a proper subset of other; false if not</returns>
         public bool IsProperSubsetOf(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
-
             ICollection<T> otherAsCollection = other as ICollection<T>;
             if (otherAsCollection != null)
             {
                 // the empty set is a proper subset of anything but the empty set
-                if (_count == 0)
+                if (size == 0)
                 {
                     return otherAsCollection.Count > 0;
                 }
@@ -380,7 +343,7 @@ namespace System.Collections.Generic
                 // faster if other is a hashset (and we're using same equality comparer)
                 if (otherAsSet != null && AreEqualityComparersEqual(this, otherAsSet))
                 {
-                    if (_count >= otherAsSet.Count)
+                    if (size >= otherAsSet.Count)
                     {
                         return false;
                     }
@@ -391,7 +354,7 @@ namespace System.Collections.Generic
             }
 
             ElementCount result = CheckUniqueAndUnfoundElements(other, false);
-            return (result.uniqueCount == _count && result.unfoundCount > 0);
+            return (result.uniqueCount == size && result.unfoundCount > 0);
         }
 
         /// <summary>
@@ -409,11 +372,6 @@ namespace System.Collections.Generic
         /// <returns>true if this is a superset of other; false if not</returns>
         public bool IsSupersetOf(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
 
             // try to fall out early based on counts
             ICollection<T> otherAsCollection = other as ICollection<T>;
@@ -429,7 +387,7 @@ namespace System.Collections.Generic
                 // same equality comparer
                 if (otherAsSet != null && AreEqualityComparersEqual(this, otherAsSet))
                 {
-                    if (otherAsSet.Count > _count)
+                    if (otherAsSet.Count > size)
                     {
                         return false;
                     }
@@ -461,14 +419,8 @@ namespace System.Collections.Generic
         /// <returns>true if this is a proper superset of other; false if not</returns>
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
-
             // the empty set isn't a proper superset of any set.
-            if (_count == 0)
+            if (size == 0)
             {
                 return false;
             }
@@ -486,7 +438,7 @@ namespace System.Collections.Generic
                 // faster if other is a hashset with the same equality comparer
                 if (otherAsSet != null && AreEqualityComparersEqual(this, otherAsSet))
                 {
-                    if (otherAsSet.Count >= _count)
+                    if (otherAsSet.Count >= size)
                     {
                         return false;
                     }
@@ -496,7 +448,7 @@ namespace System.Collections.Generic
             }
             // couldn't fall out in the above cases; do it the long way
             ElementCount result = CheckUniqueAndUnfoundElements(other, true);
-            return (result.uniqueCount < _count && result.unfoundCount == 0);
+            return (result.uniqueCount < size && result.unfoundCount == 0);
         }
 
         /// <summary>
@@ -506,13 +458,8 @@ namespace System.Collections.Generic
         /// <returns>true if these have at least one common element; false if disjoint</returns>
         public bool Overlaps(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
 
-            if (_count == 0)
+            if (size == 0)
             {
                 return false;
             }
@@ -535,11 +482,6 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public bool SetEquals(IEnumerable<T> other)
         {
-            if (other == null)
-            {
-                throw ArgumentNullException("other");
-            }
-            Contract.EndContractBlock();
 
             HashSet<T> otherAsSet = other as HashSet<T>;
             // faster if other is a hashset and we're using same equality comparer
@@ -547,7 +489,7 @@ namespace System.Collections.Generic
             {
                 // attempt to return early: since both contain unique elements, if they have 
                 // different counts, then they can't be equal
-                if (_count != otherAsSet.Count)
+                if (size != otherAsSet.Count)
                 {
                     return false;
                 }
@@ -562,24 +504,18 @@ namespace System.Collections.Generic
                 if (otherAsCollection != null)
                 {
                     // if this count is 0 but other contains at least one element, they can't be equal
-                    if (_count == 0 && otherAsCollection.Count > 0)
+                    if (size == 0 && otherAsCollection.Count > 0)
                     {
                         return false;
                     }
                 }
                 ElementCount result = CheckUniqueAndUnfoundElements(other, true);
-                return (result.uniqueCount == _count && result.unfoundCount == 0);
+                return (result.uniqueCount == size && result.unfoundCount == 0);
             }
         }
 
         public void CopyTo(T[] array, int arrayIndex = 0, int count = Count)
         {
-            if (array == null)
-            {
-                throw ArgumentNullException("array");
-            }
-            Contract.EndContractBlock();
-
             // check array index valid index into array
             if (arrayIndex < 0)
             {
@@ -618,11 +554,6 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public int RemoveWhere(Predicate<T> match)
         {
-            if (match == null)
-            {
-                throw ArgumentNullException("match");
-            }
-            Contract.EndContractBlock();
 
             int numRemoved = 0;
             for (int i = 0; i < _lastIndex; i++)
@@ -669,50 +600,7 @@ namespace System.Collections.Generic
         /// </summary>
         public void TrimExcess()
         {
-            Debug.Assert(_count >= 0, "_count is negative");
 
-            if (_count == 0)
-            {
-                // if count is zero, clear references
-                _buckets = null;
-                _slots = null;
-                _version++;
-            }
-            else
-            {
-                Debug.Assert(_buckets != null, "_buckets was null but _count > 0");
-
-                // similar to IncreaseCapacity but moves down elements in case add/remove/etc
-                // caused fragmentation
-                int newSize = HashHelpers.GetPrime(_count);
-                Slot[] newSlots = new Slot[newSize];
-                int[] newBuckets = new int[newSize];
-
-                // move down slots and rehash at the same time. newIndex keeps track of current 
-                // position in newSlots array
-                int newIndex = 0;
-                for (int i = 0; i < _lastIndex; i++)
-                {
-                    if (_slots[i].hashCode >= 0)
-                    {
-                        newSlots[newIndex] = _slots[i];
-
-                        // rehash
-                        int bucket = newSlots[newIndex].hashCode % newSize;
-                        newSlots[newIndex].next = newBuckets[bucket] - 1;
-                        newBuckets[bucket] = newIndex + 1;
-
-                        newIndex++;
-                    }
-                }
-
-                Debug.Assert(newSlots.Length <= _slots.Length, "capacity increased after TrimExcess");
-
-                _lastIndex = newIndex;
-                _slots = newSlots;
-                _buckets = newBuckets;
-                _freeList = -1;
-            }
         }
 
 
@@ -742,8 +630,8 @@ namespace System.Collections.Generic
         {
             Debug.Assert(_buckets != null, "IncreaseCapacity called on a set with no elements");
 
-            int newSize = HashHelpers.ExpandPrime(_count);
-            if (newSize <= _count)
+            int newSize = HashHelpers.ExpandPrime(size);
+            if (newSize <= size)
             {
                 throw ArgumentException(SR.Arg_HSCapacityOverflow);
             }
@@ -799,60 +687,11 @@ namespace System.Collections.Generic
         /// <returns></returns>
         private bool AddIfNotPresent(T value)
         {
-            if (_buckets == null)
-            {
-                Initialize(0);
-            }
-
-            int hashCode = InternalGetHashCode(value);
-            int bucket = hashCode % _buckets.Length;
-#if FEATURE_RANDOMIZED_STRING_HASHING
-            int collisionCount = 0;
-#endif
-            for (int i = _buckets[bucket] - 1; i >= 0; i = _slots[i].next)
-            {
-                if (_slots[i].hashCode == hashCode && _comparer.Equals(_slots[i].value, value))
-                {
-                    return false;
-                }
-#if FEATURE_RANDOMIZED_STRING_HASHING
-                collisionCount++;
-#endif
-            }
-
-            int index;
-            if (_freeList >= 0)
-            {
-                index = _freeList;
-                _freeList = _slots[index].next;
-            }
-            else
-            {
-                if (_lastIndex == _slots.Length)
-                {
-                    IncreaseCapacity();
-                    // this will change during resize
-                    bucket = hashCode % _buckets.Length;
-                }
-                index = _lastIndex;
-                _lastIndex++;
-            }
-            _slots[index].hashCode = hashCode;
-            _slots[index].value = value;
-            _slots[index].next = _buckets[bucket] - 1;
-            _buckets[bucket] = index + 1;
-            _count++;
-            _version++;
-
-#if FEATURE_RANDOMIZED_STRING_HASHING
-            if (collisionCount > HashHelpers.HashCollisionThreshold && HashHelpers.IsWellKnownEqualityComparer(_comparer))
-            {
-                _comparer = (IEqualityComparer<T>)HashHelpers.GetRandomizedEqualityComparer(_comparer);
-                SetCapacity(_buckets.Length, true);
-            }
-#endif // FEATURE_RANDOMIZED_STRING_HASHING
-
-            return true;
+			if (contains (value)) {
+				return false;
+			} else {
+				return add (value);
+			}
         }
 
         /// <summary>
@@ -1131,7 +970,7 @@ namespace System.Collections.Generic
             _slots[index].value = value;
             _slots[index].next = _buckets[bucket] - 1;
             _buckets[bucket] = index + 1;
-            _count++;
+            size++;
             _version++;
             location = index;
             return true;
@@ -1144,14 +983,14 @@ namespace System.Collections.Generic
         /// other has no duplicates.
         /// 
         /// The following count checks are performed by callers:
-        /// 1. Equals: checks if unfoundCount = 0 and uniqueFoundCount = _count; i.e. everything 
+        /// 1. Equals: checks if unfoundCount = 0 and uniqueFoundCount = size; i.e. everything 
         /// in other is in this and everything in this is in other
-        /// 2. Subset: checks if unfoundCount >= 0 and uniqueFoundCount = _count; i.e. other may
+        /// 2. Subset: checks if unfoundCount >= 0 and uniqueFoundCount = size; i.e. other may
         /// have elements not in this and everything in this is in other
-        /// 3. Proper subset: checks if unfoundCount > 0 and uniqueFoundCount = _count; i.e
+        /// 3. Proper subset: checks if unfoundCount > 0 and uniqueFoundCount = size; i.e
         /// other must have at least one element not in this and everything in this is in other
         /// 4. Proper superset: checks if unfound count = 0 and uniqueFoundCount strictly less
-        /// than _count; i.e. everything in other was in this and this had at least one element
+        /// than size; i.e. everything in other was in this and this had at least one element
         /// not contained in other.
         /// 
         /// An earlier implementation used delegates to perform these checks rather than returning
@@ -1166,7 +1005,7 @@ namespace System.Collections.Generic
             ElementCount result;
 
             // need special case in case this has no elements. 
-            if (_count == 0)
+            if (size == 0)
             {
                 int numElementsInOther = 0;
                 foreach (T item in other)
@@ -1181,7 +1020,7 @@ namespace System.Collections.Generic
             }
 
 
-            Debug.Assert((_buckets != null) && (_count > 0), "_buckets was null but count greater than 0");
+            Debug.Assert((_buckets != null) && (size > 0), "_buckets was null but count greater than 0");
 
             int originalLastIndex = _lastIndex;
             int intArrayLength = BitHelper.ToIntArrayLength(originalLastIndex);
