@@ -11,62 +11,31 @@ namespace System.Collections.Generic
 
 // [DebuggerDisplay("Count = {Count}")]
 
-    public class SortedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue>
+    public class SortedDictionary<TKey, TValue> : Gee.TreeMap<TKey, TValue>, IDictionary<TKey, TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue>
     {
         private KeyCollection _keys;
 
         private ValueCollection _values;
+        
+        private IComparer keyComparer;
 
-        private TreeSet<KeyValuePair<TKey, TValue>> _set;
+        //private TreeSet<KeyValuePair<TKey, TValue>> _set;
 
 
-        public SortedDictionary(IDictionary<TKey, TValue>? dictionary = null, IComparer<TKey>? comparer = null)
+        public SortedDictionary(IComparer<TKey>? comparer = null)
         {
-            if (dictionary == null)
-            {
-                throw ArgumentNullException("dictionary");
-            }
-
-            _set = new TreeSet<KeyValuePair<TKey, TValue>>(new KeyValuePairComparer(comparer));
-
-            foreach (KeyValuePair<TKey, TValue> pair in dictionary)
-            {
-                _set.Add(pair);
-            }
+			base (comparer);
+			keyComparer = comparer;
         }
 
-        bool Contains(KeyValuePair<TKey, TValue> keyValuePair)
+        public SortedDictionary.FromDictionary(IDictionary<TKey, TValue> dictionary, IComparer<TKey>? comparer = null)
         {
-            TreeSet.Node node = _set.FindNode(keyValuePair);
-            if (node == null)
-            {
-                return false;
-            }
 
-            if (keyValuePair.Value == null)
-            {
-                return node.Item.Value == null;
-            }
-            else
-            {
-                return EqualityComparer<TValue>.Default.Equals(node.Item.Value, keyValuePair.Value);
-            }
         }
 
-        bool RemoveKV(KeyValuePair<TKey, TValue> keyValuePair)
+        bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair<TKey, TValue>>? comparer = null)
         {
-            TreeSet.Node node = _set.FindNode(keyValuePair);
-            if (node == null)
-            {
-                return false;
-            }
 
-            if (EqualityComparer<TValue>.Default.Equals(node.Item.Value, keyValuePair.Value))
-            {
-                _set.Remove(keyValuePair);
-                return true;
-            }
-            return false;
         }
 
         bool IsReadOnly
@@ -78,43 +47,18 @@ namespace System.Collections.Generic
         }
 
         public TValue get (TKey key) {
-			if (key == null)
-			{
-				throw ArgumentNullException("key");
-			}
-
-			TreeSet.Node node = _set.FindNode(KeyValuePair<TKey, TValue>(key, default(TValue)));
-			if (node == null)
-			{
-				throw KeyNotFoundException();
-			}
-
-			return node.Item.Value;
+			return base.get (key);
 		}
 
-         public void set (TKey key) {
-			if (key == null)
-			{
-				throw ArgumentNullException("key");
-			}
-
-			TreeSet.Node node = _set.FindNode(KeyValuePair<TKey, TValue>(key, default(TValue)));
-			if (node == null)
-			{
-				_set.Add(KeyValuePair<TKey, TValue>(key, value));
-			}
-			else
-			{
-				node.Item = KeyValuePair<TKey, TValue>(node.Item.Key, value);
-				_set.UpdateVersion();
-			}
+        public void set (TKey key) {
+			base.set (key, value);
         }
 
         public int Count
         {
             get
             {
-                return _set.Count;
+                return size;
             }
         }
 
@@ -122,7 +66,7 @@ namespace System.Collections.Generic
         {
             get
             {
-                return ((KeyValuePairComparer)_set.Comparer).keyComparer;
+                return ((KeyValuePairComparer)keyComparer);
             }
         }
 
@@ -148,99 +92,52 @@ namespace System.Collections.Generic
 
         public void Add(TKey key, TValue value)
         {
-            if (key == null)
-            {
-                throw ArgumentNullException("key");
-            }
-            _set.Add(new KeyValuePair<TKey, TValue>(key, value));
+            base.set(key, value);
         }
 
         public void Clear()
         {
-            _set.Clear();
+            clear();
         }
 
         public bool ContainsKey(TKey key)
         {
-            if (key == null)
-            {
-                throw ArgumentNullException("key");
-            }
-
-            return _set.Contains(new KeyValuePair<TKey, TValue>(key, default(TValue)));
+            return has_key(key);
         }
 
         public bool ContainsValue(TValue value)
         {
-            bool found = false;
-            if (value == null)
-            {
-                _set.InOrderTreeWalk((node) =>
-                {
-                    if (node.Item.Value == null)
-                    {
-                        found = true;
-                        return false;  // stop the walk
-                    }
-                    return true;
-                });
-            }
-            else
-            {
-                EqualityComparer<TValue> valueComparer = EqualityComparer<TValue>.Default;
-                _set.InOrderTreeWalk((node) =>
-                {
-                    if (valueComparer.Equals(node.Item.Value, value))
-                    {
-                        found = true;
-                        return false;  // stop the walk
-                    }
-                    return true;
-                });
-            }
-            return found;
+			if (value in base.values)
+				return true;
+            return false;
         }
 
-        public void CopyToKV(KeyValuePair<TKey, TValue>[] array, int index)
-        {
-            _set.CopyTo(array, index);
-        }
 
         public Enumerator GetEnumerator()
         {
-            return Enumerator(this, Enumerator.KeyValuePair);
+            return new Enumerator(this, Enumerator.KeyValuePair);
         }
 
         public bool Remove(TKey key)
         {
-            if (key == null)
-            {
-                throw ArgumentNullException("key");
-            }
-
-            return _set.Remove(KeyValuePair<TKey, TValue>(key, default(TValue)));
+            return unset(key);
         }
 
         public bool TryGetValue(TKey key, out TValue value)
         {
-            if (key == null)
-            {
-                throw ArgumentNullException("key");
-            }
-
-            TreeSet.Node node = _set.FindNode(KeyValuePair<TKey, TValue>(key, default(TValue)));
-            if (node == null)
-            {
+			
+			if (has_key (key)) {
+				value = base.get (key);
+				return true;
+			} else {
                 value = default(TValue);
                 return false;
-            }
-            value = node.Item.Value;
-            return true;
+			}
         }
 
         void CopyTo(Array array, int index)
         {
-            ((ICollection)_set).CopyTo(array, index);
+            //((ICollection)_set).CopyTo(array, index);
         }
 
         bool IsFixedSize
@@ -248,109 +145,6 @@ namespace System.Collections.Generic
             get { return false; }
         }
 
-       
-        Object getObj (Object key) {
-			if (IsCompatibleKey(key))
-			{
-				TValue value;
-				if (TryGetValue((TKey)key, out value))
-				{
-					return value;
-				}
-			}
-
-			return null;
-		}
-        
-        public void setObj (Object key) 
-		{
-			if (key == null)
-			{
-				throw ArgumentNullException("key");
-			}
-
-			if (value == null && !(default(TValue) == null))
-				throw ArgumentNullException("value");
-
-			try
-			{
-				TKey tempKey = (TKey)key;
-				try
-				{
-					this[tempKey] = (TValue)value;
-				}
-				catch (InvalidCastException e)
-				{
-					throw ArgumentException(SR.Format(SR.Arg_WrongType, value, typeof(TValue)), "value");
-				}
-				finally {}
-			}
-			catch (InvalidCastException e)
-			{
-				throw ArgumentException(SR.Format(SR.Arg_WrongType, key, typeof(TKey)), "key");
-			}
-		}
-
-        void AddObj(Object key, Object value)
-        {
-            if (key == null)
-            {
-                throw ArgumentNullException("key");
-            }
-
-            if (value == null && !(default(TValue) == null))
-                throw ArgumentNullException("value");
-
-            try
-            {
-                TKey tempKey = (TKey)key;
-
-                try
-                {
-                    Add(tempKey, (TValue)value);
-                }
-                catch (InvalidCastException e)
-                {
-                    throw ArgumentException(SR.Format(SR.Arg_WrongType, value, typeof(TValue)), "value");
-                }
-            }
-            catch (InvalidCastException e)
-            {
-                throw ArgumentException(SR.Format(SR.Arg_WrongType, key, typeof(TKey)), "key");
-            }
-        }
-
-        bool ContainsObj(Object key)
-        {
-            if (IsCompatibleKey(key))
-            {
-                return ContainsKey((TKey)key);
-            }
-            return false;
-        }
-
-        private static bool IsCompatibleKey(Object key)
-        {
-            if (key == null)
-            {
-                throw ArgumentNullException("key");
-            }
-
-            return (key is TKey);
-        }
-
-        IDictionaryEnumerator GetDictEnumerator()
-        {
-            return Enumerator(this, Enumerator.DictEntry);
-        }
-
-        void RemoveObj(Object key)
-        {
-            if (IsCompatibleKey(key))
-            {
-                Remove((TKey)key);
-            }
-        }
 
         bool IsSynchronized
         {
@@ -362,7 +156,95 @@ namespace System.Collections.Generic
             get { return ((ICollection)_set).SyncRoot; }
         }
 
-        
+        [Compact]
+        public class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>, IDictionaryEnumerator
+        {
+            /*
+            private Gee.TreeMap<KeyValuePair<TKey, TValue>>.Enumerator _treeEnum;
+            private int _getEnumeratorRetType;  // What should Enumerator.Current return?
+
+            internal const int KeyValuePair = 1;
+            internal const int DictEntry = 2;
+            */
+
+            internal Enumerator(SortedDictionary<TKey, TValue> dictionary, int getEnumeratorRetType)
+            {
+              //  _treeEnum = dictionary._set.GetEnumerator();
+              //  _getEnumeratorRetType = getEnumeratorRetType;
+            }
+
+            public bool MoveNext()
+            {
+                //return _treeEnum.MoveNext();
+            }
+
+            public void Dispose()
+            {
+                //_treeEnum.Dispose();
+            }
+
+            public KeyValuePair<TKey, TValue> Current
+            {
+                get
+                {
+                   // return _treeEnum.Current;
+                }
+            }
+
+            internal bool NotStartedOrEnded
+            {
+                get
+                {
+                    //return _treeEnum.NotStartedOrEnded;
+                }
+            }
+
+            internal void Reset()
+            {
+                //_treeEnum.Reset();
+            }
+
+
+            Object Key
+            {
+                get
+                {
+                    if (NotStartedOrEnded)
+                    {
+                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
+                    }
+
+                    return Current.Key;
+                }
+            }
+
+            Object Value
+            {
+                get
+                {
+                    if (NotStartedOrEnded)
+                    {
+                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
+                    }
+
+                    return Current.Value;
+                }
+            }
+
+            DictionaryEntry Entry
+            {
+                get
+                {
+                    if (NotStartedOrEnded)
+                    {
+                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
+                    }
+
+                    return new DictionaryEntry(Current.Key, Current.Value);
+                }
+            }
+        }
+       
 
         public class KeyCollection : ICollection<TKey>, ICollection, IReadOnlyCollection<TKey>
         {
@@ -668,30 +550,5 @@ namespace System.Collections.Generic
         }
     }
 
-    /// <summary>
-    /// This class is intended as a helper for backwards compatibility with existing SortedDictionaries.
-    /// TreeSet has been converted into SortedSet<T>, which will be exposed publicly. SortedDictionaries
-    /// have the problem where they have already been serialized to disk as having a backing class named
-    /// TreeSet. To ensure that we can read back anything that has already been written to disk, we need to
-    /// make sure that we have a class named TreeSet that does everything the way it used to.
-    /// 
-    /// The only thing that makes it different from SortedSet is that it throws on duplicates
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal class TreeSet<T> : SortedSet<T>
-    {
 
-        public TreeSet(ICollection<T> collection, IComparer<T> comparer){
-			base(collection, comparer); }
-
-        internal override bool AddIfNotPresent(T item)
-        {
-            bool ret = base.AddIfNotPresent(item);
-            if (!ret)
-            {
-                throw ArgumentException(SR.Argument_AddingDuplicate);
-            }
-            return ret;
-        }
-    }
 }

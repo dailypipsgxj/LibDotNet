@@ -61,6 +61,7 @@ LIBDOTNET_SOURCES = \
 	System/IO/InvalidDataException.vala \
 	System/Globalization/Globalization.vala \
 	System/Diagnostics/Diagnostics.vala \
+	System/Reflection/Reflection.vala \
 	System/Runtime/Runtime.vala \
 	System/Runtime/Serialization/iserializable.vala \
 	System/Runtime/Serialization/ideserializationcallback.vala \
@@ -70,4 +71,5 @@ LIBDOTNET_SOURCES = \
 	System/Threading/Threading.vala \
 	System/iequatable.vala \
 	System/Nullable.vala \
-	System/idisposable.vala
+	System/idisposable.vala \
+	System/ArrayTypeMismatchException.vala

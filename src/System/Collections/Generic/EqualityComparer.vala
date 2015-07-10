@@ -36,6 +36,7 @@ namespace System.Collections.Generic
         }
 
         private static EqualityComparer<T> CreateComparer() {
+
             return new ObjectEqualityComparer<T>();
         }
 
@@ -246,21 +247,21 @@ namespace System.Collections.Generic
     // We will call the C runtime function memchr, which is optimized.
 // [Serializable]
 
-    internal class ByteEqualityComparer: EqualityComparer<byte>
+    internal class ByteEqualityComparer: EqualityComparer<char>
     {
 // [Pure]
 
-        public override bool Equals(byte x, byte y) {
+        public override bool Equals(char x, char y) {
             return x == y;
         }
 // [Pure]
 
-        public override int GetHashCode(byte b) {
+        public override int GetHashCode(char b) {
             return b.GetHashCode();
         }
 // [System.Security.SecuritySafeCritical]
   // auto-generated
-        internal override int IndexOf(byte[] array, byte value, int startIndex, int count) {
+        internal override int IndexOf(char[] array, char value, int startIndex, int count) {
             if (array==null)
                 throw ArgumentNullException("array");
             if (startIndex < 0)
@@ -271,11 +272,11 @@ namespace System.Collections.Generic
                 throw ArgumentException(Environment.GetResourcestring("Argument_InvalidOffLen"));
             Contract.EndContractBlock();
             if (count == 0) return -1;
-            byte* pbytes = array;
+            char* pbytes = array;
             return Buffer.IndexOfByte(pbytes, value, startIndex, count);
         }
 
-        internal override int LastIndexOf(byte[] array, byte value, int startIndex, int count) {
+        internal override int LastIndexOf(char[] array, char value, int startIndex, int count) {
             int endIndex = startIndex - count + 1;
             for (int i = startIndex; i >= endIndex; i--) {
                 if (array[i] == value) return i;

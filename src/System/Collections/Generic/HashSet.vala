@@ -53,27 +53,9 @@ namespace System.Collections.Generic
     //[SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "By design")]
     public class HashSet<T> : Gee.HashSet<T>, ICollection<T>, ISet<T>, IReadOnlyCollection<T>
     {
-        // store lower 31 bits of hash code
-        private const int Lower31BitMask = 0x7FFFFFFF;
-        // cutoff point, above which we won't do stackallocs. This corresponds to 100 integers.
-        private const int StackAllocThreshold = 100;
-        // when constructing a hashset from an existing collection, it may contain duplicates, 
-        // so this is used as the max acceptable excess ratio of capacity to count. Note that
-        // this is only used on the ctor and not to automatically shrink if the hashset has, e.g,
-        // a lot of adds followed by removes. Users must  ly shrink by calling TrimExcess.
-        // This is set to 3 because capacity is acceptable as 2x rounded up to nearest prime.
-        private const int ShrinkThreshold = 3;
-
-        private int[] _buckets;
-        private Slot[] _slots;
-        private int _count;
-        private int _lastIndex;
-        private int _freeList;
         private IEqualityComparer<T> _comparer;
-        private int _version;
 
         //Constructors
-
         public HashSet(IEqualityComparer<T>? comparer = null)
         {
             if (comparer == null)
@@ -82,10 +64,6 @@ namespace System.Collections.Generic
             }
 
             _comparer = comparer;
-            _lastIndex = 0;
-            _count = 0;
-            _freeList = -1;
-            _version = 0;
             base ();
         }
 
@@ -98,33 +76,7 @@ namespace System.Collections.Generic
         /// <param name="comparer"></param>
         public HashSet.FromCollection(IEnumerable<T> collection, IEqualityComparer<T>? comparer = null){
 			this(comparer);
-            if (collection == null)
-            {
-                throw ArgumentNullException("collection");
-            }
-            Contract.EndContractBlock();
-
-            // to avoid excess resizes, first set size based on collection's count. Collection
-            // may contain duplicates, so call TrimExcess if resulting hashset is larger than
-            // threshold
-            int suggestedCapacity = 0;
-            ICollection<T> coll = collection as ICollection<T>;
-            if (coll != null)
-            {
-                suggestedCapacity = coll.Count;
-            }
-            Initialize(suggestedCapacity);
-
-            this.UnionWith(collection);
-            if ((_count == 0 && _slots.Length > HashHelpers.GetMinPrime()) ||
-                (_count > 0 && _slots.Length / _count > ShrinkThreshold))
-            {
-                TrimExcess();
-            }
         }
-
-        //
-
 
 
         /// <summary>
@@ -133,19 +85,7 @@ namespace System.Collections.Generic
         /// </summary>
         public void Clear()
         {
-            if (_lastIndex > 0)
-            {
-                Debug.Assert(_buckets != null, "_buckets was null but _lastIndex > 0");
-
-                // clear the elements so that the gc can reclaim the references.
-                // clear only up to _lastIndex for _slots 
-                Array.Clear(_slots, 0, _lastIndex);
-                Array.Clear(_buckets, 0, _buckets.Length);
-                _lastIndex = 0;
-                _count = 0;
-                _freeList = -1;
-            }
-            _version++;
+			clear ();
         }
 
         /// <summary>
@@ -155,20 +95,7 @@ namespace System.Collections.Generic
         /// <returns>true if item contained; false if not</returns>
         public bool Contains(T item)
         {
-            if (_buckets != null)
-            {
-                int hashCode = InternalGetHashCode(item);
-                // see note at "HashSet" level describing why "- 1" appears in for loop
-                for (int i = _buckets[hashCode % _buckets.Length] - 1; i >= 0; i = _slots[i].next)
-                {
-                    if (_slots[i].hashCode == hashCode && _comparer.Equals(_slots[i].value, item))
-                    {
-                        return true;
-                    }
-                }
-            }
-            // either _buckets is null or wasn't found
-            return false;
+			return contains (item);
         }
 
         /// <summary>
@@ -178,46 +105,7 @@ namespace System.Collections.Generic
         /// <returns>true if removed; false if not (i.e. if the item wasn't in the HashSet)</returns>
         public bool Remove(T item)
         {
-            if (_buckets != null)
-            {
-                int hashCode = InternalGetHashCode(item);
-                int bucket = hashCode % _buckets.Length;
-                int last = -1;
-                for (int i = _buckets[bucket] - 1; i >= 0; last = i, i = _slots[i].next)
-                {
-                    if (_slots[i].hashCode == hashCode && _comparer.Equals(_slots[i].value, item))
-                    {
-                        if (last < 0)
-                        {
-                            // first iteration; update buckets
-                            _buckets[bucket] = _slots[i].next + 1;
-                        }
-                        else
-                        {
-                            // subsequent iterations; update 'next' pointers
-                            _slots[last].next = _slots[i].next;
-                        }
-                        _slots[i].hashCode = -1;
-                        _slots[i].value = default(T);
-                        _slots[i].next = _freeList;
-
-                        _count--;
-                        _version++;
-                        if (_count == 0)
-                        {
-                            _lastIndex = 0;
-                            _freeList = -1;
-                        }
-                        else
-                        {
-                            _freeList = i;
-                        }
-                        return true;
-                    }
-                }
-            }
-            // either _buckets is null or wasn't found
-            return false;
+			return remove (item);
         }
 
         /// <summary>
@@ -225,7 +113,7 @@ namespace System.Collections.Generic
         /// </summary>
         public int Count
         {
-            get { return _count; }
+            get { return size; }
         }
 
         /// <summary>
@@ -245,8 +133,6 @@ namespace System.Collections.Generic
             return new Enumerator(this);
         }
 
-
-        //
 
         //HashSet methods
 
