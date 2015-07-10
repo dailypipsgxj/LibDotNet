@@ -66,8 +66,8 @@ namespace System.Text.RegularExpressions
         /// </summary>
         static Group Synchronized(Group inner)
         {
-            if (inner == null)
-                throw new ArgumentNullException.POINTER("inner");
+            //if (inner == null)
+                //throw new ArgumentNullException.POINTER("inner");
 
             // force Captures to be computed.
 

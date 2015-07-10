@@ -62,7 +62,7 @@ namespace System.Text.RegularExpressions
                 return _group;
 
             if (i >= _capcount || i < 0)
-                throw new ArgumentOutOfRangeException.ARGUMENTOUTOFRANGE("i");
+                //throw new ArgumentOutOfRangeException.ARGUMENTOUTOFRANGE("i");
 
             // first time a capture is accessed, compute them all
             if (_captures == null)
@@ -90,7 +90,7 @@ namespace System.Text.RegularExpressions
         void CopyTo(Array<Object> array, int arrayIndex)
         {
             if (array == null)
-                throw new ArgumentNullException.POINTER("array");
+                //throw new ArgumentNullException.POINTER("array");
 
             for (int i = arrayIndex, j = 0; j < Count; i++, j++)
             {
@@ -126,7 +126,7 @@ namespace System.Text.RegularExpressions
                 owned get
                 {
                     if (_index < 0 || _index >= _collection.Count)
-                        throw new InvalidOperationException.INVALIDOPERATION("SR.EnumNotStarted");
+                        //throw new InvalidOperationException.INVALIDOPERATION("SR.EnumNotStarted");
 
                     return _collection[_index];
                 }

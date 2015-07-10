@@ -66,12 +66,8 @@ namespace System.Collections.Generic {
             public TValue value;         // Value of entry
         }
 
-        private int[] buckets;
-        private Entry[] _entries;
-        private int count;
-        private int version;
-        private int freeList;
-        private int freeCount;
+        //private int[] buckets;
+        //private Entry[] _entries;
         
         private IEqualityComparer<TKey> comparer;
         private KeyCollection _keys;
@@ -91,7 +87,7 @@ namespace System.Collections.Generic {
         }
 
         public Dictionary.FromDictionary(IDictionary<TKey,TValue> dictionary, IEqualityComparer<TKey>? comparer = null) {
-			
+		
 			this(dictionary.Count, comparer);
 
             foreach (KeyValuePair<TKey,TValue> pair in dictionary) {
@@ -112,15 +108,15 @@ namespace System.Collections.Generic {
 
         public KeyCollection Keys {
             get {
-                if (keys == null) keys = new KeyCollection(this);
-                return keys;
+                if (_keys == null) _keys = new KeyCollection(this);
+                return _keys;
             }
         }
 
         public ValueCollection Values {
             get {
-                if (values == null) values = new ValueCollection(this);
-                return values;
+                if (_values == null) _values = new ValueCollection(this);
+                return _values;
             }
         }
 
@@ -274,40 +270,21 @@ namespace System.Collections.Generic {
         public class Enumerator: IEnumerator<KeyValuePair<TKey,TValue>>, IDictionaryEnumerator
         {
             private Dictionary<TKey,TValue> dictionary;
-            private int version;
-            private int index;
+            private Gee.MapIterator iterator;
             private KeyValuePair<TKey,TValue> current;
-            private int getEnumeratorRetType;  // What should Enumerator.Current return?
-            
-            internal const int DictEntry = 1;
-            internal const int KeyValuePair = 2;
 
             internal Enumerator(Dictionary<TKey,TValue> dictionary, int getEnumeratorRetType) {
                 this.dictionary = dictionary;
-                version = dictionary.version;
                 index = 0;
-                this.getEnumeratorRetType = getEnumeratorRetType;
                 current = new KeyValuePair<TKey, TValue>();
             }
 
             public bool MoveNext() {
-                if (version != dictionary.version) {
-                    ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);
-                }
-
-                // Use unsigned comparison since we set index to dictionary.count+1 when the enumeration ends.
-                // dictionary.count+1 could be negative if dictionary.count is int32.MaxValue
-                while ((uint)index < (uint)dictionary.count) {
-                    if (dictionary.entries[index].hashCode >= 0) {
-                        current = new KeyValuePair<TKey, TValue>(dictionary.entries[index].key, dictionary.entries[index].value);
-                        index++;
-                        return true;
-                    }
-                    index++;
-                }
-
-                index = dictionary.count + 1;
-                current = new KeyValuePair<TKey, TValue>();
+				if (iterator.next()) {
+					current = new KeyValuePair<TKey, TValue>(iterator.get_key(), iterator.get_value());
+					return true;
+				}
+				current = new KeyValuePair<TKey, TValue>();
                 return false;
             }
 
@@ -319,40 +296,26 @@ namespace System.Collections.Generic {
             }
             
 
-            void IEnumerator.Reset() {
-                if (version != dictionary.version) {
-                    ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);
-                }
-
-                index = 0;
+            void Reset() {
+				iterator.unset();
                 current = new KeyValuePair<TKey, TValue>();    
             }
 
             DictionaryEntry Entry {
                 get { 
-                    if( index == 0 || (index == dictionary.count + 1)) {
-                         ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumOpCantHappen);                        
-                    }                        
-                    
-                    return new DictionaryEntry(current.Key, current.Value); 
+                    return new DictionaryEntry(iterator.get_key(), iterator.get_value()); 
                 }
             }
             
             Object Key {
                 get { 
-                    if( index == 0 || (index == dictionary.count + 1)) {
-                         ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumOpCantHappen);                        
-                    }                        
-                    
-                    return current.Key; 
+                    return iterator.get_key(); 
                 }
-            } Object Value {
+            }
+            
+            Object Value {
                 get { 
-                    if( index == 0 || (index == dictionary.count + 1)) {
-                         ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumOpCantHappen);                        
-                    }                        
-                    
-                    return current.Value; 
+                    return iterator.get_value(); 
                 }
             }
         }
@@ -370,22 +333,8 @@ namespace System.Collections.Generic {
             }
 
             public void CopyTo(TKey[] array, int index) {
-                if (array == null) {
-                    ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
-                }
-
-                if (index < 0 || index > array.Length) {
-                    ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
-                }
-
-                if (array.Length - index < dictionary.Count) {
-                    ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_ArrayPlusOffTooSmall);
-                }
-                
-                int count = dictionary.count;
-                Entry[] entries = dictionary.entries;
-                for (int i = 0; i < count; i++) {
-                    if (entries[i].hashCode >= 0) array[index++] = entries[i].key;
+                foreach (var entry in dictionary.entries) {
+                    array[index++] = entry.key;
                 }
             }
 
@@ -398,11 +347,11 @@ namespace System.Collections.Generic {
             }
 
             void Add(TKey item){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
             }
             
             void Clear(){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
             }
 
             bool Contains(TKey item){
@@ -410,7 +359,7 @@ namespace System.Collections.Generic {
             }
 
             bool Remove(TKey item){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
                 return false;
             }
             
@@ -427,12 +376,10 @@ namespace System.Collections.Generic {
             {
                 private Dictionary<TKey, TValue> dictionary;
                 private int index;
-                private int version;
                 private TKey currentKey;
             
                 internal Enumerator(Dictionary<TKey, TValue> dictionary) {
                     this.dictionary = dictionary;
-                    version = dictionary.version;
                     index = 0;
                     currentKey = default(TKey);                    
                 }
@@ -441,20 +388,11 @@ namespace System.Collections.Generic {
                 }
 
                 public bool MoveNext() {
-                    if (version != dictionary.version) {
-                        ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);
-                    }
-
-                    while ((uint)index < (uint)dictionary.count) {
-                        if (dictionary.entries[index].hashCode >= 0) {
-                            currentKey = dictionary.entries[index].key;
-                            index++;
-                            return true;
-                        }
+                    if (index < dictionary.Count) {
+						currentKey = dictionary.entries[index].key;
                         index++;
+                        return true;
                     }
-
-                    index = dictionary.count + 1;
                     currentKey = default(TKey);
                     return false;
                 }
@@ -467,10 +405,6 @@ namespace System.Collections.Generic {
 
                
                 void Reset() {
-                    if (version != dictionary.version) {
-                        ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);                        
-                    }
-
                     index = 0;                    
                     currentKey = default(TKey);
                 }
@@ -482,9 +416,6 @@ namespace System.Collections.Generic {
             private Dictionary<TKey,TValue> dictionary;
 
             public ValueCollection(Dictionary<TKey,TValue> dictionary) {
-                if (dictionary == null) {
-                    ThrowHelper.ThrowArgumentNullException(ExceptionArgument.dictionary);
-                }
                 this.dictionary = dictionary;
             }
 
@@ -493,22 +424,8 @@ namespace System.Collections.Generic {
             }
 
             public void CopyTo(TValue[] array, int index) {
-                if (array == null) {
-                    ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
-                }
-
-                if (index < 0 || index > array.Length) {
-                    ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
-                }
-
-                if (array.Length - index < dictionary.Count) {
-                    ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_ArrayPlusOffTooSmall);
-                }
-                
-                int count = dictionary.count;
-                Entry[] entries = dictionary.entries;
-                for (int i = 0; i < count; i++) {
-                    if (entries[i].hashCode >= 0) array[index++] = entries[i].value;
+                foreach (var entry in dictionary.entries) {
+                    array[index++] = entry.value;
                 }
             }
 
@@ -521,16 +438,16 @@ namespace System.Collections.Generic {
             }
 
             void Add(TValue item){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ValueCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ValueCollectionSet);
             }
 
             bool Remove(TValue item){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ValueCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ValueCollectionSet);
                 return false;
             }
 
             void Clear(){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ValueCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ValueCollectionSet);
             }
 
             bool Contains(TValue item){
@@ -545,7 +462,7 @@ namespace System.Collections.Generic {
             Object SyncRoot { 
                 get { return ((ICollection)dictionary).SyncRoot; }
             }
-// [Serializable]
+
 			[Compact]
             public class Enumerator : IEnumerator<TValue>, System.Collections.IEnumerator
             {
@@ -565,19 +482,11 @@ namespace System.Collections.Generic {
                 }
 
                 public bool MoveNext() {                    
-                    if (version != dictionary.version) {
-                        ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);
-                    }
-                    
-                    while ((uint)index < (uint)dictionary.count) {
-                        if (dictionary.entries[index].hashCode >= 0) {
-                            currentValue = dictionary.entries[index].value;
-                            index++;
-                            return true;
-                        }
+                    if (index < dictionary.Count) {
+						currentValue = dictionary.entries[index].value;
                         index++;
+                        return true;
                     }
-                    index = dictionary.count + 1;
                     currentValue = default(TValue);
                     return false;
                 }
@@ -588,11 +497,7 @@ namespace System.Collections.Generic {
                     }
                 }
 
-                
                 void Reset() {
-                    if (version != dictionary.version) {
-                        ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_EnumFailedVersion);
-                    }
                     index = 0;                    
                     currentValue = default(TValue);
                 }
