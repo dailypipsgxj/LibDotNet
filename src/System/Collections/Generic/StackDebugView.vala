@@ -18,7 +18,6 @@ namespace System.Collections.Generic
 
             _stack = stack;
         }
-// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 
         public T[] Items
         {

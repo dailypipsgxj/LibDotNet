@@ -20,12 +20,12 @@ namespace System.Collections {
 
     // Base interface for all enumerators, providing a simple approach
     // to iterating over a collection.
-// [Guid("496B0ABF-CDEE-11d3-88E8-00902754C43A")]
-
-// [System.Runtime.InteropServices.ComVisible(true)]
 
     public interface IEnumerator
     {
+		private abstract T _currentElement;
+		private abstract Gee.Iterator _iterator;
+
         // Interfaces are not serializable
         // Advances the enumerator to the next element of the enumeration and
         // returns a boolean indicating whether an element is available. Upon
@@ -33,7 +33,15 @@ namespace System.Collections {
         // element of the enumeration, and the first call to MoveNext 
         // brings the first element of the enumeration into view.
         // 
-        public abstract bool MoveNext();
+        public virtual bool MoveNext() {
+			if (_iterator.has_next ()) {
+				iterator.next();
+				_currentElement = iterator.get();
+				return true;
+			}
+			_currentElement = default(T);
+			return false;
+		}
     
         // Returns the current element of the enumeration. The returned value is
         // undefined before the first call to MoveNext and following a

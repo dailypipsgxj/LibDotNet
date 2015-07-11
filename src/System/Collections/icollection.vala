@@ -21,13 +21,17 @@ namespace System.Collections {
     // Base interface for all collections, defining enumerators, size, and 
     // synchronization methods.
 
-    public interface ICollection : IEnumerable
+    public interface ICollection : Gee.Collection, IEnumerable
     {
         // Interfaces are not serialable
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        public abstract void CopyTo(Array array, int index);
+        public virtual void CopyTo(T[] array, int arrayIndex) {
+			foreach (T item in this) {
+				array[arrayIndex++] = item;
+			}
+		}
         
         // Number of items in the collections.
         public abstract int Count { get; }

@@ -60,8 +60,6 @@ namespace System.Collections.Generic {
         //Check if this set contains the same and only the same elements as other
         bool SetEquals(IEnumerable<T> other);
 
-
-
     }
 
 }

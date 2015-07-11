@@ -1,4 +1,4 @@
-LIBDOTNET_SOURCES = \
+LIBDOTNET_REGEX = \
 	System/Text/RegularExpressions/RegexMatch.vala \
 	System/Text/RegularExpressions/RegexMatchCollection.vala \
 	System/Text/RegularExpressions/Regex.vala \
@@ -7,21 +7,9 @@ LIBDOTNET_SOURCES = \
 	System/Text/RegularExpressions/RegexGroupCollection.vala \
 	System/Text/RegularExpressions/RegexCaptureCollection.vala \
 	System/Text/RegularExpressions/RegexMatchTimeoutException.vala \
-	System/Text/RegularExpressions/RegexCapture.vala \
-	System/Collections/Hashtable.vala \
-	System/Collections/Stack.vala \
-	System/Collections/CollectionBase.vala \
-	System/Collections/StructuralComparisons.vala \
-	System/Collections/Comparer.vala \
-	System/Collections/SortedList.vala \
-	System/Collections/Queue.vala \
-	System/Collections/CaseInsensitiveComparer.vala \
-	System/Collections/ArrayList.vala \
-	System/Collections/ReadOnlyCollectionBase.vala \
-	System/Collections/KeyValuePairs.vala \
-	System/Collections/DictionaryBase.vala \
-	System/Collections/icollection.vala \
-	System/Collections/icomparer.vala \
+	System/Text/RegularExpressions/RegexCapture.vala
+	
+LIBDOTNET_COLLECTIONS_IFACE = \
 	System/Collections/idictionary.vala \
 	System/Collections/idictionaryenumerator.vala \
 	System/Collections/ienumerable.vala \
@@ -31,31 +19,48 @@ LIBDOTNET_SOURCES = \
 	System/Collections/ilist.vala \
 	System/Collections/istructuralcomparable.vala \
 	System/Collections/istructuralequatable.vala \
-	System/Collections/DictionaryEntry.vala \
-	System/Collections/Specialized/CollectionsUtil.vala \
-	System/Collections/Generic/Dictionary.vala \
-	System/Collections/Generic/EqualityComparer.vala \
-	System/Collections/Generic/SortedDictionary.vala \
-	System/Collections/Generic/Stack.vala \
-	System/Collections/Generic/SortedList.vala \
-	System/Collections/Generic/HashSet.vala \
-	System/Collections/Generic/Queue.vala \
-	System/Collections/Generic/SortedSet.vala \
-	System/Collections/Generic/KeyValuePair.vala \
-	System/Collections/Generic/LinkedList.vala \
+	System/Collections/icollection.vala \
+	System/Collections/icomparer.vala
+
+LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/icollection.vala \
-	System/Collections/Generic/ICollectionDebugView.vala \
 	System/Collections/Generic/icomparer.vala \
 	System/Collections/Generic/idictionary.vala \
-	System/Collections/Generic/IDictionaryDebugView.vala \
 	System/Collections/Generic/ienumerable.vala \
 	System/Collections/Generic/ienumerator.vala \
 	System/Collections/Generic/iequalitycomparer.vala \
-	System/Collections/Generic/ilist.vala \
 	System/Collections/Generic/iset.vala \
 	System/Collections/Generic/ireadonlycollection.vala \
 	System/Collections/Generic/ireadonlydictionary.vala \
 	System/Collections/Generic/ireadonlylist.vala \
+	System/Collections/Generic/ilist.vala
+
+LIBDOTNET_COLLECTIONS = \
+	System/Collections/Hashtable.vala \
+	System/Collections/CollectionBase.vala \
+	System/Collections/StructuralComparisons.vala \
+	System/Collections/Comparer.vala \
+	System/Collections/SortedList.vala \
+	System/Collections/CaseInsensitiveComparer.vala \
+	System/Collections/ArrayList.vala \
+	System/Collections/ReadOnlyCollectionBase.vala \
+	System/Collections/KeyValuePairs.vala \
+	System/Collections/DictionaryBase.vala \
+	System/Collections/DictionaryEntry.vala \
+	System/Collections/Specialized/CollectionsUtil.vala
+	
+LIBDOTNET_COLLECTIONS_GEN = \
+	System/Collections/Generic/SortedSet.vala \
+	System/Collections/Generic/Queue.vala \
+	System/Collections/Generic/HashSet.vala \
+	System/Collections/Generic/SortedList.vala \
+	System/Collections/Generic/Dictionary.vala \
+	System/Collections/Generic/Stack.vala \
+	System/Collections/Generic/EqualityComparer.vala \
+	System/Collections/Generic/KeyValuePair.vala \
+	System/Collections/Generic/LinkedList.vala
+	
+LIBDOTNET_SYSTEM = \
 	System/Linq/Errors.vala \
 	System/Linq/Enumerable.vala \
 	System/IO/InvalidDataException.vala \
@@ -73,3 +78,13 @@ LIBDOTNET_SOURCES = \
 	System/Exceptions.vala \
 	System/action.vala \
 	System/icomparable.vala
+
+
+LIBDOTNET_SOURCES = \
+	$(LIBDOTNET_REGEX)\
+	$(LIBDOTNET_COLLECTIONS) \
+	$(LIBDOTNET_COLLECTIONS_IFACE) \
+	$(LIBDOTNET_COLLECTIONS_GEN) \
+	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
+	$(LIBDOTNET_SYSTEM)
+	

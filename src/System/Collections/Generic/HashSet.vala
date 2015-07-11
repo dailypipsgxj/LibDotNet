@@ -48,9 +48,7 @@ namespace System.Collections.Generic
     /// the same time. 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    //[DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
-    //[DebuggerDisplay("Count = {Count}")]
-    //[SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "By design")]
+
     public class HashSet<T> : Gee.HashSet<T>, ICollection<T>, ISet<T>, IReadOnlyCollection<T>
     {
         private IEqualityComparer<T> _comparer;
@@ -64,7 +62,7 @@ namespace System.Collections.Generic
             }
 
             _comparer = comparer;
-            base ();
+            base (null, comparer.Equals);
         }
 
         /// <summary>
@@ -76,36 +74,9 @@ namespace System.Collections.Generic
         /// <param name="comparer"></param>
         public HashSet.FromCollection(IEnumerable<T> collection, IEqualityComparer<T>? comparer = null){
 			this(comparer);
-        }
-
-
-        /// <summary>
-        /// Remove all items from this set. This clears the elements but not the underlying 
-        /// buckets and slots array. Follow this call by TrimExcess to release these.
-        /// </summary>
-        public void Clear()
-        {
-			clear ();
-        }
-
-        /// <summary>
-        /// Checks if this hashset contains the item
-        /// </summary>
-        /// <param name="item">item to check for containment</param>
-        /// <returns>true if item contained; false if not</returns>
-        public bool Contains(T item)
-        {
-			return contains (item);
-        }
-
-        /// <summary>
-        /// Remove item from this hashset
-        /// </summary>
-        /// <param name="item">item to remove</param>
-        /// <returns>true if removed; false if not (i.e. if the item wasn't in the HashSet)</returns>
-        public bool Remove(T item)
-        {
-			return remove (item);
+			foreach (var item in collection) {
+				add (item);
+			}
         }
 
         /// <summary>
@@ -519,13 +490,13 @@ namespace System.Collections.Generic
             // check array index valid index into array
             if (arrayIndex < 0)
             {
-                throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw new ArgumentOutOfRangeException("arrayIndex SR.ArgumentOutOfRange_NeedNonNegNum");
             }
 
             // also throw if count less than 0
             if (count < 0)
             {
-                throw ArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_NeedNonNegNum);
+                throw new ArgumentOutOfRangeException("count SR.ArgumentOutOfRange_NeedNonNegNum");
             }
 
             // will array, starting at arrayIndex, be able to hold elements? Note: not
@@ -533,18 +504,9 @@ namespace System.Collections.Generic
             // count of 0; subsequent check takes care of the rest)
             if (arrayIndex > array.Length || count > array.Length - arrayIndex)
             {
-                throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
+                throw new ArgumentException("SR.Arg_ArrayPlusOffTooSmall");
             }
 
-            int numCopied = 0;
-            for (int i = 0; i < _lastIndex && numCopied < count; i++)
-            {
-                if (_slots[i].hashCode >= 0)
-                {
-                    array[arrayIndex + numCopied] = _slots[i].value;
-                    numCopied++;
-                }
-            }
         }
 
         /// <summary>
@@ -556,22 +518,7 @@ namespace System.Collections.Generic
         {
 
             int numRemoved = 0;
-            for (int i = 0; i < _lastIndex; i++)
-            {
-                if (_slots[i].hashCode >= 0)
-                {
-                    // cache value in case delegate removes it
-                    T value = _slots[i].value;
-                    if (match(value))
-                    {
-                        // check again that remove actually removed it
-                        if (Remove(value))
-                        {
-                            numRemoved++;
-                        }
-                    }
-                }
-            }
+
             return numRemoved;
         }
 
@@ -720,6 +667,7 @@ namespace System.Collections.Generic
             // mark if contains: find index of in slots array and mark corresponding element in bit array
             foreach (T item in other)
             {
+				
             }
         }
 
@@ -765,6 +713,7 @@ namespace System.Collections.Generic
 
             foreach (T item in other)
             {
+				
             }
 
         }
@@ -974,15 +923,12 @@ namespace System.Collections.Generic
         public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
             private HashSet<T> _set;
-            private int _index;
-            private int _version;
-            private T _current;
+			private T _currentElement;
+			private Gee.Iterator _iterator;
 
-            internal Enumerator(HashSet<T> set)
+            public Enumerator(HashSet<T> hashset)
             {
-                _set = set;
-                _index = 0;
-                _version = set._version;
+                _set = hashset;
                 _current = default(T);
             }
 
@@ -990,44 +936,18 @@ namespace System.Collections.Generic
             {
             }
 
-            public bool MoveNext()
-            {
-                if (_version != _set._version)
-                {
-                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
-                }
-
-                while (_index < _set._lastIndex)
-                {
-                    if (_set._slots[_index].hashCode >= 0)
-                    {
-                        _current = _set._slots[_index].value;
-                        _index++;
-                        return true;
-                    }
-                    _index++;
-                }
-                _index = _set._lastIndex + 1;
-                _current = default(T);
-                return false;
-            }
 
             public T Current
             {
                 get
                 {
-                    return _current;
+                    return _currentElement;
                 }
             }
 
            void Reset()
             {
-                if (_version != _set._version)
-                {
-                    throw InvalidOperationException(SR.InvalidOperation_EnumFailedVersion);
-                }
-
-                _index = 0;
+				_iterator = _set.iterator();
                 _current = default(T);
             }
         }

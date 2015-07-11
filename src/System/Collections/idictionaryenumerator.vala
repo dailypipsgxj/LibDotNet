@@ -45,7 +45,6 @@ namespace System.Collections {
     // return the same DictionaryEntry and avoids boxing the DictionaryEntry (boxing
     // is somewhat expensive).
     // 
-// [System.Runtime.InteropServices.ComVisible(true)]
 
     public interface IDictionaryEnumerator : IEnumerator
     {

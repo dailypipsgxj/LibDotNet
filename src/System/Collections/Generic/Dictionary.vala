@@ -55,35 +55,19 @@ namespace System.Collections.Generic {
     public class Dictionary<TKey,TValue>:
 		Gee.HashMap<TKey,TValue>,
 		IDictionary<TKey,TValue>,
+		ICollection<KeyValuePair<TKey, TValue>>,
 		IReadOnlyDictionary<TKey, TValue>,
 		ISerializable,
 		IDeserializationCallback  {
     
-        private struct Entry {
-            public int hashCode;    // Lower 31 bits of hash code, -1 if unused
-            public int next;        // Index of next entry, -1 if last
-            public TKey key;           // Key of entry
-            public TValue value;         // Value of entry
-        }
-
-        //private int[] buckets;
-        //private Entry[] _entries;
-        
         private IEqualityComparer<TKey> comparer;
         private KeyCollection _keys;
         private ValueCollection _values;
         private Object _syncRoot;
         
-        // constants for serialization
-        private const string VersionName = "Version";
-        private const string HashSizeName = "HashSize";  // Must save buckets.Length
-        private const string KeyValuePairsName = "KeyValuePairs";
-        private const string ComparerName = "Comparer";
-
-
         public Dictionary(int capacity = 0, IEqualityComparer<TKey>? comparer = null) {
             this.comparer = comparer ?? EqualityComparer<TKey>.Default;
-            base (null, comparer);
+            base (null, comparer.Equals);
         }
 
         public Dictionary.FromDictionary(IDictionary<TKey,TValue> dictionary, IEqualityComparer<TKey>? comparer = null) {
@@ -95,7 +79,6 @@ namespace System.Collections.Generic {
             }
         }
 
-           
         public IEqualityComparer<TKey> Comparer {
             get {
                 return comparer;      
@@ -150,14 +133,6 @@ namespace System.Collections.Generic {
 
         bool Remove(TKey key, TValue? value = null) {
 			unset(key, value);
-        }
-
-        public void Clear() {
-			clear();
-        }
-
-        public bool ContainsKey(TKey key) {
-            return has_key(key);
         }
 
         public bool ContainsValue(TValue value) {
@@ -221,15 +196,6 @@ namespace System.Collections.Generic {
         }
 
 
-        public bool TryGetValue(TKey key, out TValue value) {
-            if (has_key(key)) {
-                value = base.get(key);
-                return true;
-            }
-            value = default(TValue);
-            return false;
-        }
-
         // This is a convenience method for the internal callers that were converted from using Hashtable.
         // Many were combining key doesn't exist and key exists but null value (for non-value types) checks.
         // This allows them to continue getting that behavior with minimal code delta. This is basically
@@ -270,7 +236,7 @@ namespace System.Collections.Generic {
         public class Enumerator: IEnumerator<KeyValuePair<TKey,TValue>>, IDictionaryEnumerator
         {
             private Dictionary<TKey,TValue> dictionary;
-            private Gee.MapIterator iterator;
+            private Gee.MapIterator _iterator;
             private KeyValuePair<TKey,TValue> current;
 
             internal Enumerator(Dictionary<TKey,TValue> dictionary, int getEnumeratorRetType) {

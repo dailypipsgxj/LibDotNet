@@ -22,7 +22,7 @@ namespace System.Collections.Generic {
     // Keys can be any non-null object.  Values can be any object.
     // You can look up a value in an IDictionary via the default indexed
     // property, Items.  
-    public interface IDictionary<TKey, TValue> : ICollection<KeyValuePair<TKey, TValue>>
+    public interface IDictionary<TKey, TValue> : Gee.Map, ICollection<KeyValuePair<TKey, TValue>>
     {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
@@ -43,17 +43,43 @@ namespace System.Collections.Generic {
     
         // Returns whether this dictionary contains a particular key.
         //
-        public abstract bool ContainsKey(TKey key);
+        public virtual bool ContainsKey(TKey key) {
+			return has_key(key);
+		}
+
+        public virtual bool ContainsValue(TValue value)
+        {
+            return (value in values);
+        }
+
     
         // Adds a key-value pair to the dictionary.
         // 
-        public abstract void Add(TKey key, TValue value);
+        public virtual void Add(TKey key, TValue value) {
+			set(key, value);
+		}
     
         // Removes a particular key from the dictionary.
         //
-        public abstract bool Remove(TKey key);
+        public virtual bool Remove(TKey key) {
+			unset(key);
+		}
 
-        public abstract bool TryGetValue(TKey key, out TValue value);
+        public abstract bool TryGetValue(TKey key, out TValue value) {
+		    if (has_key(key)) {
+                value = get(key);
+                return true;
+            }
+            value = default(TValue);
+            return false;
+		}
+		
+		private static abstract bool IsCompatibleKey(Object key)
+        {
+            return (key is TKey);
+        }
+
+		
     }
 
 }

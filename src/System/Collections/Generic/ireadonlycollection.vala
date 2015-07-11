@@ -26,39 +26,11 @@ namespace System.Collections.Generic
     // without jitting.  Hence the TypeDependencyAttribute on SZArrayHelper.
     // This is a special hack internally though - see VM\compile.cpp.
     // The same attribute is on IList<T>, IEnumerable<T>, ICollection<T>, and IReadOnlyList<T>.
-// [TypeDependencyAttribute("System.SZArrayHelper")]
 
-#if CONTRACTS_FULL
-// [ContractClass(typeof(IReadOnlyCollectionContract<>))]
-
-#endif
     // If we ever implement more interfaces on IReadOnlyCollection, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
     public interface IReadOnlyCollection<T> : IEnumerable<T>
     {
-        abstract int Count { get; }
+        public abstract int Count { get; }
     }
 
-#if CONTRACTS_FULL
-// [ContractClassFor(typeof(IReadOnlyCollection<>))]
-
-    internal abstract class IReadOnlyCollectionContract<T> : IReadOnlyCollection<T>
-    {
-        int IReadOnlyCollection<T>.Count {
-            get {
-                Contract.Ensures(Contract.Result<int>() >= 0);
-                return default(int);
-            }
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return default(IEnumerator<T>);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return default(IEnumerator);
-        }
-    }
-#endif
 }

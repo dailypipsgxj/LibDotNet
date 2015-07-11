@@ -33,7 +33,7 @@ namespace System.Collections.Generic {
     {
         // Returns an IEnumerator for this enumerable Object.  The enumerator provides
         // a simple way to access all the contents of a collection.
-        public abstract new IEnumerator<T> GetEnumerator();
+        public abstract IEnumerator<T> GetEnumerator();
     }
 
 }

@@ -27,83 +27,40 @@ namespace System.Collections.Generic {
     // without jitting.  Hence the TypeDependencyAttribute on SZArrayHelper.
     // This is a special hack internally though - see VM\compile.cpp.
     // The same attribute is on IEnumerable<T> and ICollection<T>.
-#if CONTRACTS_FULL
-// [ContractClass(typeof(ICollectionContract<>))]
 
-#endif
-// [TypeDependencyAttribute("System.SZArrayHelper")]
-
-    public interface ICollection<T> : IEnumerable<T>
+    public interface ICollection<T> : Gee.Collection<T>, IEnumerable<T>
     {
         // Number of items in the collections.        
         public abstract int Count { get; }
 
         public abstract bool IsReadOnly { get; }
 
-        public abstract void Add(T item);
+        public virtual void Add(T item) {
+			add(item);
+		}
 
-        public abstract void Clear();
+        public virtual void Clear() {
+			clear();
+		}
 
-        public abstract bool Contains(T item); 
+        public virtual bool Contains(T item) {
+			return contains (item);
+		}
                 
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        public abstract void CopyTo(T[] array, int arrayIndex);
+        public virtual void CopyTo(T[] array, int arrayIndex) {
+			foreach (T item in this) {
+				array[arrayIndex++] = item;
+			}
+		}
                 
         //void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int count);
 
-        public abstract bool Remove(T item);
+        public virtual bool Remove(T item) {
+			remove(item);
+		}
     }
 
-#if CONTRACTS_FULL
-// [ContractClassFor(typeof(ICollection<>))]
-
-    internal abstract class ICollectionContract<T> : ICollection<T>
-    {
-        int ICollection<T>.Count {
-            get {
-                Contract.Ensures(Contract.Result<int>() >= 0);
-                return default(int);
-            }
-        }
-
-        bool ICollection<T>.IsReadOnly {
-            get { return default(bool); }
-        }
-
-        void ICollection<T>.Add(T item)
-        {
-            //Contract.Ensures(((ICollection<T>)this).Count == Contract.OldValue(((ICollection<T>)this).Count) + 1);  // not threadsafe
-        }
-
-        void ICollection<T>.Clear()
-        {
-        }
-
-        bool ICollection<T>.Contains(T item)
-        {
-            return default(bool);
-        }
-
-        void ICollection<T>.CopyTo(T[] array, int arrayIndex)
-        {
-        }
-
-        bool ICollection<T>.Remove(T item)
-        {
-            return default(bool);
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return default(IEnumerator<T>);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return default(IEnumerator);
-        }
-    }
-#endif // CONTRACTS_FULL
 }
