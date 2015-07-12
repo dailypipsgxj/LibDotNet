@@ -41,7 +41,7 @@ namespace System.Collections.Generic
         LeftRightRotation = 4,
     }
 
-    public class SortedSet<T> : Gee.TreeSet<T>, ISet<T>, ICollection<T>, ICollection, IReadOnlyCollection<T>
+    public class SortedSet<T> : Gee.TreeSet<T>, ISet<T>, ICollection<T>, IReadOnlyCollection<T>
     {
         private Node _root;
         private IComparer<T> _comparer;
