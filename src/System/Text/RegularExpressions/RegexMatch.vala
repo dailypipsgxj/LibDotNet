@@ -46,11 +46,10 @@ namespace System.Text.RegularExpressions
         {
             get
             {
-                return new Match(new GLib.MatchInfo());
             }
         }
 
-        internal Match(GLib.MatchInfo matchinfo){
+        public Match(GLib.MatchInfo matchinfo){
 			_matchinfo = matchinfo;
 			base();
 			//base(text, new int[2], 0);
@@ -68,7 +67,7 @@ namespace System.Text.RegularExpressions
             get
             {
                 if (_groupcoll == null)
-                    _groupcoll = new GroupCollection(this, null);
+                    _groupcoll = new GroupCollection(this);
 
                 return _groupcoll;
             }
@@ -119,6 +118,8 @@ namespace System.Text.RegularExpressions
      */
     internal class MatchSparse : Match
     {
-
+		public MatchSparse (GLib.MatchInfo matchinfo) {
+			base(matchinfo);
+		}
     }
 }

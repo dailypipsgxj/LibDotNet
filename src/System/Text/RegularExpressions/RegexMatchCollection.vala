@@ -19,30 +19,21 @@ namespace System.Text.RegularExpressions
     /// Represents the set of names appearing as capturing group
     /// names in a regular expression.
     /// </summary>
-    public class MatchCollection : ICollection
+    public class MatchCollection : ICollection, IEnumerable
     {
-        private   Regex _regex;
-        private   List<Match> _matches;
-        private bool _done;
+        private   GLib.Regex _regex;
         private   string _input;
         private   int _beginning;
         private   int _length;
         private int _startat;
-        private int _prevlen;
 
-        internal MatchCollection(Regex regex, string input, int beginning, int length, int startat)
+        internal MatchCollection(GLib.Regex regex, string input, int beginning, int length, int startat)
         {
-            if (startat < 0 || startat > input.Length)
-                throw ArgumentOutOfRangeException("startat", SR.BeginIndexNotNegative);
-
             _regex = regex;
             _input = input;
             _beginning = beginning;
             _length = length;
             _startat = startat;
-            _prevlen = -1;
-            _matches = new List<Match>();
-            _done = false;
         }
 
         /// <summary>
@@ -52,24 +43,16 @@ namespace System.Text.RegularExpressions
         {
             get
             {
-                EnsureInitialized();
-                return _matches.Count;
+                return -1;//_matches.Count;
             }
         }
 
         /// <summary>
         /// Returns the ith Match in the collection.
         /// </summary>
-        public override Match get (int i)
+        public Match get (int i)
         {
-			if (i < 0)
-				throw ArgumentOutOfRangeException("i");
-
 			Match match = GetMatch(i);
-
-			if (match == null)
-				throw ArgumentOutOfRangeException("i");
-
 			return match;
         }
 
@@ -83,39 +66,13 @@ namespace System.Text.RegularExpressions
 
         private Match GetMatch(int i)
         {
-            if (_matches.Count > i)
-                return _matches[i];
-
-            if (_done)
-                return null;
-
             Match match;
-
-            do
-            {
-                match = _regex.Run(false, _prevlen, _input, _beginning, _length, _startat);
-
-                if (!match.Success)
-                {
-                    _done = true;
-                    return null;
-                }
-
-                _matches.Add(match);
-
-                _prevlen = match._length;
-                _startat = match._textpos;
-            } while (_matches.Count <= i);
-
             return match;
         }
 
         private void EnsureInitialized()
         {
-            if (!_done)
-            {
-                GetMatch(int.MaxValue);
-            }
+			GetMatch(int.MAX);
         }
 
         bool IsSynchronized
@@ -125,19 +82,18 @@ namespace System.Text.RegularExpressions
 
         Object SyncRoot
         {
-            get { return this; }
+            get { return this as Object; }
         }
 
-        void ICollection.CopyTo(Array array, int arrayIndex)
-        {
-            EnsureInitialized();
-            ((ICollection)_matches).CopyTo(array, arrayIndex);
-        }
 
         private class Enumerator : IEnumerator
         {
             private   MatchCollection _collection;
             private int _index;
+
+			private Object _currentElement { get; set;}
+			private Gee.Iterator<Object> _iterator { get; set;}
+
 
             internal Enumerator(MatchCollection collection)
             {
@@ -164,10 +120,10 @@ namespace System.Text.RegularExpressions
 
             public Match Current
             {
-                get
+                owned get
                 {
                     if (_index < 0)
-                        throw InvalidOperationException(SR.EnumNotStarted);
+                        throw new InvalidOperationException.ENUMNOTSTARTED("SR.EnumNotStarted");
 
                     return _collection.GetMatch(_index);
                 }

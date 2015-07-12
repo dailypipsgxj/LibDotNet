@@ -58,22 +58,6 @@ namespace System.Text.RegularExpressions
         /// </summary>
         private Capture GetCapture(int i)
         {
-            if (i == _capcount - 1 && i >= 0)
-                return _group;
-
-            if (i >= _capcount || i < 0)
-                //throw new ArgumentOutOfRangeException.ARGUMENTOUTOFRANGE("i");
-
-            // first time a capture is accessed, compute them all
-            if (_captures == null)
-            {
-                _captures = new Capture[_capcount];
-                for (int j = 0; j < _capcount - 1; j++)
-                {
-                    _captures[j] = new Capture(_group._text, _group._caps[j * 2], _group._caps[j * 2 + 1]);
-                }
-            }
-
             return _captures[i];
         }
 
@@ -85,17 +69,6 @@ namespace System.Text.RegularExpressions
         Object SyncRoot
         {
             get { return (Object)_group; }
-        }
-
-        void CopyTo(Array<Object> array, int arrayIndex)
-        {
-            if (array == null)
-                //throw new ArgumentNullException.POINTER("array");
-
-            for (int i = arrayIndex, j = 0; j < Count; i++, j++)
-            {
-                array.insert_val(i, (Object)this[j]);
-            }
         }
 
         private class Enumerator : IEnumerator

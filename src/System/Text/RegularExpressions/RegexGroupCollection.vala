@@ -14,7 +14,7 @@ namespace System.Text.RegularExpressions
     /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
-    public class GroupCollection : System.Collections.ICollection
+    public class GroupCollection : System.Collections.ICollection, System.Collections.IEnumerable 
     {
         private Match _match;
 
@@ -31,7 +31,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public int Count
         {
-            get { return _match._matchcinfo.get_match_count(); }
+            get { return _match._matchinfo.get_match_count(); }
         }
 
         public Group get(int groupnum)
@@ -53,7 +53,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Provides an enumerator in the same order as Item[].
         /// </summary>
-        public GetEnumerator()
+        public System.Collections.IEnumerator GetEnumerator()
         {
             return new Enumerator(this);
         }
@@ -61,7 +61,7 @@ namespace System.Text.RegularExpressions
         private Group GetGroup(int groupnum)
         {
 
-            return Group._emptygroup;
+            return new Group();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace System.Text.RegularExpressions
         
         Object SyncRoot
         {
-            get { return _match; }
+            get { return _match as Object; }
         }
 
 
@@ -87,6 +87,8 @@ namespace System.Text.RegularExpressions
         {
             private   GroupCollection _collection;
             private int _index;
+			private Object _currentElement { get; set;}
+			private Gee.Iterator<Object> _iterator { get; set;}
 
             internal Enumerator(GroupCollection collection)
             {
@@ -108,7 +110,7 @@ namespace System.Text.RegularExpressions
 
             public Group Current
             {
-                get
+                owned get
                 {
                     return _collection[_index];
                 }

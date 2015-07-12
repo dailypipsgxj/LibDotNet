@@ -13,7 +13,7 @@ using System.Threading;
 namespace System.Text.RegularExpressions
 {
 	
-	public abstract class StaticRegex : GLib.Regex {
+	public abstract class StaticRegex {
 		
         //internal string _pattern;                   // The string pattern provided
         //internal RegexOptions _roptions;            // the top-level options from the options string
@@ -22,13 +22,8 @@ namespace System.Text.RegularExpressions
         // by one means or another. Typically, it is set to InfiniteMatchTimeout.
         internal const TimeSpan DefaultMatchTimeout = -1;
 		
-		public StaticRegex()
+		public StaticRegex(string pattern = "", RegexOptions options = RegexOptions.None)
         {
-			try {
-				base("");
-			} catch (RegexError e) {
-			
-			}
 		}
 
 	
@@ -46,7 +41,7 @@ namespace System.Text.RegularExpressions
 									TimeSpan matchTimeout = DefaultMatchTimeout)
 		{
 			RegexCompileFlags flags = ConvertOptions (options);
-			return match_simple (pattern, input, flags);
+			return GLib.Regex.match_simple (pattern, input, flags);
 		}
 
         /*
@@ -65,7 +60,7 @@ namespace System.Text.RegularExpressions
 			RegexCompileFlags flags = ConvertOptions (options);
 			bool matched = false;
 
-			re = new Regex (pattern);
+			re = new GLib.Regex (pattern);
 			try {
 				matched = re.match(input, 0, out matchinfo);
 			} catch (RegexError e) {
@@ -85,8 +80,8 @@ namespace System.Text.RegularExpressions
         {
             GLib.Regex re;
 			RegexCompileFlags flags = ConvertOptions (options);
-			re = new Regex (pattern, flags);
-			return new MatchCollection(re, input, 0, input.length);
+			re = new GLib.Regex (pattern, flags);
+			return new MatchCollection(re, input, 0, input.length, 0);
 		}
 
         /// <summary>
@@ -99,8 +94,8 @@ namespace System.Text.RegularExpressions
         {
 			GLib.Regex re;
 			RegexCompileFlags flags = ConvertOptions (options);
-			re = new Regex (pattern, flags);
-			return re.replace (input, input.length, 0, replacement);
+			re = new GLib.Regex (pattern, flags);
+			return re.replace (input, input.length, 0, replacement, 0);
         }
 
         /// <summary>
@@ -108,10 +103,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static string[] Split(string input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout)
         {
-			GLib.Regex re;
-			RegexCompileFlags flags = ConvertOptions (options);
-			re = new Regex (pattern, flags);
-			return re.split_simple (pattern, input, flags);
+			return GLib.Regex.split_simple (pattern, input, ConvertOptions (options));
         }
 
         /// <summary>
@@ -125,7 +117,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static string Escape(string str)
         {
-            return escape_string(str);
+            return GLib.Regex.escape_string(str);
         }
 
         /// <summary>
@@ -137,7 +129,7 @@ namespace System.Text.RegularExpressions
         }
 
 		
-		static RegexCompileFlags ConvertOptions (RegexOptions options)
+		protected static RegexCompileFlags ConvertOptions (RegexOptions options)
 		{
 			RegexCompileFlags flags = 0;
 
@@ -185,6 +177,7 @@ namespace System.Text.RegularExpressions
     {
         internal string _pattern;                   // The string pattern provided
         internal RegexOptions _roptions;            // the top-level options from the options string
+        internal GLib.Regex _regex;
 
         // *********** Match timeout fields { ***********
 
@@ -233,15 +226,14 @@ namespace System.Text.RegularExpressions
         public Regex(string pattern, RegexOptions options = RegexOptions.None, TimeSpan matchTimeout = DefaultMatchTimeout, bool useCache = false)
         {
 
-			RegexCompileFlags flags = ConvertOptions (options);
-			
+
             _pattern = pattern;
             _roptions = options;
             _internalMatchTimeout = matchTimeout;
 			
-			base(pattern, flags);
+			_regex = new GLib.Regex(pattern, ConvertOptions (options));
 			
-			_capsize = get_capture_count ();
+			_capsize = _regex.get_capture_count ();
 			
 		}
 
@@ -249,12 +241,9 @@ namespace System.Text.RegularExpressions
         {
             get
             {
-                return s_cacheSize;
+                return -1;
             }
-            set
-            {
-                s_cacheSize = value;
-            }
+            set { }
         }
 
         /// <summary>
@@ -351,7 +340,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public int GroupNumberFromName(string name)
         {
-			return get_string_number (name);
+			return _regex.get_string_number (name);
         }
 
 
@@ -367,9 +356,9 @@ namespace System.Text.RegularExpressions
         public bool IsMatch(string input)
         */
         
-        public bool IsMatch(string input, int startat)
+        public new bool IsMatch(string input, int startat)
         {
-            return match_full(input, input.length, startat);
+            return _regex.match_full(input, input.length, startat);
         }
 
         /*
@@ -383,16 +372,16 @@ namespace System.Text.RegularExpressions
         /*
         public Match Match(string input, int startat)
         */
-        public Match Match(string input, int beginning = 0, int length = -1)
+        public new Match Match(string input, int beginning = 0, int length = -1)
         {
 			GLib.MatchInfo matchinfo;
 			bool matched = false;
 			try {
-				matched = match_full (input, length, beginning, _roptions, matchinfo);
+				matched = _regex.match_full (input, length, beginning, 0, out matchinfo);
 			} catch (RegexError e) {
 				
 			}
-			return new Match (matchinfo);
+			return new System.Text.RegularExpressions.Match (matchinfo);
         }
         
         /*
@@ -401,9 +390,9 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns all the successful matches as if Match was called iteratively numerous times.
         /// </summary>
-        public MatchCollection Matches(string input, int startat = 0)
+        public new MatchCollection Matches(string input, int startat = 0)
         {
-            return new MatchCollection(this, input, 0, input.length, startat);
+            return new MatchCollection(_regex, input, 0, input.length, startat);
         }
 
         /// <summary>
@@ -411,9 +400,9 @@ namespace System.Text.RegularExpressions
         /// <paramref name="replacement"/> pattern, starting at the character position
         /// <paramref name="startat"/>.
         /// </summary>
-        public string Replace(string input, string replacement, int count = -1, int startat = 0)
+        public new string Replace(string input, string replacement, int count = -1, int startat = 0)
         {
-			return replace (input, input.length, startat, replacement, _roptions);
+			return _regex.replace (input, input.length, startat, replacement);
         }
         /// <summary>
         /// Replaces all occurrences of the <paramref name="pattern"/> with the recent
@@ -445,9 +434,9 @@ namespace System.Text.RegularExpressions
         /// Splits the <paramref name="input"/> string at the position defined by a
         /// previous pattern.
         /// </summary>
-        public string[] Split(string input, int count = -1, int startat = 0)
+        public new string[] Split(string input, int count = -1, int startat = 0)
         {
-			return split_full (input, count, startat);
+			return _regex.split_full (input, count, startat);
         }
 
         
