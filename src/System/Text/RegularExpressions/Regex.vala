@@ -65,13 +65,13 @@ namespace System.Text.RegularExpressions
 			RegexCompileFlags flags = ConvertOptions (options);
 			bool matched = false;
 
-			re = new Regex (pattern, flags);
+			re = new Regex (pattern);
 			try {
-				matched = re.match_full (input, length, beginning, flags, matchinfo);
+				matched = re.match(input, 0, out matchinfo);
 			} catch (RegexError e) {
 				
 			}
-			return new Match (matchinfo);
+			return new System.Text.RegularExpressions.Match (matchinfo);
 
         }
 

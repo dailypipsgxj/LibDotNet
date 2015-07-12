@@ -35,7 +35,7 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Match : Group
     {
-        internal static Match s_empty = new Match(null, 1, "", 0, 0, 0);
+        //internal static Match s_empty = new Match(null, 1, "", 0, 0, 0);
         internal GroupCollection _groupcoll;
 
         // input to the match
@@ -64,18 +64,9 @@ namespace System.Text.RegularExpressions
             }
         }
 
-        internal Match(Regex regex, int capcount, string text, int begpos = 0, int len = -1, int startpos = 0){
-			base(text, new int[2], 0);
-            _regex = regex;
-            _matchcount = new int[capcount];
-
-            _matches = new int[capcount];
-            _matches[0] = _caps;
-            _textbeg = begpos;
-            _textend = begpos + len;
-            _textstart = startpos;
-            _balancing = false;
-
+        internal Match(GLib.MatchInfo matchinfo){
+			_matchinfo = matchinfo;
+			//base(text, new int[2], 0);
         }
 
         /*
@@ -83,18 +74,6 @@ namespace System.Text.RegularExpressions
          */
         internal virtual void Reset(Regex regex, string text, int textbeg, int textend, int textstart)
         {
-            _regex = regex;
-            _text = text;
-            _textbeg = textbeg;
-            _textend = textend;
-            _textstart = textstart;
-
-            for (int i = 0; i < _matchcount.Length; i++)
-            {
-                _matchcount[i] = 0;
-            }
-
-            _balancing = false;
         }
 
         public virtual GroupCollection Groups
@@ -115,10 +94,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public Match NextMatch()
         {
-            if (_regex == null)
-                return this;
-
-            return _regex.Run(false, _length, _text, _textbeg, _textend - _textbeg, _textpos);
+            //return _regex.Run(false, _length, _text, _textbeg, _textend - _textbeg, _textpos);
         }
 
         /// <summary>
@@ -132,28 +108,6 @@ namespace System.Text.RegularExpressions
             return replacement;
         }
 
-        /*
-         * Used by the replacement code
-         */
-        internal virtual string GroupToStringImpl(int groupnum)
-        {
-            int c = _matchcount[groupnum];
-            if (c == 0)
-                return string.Empty;
-
-            int[] matches = _matches[groupnum];
-
-            return _text.Substring(matches[(c - 1) * 2], matches[(c * 2) - 1]);
-        }
-
-        /*
-         * Used by the replacement code
-         */
-        internal string LastGroupTostringImpl()
-        {
-            return GroupTostringImpl(_matchcount.Length - 1);
-        }
-
 
         /*
          * Convert to a thread-safeObjectby precomputing cache contents
@@ -165,183 +119,7 @@ namespace System.Text.RegularExpressions
 
         static Match Synchronized (Match inner)
         {
-            if (inner == null)
-                throw ArgumentNullException("inner");
-
-            int numgroups = inner._matchcount.Length;
-
-            // Populate all groups by looking at each one
-            for (int i = 0; i < numgroups; i++)
-            {
-                Group group = inner.Groups[i];
-
-                // Depends on the fact that Group.Synchronized just
-                // operates on and returns the same instance
-                System.Text.RegularExpressions.Group.Synchronized(group);
-            }
-
             return inner;
-        }
-
-        /*
-         * Nonpublic builder: add a capture to the group specified by "cap"
-         */
-        internal virtual void AddMatch(int cap, int start, int len)
-        {
-            int capcount;
-
-            if (_matches[cap] == null)
-                _matches[cap] = new int[2];
-
-            capcount = _matchcount[cap];
-
-            if (capcount * 2 + 2 > _matches[cap].Length)
-            {
-                int[] oldmatches = _matches[cap];
-                int[] newmatches = new int[capcount * 8];
-                for (int j = 0; j < capcount * 2; j++)
-                    newmatches[j] = oldmatches[j];
-                _matches[cap] = newmatches;
-            }
-
-            _matches[cap][capcount * 2] = start;
-            _matches[cap][capcount * 2 + 1] = len;
-            _matchcount[cap] = capcount + 1;
-        }
-
-        /*
-         * Nonpublic builder: Add a capture to balance the specified group.  This is used by the
-                              balanced match construct. (?<foo-foo2>...)
-
-           If there were no such thing as backtracking, this would be as simple as calling RemoveMatch(cap).
-           However, since we have backtracking, we need to keep track of everything.
-         */
-        internal virtual void BalanceMatch(int cap)
-        {
-            int capcount;
-            int target;
-
-            _balancing = true;
-
-            // we'll look at the last capture first
-            capcount = _matchcount[cap];
-            target = capcount * 2 - 2;
-
-            // first see if it is negative, and therefore is a reference to the next available
-            // capture group for balancing.  If it is, we'll reset target to point to that capture.
-            if (_matches[cap][target] < 0)
-                target = -3 - _matches[cap][target];
-
-            // move back to the previous capture
-            target -= 2;
-
-            // if the previous capture is a reference, just copy that reference to the end.  Otherwise, point to it.
-            if (target >= 0 && _matches[cap][target] < 0)
-                AddMatch(cap, _matches[cap][target], _matches[cap][target + 1]);
-            else
-                AddMatch(cap, -3 - target, -4 - target /* == -3 - (target + 1) */ );
-        }
-
-        /*
-         * Nonpublic builder: removes a group match by capnum
-         */
-        internal virtual void RemoveMatch(int cap)
-        {
-            _matchcount[cap]--;
-        }
-
-        /*
-         * Nonpublic: tells if a group was matched by capnum
-         */
-        internal virtual bool IsMatched(int cap)
-        {
-            return cap < _matchcount.Length && _matchcount[cap] > 0 && _matches[cap][_matchcount[cap] * 2 - 1] != (-3 + 1);
-        }
-
-        /*
-         * Nonpublic: returns the index of the last specified matched group by capnum
-         */
-        internal virtual int MatchIndex(int cap)
-        {
-            int i = _matches[cap][_matchcount[cap] * 2 - 2];
-            if (i >= 0)
-                return i;
-
-            return _matches[cap][-3 - i];
-        }
-
-        /*
-         * Nonpublic: returns the length of the last specified matched group by capnum
-         */
-        internal virtual int MatchLength(int cap)
-        {
-            int i = _matches[cap][_matchcount[cap] * 2 - 1];
-            if (i >= 0)
-                return i;
-
-            return _matches[cap][-3 - i];
-        }
-
-        /*
-         * Nonpublic: tidy the match so that it can be used as an immutable result
-         */
-        internal virtual void Tidy(int textpos)
-        {
-            int[] interval;
-
-            interval = _matches[0];
-            _index = interval[0];
-            _length = interval[1];
-            _textpos = textpos;
-            _capcount = _matchcount[0];
-
-            if (_balancing)
-            {
-                // The idea here is that we want to compact all of our unbalanced captures.  To do that we
-                // use j basically as a count of how many unbalanced captures we have at any given time
-                // (really j is an index, but j/2 is the count).  First we skip past all of the real captures
-                // until we find a balance captures.  Then we check each subsequent entry.  If it's a balance
-                // capture (it's negative), we decrement j.  If it's a real capture, we increment j and copy
-                // it down to the last free position.
-                for (int cap = 0; cap < _matchcount.Length; cap++)
-                {
-                    int limit;
-                    int[] matcharray;
-
-                    limit = _matchcount[cap] * 2;
-                    matcharray = _matches[cap];
-
-                    int i = 0;
-                    int j;
-
-                    for (i = 0; i < limit; i++)
-                    {
-                        if (matcharray[i] < 0)
-                            break;
-                    }
-
-                    for (j = i; i < limit; i++)
-                    {
-                        if (matcharray[i] < 0)
-                        {
-                            // skip negative values
-                            j--;
-                        }
-                        else
-                        {
-                            // but if we find something positive (an actual capture), copy it back to the last
-                            // unbalanced position.
-                            if (i != j)
-                                matcharray[j] = matcharray[i];
-                            j++;
-                        }
-                    }
-
-                    _matchcount[cap] = j / 2;
-                }
-
-                _balancing = false;
-            }
         }
 
 
