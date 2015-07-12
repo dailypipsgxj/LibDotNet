@@ -6,6 +6,6 @@ using System;
 namespace System.IO
 {
 	errordomain InvalidDataException {
-		GenericInvalidData
+		GENERICINVALIDDATA
 	}
 }

@@ -63,7 +63,6 @@ LIBDOTNET_COLLECTIONS_GEN = \
 LIBDOTNET_SYSTEM = \
 	System/Text/Text.vala \
 	System/Linq/Errors.vala \
-	System/Linq/Enumerable.vala \
 	System/IO/InvalidDataException.vala \
 	System/Globalization/Globalization.vala \
 	System/Globalization/CultureInfo.vala \
