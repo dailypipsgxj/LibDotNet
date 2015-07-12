@@ -1,9 +1,9 @@
 LIBDOTNET_REGEX = \
+	System/Text/RegularExpressions/RegexOptions.vala \
 	System/Text/RegularExpressions/RegexMatch.vala \
 	System/Text/RegularExpressions/RegexMatchCollection.vala \
 	System/Text/RegularExpressions/Regex.vala \
 	System/Text/RegularExpressions/RegexGroup.vala \
-	System/Text/RegularExpressions/RegexOptions.vala \
 	System/Text/RegularExpressions/RegexGroupCollection.vala \
 	System/Text/RegularExpressions/RegexCaptureCollection.vala \
 	System/Text/RegularExpressions/RegexMatchTimeoutException.vala \

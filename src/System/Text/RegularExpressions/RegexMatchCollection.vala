@@ -83,8 +83,6 @@ namespace System.Text.RegularExpressions
 
         private Match GetMatch(int i)
         {
-            Debug.Assert(i >= 0, "i cannot be negative.");
-
             if (_matches.Count > i)
                 return _matches[i];
 
@@ -143,8 +141,6 @@ namespace System.Text.RegularExpressions
 
             internal Enumerator(MatchCollection collection)
             {
-                Debug.Assert(collection != null, "collection cannot be null.");
-
                 _collection = collection;
                 _index = -1;
             }

@@ -12,12 +12,32 @@ using System.Threading;
 
 namespace System.Text.RegularExpressions
 {
+	
+	internal abstract class StaticRegex : GLib.Regex {
+        /*
+         * Static version of simple IsMatch call
+         */
+        /// <summary>
+        /// Searches the input string for one or more occurrences of the text
+        /// supplied in the pattern parameter with matching options supplied in the options
+        /// parameter.
+        /// </summary>
+		public static bool IsMatch(	string input,
+									string pattern,
+									RegexOptions options = RegexOptions.None,
+									TimeSpan matchTimeout = DefaultMatchTimeout)
+		{
+			RegexCompileFlags flags = ConvertOptions (options);
+			return match_simple (pattern, input, flags);
+		}		
+	}
+	
     /// <summary>
     /// Represents an immutable, compiled regular expression. Also
     /// contains static methods that allow use of regular expressions without instantiating
     /// a Regex  ly.
     /// </summary>
-    public class Regex : GLib.Regex
+    public class Regex : StaticRegex, GLib.Regex
     {
         internal string _pattern;                   // The string pattern provided
         internal RegexOptions _roptions;            // the top-level options from the options string
@@ -281,22 +301,7 @@ namespace System.Text.RegularExpressions
 			return get_string_number (name);
         }
 
-        /*
-         * Static version of simple IsMatch call
-         */
-        /// <summary>
-        /// Searches the input string for one or more occurrences of the text
-        /// supplied in the pattern parameter with matching options supplied in the options
-        /// parameter.
-        /// </summary>
-		public static bool IsMatch(	string input,
-									string pattern,
-									RegexOptions options = RegexOptions.None,
-									TimeSpan matchTimeout = DefaultMatchTimeout)
-		{
-			RegexCompileFlags flags = ConvertOptions (options);
-			return match_simple (pattern, input, flags);
-		}
+
         /*
          * Returns true if the regex finds a match after the specified position
          * (proceeding leftward if the regex is leftward and rightward otherwise)
@@ -307,11 +312,12 @@ namespace System.Text.RegularExpressions
         /// </summary>
         /*
         public bool IsMatch(string input)
+        */
+        
         public bool IsMatch(string input, int startat)
         {
-            return (null == Run(true, -1, input, 0, input.Length, startat));
+            return match_full(input, input.length, startat);
         }
-        */
 
         /*
          * Static version of simple Match call
@@ -470,13 +476,13 @@ namespace System.Text.RegularExpressions
         internal Match Run(bool quick, int prevlen, string input, int beginning, int length, int startat)
         {
             Match match;
-            RegexRunner runner = null;
+            //RegexRunner runner = null;
 
             if (startat < 0 || startat > input.Length)
-                throw ArgumentOutOfRangeException("start", SR.BeginIndexNotNegative);
+                throw ArgumentOutOfRangeException.BEGININDEXNOTNEGATIVE("start SR.BeginIndexNotNegative");
 
             if (length < 0 || length > input.Length)
-                throw ArgumentOutOfRangeException("length", SR.LengthNotNegative);
+                throw ArgumentOutOfRangeException.LENGTHNOTNEGATIVE("length SR.LengthNotNegative");
 
             // There may be a cached runner; grab ownership of it if we can.
 
@@ -500,16 +506,9 @@ namespace System.Text.RegularExpressions
                 _runnerref.Release(runner);
             }
 
-#if DEBUG
-            if (Debug && match != null)
-                match.Dump();
-#endif
             return match;
-        }
-        */
-
-
-
+        }*/
+        
 
         /*
          * True if the L option was set
@@ -524,18 +523,6 @@ namespace System.Text.RegularExpressions
             return (_roptions & RegexOptions.CultureInvariant) != 0;
         }
 
-#if DEBUG
-        /*
-         * True if the regex has debugging enabled
-         */
-        internal bool Debug
-        {
-            get
-            {
-                return (_roptions & RegexOptions.Debug) != 0;
-            }
-        }
-#endif
     }
 
 

@@ -14,7 +14,9 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Group : Capture
     {
-        // the empty groupObjectinternal static Group _emptygroup = new Group(string.Empty, Array.Empty<int>(), 0);
+        // the empty group Object
+        
+        internal static Group _emptygroup = new Group(string.Empty, Array.Empty<int>(), 0);
 
         internal int[] _caps;
         internal int _capcount;
@@ -52,7 +54,6 @@ namespace System.Text.RegularExpressions
             {
                 if (_capcoll == null)
                     _capcoll = new CaptureCollection(this);
-
                 return _capcoll;
             }
         }
@@ -66,9 +67,6 @@ namespace System.Text.RegularExpressions
         /// </summary>
         static Group Synchronized(Group inner)
         {
-            //if (inner == null)
-                //throw new ArgumentNullException.POINTER("inner");
-
             // force Captures to be computed.
 
             CaptureCollection capcoll;

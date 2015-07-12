@@ -7,7 +7,9 @@ namespace System {
 	errordomain ArgumentOutOfRangeException {
 		INDEX,
 		VALUE,
-		NEEDNONNEGNUM
+		NEEDNONNEGNUM,
+		BEGININDEXNOTNEGATIVE,
+		LENGTHNOTNEGATIVE
 	}
 
 	errordomain ArgumentException {

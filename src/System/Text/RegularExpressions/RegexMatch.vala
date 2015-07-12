@@ -51,6 +51,8 @@ namespace System.Text.RegularExpressions
         internal bool _balancing;        // whether we've done any balancing with this match.  If we
                                          // have done balancing, we'll need to do extra work in Tidy().
 
+		internal GLib.MatchInfo _matchinfo;
+
         /// <summary>
         /// Returns an empty Match object.
         /// </summary>
@@ -74,9 +76,6 @@ namespace System.Text.RegularExpressions
             _textstart = startpos;
             _balancing = false;
 
-            // No need for an exception here.  This is only called internally, so we'll use an Assert instead
-            System.Diagnostics.Debug.Assert(!(_textbeg < 0 || _textstart < _textbeg || _textend < _textstart || _text.Length < _textend),
-                                            "The parameters are out of range.");
         }
 
         /*
@@ -136,7 +135,7 @@ namespace System.Text.RegularExpressions
         /*
          * Used by the replacement code
          */
-        internal virtual string GroupTostringImpl(int groupnum)
+        internal virtual string GroupToStringImpl(int groupnum)
         {
             int c = _matchcount[groupnum];
             if (c == 0)
@@ -345,38 +344,7 @@ namespace System.Text.RegularExpressions
             }
         }
 
-#if DEBUG
-        internal bool Debug
-        {
-            get
-            {
-                if (_regex == null)
-                    return false;
 
-                return _regex.Debug;
-            }
-        }
-
-        internal virtual void Dump()
-        {
-            int i, j;
-
-            for (i = 0; i < _matchcount.Length; i++)
-            {
-                System.Diagnostics.Debug.WriteLine("Capnum " + i.Tostring(CultureInfo.InvariantCulture) + ":");
-
-                for (j = 0; j < _matchcount[i]; j++)
-                {
-                    string text = "";
-
-                    if (_matches[i][j * 2] >= 0)
-                        text = _text.Substring(_matches[i][j * 2], _matches[i][j * 2 + 1]);
-
-                    System.Diagnostics.Debug.WriteLine("  (" + _matches[i][j * 2].Tostring(CultureInfo.InvariantCulture) + "," + _matches[i][j * 2 + 1].Tostring(CultureInfo.InvariantCulture) + ") " + text);
-                }
-            }
-        }
-#endif
     }
 
 
@@ -409,19 +377,5 @@ namespace System.Text.RegularExpressions
             }
         }
 
-#if DEBUG
-        internal override void Dump()
-        {
-            if (_caps != null)
-            {
-                foreach (KeyValuePair<int, int> kvp in _caps)
-                {
-                    System.Diagnostics.Debug.WriteLine("Slot " + kvp.Key.Tostring() + " -> " + kvp.Value.Tostring());
-                }
-            }
-
-            base.Dump();
-        }
-#endif
     }
 }
