@@ -123,7 +123,7 @@ namespace System.Text.RegularExpressions
                 owned get
                 {
                     if (_index < 0)
-                        throw new InvalidOperationException.ENUMNOTSTARTED("SR.EnumNotStarted");
+                        //throw new InvalidOperationException.ENUMNOTSTARTED("SR.EnumNotStarted");
 
                     return _collection.GetMatch(_index);
                 }

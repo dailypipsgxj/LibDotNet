@@ -60,27 +60,33 @@ LIBDOTNET_COLLECTIONS_GEN = \
 	System/Collections/Generic/KeyValuePair.vala \
 	System/Collections/Generic/LinkedList.vala
 	
-LIBDOTNET_SYSTEM = \
+LIBDOTNET_SYSTEM_NS = \
 	System/Text/Text.vala \
-	System/Linq/Errors.vala \
-	System/IO/InvalidDataException.vala \
 	System/Globalization/Globalization.vala \
-	System/Globalization/CultureInfo.vala \
 	System/Diagnostics/Diagnostics.vala \
 	System/Reflection/Reflection.vala \
 	System/Runtime/Runtime.vala \
-	System/Runtime/Serialization/iserializable.vala \
-	System/Runtime/Serialization/ideserializationcallback.vala \
 	System/Security/Security.vala \
-	System/Threading/Threading.vala \
-	System/iequatable.vala \
+	System/Threading/Threading.vala
+
+LIBDOTNET_SYSTEM = \
 	System/Nullable.vala \
-	System/idisposable.vala \
 	System/Exceptions.vala \
 	System/action.vala \
-	System/icomparable.vala \
 	System/StringComparer.vala
 
+LIBDOTNET_SYSTEM_IFACE = \
+	System/idisposable.vala \
+	System/icomparable.vala \
+	System/iequatable.vala
+
+LIBDOTNET_SERIAL = \
+	System/Runtime/Serialization/iserializable.vala \
+	System/Runtime/Serialization/ideserializationcallback.vala
+
+LIBDOTNET_SYSTEM_MISC = \
+	System/Linq/Errors.vala \
+	System/Globalization/CultureInfo.vala
 
 LIBDOTNET_SOURCES = \
 	$(LIBDOTNET_REGEX) \
@@ -88,5 +94,9 @@ LIBDOTNET_SOURCES = \
 	$(LIBDOTNET_COLLECTIONS_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
-	$(LIBDOTNET_SYSTEM)
+	$(LIBDOTNET_SYSTEM_NS) \
+	$(LIBDOTNET_SYSTEM) \
+	$(LIBDOTNET_SYSTEM_IFACE) \
+	$(LIBDOTNET_SYSTEM_MISC) \
+	$(LIBDOTNET_SERIAL)
 	
