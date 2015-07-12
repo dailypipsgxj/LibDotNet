@@ -16,7 +16,7 @@ using System.Diagnostics.Contracts;
 
 namespace System.Collections
 {
-    public class Comparer : Gee.Comparable, IComparer
+    public class Comparer : IComparer
     {
         public static Comparer Default = new Comparer();
         public static Comparer DefaultInvariant = new Comparer();
@@ -36,19 +36,7 @@ namespace System.Collections
         // 
         public int Compare(Object a, Object b)
         {
-            if (a == b) return 0;
-            if (a == null) return -1;
-            if (b == null) return 1;
-
-            IComparable ia = a as IComparable;
-            if (ia != null)
-                return ia.CompareTo(b);
-
-            IComparable ib = b as IComparable;
-            if (ib != null)
-                return -ib.CompareTo(a);
-
-            throw ArgumentException(SR.Argument_ImplementIComparable);
+            throw new ArgumentException.IMPLEMENTICOMPARABLE("SR.Argument_ImplementIComparable");
         }
     }
 }

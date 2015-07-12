@@ -48,13 +48,15 @@ namespace System.Collections {
 
     public interface IDictionaryEnumerator : IEnumerator
     {
+		protected abstract Gee.MapIterator<Object, Object> _iterator { get; set;}
+
         // Returns the key of the current element of the enumeration. The returned
         // value is undefined before the first call to GetNext and following
         // a call to GetNext that returned false. Multiple calls to
         // GetKey with no intervening calls to GetNext will return
         // the same object.
         // 
-        abstract Object Key {
+        public abstract Object Key {
             get; 
         }
         
@@ -64,7 +66,7 @@ namespace System.Collections {
         // to GetValue with no intervening calls to GetNext will
         // return the same object.
         // 
-        abstract Object Value {
+        public abstract Object Value {
             get;
         }
         
@@ -73,7 +75,7 @@ namespace System.Collections {
         // copy as much as possible into the Array.  The number of elements
         // copied is returned.
         // 
-        abstract DictionaryEntry Entry {
+        public abstract DictionaryEntry Entry {
             get; 
         }
     }

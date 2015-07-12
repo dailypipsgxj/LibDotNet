@@ -21,21 +21,27 @@ namespace System.Collections {
     // Base interface for all collections, defining enumerators, size, and 
     // synchronization methods.
 
-    public interface ICollection : Gee.Collection, IEnumerable
+    public interface ICollection : IEnumerable
     {
         // Interfaces are not serialable
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        public virtual void CopyTo(T[] array, int arrayIndex) {
-			foreach (T item in this) {
-				array[arrayIndex++] = item;
+        public virtual void CopyTo(Array<Object> array, int arrayIndex) {
+			foreach (var item in this) {
+				array.insert_val(arrayIndex++, (Object)item);
 			}
 		}
         
         // Number of items in the collections.
         public abstract int Count { get; }
         
+        public virtual IEnumerator iterator()
+		{
+			return GetEnumerator();
+		}
+
+
         
         // SyncRoot will return an Object to use for synchronization 
         // (thread safety).  You can use this Object in your code to take a

@@ -16,7 +16,7 @@ namespace System.Collections
 {
     // Useful base class for typed read/write collections where items derive from Object
     
-    public abstract class DictionaryBase : IDictionary
+    public abstract class DictionaryBase : Gee.AbstractMap<Object,Object>, IDictionary, IEnumerable, ICollection
     {
         private Hashtable _hashtable;
 
@@ -76,14 +76,14 @@ namespace System.Collections
             InnerHashtable.CopyTo(array, index);
         }
         
-        Object IDictionary.get (Object key)
+        public new virtual Object get (Object key)
 		{
 			Object currentValue = InnerHashtable[key];
 			OnGet(key, currentValue);
 			return currentValue;
 		}
 
-        void IDictionary.set (Object key)
+        public new virtual void set (Object key, Object value)
         {
 			OnValidate(key, value);
 			bool keyExists = true;

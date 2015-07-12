@@ -22,12 +22,12 @@ namespace System.Collections.Specialized
 
         public static Hashtable CreateCaseInsensitiveHashtableWithCapacity(int capacity)
         {
-            return new Hashtable.WithCapacity(capacity, StringComparer.CurrentCultureIgnoreCase);
+            return new Hashtable.WithCapacity(capacity, 1.0f, StringComparer.CurrentCultureIgnoreCase);
         }
 
         public static Hashtable CreateCaseInsensitiveHashtableFromDictionary(IDictionary d)
         {
-            return new Hashtable(d, StringComparer.CurrentCultureIgnoreCase);
+            return new Hashtable.WithDictionary(d, 1.0f, StringComparer.CurrentCultureIgnoreCase);
         }
 
         public static SortedList CreateCaseInsensitiveSortedList()

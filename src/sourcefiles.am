@@ -37,16 +37,16 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 
 LIBDOTNET_COLLECTIONS = \
 	System/Collections/Hashtable.vala \
-	System/Collections/CollectionBase.vala \
-	System/Collections/StructuralComparisons.vala \
-	System/Collections/Comparer.vala \
-	System/Collections/SortedList.vala \
-	System/Collections/CaseInsensitiveComparer.vala \
 	System/Collections/ArrayList.vala \
-	System/Collections/ReadOnlyCollectionBase.vala \
+	System/Collections/SortedList.vala \
 	System/Collections/KeyValuePairs.vala \
+	System/Collections/CollectionBase.vala \
+	System/Collections/ReadOnlyCollectionBase.vala \
 	System/Collections/DictionaryBase.vala \
 	System/Collections/DictionaryEntry.vala \
+	System/Collections/Comparer.vala \
+	System/Collections/CaseInsensitiveComparer.vala \
+	System/Collections/StructuralComparisons.vala \
 	System/Collections/Specialized/CollectionsUtil.vala
 	
 LIBDOTNET_COLLECTIONS_GEN = \
@@ -61,10 +61,12 @@ LIBDOTNET_COLLECTIONS_GEN = \
 	System/Collections/Generic/LinkedList.vala
 	
 LIBDOTNET_SYSTEM = \
+	System/Text/Text.vala \
 	System/Linq/Errors.vala \
 	System/Linq/Enumerable.vala \
 	System/IO/InvalidDataException.vala \
 	System/Globalization/Globalization.vala \
+	System/Globalization/CultureInfo.vala \
 	System/Diagnostics/Diagnostics.vala \
 	System/Reflection/Reflection.vala \
 	System/Runtime/Runtime.vala \
@@ -77,11 +79,12 @@ LIBDOTNET_SYSTEM = \
 	System/idisposable.vala \
 	System/Exceptions.vala \
 	System/action.vala \
-	System/icomparable.vala
+	System/icomparable.vala \
+	System/StringComparer.vala
 
 
 LIBDOTNET_SOURCES = \
-	$(LIBDOTNET_REGEX)\
+	$(LIBDOTNET_REGEX) \
 	$(LIBDOTNET_COLLECTIONS) \
 	$(LIBDOTNET_COLLECTIONS_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \

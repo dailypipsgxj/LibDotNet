@@ -65,16 +65,16 @@ namespace System.Collections.Generic {
 			unset(key);
 		}
 
-        public abstract bool TryGetValue(TKey key, out TValue value) {
+        public virtual bool TryGetValue(TKey key, out TValue value) {
 		    if (has_key(key)) {
                 value = get(key);
                 return true;
             }
-            value = default(TValue);
+            //value = default(TValue);
             return false;
 		}
 		
-		private static abstract bool IsCompatibleKey(Object key)
+		protected virtual bool IsCompatibleKey(Object key)
         {
             return (key is TKey);
         }

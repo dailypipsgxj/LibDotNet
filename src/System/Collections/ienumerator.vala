@@ -23,8 +23,8 @@ namespace System.Collections {
 
     public interface IEnumerator
     {
-		private abstract T _currentElement;
-		private abstract Gee.Iterator _iterator;
+		protected abstract Object _currentElement { get; set;}
+		protected abstract Gee.Iterator<Object> _iterator { get; set;}
 
         // Interfaces are not serializable
         // Advances the enumerator to the next element of the enumeration and
@@ -35,12 +35,20 @@ namespace System.Collections {
         // 
         public virtual bool MoveNext() {
 			if (_iterator.has_next ()) {
-				iterator.next();
-				_currentElement = iterator.get();
+				_iterator.next();
+				_currentElement = _iterator.get();
 				return true;
 			}
-			_currentElement = default(T);
+			//_currentElement = default(T);
 			return false;
+		}
+		
+		public virtual bool next() {
+			MoveNext();
+		}
+   
+		public virtual Object get() {
+			return Current;
 		}
     
         // Returns the current element of the enumeration. The returned value is

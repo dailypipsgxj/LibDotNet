@@ -16,12 +16,12 @@ namespace System.Collections
 
         public static IComparer StructuralComparer
         {
-            get
+            owned get
             {
                 IComparer comparer = s_StructuralComparer;
                 if (comparer == null)
                 {
-                    comparer = new StructuralComparer();
+                    comparer = new StructuralComparerClass();
                     s_StructuralComparer = comparer;
                 }
                 return comparer;
@@ -30,12 +30,12 @@ namespace System.Collections
 
         public static IEqualityComparer StructuralEqualityComparer
         {
-            get
+            owned get
             {
                 IEqualityComparer comparer = s_StructuralEqualityComparer;
                 if (comparer == null)
                 {
-                    comparer = new StructuralEqualityComparer();
+                    comparer = new StructuralEqualityComparerClass();
                     s_StructuralEqualityComparer = comparer;
                 }
                 return comparer;
@@ -43,7 +43,7 @@ namespace System.Collections
         }
     }
 
-    internal class StructuralEqualityComparer : IEqualityComparer
+    internal class StructuralEqualityComparerClass : IEqualityComparer
     {
         public new bool Equals(Object x, Object y)
         {
@@ -58,7 +58,7 @@ namespace System.Collections
 
                 if (y != null)
                 {
-                    return x.Equals(y);
+                    return (x==y);
                 }
                 else
                 {
@@ -80,11 +80,11 @@ namespace System.Collections
                 return seObj.GetHashCode(this);
             }
 
-            return obj.GetHashCode();
+            return -1; //obj.GetHashCode();
         }
     }
 
-    internal class StructuralComparer : IComparer
+    internal class StructuralComparerClass : IComparer
     {
         public int Compare(Object x, Object y)
         {

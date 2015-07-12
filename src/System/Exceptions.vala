@@ -1,15 +1,37 @@
-errordomain ArrayTypeMismatchException {
-	ARRAYTYPEMISMATCH
-}
+namespace System {
 
-errordomain ArgumentOutOfRangeException {
-	ARGUMENTOUTOFRANGE
-}
+	errordomain ArrayTypeMismatchException {
+		ARRAYTYPEMISMATCH
+	}
 
-errordomain ArgumentNullException {
-	POINTER
-}
+	errordomain ArgumentOutOfRangeException {
+		INDEX,
+		VALUE,
+		NEEDNONNEGNUM
+	}
 
-errordomain InvalidOperationException {
-	INVALIDOPERATION
+	errordomain ArgumentException {
+		NULL,
+		INVALIDOFFSETLENGTH,
+		NOTFOUND,
+		IMPLEMENTICOMPARABLE
+	}
+
+	errordomain ArgumentNullException {
+		POINTER,
+		VALUE
+	}
+
+	errordomain InvalidOperationException {
+		ENUMNOTSTARTED,
+		ENUMENDED
+	}
+	
+	errordomain NotSupportedException {
+		RANGECOLLECTION,
+		FIXEDSIZECOLLECTION,
+		READONLYCOLLECTION,
+		SORTEDLISTNESTEDWRITE,
+		KEYCOLLECTIONSET
+	}
 }

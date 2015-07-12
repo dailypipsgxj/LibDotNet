@@ -22,158 +22,54 @@ namespace System.Collections {
     // An IList is an ordered collection of objects.  The exact ordering
     // is up to the implementation of the list, ranging from a sorted
     // order to insertion order.  
-#if CONTRACTS_FULL
-// [ContractClass(typeof(IListContract))]
 
-#endif // CONTRACTS_FULL
-// [System.Runtime.InteropServices.ComVisible(true)]
-
-    public interface IList : ICollection
+    public interface IList : Gee.List, ICollection
     {
-        // The Item property provides methods to read and edit entries in the List.
-        abstract Object get (int index) {}
-
-        abstract void set (int index) {}
-    
         // Adds an item to the list.  The exact position in the list is 
         // implementation-dependent, so while ArrayList may always insert
         // in the last available location, a SortedList most likely would not.
         // The return value is the position the new element was inserted in.
-        abstract int Add(Object value);
+        public virtual int Add(Object value) {
+			add(value);
+			return size;
+		}
     
         // Returns whether the list contains a particular item.
-        abstract bool Contains(Object value);
+        public virtual bool Contains(Object value) {
+			return contains(value);
+		}
     
         // Removes all items from the list.
-        abstract void Clear();
+        public virtual void Clear() {
+			clear();
+		}
 
-        abstract bool IsReadOnly 
-        { get; }
+        public abstract bool IsReadOnly { get; }
 
-    
-        abstract bool IsFixedSize
-        {
-            get;
-        }
-
+        public abstract bool IsFixedSize { get; }
         
         // Returns the index of a particular item, if it is in the list.
         // Returns -1 if the item isn't in the list.
-        abstract int IndexOf(Object value);
-    
+        public virtual int IndexOf(Object value) {
+			return index_of(value);
+		}
         // Inserts value into the list at position index.
         // index must be non-negative and less than or equal to the 
         // number of elements in the list.  If index equals the number
         // of items in the list, then value is appended to the end.
-        abstract void Insert(int index, Object value);
+        public virtual void Insert(int index, Object value) {
+			set(index, value);
+		}
     
         // Removes an item from the list.
-        abstract void Remove(Object value);
+        public virtual void Remove(Object value) {
+			remove(value);
+		}
     
         // Removes the item at position index.
-        abstract void RemoveAt(int index);
+        public virtual void RemoveAt(int index) {
+			remove_at(index);
+		}
     }
 
-#if CONTRACTS_FULL
-// [ContractClassFor(typeof(IList))]
-
-    internal abstract class IListContract : IList
-    {
-        int IList.Add(Object value)
-        {
-            //Contract.Ensures(((IList)this).Count == Contract.OldValue(((IList)this).Count) + 1);  // Not threadsafe
-            // This method should return the index in which an item was inserted, but we have
-            // some internal collections that don't always insert items into the list, as well
-            // as an MSDN sample code showing us returning -1.  Allow -1 to mean "did not insert".
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() < ((IList)this).Count);
-            return default(int);
-        }
-
-        Object IList. get (int index) {
-		{
-                //Contract.Requires(index >= 0);
-                //Contract.Requires(index < ((IList)this).Count);
-                return default(int);
-            }
-            set {
-                //Contract.Requires(index >= 0);
-                //Contract.Requires(index < ((IList)this).Count);
-            }
-        }
-
-        bool IList.IsFixedSize {
-            get { return default(bool); }
-        }
-
-        bool IList.IsReadOnly {
-            get { return default(bool); }
-        }
-
-        bool ICollection.IsSynchronized {
-            get { return default(bool); }
-        }
-
-        void IList.Clear()
-        {
-            //Contract.Ensures(((IList)this).Count == 0  || ((IList)this).IsFixedSize);  // not threadsafe
-        }
-
-        bool IList.Contains(Object value)
-        {
-            return default(bool);
-        }
-
-        void ICollection.CopyTo(Array array, int startIndex)
-        {
-            //Contract.Requires(array != null);
-            //Contract.Requires(startIndex >= 0);
-            //Contract.Requires(startIndex + ((IList)this).Count <= array.Length);
-        }
-
-        int ICollection.Count {
-            get {
-                return default(int);
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return default(IEnumerator);
-        }
-// [Pure]
-
-        int IList.IndexOf(Object value)
-        {
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() < ((IList)this).Count);
-            return default(int);
-        }
-
-        void IList.Insert(int index, Object value)
-        {
-            //Contract.Requires(index >= 0);
-            //Contract.Requires(index <= ((IList)this).Count);  // For inserting immediately after the end.
-            //Contract.Ensures(((IList)this).Count == Contract.OldValue(((IList)this).Count) + 1);  // Not threadsafe
-        }
-
-        void IList.Remove(Object value)
-        {
-            // No information if removal fails.
-        }
-
-        void IList.RemoveAt(int index)
-        {
-            //Contract.Requires(index >= 0);
-            //Contract.Requires(index < ((IList)this).Count);
-            //Contract.Ensures(((IList)this).Count == Contract.OldValue(((IList)this).Count) - 1);  // Not threadsafe
-        }
-        
-        Object ICollection.SyncRoot {
-            get {
-                return default(Object);
-            }
-        }
-    }
-#endif // CONTRACTS_FULL
 }

@@ -66,7 +66,7 @@ namespace System.Collections {
         { get; }
 
         // Returns an IDictionaryEnumerator for this dictionary.
-        abstract new IDictionaryEnumerator GetEnumerator();
+        public abstract IDictionaryEnumerator GetEnumerator();
     
         // Removes a particular key from the dictionary.
         //

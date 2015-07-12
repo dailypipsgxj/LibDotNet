@@ -60,7 +60,6 @@ namespace System.Collections.Generic
         private Object _syncRoot;
 
         private const int DefaultCapacity = 4;
-		private int	Capacity;
 
         // Constructs a new sorted list. The sorted list is initially empty and has
         // a capacity of zero. Upon adding the first element to the sorted list the
@@ -377,7 +376,7 @@ namespace System.Collections.Generic
             {
 				if (iterator.next()) {
 			        _key = _iterator.get_key();
-                    _value = _iterator.get_value());
+                    _value = _iterator.get_value();
 					return true;
 				}
                 _key = default(TKey);
@@ -443,7 +442,7 @@ namespace System.Collections.Generic
 
             public bool MoveNext()
             {
-                if ((_index < _sortedList.Count)
+                if (_index < _sortedList.Count)
                 {
                     _currentKey = _sortedList.keys[_index];
                     _index++;

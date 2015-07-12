@@ -17,7 +17,7 @@ using System.Diagnostics.Contracts;
 
 namespace System.Collections
 {
-    public class CaseInsensitiveComparer : Gee.Comparable, IComparer
+    public class CaseInsensitiveComparer :  GLib.Object, Gee.Comparable<Object>, IComparer
     {
         //private CompareInfo _compareInfo;
         private static CaseInsensitiveComparer s_InvariantCaseInsensitiveComparer;
@@ -29,7 +29,7 @@ namespace System.Collections
 
         public static CaseInsensitiveComparer Default
         {
-            get
+            owned get
             {
                 return new CaseInsensitiveComparer();
             }
@@ -59,9 +59,9 @@ namespace System.Collections
         {
             string sa = a as string;
             string sb = b as string;
-            if (sa != null && sb != null)
-                return _compareInfo.Compare(sa, sb, CompareOptions.IgnoreCase);
-            else
+            //if (sa != null && sb != null)
+                //return _compareInfo.Compare(sa, sb, CompareOptions.IgnoreCase);
+            //else
                 return Comparer.Default.Compare(a, b);
         }
         
