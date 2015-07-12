@@ -31,7 +31,7 @@ namespace System.Collections.Generic
     // For a detailed description of the algorithm, take a look at "Algorithm" by Rebert Sedgewick.
     //
 
-    internal delegate bool TreeWalkPredicate<T>(SortedSet.Node node);
+    //internal delegate bool TreeWalkPredicate<T>(SortedSet.Node node);
 
     internal enum TreeRotation
     {

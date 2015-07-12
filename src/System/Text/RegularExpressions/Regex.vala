@@ -460,6 +460,6 @@ namespace System.Text.RegularExpressions
     /*
      * Callback class
      */
-    public delegate string MatchEvaluator(Match match);
+    //public delegate string MatchEvaluator(Match match);
 
 }

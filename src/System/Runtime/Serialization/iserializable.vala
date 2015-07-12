@@ -20,14 +20,8 @@ namespace System.Runtime.Serialization {
     using System.Security.Permissions;
     using System;
     using System.Reflection;
-// [System.Runtime.InteropServices.ComVisible(true)]
 
     public interface ISerializable {
-#if FEATURE_SERIALIZATION
-// [System.Security.SecurityCritical]
-  // auto-generated_required
-        abstract void GetObjectData(SerializationInfo info, StreamingContext context);
-#endif
     }
 
 }
