@@ -57,8 +57,8 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the value of this Regex Capture.
         /// </summary>
-         [ CCode ( returns_floating_reference = true ) ]
-        public weak string Value
+        //[ CCode ( returns_floating_reference = true ) ]
+        public string Value
         {
             owned get
             {
@@ -101,20 +101,5 @@ namespace System.Text.RegularExpressions
             return _text.substring(_index + _length, _text.length - _index - _length);
         }
 
-#if DEBUG
-        internal virtual string Description()
-        {
-            StringBuilder Sb = new StringBuilder();
-
-            Sb.append("(I = ");
-            Sb.append(_index);
-            Sb.append(", L = ");
-            Sb.append(_length);
-            Sb.append("): ");
-            Sb.append(_text, _index, _length);
-
-            return Sb.str;
-        }
-#endif
     }
 }

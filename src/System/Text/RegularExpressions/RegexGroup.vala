@@ -14,19 +14,11 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Group : Capture
     {
-        // the empty group Object
-        
-        internal static Group _emptygroup;
-
-        internal int[] _caps;
         internal int _capcount;
         internal CaptureCollection _capcoll;
 
-        internal Group(string text, int[] caps, int capcount){
-			base(text, capcount == 0 ? 0 : caps[(capcount - 1) * 2],
-               capcount == 0 ? 0 : caps[(capcount * 2) - 1]);
-            _caps = caps;
-            _capcount = capcount;
+        internal Group() {
+			base("",0,0);
         }
 
         /// <summary>
@@ -67,16 +59,6 @@ namespace System.Text.RegularExpressions
         /// </summary>
         static Group Synchronized(Group inner)
         {
-            // force Captures to be computed.
-
-            CaptureCollection capcoll;
-            Capture dummy;
-
-            capcoll = inner.Captures;
-
-            if (inner._capcount > 0)
-                dummy = capcoll[0];
-
             return inner;
         }
     }

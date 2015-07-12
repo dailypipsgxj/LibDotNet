@@ -37,20 +37,6 @@ namespace System.Text.RegularExpressions
     {
         //internal static Match s_empty = new Match(null, 1, "", 0, 0, 0);
         internal GroupCollection _groupcoll;
-
-        // input to the match
-        internal Regex _regex;
-        internal int _textbeg;
-        internal int _textpos;
-        internal int _textend;
-        internal int _textstart;
-
-        // output from the match
-        internal int[][] _matches;
-        internal int[] _matchcount;
-        internal bool _balancing;        // whether we've done any balancing with this match.  If we
-                                         // have done balancing, we'll need to do extra work in Tidy().
-
 		internal GLib.MatchInfo _matchinfo;
 
         /// <summary>
@@ -60,12 +46,13 @@ namespace System.Text.RegularExpressions
         {
             get
             {
-                return s_empty;
+                return new Match(new GLib.MatchInfo());
             }
         }
 
         internal Match(GLib.MatchInfo matchinfo){
 			_matchinfo = matchinfo;
+			base();
 			//base(text, new int[2], 0);
         }
 
@@ -132,28 +119,6 @@ namespace System.Text.RegularExpressions
      */
     internal class MatchSparse : Match
     {
-        // the lookup hashtable
-        internal Gee.HashMap<int32, int32> _caps = new Gee.HashMap<int32, int32> ();
-
-        /*
-         * Nonpublic constructor
-         */
-        internal MatchSparse(Regex regex, Gee.HashMap<int32, int32> caps, int capcount,
-                             string text, int begpos, int len, int startpos){
-			base(regex, capcount, text, begpos, len, startpos);
-            _caps = caps;
-        }
-
-        public override GroupCollection Groups
-        {
-            get
-            {
-                if (_groupcoll == null)
-                    _groupcoll = new GroupCollection(this, _caps);
-
-                return _groupcoll;
-            }
-        }
 
     }
 }

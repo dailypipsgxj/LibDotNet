@@ -17,15 +17,13 @@ namespace System.Text.RegularExpressions
     public class GroupCollection : System.Collections.ICollection
     {
         private Match _match;
-        private Dictionary<int, int> _captureMap;
 
         // cache of Group objects fed to the user
         private Group[] _groups;
 
-        public GroupCollection(Match match, Dictionary<int, int> caps)
+        public GroupCollection(Match match)
         {
             _match = match;
-            _captureMap = caps;
         }
 
         /// <summary>
@@ -33,7 +31,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public int Count
         {
-            get { return _match._matchcount.Length; }
+            get { return _match._matchcinfo.get_match_count(); }
         }
 
         public Group get(int groupnum)
@@ -55,25 +53,13 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Provides an enumerator in the same order as Item[].
         /// </summary>
-        public System.Collections.IEnumerator GetEnumerator()
+        public GetEnumerator()
         {
             return new Enumerator(this);
         }
 
         private Group GetGroup(int groupnum)
         {
-            if (_captureMap != null)
-            {
-                int groupNumImpl;
-                if (_captureMap.TryGetValue(groupnum, out groupNumImpl))
-                {
-                    return GetGroupImpl(groupNumImpl);
-                }
-            }
-            else if (groupnum < _match._matchcount.Length && groupnum >= 0)
-            {
-                return GetGroupImpl(groupnum);
-            }
 
             return Group._emptygroup;
         }
@@ -83,20 +69,6 @@ namespace System.Text.RegularExpressions
         /// </summary>
         private Group GetGroupImpl(int groupnum)
         {
-            if (groupnum == 0)
-                return _match;
-
-            // Construct all the Group objects the first time GetGroup is called
-
-            if (_groups == null)
-            {
-                _groups = new Group[_match._matchcount.Length - 1];
-                for (int i = 0; i < _groups.Length; i++)
-                {
-                    _groups[i] = new Group(_match._text, _match._matches[i + 1], _match._matchcount[i + 1]);
-                }
-            }
-
             return _groups[groupnum - 1];
         }
 
@@ -110,16 +82,6 @@ namespace System.Text.RegularExpressions
             get { return _match; }
         }
 
-        void CopyTo(Array array, int arrayIndex)
-        {
-            if (array == null)
-                throw ArgumentNullException("array");
-
-            for (int i = arrayIndex, j = 0; j < Count; i++, j++)
-            {
-                array.SetValue(this[j], i);
-            }
-        }
 
         private class Enumerator : System.Collections.IEnumerator
         {
@@ -128,8 +90,6 @@ namespace System.Text.RegularExpressions
 
             internal Enumerator(GroupCollection collection)
             {
-                Debug.Assert(collection != null, "collection cannot be null.");
-
                 _collection = collection;
                 _index = -1;
             }
@@ -150,9 +110,6 @@ namespace System.Text.RegularExpressions
             {
                 get
                 {
-                    if (_index < 0 || _index >= _collection.Count)
-                        throw InvalidOperationException(SR.EnumNotStarted);
-
                     return _collection[_index];
                 }
             }
