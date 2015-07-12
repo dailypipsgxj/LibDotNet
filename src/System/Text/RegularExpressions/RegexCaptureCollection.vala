@@ -103,6 +103,9 @@ namespace System.Text.RegularExpressions
             private   CaptureCollection _collection;
             private int _index;
 
+			private Object _currentElement { get; set;}
+			private Gee.Iterator<Object> _iterator { get; set;}
+
             internal Enumerator(CaptureCollection collection)
             {
                 _collection = collection;

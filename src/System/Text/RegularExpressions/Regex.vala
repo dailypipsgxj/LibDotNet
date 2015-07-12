@@ -13,7 +13,29 @@ using System.Threading;
 namespace System.Text.RegularExpressions
 {
 	
-	internal abstract class StaticRegex : GLib.Regex {
+	public abstract class StaticRegex : GLib.Regex {
+		
+        //internal string _pattern;                   // The string pattern provided
+        //internal RegexOptions _roptions;            // the top-level options from the options string
+
+        // DefaultMatchTimeout specifies the match timeout to use if no other timeout was specified
+        // by one means or another. Typically, it is set to InfiniteMatchTimeout.
+        internal const TimeSpan DefaultMatchTimeout = -1;
+		
+		public StaticRegex()
+        {
+			//RegexCompileFlags flags = ConvertOptions (options);
+            //_pattern = pattern;
+            //_roptions = options;
+			//public Regex (string pattern, RegexCompileFlags compile_options = 0, RegexMatchFlags match_options = 0) throws RegexError
+			try {
+				base("");
+			} catch (RegexError e) {
+			
+			}
+		}
+
+	
         /*
          * Static version of simple IsMatch call
          */
@@ -29,7 +51,45 @@ namespace System.Text.RegularExpressions
 		{
 			RegexCompileFlags flags = ConvertOptions (options);
 			return match_simple (pattern, input, flags);
-		}		
+		}
+		
+		static RegexCompileFlags ConvertOptions (RegexOptions options)
+		{
+			RegexCompileFlags flags = 0;
+
+			if ((options & RegexOptions.None) !=  RegexOptions.None)
+			{
+				if ((options & RegexOptions.IgnoreCase) ==  RegexOptions.IgnoreCase)
+					flags |=  RegexCompileFlags.CASELESS;
+				if ((options & RegexOptions.Multiline) ==  RegexOptions.Multiline)
+					flags |=  RegexCompileFlags.MULTILINE;
+					
+				if ((options & RegexOptions.ExplicitCapture) ==  RegexOptions.ExplicitCapture)
+					//flags |=  0;
+					
+				if ((options & RegexOptions.Compiled) ==  RegexOptions.Compiled)
+					flags |=  RegexCompileFlags.OPTIMIZE;
+					
+				if ((options & RegexOptions.Singleline) ==  RegexOptions.Singleline)
+					flags |=  RegexCompileFlags.DOTALL;
+				
+				if ((options & RegexOptions.IgnorePatternWhitespace) ==  RegexOptions.IgnorePatternWhitespace)
+					flags |=  RegexCompileFlags.EXTENDED;
+					
+				if ((options & RegexOptions.RightToLeft) ==  RegexOptions.RightToLeft)
+					//flags |=  0;
+					
+				if ((options & RegexOptions.ECMAScript) ==  RegexOptions.ECMAScript)
+					flags |=  RegexCompileFlags.JAVASCRIPT_COMPAT;
+
+				if ((options & RegexOptions.CultureInvariant) ==  RegexOptions.CultureInvariant)
+					//flags |=  0;
+					
+				return flags;
+			}
+			
+		}
+		
 	}
 	
     /// <summary>
@@ -37,7 +97,7 @@ namespace System.Text.RegularExpressions
     /// contains static methods that allow use of regular expressions without instantiating
     /// a Regex  ly.
     /// </summary>
-    public class Regex : StaticRegex, GLib.Regex
+    public class Regex : StaticRegex
     {
         internal string _pattern;                   // The string pattern provided
         internal RegexOptions _roptions;            // the top-level options from the options string
@@ -60,9 +120,6 @@ namespace System.Text.RegularExpressions
 
         internal TimeSpan _internalMatchTimeout;   // timeout for the execution of this regex
 
-        // DefaultMatchTimeout specifies the match timeout to use if no other timeout was specified
-        // by one means or another. Typically, it is set to InfiniteMatchTimeout.
-        internal static TimeSpan DefaultMatchTimeout = -1;
 
         // *********** } match timeout fields ***********
 
@@ -110,42 +167,6 @@ namespace System.Text.RegularExpressions
 		}
 
 
-		internal RegexCompileFlags ConvertOptions (RegexOptions options)
-		{
-			RegexCompileFlags flags = 0;
-
-			if ((options & RegexOptions.None) !=  RegexOptions.None)
-			{
-				if ((options & RegexOptions.IgnoreCase) ==  RegexOptions.IgnoreCase)
-					flags |=  RegexCompileFlags.CASELESS;
-				if ((options & RegexOptions.Multiline) ==  RegexOptions.Multiline)
-					flags |=  RegexCompileFlags.MULTILINE;
-					
-				if ((options & RegexOptions.ExplicitCapture) ==  RegexOptions.ExplicitCapture)
-					//flags |=  0;
-					
-				if ((options & RegexOptions.Compiled) ==  RegexOptions.Compiled)
-					flags |=  RegexCompileFlags.OPTIMIZE;
-					
-				if ((options & RegexOptions.Singleline) ==  RegexOptions.Singleline)
-					flags |=  RegexCompileFlags.DOTALL;
-				
-				if ((options & RegexOptions.IgnorePatternWhitespace) ==  RegexOptions.IgnorePatternWhitespace)
-					flags |=  RegexCompileFlags.EXTENDED;
-					
-				if ((options & RegexOptions.RightToLeft) ==  RegexOptions.RightToLeft)
-					//flags |=  0;
-					
-				if ((options & RegexOptions.ECMAScript) ==  RegexOptions.ECMAScript)
-					flags |=  RegexCompileFlags.JAVASCRIPT_COMPAT;
-
-				if ((options & RegexOptions.CultureInvariant) ==  RegexOptions.CultureInvariant)
-					//flags |=  0;
-					
-				return flags;
-			}
-			
-		}
 
         // Note: "&lt;" is the XML entity for smaller ("<").
         /// <summary>
