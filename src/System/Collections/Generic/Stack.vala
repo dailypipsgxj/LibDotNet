@@ -17,7 +17,7 @@ namespace System.Collections.Generic
     // A simple stack of objects.  Internally it is implemented as an array,
     // so Push can be O(n).  Pop is O(1).
 
-    public class Stack<T> : Gee.LinkedList<T>, IEnumerable<T>, ICollection, IReadOnlyCollection<T>
+    public class Stack<T> : Gee.LinkedList<T>, IEnumerable<T>, ICollection<T>, IReadOnlyCollection<T>
     {
         private Object _syncRoot;
 

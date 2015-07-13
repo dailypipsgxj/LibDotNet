@@ -235,11 +235,11 @@ namespace System.Collections.Generic {
 		[Compact]
         public class Enumerator: IEnumerator<KeyValuePair<TKey,TValue>>, IDictionaryEnumerator
         {
-            private Dictionary<TKey,TValue> dictionary;
-            private Gee.MapIterator _iterator;
-            private KeyValuePair<TKey,TValue> current;
+            public Dictionary<TKey,TValue> dictionary;
+            public Gee.MapIterator _iterator;
+            public KeyValuePair<TKey,TValue> current;
 
-            internal Enumerator(Dictionary<TKey,TValue> dictionary, int getEnumeratorRetType) {
+            public Enumerator(Dictionary<TKey,TValue> dictionary, int getEnumeratorRetType) {
                 this.dictionary = dictionary;
                 index = 0;
                 current = new KeyValuePair<TKey, TValue>();
@@ -288,7 +288,7 @@ namespace System.Collections.Generic {
 
         public class KeyCollection: ICollection<TKey>
         {
-            private Dictionary<TKey,TValue> dictionary;
+            public Dictionary<TKey,TValue> dictionary;
 
             public KeyCollection(Dictionary<TKey,TValue> dictionary) {
                 this.dictionary = dictionary;
@@ -340,11 +340,11 @@ namespace System.Collections.Generic {
 			[Compact]
             public class Enumerator : IEnumerator<TKey>, System.Collections.IEnumerator
             {
-                private Dictionary<TKey, TValue> dictionary;
-                private int index;
-                private TKey currentKey;
+                public Dictionary<TKey, TValue> dictionary;
+                public int index;
+                public TKey currentKey;
             
-                internal Enumerator(Dictionary<TKey, TValue> dictionary) {
+                public Enumerator(Dictionary<TKey, TValue> dictionary) {
                     this.dictionary = dictionary;
                     index = 0;
                     currentKey = default(TKey);                    
@@ -379,7 +379,7 @@ namespace System.Collections.Generic {
 
         public class ValueCollection: ICollection<TValue>, ICollection
         {
-            private Dictionary<TKey,TValue> dictionary;
+            public Dictionary<TKey,TValue> dictionary;
 
             public ValueCollection(Dictionary<TKey,TValue> dictionary) {
                 this.dictionary = dictionary;
@@ -432,12 +432,12 @@ namespace System.Collections.Generic {
 			[Compact]
             public class Enumerator : IEnumerator<TValue>, System.Collections.IEnumerator
             {
-                private Dictionary<TKey, TValue> dictionary;
+                public Dictionary<TKey, TValue> dictionary;
                 private int index;
                 private int version;
-                private TValue currentValue;
+                public TValue currentValue;
             
-                internal Enumerator(Dictionary<TKey, TValue> dictionary) {
+                public Enumerator(Dictionary<TKey, TValue> dictionary) {
                     this.dictionary = dictionary;
                     version = dictionary.version;
                     index = 0;
