@@ -30,8 +30,8 @@ namespace System.Collections.Generic
     // If we ever implement more interfaces on IReadOnlyList, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
     public interface IReadOnlyList<T> : IReadOnlyCollection<T>
     {
-        T get (int index) {
-		; }
+        public abstract T get (int index); 
+		
     }
 
 }

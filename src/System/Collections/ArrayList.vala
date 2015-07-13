@@ -147,6 +147,7 @@ namespace System.Collections
 			if (comparer == null) {
 				return index_of(value);
 			}
+			return -1;
         }
 
 
@@ -409,6 +410,7 @@ namespace System.Collections
 				if (comparer == null) {
 					return index_of(value);
 				}
+				return -1;
             }
 
             public void Clear()
@@ -448,7 +450,7 @@ namespace System.Collections
 
             public int IndexOf(Object value, int startIndex = 0, int count = Count)
             {
-				_list.IndexOf(value);
+				return -1;
             }
 
             public void Insert(int index, Object obj)
@@ -481,7 +483,7 @@ namespace System.Collections
 
             public override int LastIndexOf(Object value, int startIndex = 0, int count = Count)
             {
-				//???
+				return -1;
             }
 
             public void Remove(Object value)
@@ -558,7 +560,7 @@ namespace System.Collections
 
             // This is the enumerator for an IList that's been wrapped in another
             // class that implements all of ArrayList's methods.
-            private class IListWrapperEnumWrapper : IEnumerator
+            private class IListWrapperEnumWrapper : Object, IEnumerator
             {
 				private Object _currentElement { get; set;}
 				private Gee.Iterator<Object> _iterator { get; set;}
@@ -594,7 +596,7 @@ namespace System.Collections
 
                 public Object Current
                 {
-                    get
+                    owned get
                     {
                         return _en.Current;
                     }
@@ -704,7 +706,7 @@ namespace System.Collections
             {
                 lock (_root)
                 {
-                    //return _list.BinarySearch(value, comparer);
+                    return -1;
                 }
             }
   
@@ -761,7 +763,7 @@ namespace System.Collections
             {
                 lock (_root)
                 {
-                    //return _list.IndexOf(value, startIndex, count);
+                    return -1;
                 }
             }
 
@@ -907,7 +909,7 @@ namespace System.Collections
             {
 				lock (_root)
 				{
-					//return _list[index];
+					return this as Object;
 				}
             }
 
@@ -1518,7 +1520,7 @@ namespace System.Collections
         // Implements an enumerator for a ArrayList. The enumerator uses the
         // internal version number of the list to ensure that no modifications are
         // made to the list while an enumeration is in progress.
-        private class ArrayListEnumerator : IEnumerator
+        private class ArrayListEnumerator : Object, IEnumerator
         {
 			private Object _currentElement { get; set;}
 			private Gee.Iterator<Object> _iterator { get; set;}
@@ -1554,7 +1556,7 @@ namespace System.Collections
 
             public Object Current
             {
-                get
+                owned get
                 {
                     if (_index < _startIndex)
                         throw new InvalidOperationException.ENUMNOTSTARTED("SR.InvalidOperation_EnumNotStarted");
@@ -1654,6 +1656,7 @@ namespace System.Collections
                          //   return true;
                     return false;
                 }
+                return false;
             }
 
             public void CopyTo(Array array, int index)
@@ -1815,7 +1818,7 @@ namespace System.Collections
             }
         }
 
-        private class ArrayListEnumeratorSimple : IEnumerator
+        private class ArrayListEnumeratorSimple : Object, IEnumerator
         {
 			private Object _currentElement { get; set;}
 			private Gee.Iterator<Object> _iterator { get; set;}
@@ -1866,7 +1869,7 @@ namespace System.Collections
                 }
             }
 
-            public Object Current
+            public new Object Current
             {
                 owned get
                 {

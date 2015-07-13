@@ -28,10 +28,10 @@ namespace System.Linq
 
     internal class strings
     {
-        internal static string EmptyEnumerable { get { return SR.EmptyEnumerable; } }
-        internal static string MoreThanOneElement { get { return SR.MoreThanOneElement; } }
-        internal static string MoreThanOneMatch { get { return SR.MoreThanOneMatch; } }
-        internal static string NoElements { get { return SR.NoElements; } }
-        internal static string NoMatch { get { return SR.NoMatch; } }
+        internal static string EmptyEnumerable { get { return "SR.EmptyEnumerable"; } }
+        internal static string MoreThanOneElement { get { return "SR.MoreThanOneElement"; } }
+        internal static string MoreThanOneMatch { get { return "SR.MoreThanOneMatch"; } }
+        internal static string NoElements { get { return "SR.NoElements"; } }
+        internal static string NoMatch { get { return "SR.NoMatch"; } }
     }
 }

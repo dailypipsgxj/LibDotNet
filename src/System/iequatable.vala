@@ -8,7 +8,7 @@ namespace System {
     using System;    
     public interface IEquatable<T>
     {
-        bool Equals(T other);
+        public abstract bool Equals(T other);
     }
 
 }

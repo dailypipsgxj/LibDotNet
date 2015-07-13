@@ -118,7 +118,7 @@ namespace System.Collections
         // method returns the sameObjectas GetKeyList, but typed as an
         // ICollection instead of an IList.
         // 
-        public virtual ICollection Keys
+        public new virtual ICollection Keys
         {
             owned get { return GetKeyList(); }
         }
@@ -127,7 +127,7 @@ namespace System.Collections
         // method returns the sameObjectas GetValueList, but typed as an
         // ICollection instead of an IList.
         // 
-        public virtual ICollection Values
+        public new virtual ICollection Values
         {
             owned get { return GetValueList(); }
         }
@@ -304,6 +304,7 @@ namespace System.Collections
 			for (int i = 0; i < size; i++) {
 				if (_values[i] == value) return i;
 			}
+			return -1;
         }
 
         // Removes the entry at the given index. The size of the sorted list is
@@ -564,7 +565,7 @@ namespace System.Collections
         }
 
 
-        private class SortedListEnumerator : IDictionaryEnumerator, IEnumerator
+        private class SortedListEnumerator : Object, IDictionaryEnumerator, IEnumerator
         {
             private SortedList _sortedList;
 			private Object _currentElement { get; set;}

@@ -21,7 +21,7 @@ namespace System.Collections {
     // Base interface for all enumerators, providing a simple approach
     // to iterating over a collection.
 
-    public interface IEnumerator
+    public interface IEnumerator : Object
     {
 		protected abstract Object _currentElement { get; set;}
 		protected abstract Gee.Iterator<Object> _iterator { get; set;}
@@ -45,6 +45,7 @@ namespace System.Collections {
 		
 		public virtual bool next() {
 			MoveNext();
+			return true;
 		}
    
 		public virtual Object get() {
@@ -58,7 +59,7 @@ namespace System.Collections {
         // will return the same object.
         // 
         public abstract Object Current {
-            get; 
+           owned get; 
         }
     
         // Resets the enumerator to the beginning of the enumeration, starting over.

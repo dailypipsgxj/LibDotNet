@@ -33,7 +33,9 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/ireadonlycollection.vala \
 	System/Collections/Generic/ireadonlydictionary.vala \
 	System/Collections/Generic/ireadonlylist.vala \
-	System/Collections/Generic/ilist.vala
+	System/Collections/Generic/ilist.vala \
+	System/Collections/Generic/KeyValuePair.vala
+
 
 LIBDOTNET_COLLECTIONS = \
 	System/Collections/Hashtable.vala \
@@ -44,7 +46,6 @@ LIBDOTNET_COLLECTIONS = \
 	System/Collections/DictionaryEntry.vala
 		
 LIBDOTNET_COLLECTIONS_GEN = \
-	System/Collections/Generic/KeyValuePair.vala \
 	System/Collections/Generic/Stack.vala \
 	System/Collections/Generic/LinkedList.vala \
 	System/Collections/Generic/Dictionary.vala \
@@ -64,9 +65,7 @@ LIBDOTNET_SYSTEM_NS = \
 	System/Threading/Threading.vala
 
 LIBDOTNET_SYSTEM = \
-	System/Nullable.vala \
-	System/Exceptions.vala \
-	System/StringComparer.vala
+	System/Exceptions.vala 
 
 LIBDOTNET_SYSTEM_IFACE = \
 	System/idisposable.vala \
@@ -82,11 +81,9 @@ LIBDOTNET_SYSTEM_MISC = \
 	System/Globalization/CultureInfo.vala
 
 LIBDOTNET_SOURCES = \
-	$(LIBDOTNET_REGEX) \
 	$(LIBDOTNET_COLLECTIONS_IFACE) \
-	$(LIBDOTNET_COLLECTIONS) \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
-	$(LIBDOTNET_COLLECTIONS_GEN) \
+	$(LIBDOTNET_COLLECTIONS) \
 	$(LIBDOTNET_SYSTEM_NS) \
 	$(LIBDOTNET_SYSTEM) \
 	$(LIBDOTNET_SYSTEM_IFACE) \

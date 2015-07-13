@@ -17,8 +17,8 @@ namespace System.Collections
 	[Compact]
     public class KeyValuePairs
     {
-        private Object _key;
-        private Object _value;
+        public Object _key;
+        public Object _value;
 
         public KeyValuePairs(Object key, Object value)
         {

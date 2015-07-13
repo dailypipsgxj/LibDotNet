@@ -22,7 +22,7 @@ namespace System.Collections.Generic {
     // A KeyValuePair holds a key and a value from a dictionary.
     // It is used by the IEnumerable<T> implementation for both IDictionary<TKey, TValue>
     // and IReadOnlyDictionary<TKey, TValue>.
-	[Compact]
+	//[Compact]
     public class KeyValuePair<TKey, TValue> {
         private TKey key;
         private TValue value;

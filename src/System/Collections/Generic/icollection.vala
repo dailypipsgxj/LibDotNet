@@ -28,7 +28,8 @@ namespace System.Collections.Generic {
     // This is a special hack internally though - see VM\compile.cpp.
     // The same attribute is on IEnumerable<T> and ICollection<T>.
 
-    public interface ICollection<T> : Gee.Collection<T>, IEnumerable<T>
+	[GenericAccessors]
+    public interface ICollection<T> : Object, Gee.Collection<T>, IEnumerable<T>
     {
         // Number of items in the collections.        
         public abstract int Count { get; }
@@ -59,7 +60,7 @@ namespace System.Collections.Generic {
         //void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int count);
 
         public virtual bool Remove(T item) {
-			remove(item);
+			return remove(item);
 		}
     }
 

@@ -23,7 +23,7 @@ namespace System.Collections {
     // 
     // Interfaces are not serializable
 
-    public interface IComparer  {
+    public interface IComparer : Object {
         // Compares two objects. An implementation of this method must return a
         // value less than zero if x is less than y, zero if x is equal to y, or a
         // value greater than zero if x is greater than y.

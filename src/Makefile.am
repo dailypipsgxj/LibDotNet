@@ -13,7 +13,7 @@ AM_CFLAGS =\
 lib_LTLIBRARIES = libdotnet.la
 
 vapidir = $(datadir)/vala/vapi
-dist_vapi_DATA = libdotnet-0.1.vapi libdotnet-0.1.deps
+dist_vapi_DATA = libdotnet-0.1.vapi
 
 libdotnet_la_SOURCES = $(LIBDOTNET_SOURCES)
 

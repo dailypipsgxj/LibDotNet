@@ -33,13 +33,13 @@ namespace System.Collections {
         //abstract void set (Object key) {}
     
         // Returns a collections of the keys in this dictionary.
-        abstract ICollection Keys {
-            get;
+        public abstract ICollection Keys {
+            owned get;
         }
     
         // Returns a collections of the values in this dictionary.
-        abstract ICollection Values {
-            get;
+        public abstract ICollection Values {
+            owned get;
         }
     
         // Returns whether this dictionary contains a particular key.

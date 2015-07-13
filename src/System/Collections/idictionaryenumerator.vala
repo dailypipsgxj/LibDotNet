@@ -56,9 +56,7 @@ namespace System.Collections {
         // GetKey with no intervening calls to GetNext will return
         // the same object.
         // 
-        public abstract Object Key {
-            get; 
-        }
+        public abstract Object Key { owned get; }
         
         // Returns the value of the current element of the enumeration. The
         // returned value is undefined before the first call to GetNext and
@@ -66,17 +64,13 @@ namespace System.Collections {
         // to GetValue with no intervening calls to GetNext will
         // return the same object.
         // 
-        public abstract Object Value {
-            get;
-        }
+        public abstract Object Value { owned get; }
         
         // GetBlock will copy dictionary values into the given Array.  It will either
         // fill up the array, or if there aren't enough elements, it will
         // copy as much as possible into the Array.  The number of elements
         // copied is returned.
         // 
-        public abstract DictionaryEntry Entry {
-            get; 
-        }
+        public abstract DictionaryEntry Entry { owned get; }
     }
 }

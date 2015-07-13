@@ -21,7 +21,7 @@ namespace System.Collections {
     // Base interface for all collections, defining enumerators, size, and 
     // synchronization methods.
 
-    public interface ICollection : IEnumerable
+    public interface ICollection : Object, IEnumerable
     {
         // Interfaces are not serialable
         // CopyTo copies a collection into an Array, starting at a particular

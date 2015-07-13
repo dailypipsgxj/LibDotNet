@@ -20,7 +20,7 @@ namespace System.Collections {
     // A DictionaryEntry holds a key and a value from a dictionary.
     // It is returned by IDictionaryEnumerator::GetEntry().
 
-	[Compact]
+	//[Compact]
     public class DictionaryEntry
     {
         private Object _key;

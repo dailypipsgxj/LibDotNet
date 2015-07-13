@@ -22,7 +22,8 @@ namespace System.Collections.Generic {
     // Keys can be any non-null object.  Values can be any object.
     // You can look up a value in an IDictionary via the default indexed
     // property, Items.  
-    public interface IDictionary<TKey, TValue> : Gee.Map, ICollection<KeyValuePair<TKey, TValue>>
+	[GenericAccessors]
+    public interface IDictionary<TKey, TValue> : Gee.Map<TKey, TValue>, ICollection<KeyValuePair<TKey, TValue>>
     {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
@@ -62,7 +63,7 @@ namespace System.Collections.Generic {
         // Removes a particular key from the dictionary.
         //
         public virtual bool Remove(TKey key) {
-			unset(key);
+			return unset(key);
 		}
 
         public virtual bool TryGetValue(TKey key, out TValue value) {

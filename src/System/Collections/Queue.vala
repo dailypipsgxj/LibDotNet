@@ -19,14 +19,14 @@ namespace System.Collections
     // A simple Queue of objects.  Internally it is implemented as a circular
     // buffer, so Enqueue can be O(n).  Dequeue is O(1).
 
-    public class Queue : Gee.PriorityQueue, ICollection
+    public class Queue : Gee.PriorityQueue<Object>, ICollection, IEnumerable
     {
         private Object _syncRoot;
 
         // Creates a queue with room for capacity objects. When full, the new
         // capacity is set to the old capacity * growFactor.
         //
-        public Queue(int capacity = 32, float growFactor = 2.0)
+        public Queue(int capacity = 32, float growFactor = 2.0f)
         {
             base();
         }
@@ -44,12 +44,12 @@ namespace System.Collections
 
         public virtual int Count
         {
-            get { return _size; }
+            get { return size; }
         }
 
         public virtual Object Clone()
         {
-            Queue q = new Queue(_size);
+            Queue q = new Queue(size);
             return q;
         }
 
@@ -104,7 +104,7 @@ namespace System.Collections
         // InvalidOperationException.
         public virtual Object Peek()
         {
-
+			return new Object();
         }
 
         // Returns a synchronized Queue.  Returns a synchronized wrapper
@@ -127,7 +127,7 @@ namespace System.Collections
 
         internal Object GetElement(int i)
         {
-            return -1;
+            return new Object();
         }
 
         // Iterates over the objects in the queue, returning an array of the
@@ -268,12 +268,14 @@ namespace System.Collections
         // Implements an enumerator for a Queue.  The enumerator uses the
         // internal version number of the list to ensure that no modifications are
         // made to the list while an enumeration is in progress.
-        public class QueueEnumerator : IEnumerator
+        public class QueueEnumerator : Object, IEnumerator
         {
-            private Queue _q;
-            private Object _currentElement;
+			private Object _currentElement { get; set;}
+			private Gee.Iterator<Object> _iterator { get; set;}
 
-            internal QueueEnumerator(Queue q)
+            private Queue _q;
+
+            public QueueEnumerator(Queue q)
             {
             }
 
@@ -284,7 +286,7 @@ namespace System.Collections
 
             public virtual Object Current
             {
-                get
+                owned get
                 {
                     return _currentElement;
                 }

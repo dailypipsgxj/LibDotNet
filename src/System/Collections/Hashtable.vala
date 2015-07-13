@@ -144,7 +144,7 @@ namespace System.Collections
         // to those Objects.
         public virtual Object Clone()
         {
-
+			return this as Object;
         }
 
         // Checks if this hashtable contains an entry with the given key.  This is
@@ -174,18 +174,6 @@ namespace System.Collections
             foreach (var key in keys)
             {
 				array.insert_val (arrayIndex++, key);
-            }
-        }
-
-        // Copies the keys of this hashtable to a given array starting at a given
-        // index. This method is used by the implementation of the CopyTo method in
-        // the KeyCollection class.
-        private void CopyEntries(Array<Object> array, int arrayIndex)
-        {
-            foreach (var ent in entries)
-            {
-				DictionaryEntry entry = new DictionaryEntry(ent.key, ent.value);
-				array.insert_val (arrayIndex++, (Object)entry);
             }
         }
 
@@ -239,7 +227,7 @@ namespace System.Collections
         {
             if (_keycomparer != null)
                 return _keycomparer.GetHashCode(key);
-            //return key.GetHashCode();
+            return -1;
         }
 
         // Is this Hashtable read-only?
@@ -270,7 +258,7 @@ namespace System.Collections
         // 
         public virtual ICollection Keys
         {
-            get
+            owned get
             {
                 if (_keys == null) _keys = new KeyCollection(this);
                 return _keys;
@@ -289,7 +277,7 @@ namespace System.Collections
         // 
         public virtual ICollection Values
         {
-            get
+            owned get
             {
                 if (_values == null) _values = new ValueCollection(this);
                 return _values;
@@ -332,7 +320,7 @@ namespace System.Collections
 
         // Implements a Collection for the keys of a hashtable. An instance of this
         // class is created by the GetKeys method of a hashtable.
-        public class KeyCollection : ICollection, IEnumerable
+        public class KeyCollection : Object, ICollection, IEnumerable
         {
             private Hashtable _hashtable;
 
@@ -370,7 +358,7 @@ namespace System.Collections
 
         // Implements a Collection for the values of a hashtable. An instance of
         // this class is created by the GetValues method of a hashtable.
-        public class ValueCollection : ICollection, IEnumerable
+        public class ValueCollection : Object, ICollection, IEnumerable
         {
             private Hashtable _hashtable;
 
@@ -408,7 +396,7 @@ namespace System.Collections
         // Implements an enumerator for a hashtable. The enumerator uses the
         // internal version number of the hashtable to ensure that no modifications
         // are made to the hashtable while an enumeration is in progress.
-        public class HashtableEnumerator : IDictionaryEnumerator, IEnumerator
+        public class HashtableEnumerator : Object, IDictionaryEnumerator, IEnumerator
         {
             private Hashtable _hashtable;
 			private Object _currentElement { get; set;}
@@ -420,7 +408,7 @@ namespace System.Collections
                 _iterator = hashtable.map_iterator();
             }
 
-            public virtual Object Key
+            public new virtual Object Key
             {
                 owned get
                 {
@@ -428,7 +416,7 @@ namespace System.Collections
                 }
             }
 
-            public virtual DictionaryEntry Entry
+            public new virtual DictionaryEntry Entry
             {
                 owned get
                 {
@@ -439,13 +427,13 @@ namespace System.Collections
 
             public virtual Object Current
             {
-                get
+                owned get
                 {
                    return _currentElement;
                 }
             }
 
-            public virtual Object Value
+            public new virtual Object Value
             {
                 owned get
                 {
