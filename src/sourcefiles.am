@@ -53,10 +53,10 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/ireadonlylist.vala
 	
 LIBDOTNET_COLLECTIONS_GEN = \
+	System/Collections/Generic/Comparer.vala \
 	System/Collections/Generic/KeyValuePair.vala
 
 LIBDOTNET_COLLECTIONS_GENX = \
-	System/Collections/Generic/Comparer.vala \
 	System/Collections/Generic/Dictionary.vala \
 	System/Collections/Generic/EqualityComparer.vala \
 	System/Collections/Generic/HashSet.vala \
@@ -79,7 +79,8 @@ LIBDOTNET_SYSTEM_NS = \
 
 LIBDOTNET_SYSTEM = \
 	System/Nullable.vala \
-	System/Exceptions.vala 
+	System/Exceptions.vala \
+	System/action.vala
 
 LIBDOTNET_SYSTEM_IFACE = \
 	System/idisposable.vala \

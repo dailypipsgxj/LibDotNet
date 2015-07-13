@@ -6,27 +6,31 @@
 #include <glib-object.h>
 
 
-#define SYSTEM_GLOBALIZATION_TYPE_CULTURE_INFO (system_globalization_culture_info_get_type ())
+#define SYSTEM_GLOBALIZATION_CULTURE_INFO_TYPE_STRING_COMPARISON (system_globalization_culture_info_string_comparison_get_type ())
 
 typedef enum  {
-	SYSTEM_GLOBALIZATION_CULTURE_INFO_InvariantCulture,
-	SYSTEM_GLOBALIZATION_CULTURE_INFO_CurrentCulture
-} SystemGlobalizationCultureInfo;
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCulture = 0,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCultureIgnoreCase = 1,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCulture = 2,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCultureIgnoreCase = 3,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_Ordinal = 4,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_OrdinalIgnoreCase = 5
+} SystemGlobalizationCultureInfoStringComparison;
 
 
 
-GType system_globalization_culture_info_get_type (void) G_GNUC_CONST;
+GType system_globalization_culture_info_string_comparison_get_type (void) G_GNUC_CONST;
 
 
-GType system_globalization_culture_info_get_type (void) {
-	static volatile gsize system_globalization_culture_info_type_id__volatile = 0;
-	if (g_once_init_enter (&system_globalization_culture_info_type_id__volatile)) {
-		static const GEnumValue values[] = {{SYSTEM_GLOBALIZATION_CULTURE_INFO_InvariantCulture, "SYSTEM_GLOBALIZATION_CULTURE_INFO_InvariantCulture", "invariantculture"}, {SYSTEM_GLOBALIZATION_CULTURE_INFO_CurrentCulture, "SYSTEM_GLOBALIZATION_CULTURE_INFO_CurrentCulture", "currentculture"}, {0, NULL, NULL}};
-		GType system_globalization_culture_info_type_id;
-		system_globalization_culture_info_type_id = g_enum_register_static ("SystemGlobalizationCultureInfo", values);
-		g_once_init_leave (&system_globalization_culture_info_type_id__volatile, system_globalization_culture_info_type_id);
+GType system_globalization_culture_info_string_comparison_get_type (void) {
+	static volatile gsize system_globalization_culture_info_string_comparison_type_id__volatile = 0;
+	if (g_once_init_enter (&system_globalization_culture_info_string_comparison_type_id__volatile)) {
+		static const GEnumValue values[] = {{SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCulture, "SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCulture", "currentculture"}, {SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCultureIgnoreCase, "SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCultureIgnoreCase", "currentcultureignorecase"}, {SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCulture, "SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCulture", "invariantculture"}, {SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCultureIgnoreCase, "SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCultureIgnoreCase", "invariantcultureignorecase"}, {SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_Ordinal, "SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_Ordinal", "ordinal"}, {SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_OrdinalIgnoreCase, "SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_OrdinalIgnoreCase", "ordinalignorecase"}, {0, NULL, NULL}};
+		GType system_globalization_culture_info_string_comparison_type_id;
+		system_globalization_culture_info_string_comparison_type_id = g_enum_register_static ("SystemGlobalizationCultureInfoStringComparison", values);
+		g_once_init_leave (&system_globalization_culture_info_string_comparison_type_id__volatile, system_globalization_culture_info_string_comparison_type_id);
 	}
-	return system_globalization_culture_info_type_id__volatile;
+	return system_globalization_culture_info_string_comparison_type_id__volatile;
 }
 
 

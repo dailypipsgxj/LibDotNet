@@ -384,7 +384,7 @@ typedef struct _SystemCollectionsCaseInsensitiveHashCodeProvider SystemCollectio
 typedef struct _SystemCollectionsCaseInsensitiveHashCodeProviderClass SystemCollectionsCaseInsensitiveHashCodeProviderClass;
 typedef struct _SystemCollectionsCaseInsensitiveHashCodeProviderPrivate SystemCollectionsCaseInsensitiveHashCodeProviderPrivate;
 
-#define SYSTEM_GLOBALIZATION_TYPE_CULTURE_INFO (system_globalization_culture_info_get_type ())
+#define SYSTEM_GLOBALIZATION_CULTURE_INFO_TYPE_STRING_COMPARISON (system_globalization_culture_info_string_comparison_get_type ())
 
 #define SYSTEM_COLLECTIONS_TYPE_COLLECTION_BASE (system_collections_collection_base_get_type ())
 #define SYSTEM_COLLECTIONS_COLLECTION_BASE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_COLLECTION_BASE, SystemCollectionsCollectionBase))
@@ -541,6 +541,17 @@ typedef struct _SystemCollectionsStructuralComparisons SystemCollectionsStructur
 typedef struct _SystemCollectionsStructuralComparisonsClass SystemCollectionsStructuralComparisonsClass;
 typedef struct _SystemCollectionsStructuralComparisonsPrivate SystemCollectionsStructuralComparisonsPrivate;
 typedef struct _SystemCollectionsDictionaryEntryPrivate SystemCollectionsDictionaryEntryPrivate;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER (system_collections_generic_comparer_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer))
+#define SYSTEM_COLLECTIONS_GENERIC_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparerClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparerClass))
+
+typedef struct _SystemCollectionsGenericComparer SystemCollectionsGenericComparer;
+typedef struct _SystemCollectionsGenericComparerClass SystemCollectionsGenericComparerClass;
+typedef struct _SystemCollectionsGenericComparerPrivate SystemCollectionsGenericComparerPrivate;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR (system_collections_generic_key_value_pair_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR, SystemCollectionsGenericKeyValuePair))
@@ -980,9 +991,13 @@ struct _SystemCollectionsCaseInsensitiveHashCodeProviderClass {
 };
 
 typedef enum  {
-	SYSTEM_GLOBALIZATION_CULTURE_INFO_InvariantCulture,
-	SYSTEM_GLOBALIZATION_CULTURE_INFO_CurrentCulture
-} SystemGlobalizationCultureInfo;
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCulture = 0,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCultureIgnoreCase = 1,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCulture = 2,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCultureIgnoreCase = 3,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_Ordinal = 4,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_OrdinalIgnoreCase = 5
+} SystemGlobalizationCultureInfoStringComparison;
 
 struct _SystemCollectionsCollectionBase {
 	GeeAbstractList parent_instance;
@@ -1232,6 +1247,19 @@ struct _SystemCollectionsKeyValuePairs {
 	GObject* _value;
 };
 
+struct _SystemCollectionsGenericComparer {
+	GTypeInstance parent_instance;
+	volatile int ref_count;
+	SystemCollectionsGenericComparerPrivate * priv;
+};
+
+struct _SystemCollectionsGenericComparerClass {
+	GTypeClass parent_class;
+	void (*finalize) (SystemCollectionsGenericComparer *self);
+	gint (*Compare) (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
+};
+
+typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
 struct _SystemCollectionsGenericKeyValuePair {
 	GTypeInstance parent_instance;
 	volatile int ref_count;
@@ -1255,6 +1283,8 @@ struct _SystemNullableClass {
 	void (*finalize) (SystemNullable *self);
 };
 
+typedef void (*SystemAction) (gconstpointer obj, void* user_data);
+typedef gboolean (*SystemPredicate) (gconstpointer obj, void* user_data);
 struct _SystemIComparableIface {
 	GTypeInterface parent_iface;
 	gint (*CompareTo) (SystemIComparable* self, gconstpointer other);
@@ -1514,9 +1544,9 @@ void system_collections_value_set_case_insensitive_hash_code_provider (GValue* v
 void system_collections_value_take_case_insensitive_hash_code_provider (GValue* value, gpointer v_object);
 gpointer system_collections_value_get_case_insensitive_hash_code_provider (const GValue* value);
 GType system_collections_case_insensitive_hash_code_provider_get_type (void) G_GNUC_CONST;
-GType system_globalization_culture_info_get_type (void) G_GNUC_CONST;
-SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_new (SystemGlobalizationCultureInfo* culture);
-SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_construct (GType object_type, SystemGlobalizationCultureInfo* culture);
+GType system_globalization_culture_info_string_comparison_get_type (void) G_GNUC_CONST;
+SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_new (SystemGlobalizationCultureInfoStringComparison* culture);
+SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_construct (GType object_type, SystemGlobalizationCultureInfoStringComparison* culture);
 SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_get_Default (void);
 SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_get_DefaultInvariant (void);
 GType system_collections_collection_base_get_type (void) G_GNUC_CONST;
@@ -1692,6 +1722,17 @@ GObject* system_collections_dictionary_entry_get_Value (SystemCollectionsDiction
 void system_collections_dictionary_entry_set_Value (SystemCollectionsDictionaryEntry* self, GObject* value);
 SystemCollectionsKeyValuePairs* system_collections_key_value_pairs_new (GObject* key, GObject* value);
 SystemCollectionsKeyValuePairs* system_collections_key_value_pairs_new (GObject* key, GObject* value);
+gpointer system_collections_generic_comparer_ref (gpointer instance);
+void system_collections_generic_comparer_unref (gpointer instance);
+GParamSpec* system_collections_generic_param_spec_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
+void system_collections_generic_value_set_comparer (GValue* value, gpointer v_object);
+void system_collections_generic_value_take_comparer (GValue* value, gpointer v_object);
+gpointer system_collections_generic_value_get_comparer (const GValue* value);
+GType system_collections_generic_comparer_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericComparer* system_collections_generic_comparer_Create (SystemComparison comparison, void* comparison_target);
+gint system_collections_generic_comparer_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
+SystemCollectionsGenericComparer* system_collections_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
+SystemCollectionsGenericComparer* system_collections_generic_comparer_get_Default (void);
 gpointer system_collections_generic_key_value_pair_ref (gpointer instance);
 void system_collections_generic_key_value_pair_unref (gpointer instance);
 GParamSpec* system_collections_generic_param_spec_key_value_pair (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);

@@ -4,6 +4,13 @@ namespace System {
 	namespace Collections {
 		namespace Generic {
 			[CCode (cheader_filename = "libdotnet.h")]
+			public abstract class Comparer<T> : System.Collections.Generic.IComparer<T> {
+				public Comparer ();
+				public abstract int Compare (T x, T y);
+				public static System.Collections.Generic.Comparer<T> Create (System.Comparison<T> comparison);
+				public static System.Collections.Generic.Comparer<T> Default { owned get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
 			public class KeyValuePair<TKey,TValue> {
 				public KeyValuePair (TKey key, TValue value);
 				public string ToString (GLib.StringBuilder s);
@@ -137,7 +144,7 @@ namespace System {
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
 		public class CaseInsensitiveHashCodeProvider : System.Collections.IHashCodeProvider {
-			public CaseInsensitiveHashCodeProvider (System.Globalization.CultureInfo? culture);
+			public CaseInsensitiveHashCodeProvider (System.Globalization.CultureInfo.StringComparison? culture);
 			public static System.Collections.CaseInsensitiveHashCodeProvider Default { owned get; }
 			public static System.Collections.CaseInsensitiveHashCodeProvider DefaultInvariant { get; }
 		}
@@ -416,10 +423,16 @@ namespace System {
 		}
 	}
 	namespace Globalization {
-		[CCode (cheader_filename = "libdotnet.h")]
-		public enum CultureInfo {
-			InvariantCulture,
-			CurrentCulture
+		namespace CultureInfo {
+			[CCode (cheader_filename = "libdotnet.h")]
+			public enum StringComparison {
+				CurrentCulture,
+				CurrentCultureIgnoreCase,
+				InvariantCulture,
+				InvariantCultureIgnoreCase,
+				Ordinal,
+				OrdinalIgnoreCase
+			}
 		}
 	}
 	namespace Linq {
@@ -561,4 +574,10 @@ namespace System {
 	public interface IEquatable<T> {
 		public abstract bool Equals (T other);
 	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public delegate void Action<T> (T obj);
+	[CCode (cheader_filename = "libdotnet.h")]
+	public delegate int Comparison<T> (T x, T y);
+	[CCode (cheader_filename = "libdotnet.h")]
+	public delegate bool Predicate<T> (T obj);
 }

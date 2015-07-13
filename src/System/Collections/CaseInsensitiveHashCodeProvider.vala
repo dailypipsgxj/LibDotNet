@@ -25,10 +25,10 @@ namespace System.Collections {
     using System.Diagnostics.Contracts;
 
     public class CaseInsensitiveHashCodeProvider : IHashCodeProvider {
-        private CultureInfo culture;
+        private CultureInfo.StringComparison culture;
         private static CaseInsensitiveHashCodeProvider m_InvariantCaseInsensitiveHashCodeProvider = null;
 
-        public CaseInsensitiveHashCodeProvider(CultureInfo? culture) {
+        public CaseInsensitiveHashCodeProvider(CultureInfo.StringComparison? culture) {
            this.culture = culture;
         }
 
@@ -36,7 +36,7 @@ namespace System.Collections {
         {
             owned get
             {
-                return new CaseInsensitiveHashCodeProvider(CultureInfo.CurrentCulture);
+                return new CaseInsensitiveHashCodeProvider(CultureInfo.StringComparison.CurrentCulture);
             }
         }
         
@@ -45,7 +45,7 @@ namespace System.Collections {
             get
             {
                 if (m_InvariantCaseInsensitiveHashCodeProvider == null) {
-                    m_InvariantCaseInsensitiveHashCodeProvider = new CaseInsensitiveHashCodeProvider(CultureInfo.InvariantCulture);
+                    m_InvariantCaseInsensitiveHashCodeProvider = new CaseInsensitiveHashCodeProvider(CultureInfo.StringComparison.InvariantCulture);
                 }
                 return m_InvariantCaseInsensitiveHashCodeProvider;
             }

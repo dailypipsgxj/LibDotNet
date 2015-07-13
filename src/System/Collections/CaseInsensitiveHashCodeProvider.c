@@ -45,7 +45,7 @@ typedef struct _SystemCollectionsCaseInsensitiveHashCodeProvider SystemCollectio
 typedef struct _SystemCollectionsCaseInsensitiveHashCodeProviderClass SystemCollectionsCaseInsensitiveHashCodeProviderClass;
 typedef struct _SystemCollectionsCaseInsensitiveHashCodeProviderPrivate SystemCollectionsCaseInsensitiveHashCodeProviderPrivate;
 
-#define SYSTEM_GLOBALIZATION_TYPE_CULTURE_INFO (system_globalization_culture_info_get_type ())
+#define SYSTEM_GLOBALIZATION_CULTURE_INFO_TYPE_STRING_COMPARISON (system_globalization_culture_info_string_comparison_get_type ())
 #define _system_collections_case_insensitive_hash_code_provider_unref0(var) ((var == NULL) ? NULL : (var = (system_collections_case_insensitive_hash_code_provider_unref (var), NULL)))
 typedef struct _SystemCollectionsParamSpecCaseInsensitiveHashCodeProvider SystemCollectionsParamSpecCaseInsensitiveHashCodeProvider;
 
@@ -66,12 +66,16 @@ struct _SystemCollectionsCaseInsensitiveHashCodeProviderClass {
 };
 
 typedef enum  {
-	SYSTEM_GLOBALIZATION_CULTURE_INFO_InvariantCulture,
-	SYSTEM_GLOBALIZATION_CULTURE_INFO_CurrentCulture
-} SystemGlobalizationCultureInfo;
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCulture = 0,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCultureIgnoreCase = 1,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCulture = 2,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCultureIgnoreCase = 3,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_Ordinal = 4,
+	SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_OrdinalIgnoreCase = 5
+} SystemGlobalizationCultureInfoStringComparison;
 
 struct _SystemCollectionsCaseInsensitiveHashCodeProviderPrivate {
-	SystemGlobalizationCultureInfo culture;
+	SystemGlobalizationCultureInfoStringComparison culture;
 };
 
 struct _SystemCollectionsParamSpecCaseInsensitiveHashCodeProvider {
@@ -92,22 +96,22 @@ void system_collections_value_set_case_insensitive_hash_code_provider (GValue* v
 void system_collections_value_take_case_insensitive_hash_code_provider (GValue* value, gpointer v_object);
 gpointer system_collections_value_get_case_insensitive_hash_code_provider (const GValue* value);
 GType system_collections_case_insensitive_hash_code_provider_get_type (void) G_GNUC_CONST;
-GType system_globalization_culture_info_get_type (void) G_GNUC_CONST;
+GType system_globalization_culture_info_string_comparison_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_CASE_INSENSITIVE_HASH_CODE_PROVIDER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_TYPE_CASE_INSENSITIVE_HASH_CODE_PROVIDER, SystemCollectionsCaseInsensitiveHashCodeProviderPrivate))
 enum  {
 	SYSTEM_COLLECTIONS_CASE_INSENSITIVE_HASH_CODE_PROVIDER_DUMMY_PROPERTY
 };
-SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_new (SystemGlobalizationCultureInfo* culture);
-SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_construct (GType object_type, SystemGlobalizationCultureInfo* culture);
+SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_new (SystemGlobalizationCultureInfoStringComparison* culture);
+SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_construct (GType object_type, SystemGlobalizationCultureInfoStringComparison* culture);
 static gint system_collections_case_insensitive_hash_code_provider_real_GetHashCode (SystemCollectionsIHashCodeProvider* base, GObject* obj);
 SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_get_Default (void);
 SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_get_DefaultInvariant (void);
 static void system_collections_case_insensitive_hash_code_provider_finalize (SystemCollectionsCaseInsensitiveHashCodeProvider* obj);
 
 
-SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_construct (GType object_type, SystemGlobalizationCultureInfo* culture) {
+SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_construct (GType object_type, SystemGlobalizationCultureInfoStringComparison* culture) {
 	SystemCollectionsCaseInsensitiveHashCodeProvider* self = NULL;
-	SystemGlobalizationCultureInfo* _tmp0_ = NULL;
+	SystemGlobalizationCultureInfoStringComparison* _tmp0_ = NULL;
 	self = (SystemCollectionsCaseInsensitiveHashCodeProvider*) g_type_create_instance (object_type);
 	_tmp0_ = culture;
 	self->priv->culture = *_tmp0_;
@@ -115,7 +119,7 @@ SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insens
 }
 
 
-SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_new (SystemGlobalizationCultureInfo* culture) {
+SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_new (SystemGlobalizationCultureInfoStringComparison* culture) {
 	return system_collections_case_insensitive_hash_code_provider_construct (SYSTEM_COLLECTIONS_TYPE_CASE_INSENSITIVE_HASH_CODE_PROVIDER, culture);
 }
 
@@ -132,9 +136,9 @@ static gint system_collections_case_insensitive_hash_code_provider_real_GetHashC
 
 SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insensitive_hash_code_provider_get_Default (void) {
 	SystemCollectionsCaseInsensitiveHashCodeProvider* result;
-	SystemGlobalizationCultureInfo _tmp0_ = 0;
+	SystemGlobalizationCultureInfoStringComparison _tmp0_ = 0;
 	SystemCollectionsCaseInsensitiveHashCodeProvider* _tmp1_ = NULL;
-	_tmp0_ = SYSTEM_GLOBALIZATION_CULTURE_INFO_CurrentCulture;
+	_tmp0_ = SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_CurrentCulture;
 	_tmp1_ = system_collections_case_insensitive_hash_code_provider_new (&_tmp0_);
 	result = _tmp1_;
 	return result;
@@ -147,9 +151,9 @@ SystemCollectionsCaseInsensitiveHashCodeProvider* system_collections_case_insens
 	SystemCollectionsCaseInsensitiveHashCodeProvider* _tmp3_ = NULL;
 	_tmp0_ = system_collections_case_insensitive_hash_code_provider_m_InvariantCaseInsensitiveHashCodeProvider;
 	if (_tmp0_ == NULL) {
-		SystemGlobalizationCultureInfo _tmp1_ = 0;
+		SystemGlobalizationCultureInfoStringComparison _tmp1_ = 0;
 		SystemCollectionsCaseInsensitiveHashCodeProvider* _tmp2_ = NULL;
-		_tmp1_ = SYSTEM_GLOBALIZATION_CULTURE_INFO_InvariantCulture;
+		_tmp1_ = SYSTEM_GLOBALIZATION_CULTURE_INFO_STRING_COMPARISON_InvariantCulture;
 		_tmp2_ = system_collections_case_insensitive_hash_code_provider_new (&_tmp1_);
 		_system_collections_case_insensitive_hash_code_provider_unref0 (system_collections_case_insensitive_hash_code_provider_m_InvariantCaseInsensitiveHashCodeProvider);
 		system_collections_case_insensitive_hash_code_provider_m_InvariantCaseInsensitiveHashCodeProvider = _tmp2_;
