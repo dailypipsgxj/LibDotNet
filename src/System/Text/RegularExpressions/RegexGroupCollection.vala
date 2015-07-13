@@ -83,14 +83,14 @@ namespace System.Text.RegularExpressions
         }
 
 
-        private class Enumerator : System.Collections.IEnumerator
+        public class Enumerator : System.Collections.IEnumerator
         {
             private   GroupCollection _collection;
             private int _index;
 			private Object _currentElement { get; set;}
 			private Gee.Iterator<Object> _iterator { get; set;}
 
-            internal Enumerator(GroupCollection collection)
+            public Enumerator(GroupCollection collection)
             {
                 _collection = collection;
                 _index = -1;

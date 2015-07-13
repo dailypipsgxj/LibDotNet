@@ -71,7 +71,7 @@ namespace System.Text.RegularExpressions
             get { return (Object)_group; }
         }
 
-        private class Enumerator : IEnumerator
+        public class Enumerator : IEnumerator
         {
             private   CaptureCollection _collection;
             private int _index;

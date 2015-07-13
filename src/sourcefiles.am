@@ -44,6 +44,7 @@ LIBDOTNET_COLLECTIONS = \
 	System/Collections/DictionaryEntry.vala
 		
 LIBDOTNET_COLLECTIONS_GEN = \
+	System/Collections/Generic/KeyValuePair.vala \
 	System/Collections/Generic/SortedSet.vala \
 	System/Collections/Generic/Queue.vala \
 	System/Collections/Generic/HashSet.vala \
@@ -51,7 +52,6 @@ LIBDOTNET_COLLECTIONS_GEN = \
 	System/Collections/Generic/Dictionary.vala \
 	System/Collections/Generic/Stack.vala \
 	System/Collections/Generic/EqualityComparer.vala \
-	System/Collections/Generic/KeyValuePair.vala \
 	System/Collections/Generic/LinkedList.vala
 	
 LIBDOTNET_SYSTEM_NS = \

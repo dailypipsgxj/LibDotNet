@@ -111,15 +111,4 @@ namespace System.Text.RegularExpressions
 
     }
 
-
-    /*
-     * MatchSparse is for handling the case where slots are
-     * sparsely arranged (e.g., if somebody says use slot 100000)
-     */
-    internal class MatchSparse : Match
-    {
-		public MatchSparse (GLib.MatchInfo matchinfo) {
-			base(matchinfo);
-		}
-    }
 }

@@ -27,7 +27,7 @@ namespace System.Text.RegularExpressions
         private   int _length;
         private int _startat;
 
-        internal MatchCollection(GLib.Regex regex, string input, int beginning, int length, int startat)
+        public MatchCollection(GLib.Regex regex, string input, int beginning, int length, int startat)
         {
             _regex = regex;
             _input = input;
@@ -86,7 +86,7 @@ namespace System.Text.RegularExpressions
         }
 
 
-        private class Enumerator : IEnumerator
+        public class Enumerator : IEnumerator
         {
             private   MatchCollection _collection;
             private int _index;
