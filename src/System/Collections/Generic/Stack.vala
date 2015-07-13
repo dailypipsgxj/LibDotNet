@@ -112,8 +112,8 @@ namespace System.Collections.Generic
 		[Compact]
         public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
-            private Stack<T> _stack;
-            private T _currentElement;
+            public Stack<T> _stack;
+            public T _currentElement;
 			private Gee.Iterator _iterator;
 
             public Enumerator(Stack<T> stack)
