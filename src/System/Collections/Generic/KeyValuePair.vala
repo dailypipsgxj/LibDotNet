@@ -41,15 +41,17 @@ namespace System.Collections.Generic {
         }
 
         public string ToString (StringBuilder s) {
+            /*
             s.append('[');
             if( Key != null) {
                 s.append(Key.ToString());
             }
-            s.Append(", ");
+            s.append(", ");
             if( Value != null) {
                s.append(Value.ToString());
             }
-            s.Append(']');
+            s.append(']');
+            */
             return s.str;
         }
     }
