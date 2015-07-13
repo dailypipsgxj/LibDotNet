@@ -1,15 +1,17 @@
 LIBDOTNET_REGEX = \
-	System/Text/RegularExpressions/RegexOptions.vala \
+	System/Text/RegularExpressions/RegexCapture.vala \
+	System/Text/RegularExpressions/RegexCaptureCollection.vala \
+	System/Text/RegularExpressions/RegexGroup.vala \
+	System/Text/RegularExpressions/RegexGroupCollection.vala \
 	System/Text/RegularExpressions/RegexMatch.vala \
 	System/Text/RegularExpressions/RegexMatchCollection.vala \
 	System/Text/RegularExpressions/Regex.vala \
-	System/Text/RegularExpressions/RegexGroup.vala \
-	System/Text/RegularExpressions/RegexGroupCollection.vala \
-	System/Text/RegularExpressions/RegexCaptureCollection.vala \
 	System/Text/RegularExpressions/RegexMatchTimeoutException.vala \
-	System/Text/RegularExpressions/RegexCapture.vala
+	System/Text/RegularExpressions/RegexOptions.vala
 	
 LIBDOTNET_COLLECTIONS_IFACE = \
+	System/Collections/icollection.vala \
+	System/Collections/icomparer.vala \
 	System/Collections/idictionary.vala \
 	System/Collections/idictionaryenumerator.vala \
 	System/Collections/ienumerable.vala \
@@ -18,9 +20,23 @@ LIBDOTNET_COLLECTIONS_IFACE = \
 	System/Collections/ihashcodeprovider.vala \
 	System/Collections/ilist.vala \
 	System/Collections/istructuralcomparable.vala \
-	System/Collections/istructuralequatable.vala \
-	System/Collections/icollection.vala \
-	System/Collections/icomparer.vala
+	System/Collections/istructuralequatable.vala
+
+LIBDOTNET_COLLECTIONS = \
+	System/Collections/ArrayList.vala \
+	System/Collections/BitArray.vala \
+	System/Collections/CaseInsensitiveComparer.vala	\
+	System/Collections/CaseInsensitiveHashCodeProvider.vala	\
+	System/Collections/CollectionBase.vala	\
+	System/Collections/Comparer.vala \
+	System/Collections/DictionaryBase.vala	\
+	System/Collections/Hashtable.vala \
+	System/Collections/Queue.vala \
+	System/Collections/ReadOnlyCollectionBase.vala \
+	System/Collections/SortedList.vala \
+	System/Collections/Stack.vala \
+	System/Collections/StructuralComparisons.vala \
+	System/Collections/DictionaryEntry.vala
 
 LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/icollection.vala \
@@ -29,31 +45,26 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/ienumerable.vala \
 	System/Collections/Generic/ienumerator.vala \
 	System/Collections/Generic/iequalitycomparer.vala \
+	System/Collections/Generic/ilist.vala \
 	System/Collections/Generic/iset.vala \
 	System/Collections/Generic/ireadonlycollection.vala \
 	System/Collections/Generic/ireadonlydictionary.vala \
-	System/Collections/Generic/ireadonlylist.vala \
-	System/Collections/Generic/ilist.vala \
+	System/Collections/Generic/ireadonlylist.vala
+	
+LIBDOTNET_COLLECTIONS_GEN = \
 	System/Collections/Generic/KeyValuePair.vala
 
-LIBDOTNET_COLLECTIONS = \
-	System/Collections/Hashtable.vala \
-	System/Collections/Queue.vala \
-	System/Collections/SortedList.vala \
-	System/Collections/KeyValuePairs.vala \
-	System/Collections/DictionaryEntry.vala
-	System/Collections/ArrayList.vala
-		
-LIBDOTNET_COLLECTIONS_GEN = \
-	System/Collections/Generic/EqualityComparer.vala \
-	System/Collections/Generic/LinkedList.vala
-
 LIBDOTNET_COLLECTIONS_GENX = \
+	System/Collections/Generic/Comparer.vala \
 	System/Collections/Generic/Dictionary.vala \
-	System/Collections/Generic/SortedSet.vala \
-	System/Collections/Generic/Queue.vala \
+	System/Collections/Generic/EqualityComparer.vala \
 	System/Collections/Generic/HashSet.vala \
+	System/Collections/Generic/LinkedList.vala \
+	System/Collections/Generic/List.vala \
+	System/Collections/Generic/Queue.vala \
+	System/Collections/Generic/SortedDictionary.vala \
 	System/Collections/Generic/SortedList.vala \
+	System/Collections/Generic/SortedSet.vala \
 	System/Collections/Generic/Stack.vala
 	
 LIBDOTNET_SYSTEM_NS = \
