@@ -40,7 +40,7 @@ namespace System.Collections.Generic {
             get { return value; }
         }
 
-        public override string ToString (StringBuilder s) {
+        public string ToString (StringBuilder s) {
             s.append('[');
             if( Key != null) {
                 s.append(Key.ToString());
