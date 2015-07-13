@@ -332,7 +332,7 @@ namespace System.Collections
 
         // Implements a Collection for the keys of a hashtable. An instance of this
         // class is created by the GetKeys method of a hashtable.
-        private class KeyCollection : ICollection, IEnumerable
+        public class KeyCollection : ICollection, IEnumerable
         {
             private Hashtable _hashtable;
 
@@ -370,7 +370,7 @@ namespace System.Collections
 
         // Implements a Collection for the values of a hashtable. An instance of
         // this class is created by the GetValues method of a hashtable.
-        private class ValueCollection : ICollection, IEnumerable
+        public class ValueCollection : ICollection, IEnumerable
         {
             private Hashtable _hashtable;
 
@@ -408,7 +408,7 @@ namespace System.Collections
         // Implements an enumerator for a hashtable. The enumerator uses the
         // internal version number of the hashtable to ensure that no modifications
         // are made to the hashtable while an enumeration is in progress.
-        private class HashtableEnumerator : IDictionaryEnumerator, IEnumerator
+        public class HashtableEnumerator : IDictionaryEnumerator, IEnumerator
         {
             private Hashtable _hashtable;
 			private Object _currentElement { get; set;}

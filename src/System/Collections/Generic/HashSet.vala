@@ -514,6 +514,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="match"></param>
         /// <returns></returns>
+        /*
         public int RemoveWhere(Predicate<T> match)
         {
 
@@ -521,6 +522,7 @@ namespace System.Collections.Generic
 
             return numRemoved;
         }
+        */
 
         /// <summary>
         /// Gets the IEqualityComparer that is used to determine equality of keys for 

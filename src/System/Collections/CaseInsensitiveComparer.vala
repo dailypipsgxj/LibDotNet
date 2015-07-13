@@ -62,7 +62,7 @@ namespace System.Collections
             //if (sa != null && sb != null)
                 //return _compareInfo.Compare(sa, sb, CompareOptions.IgnoreCase);
             //else
-                return Comparer.Default.Compare(a, b);
+            return Comparer.Default.Compare(a, b);
         }
         
         public int compare_to (Object a)

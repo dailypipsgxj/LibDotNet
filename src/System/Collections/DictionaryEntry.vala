@@ -19,9 +19,7 @@ namespace System.Collections {
     using System;
     // A DictionaryEntry holds a key and a value from a dictionary.
     // It is returned by IDictionaryEnumerator::GetEntry().
-// [System.Runtime.InteropServices.ComVisible(true)]
 
-// [Serializable]
 	[Compact]
     public class DictionaryEntry
     {

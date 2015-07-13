@@ -330,7 +330,7 @@ namespace System.Collections.Generic
         }
 
         [Compact]
-        private class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>, System.Collections.IDictionaryEnumerator
+        public class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>, System.Collections.IDictionaryEnumerator
         {
             private SortedList<TKey, TValue> _sortedList;
 			private Gee.MapIterator _iterator;
@@ -422,7 +422,7 @@ namespace System.Collections.Generic
             }
         }
 
-        private class SortedListKeyEnumerator : IEnumerator<TKey>, System.Collections.IEnumerator
+        public class SortedListKeyEnumerator : IEnumerator<TKey>, System.Collections.IEnumerator
         {
             private SortedList<TKey, TValue> _sortedList;
             private int _index;
@@ -469,7 +469,7 @@ namespace System.Collections.Generic
             }
         }
 
-        private class SortedListValueEnumerator : IEnumerator<TValue>, System.Collections.IEnumerator
+        public class SortedListValueEnumerator : IEnumerator<TValue>, System.Collections.IEnumerator
         {
             private SortedList<TKey, TValue> _sortedList;
             private int _index;
@@ -514,7 +514,7 @@ namespace System.Collections.Generic
             }
         }
 
-        private class KeyList : IList<TKey>, System.Collections.ICollection
+        public class KeyList : IList<TKey>, System.Collections.ICollection
         {
             private SortedList<TKey, TValue> _dict;
 
@@ -595,7 +595,7 @@ namespace System.Collections.Generic
             }
         }
 
-        private class ValueList : IList<TValue>, System.Collections.ICollection
+        public class ValueList : IList<TValue>, System.Collections.ICollection
         {
             private SortedList<TKey, TValue> _dict;
 

@@ -24,7 +24,7 @@ namespace System.Collections.Generic
         public abstract bool TryGetValue(TKey key, out TValue value);
 
         //public abstract TValue get (TKey key) {}
-        abstract IEnumerable<TKey> Keys { get; }
-        abstract IEnumerable<TValue> Values { get; }
+        public abstract IEnumerable<TKey> Keys { get; }
+        public abstract IEnumerable<TValue> Values { get; }
     }
 }

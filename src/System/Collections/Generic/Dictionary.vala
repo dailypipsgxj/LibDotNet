@@ -313,11 +313,11 @@ namespace System.Collections.Generic {
             }
 
             void Add(TKey item){
-                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
             }
             
             void Clear(){
-                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
             }
 
             bool Contains(TKey item){
@@ -325,7 +325,7 @@ namespace System.Collections.Generic {
             }
 
             bool Remove(TKey item){
-                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
                 return false;
             }
             

@@ -33,36 +33,16 @@ namespace System.Collections.Generic
 
     //internal delegate bool TreeWalkPredicate<T>(SortedSet.Node node);
 
-    internal enum TreeRotation
-    {
-        LeftRotation = 1,
-        RightRotation = 2,
-        RightLeftRotation = 3,
-        LeftRightRotation = 4,
-    }
-
     public class SortedSet<T> : Gee.TreeSet<T>, ISet<T>, ICollection<T>, IReadOnlyCollection<T>
     {
-        private Node _root;
-        private IComparer<T> _comparer;
-
+        private IComparer<T>? _comparer;
         private Object _syncRoot;
-
-        internal const int StackAllocThreshold = 100;
 
         public SortedSet(IComparer<T>? comparer = null)
         {
-            if (comparer == null)
-            {
-                _comparer = Comparer<T>.Default;
-            }
-            else
-            {
-                _comparer = comparer;
-            }
-            base(comparer.Equals);
+            _comparer = comparer;
+            base();
         }
-
 
         public SortedSet.FromCollection(IEnumerable<T> collection, IComparer<T>? comparer = null){
 			this(comparer);
@@ -71,24 +51,11 @@ namespace System.Collections.Generic
 
         private void AddAllElements(IEnumerable<T> collection)
         {
-            foreach (T item in collection)
-            {
-                if (!this.Contains(item))
-                    Add(item);
-            }
         }
 
         private void RemoveAllElements(IEnumerable<T> collection)
         {
-            T min = this.Min;
-            T max = this.Max;
-            foreach (T item in collection)
-            {
-                if (!(_comparer.Compare(item, min) < 0 || _comparer.Compare(item, max) > 0) && this.Contains(item))
-                    this.Remove(item);
-            }
         }
-
 
         public int Count
         {
@@ -167,68 +134,6 @@ namespace System.Collections.Generic
 
 
         /// <summary>
-        /// Decides whether these sets are the same, given the comparer. If the EC's are the same, we can
-        /// just use SetEquals, but if they aren't then we have to manually check with the given comparer
-        /// </summary>        
-        internal static bool SortedSetEquals(SortedSet<T> set1, SortedSet<T> set2, IComparer<T> comparer)
-        {
-            // handle null cases first
-            if (set1 == null)
-            {
-                return (set2 == null);
-            }
-            else if (set2 == null)
-            {
-                // set1 != null
-                return false;
-            }
-
-            if (AreComparersEqual(set1, set2))
-            {
-                if (set1.Count != set2.Count)
-                    return false;
-
-                return set1.SetEquals(set2);
-            }
-            else
-            {
-                bool found = false;
-                foreach (T item1 in set1)
-                {
-                    found = false;
-                    foreach (T item2 in set2)
-                    {
-                        if (comparer.Compare(item1, item2) == 0)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found)
-                        return false;
-                }
-                return true;
-            }
-        }
-
-
-        //This is a little frustrating because we can't support more sorted structures
-        private static bool AreComparersEqual(SortedSet<T> set1, SortedSet<T> set2)
-        {
-            return set1.Comparer.Equals(set2.Comparer);
-        }
-
-        /// <summary>
-        /// Copies this to an array. Used for DebugView
-        /// </summary>
-        /// <returns></returns>
-        internal T[] ToArray()
-        {
-            return to_array();
-        }
-
-
-        /// <summary>
         /// Transform this set into its union with the IEnumerable OTHER            
         ///Attempts to insert each element and rejects it if it exists.          
         /// NOTE: The callerObjectis important as UnionWith uses the Comparator 
@@ -251,26 +156,8 @@ namespace System.Collections.Generic
         /// <param name="other"></param>   
         public virtual void IntersectWith(IEnumerable<T> other)
         {
-             IntersectWithEnumerable(other);
+             //IntersectWithEnumerable(other);
         }
-
-        internal virtual void IntersectWithEnumerable(IEnumerable<T> other)
-        {
-            //TODO: Perhaps a more space-conservative way to do this
-            List<T> toSave = new List<T>(this.Count);
-            foreach (T item in other)
-            {
-                if (this.Contains(item))
-                {
-                    toSave.Add(item);
-                    this.Remove(item);
-                }
-            }
-            this.Clear();
-            AddAllElements(toSave);
-        }
-
-
 
         /// <summary>
         ///  Transform this set into its complement with the IEnumerable OTHER       
@@ -293,55 +180,6 @@ namespace System.Collections.Generic
         /// <param name="other"></param>
         public void SymmetricExceptWith(IEnumerable<T> other)
         {
-			//need perf improvement on this
-			T[] elements = (new List<T>(other)).ToArray();
-			elements.sort(this.Comparer.Equals);
-			SymmetricExceptWithSameEC(elements);
-        }
-
-        //OTHER must be a set
-        internal void SymmetricExceptWithSameEC(ISet<T> other)
-        {
-            foreach (T item in other)
-            {
-                //yes, it is classier to say
-                //if (!this.Remove(item))this.Add(item);
-                //but this ends up saving on rotations                    
-                if (this.Contains(item))
-                {
-                    this.Remove(item);
-                }
-                else
-                {
-                    this.Add(item);
-                }
-            }
-        }
-
-        //OTHER must be a sorted array
-        internal void SymmetricExceptWithSameECFromArray(T[] other)
-        {
-            if (other.Length == 0)
-            {
-                return;
-            }
-            T last = other[0];
-            for (int i = 0; i < other.length; i++)
-            {
-                while (i < other.length && i != 0 && _comparer.Compare(other[i], last) == 0)
-                    i++;
-                if (i >= other.length)
-                    break;
-                if (this.Contains(other[i]))
-                {
-                    this.Remove(other[i]);
-                }
-                else
-                {
-                    this.Add(other[i]);
-                }
-                last = other[i];
-            }
         }
 
 
@@ -352,32 +190,8 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public bool IsSubsetOf(IEnumerable<T> other)
         {
-
-            SortedSet<T> asSorted = other as SortedSet<T>;
-            if (asSorted != null && AreComparersEqual(this, asSorted))
-            {
-                if (this.Count > asSorted.Count)
-                    return false;
-                return IsSubsetOfSortedSetWithSameEC(asSorted);
-            }
-            else
-            {
-                ElementCount result = CheckUniqueAndUnfoundElements(other, false);
-                return (result.uniqueCount == Count && result.unfoundCount >= 0);
-            }
+			return false;
         }
-
-        private bool IsSubsetOfSortedSetWithSameEC(SortedSet<T> asSorted)
-        {
-            SortedSet<T> prunedOther = asSorted.GetViewBetween(this.Min, this.Max);
-            foreach (T item in this)
-            {
-                if (!prunedOther.Contains(item))
-                    return false;
-            }
-            return true;
-        }
-
 
         /// <summary>
         /// Checks whether this Tree is a proper subset of the IEnumerable other
@@ -386,28 +200,8 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public bool IsProperSubsetOf(IEnumerable<T> other)
         {
-
-            if ((other as ICollection) != null)
-            {
-                if (Count == 0)
-                    return (other as ICollection).Count > 0;
-            }
-
-
-            //another for sorted sets with the same comparer
-            SortedSet<T> asSorted = other as SortedSet<T>;
-            if (asSorted != null && AreComparersEqual(this, asSorted))
-            {
-                if (this.Count >= asSorted.Count)
-                    return false;
-                return IsSubsetOfSortedSetWithSameEC(asSorted);
-            }
-            //worst case: mark every element in my set and see if i've counted all
-            //O(MlogN).
-            ElementCount result = CheckUniqueAndUnfoundElements(other, false);
-            return (result.uniqueCount == Count && result.unfoundCount > 0);
+            return false;
         }
-
 
         /// <summary>
         /// Checks whether this Tree is a super set of the IEnumerable other
@@ -416,27 +210,7 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public bool IsSupersetOf(IEnumerable<T> other)
         {
-
-            if ((other as ICollection) != null && (other as ICollection).Count == 0)
-                return true;
-
-            //do it one way for HashSets
-            //another for sorted sets with the same comparer
-            SortedSet<T> asSorted = other as SortedSet<T>;
-            if (asSorted != null && AreComparersEqual(this, asSorted))
-            {
-                if (this.Count < asSorted.Count)
-                    return false;
-                SortedSet<T> pruned = GetViewBetween(asSorted.Min, asSorted.Max);
-                foreach (T item in asSorted)
-                {
-                    if (!pruned.Contains(item))
-                        return false;
-                }
-                return true;
-            }
-            //and a third for everything else
-            return ContainsAllElements(other);
+            return true;
         }
 
         /// <summary>
@@ -446,32 +220,8 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
-            if (Count == 0)
-                return false;
-
-            if ((other as ICollection) != null && (other as ICollection).Count == 0)
-                return true;
-
-            //another way for sorted sets
-            SortedSet<T> asSorted = other as SortedSet<T>;
-            if (asSorted != null && AreComparersEqual(asSorted, this))
-            {
-                if (asSorted.Count >= this.Count)
-                    return false;
-                SortedSet<T> pruned = GetViewBetween(asSorted.Min, asSorted.Max);
-                foreach (T item in asSorted)
-                {
-                    if (!pruned.Contains(item))
-                        return false;
-                }
-                return true;
-            }
-
-            ElementCount result = CheckUniqueAndUnfoundElements(other, true);
-            return (result.uniqueCount < Count && result.unfoundCount == 0);
+            return false;
         }
-
-
 
         /// <summary>
         /// Checks whether this Tree has all elements in common with IEnumerable other
@@ -480,33 +230,8 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public bool SetEquals(IEnumerable<T> other)
         {
-
-            SortedSet<T> asSorted = other as SortedSet<T>;
-            if (asSorted != null && AreComparersEqual(this, asSorted))
-            {
-                IEnumerator<T> mine = this.GetEnumerator();
-                IEnumerator<T> theirs = asSorted.GetEnumerator();
-                bool mineEnded = !mine.MoveNext();
-                bool theirsEnded = !theirs.MoveNext();
-                while (!mineEnded && !theirsEnded)
-                {
-                    if (Comparer.Compare(mine.Current, theirs.Current) != 0)
-                    {
-                        return false;
-                    }
-                    mineEnded = !mine.MoveNext();
-                    theirsEnded = !theirs.MoveNext();
-                }
-                return mineEnded && theirsEnded;
-            }
-
-            //worst case: mark every element in my set and see if i've counted all
-            //O(N) by size of other            
-            ElementCount result = CheckUniqueAndUnfoundElements(other, true);
-            return (result.uniqueCount == Count && result.unfoundCount == 0);
+            return true;
         }
-
-
 
         /// <summary>
         /// Checks whether this Tree has any elements in common with IEnumerable other
@@ -515,89 +240,10 @@ namespace System.Collections.Generic
         /// <returns></returns>
         public bool Overlaps(IEnumerable<T> other)
         {
-
-            if (this.Count == 0)
-                return false;
-
-            if ((other as ICollection<T> != null) && (other as ICollection<T>).Count == 0)
-                return false;
-
-            SortedSet<T> asSorted = other as SortedSet<T>;
-            if (asSorted != null && AreComparersEqual(this, asSorted) && (_comparer.Compare(Min, asSorted.Max) > 0 || _comparer.Compare(Max, asSorted.Min) < 0))
-            {
-                return false;
-            }
-            foreach (T item in other)
-            {
-                if (this.Contains(item))
-                {
-                    return true;
-                }
-            }
             return false;
         }
 
-        /// <summary>
-        /// This works similar to HashSet's CheckUniqueAndUnfound (description below), except that the bit
-        /// array maps differently than in the HashSet. We can only use this for the bulk boolean checks.
-        /// 
-        /// Determines counts that can be used to determine equality, subset, and superset. This
-        /// is only used when other is an IEnumerable and not a HashSet. If other is a HashSet
-        /// these properties can be checked faster without use of marking because we can assume 
-        /// other has no duplicates.
-        /// 
-        /// The following count checks are performed by callers:
-        /// 1. Equals: checks if unfoundCount = 0 and uniqueFoundCount = Count; i.e. everything 
-        /// in other is in this and everything in this is in other
-        /// 2. Subset: checks if unfoundCount >= 0 and uniqueFoundCount = Count; i.e. other may
-        /// have elements not in this and everything in this is in other
-        /// 3. Proper subset: checks if unfoundCount > 0 and uniqueFoundCount = Count; i.e
-        /// other must have at least one element not in this and everything in this is in other
-        /// 4. Proper superset: checks if unfound count = 0 and uniqueFoundCount strictly less
-        /// than Count; i.e. everything in other was in this and this had at least one element
-        /// not contained in other.
-        /// 
-        /// An earlier implementation used delegates to perform these checks rather than returning
-        /// an ElementCount struct; however this was changed due to the perf overhead of delegates.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <param name="returnIfUnfound">Allows us to finish faster for equals and proper superset
-        /// because unfoundCount must be 0.</param>
-        /// <returns></returns>
-        // <SecurityKernel Critical="True" Ring="0">
-        // <UsesUnsafeCode Name="Local bitArrayPtr of type: int32*" />
-        // <ReferencesCritical Name="Method: BitHelper..ctor(System.int32*,System.int32)" Ring="1" />
-        // <ReferencesCritical Name="Method: BitHelper.IsMarked(System.int32):System.Boolean" Ring="1" />
-        // <ReferencesCritical Name="Method: BitHelper.MarkBit(System.int32):System.Void" Ring="1" />
-        // </SecurityKernel>
-        private   ElementCount CheckUniqueAndUnfoundElements(IEnumerable<T> other, bool returnIfUnfound)
-        {
-            ElementCount result;
-
-            // need special case in case this has no elements. 
-            if (Count == 0)
-            {
-                int numElementsInOther = 0;
-                foreach (T item in other)
-                {
-                    numElementsInOther++;
-                    // break right away, all we want to know is whether other has 0 or 1 elements
-                    break;
-                }
-                result.uniqueCount = 0;
-                result.unfoundCount = numElementsInOther;
-                return result;
-            }
-
-            foreach (T item in other)
-            {
-            }
-
-            result.uniqueCount = uniqueFoundCount;
-            result.unfoundCount = unfoundCount;
-            return result;
-        }
-
+		/*
         public int RemoveWhere(Predicate<T> match)
         {
             // reverse breadth first to (try to) incur low cost
@@ -605,6 +251,7 @@ namespace System.Collections.Generic
 
             return actuallyRemoved;
         }
+        */
 
         public T Min
         {
@@ -625,10 +272,10 @@ namespace System.Collections.Generic
         public IEnumerable<T> Reverse()
         {
             Enumerator e = new Enumerator(this, true);
-            while (e.MoveNext())
+            /*while (e.MoveNext())
             {
                 yield return e.Current;
-            }
+            }*/
         }
 
 
@@ -653,7 +300,7 @@ namespace System.Collections.Generic
         /// are reflected in the actual tree. Uses the Comparator of the underlying tree.
         /// </summary>
         /// <typeparam name="T"></typeparam>   
-        internal class TreeSubSet : SortedSet<T>
+        public class TreeSubSet : SortedSet<T>
         {
             private SortedSet<T> _underlying;
             private Gee.SortedSet _subset;
@@ -736,27 +383,13 @@ namespace System.Collections.Generic
             }
         }
 
-        internal class Node
-        {
-            public bool IsRed;
-            public T Item;
-            public Node Left;
-            public Node Right;
-
-            public Node(T item, bool isRed = true)
-            {
-                // The default color will be red, we never need to create a black node directly.                
-                this.Item = item;
-                this.IsRed = isRed;
-            }
-        }
 
 		[Compact]
-        public class Enumerator : IEnumerator<T>, IEnumerator
+        public class Enumerator : IEnumerator<T>
         {
             private SortedSet<T> _tree;
 			private T _currentElement;
-			private Gee.Iterator _iterator;
+			private Gee.Iterator<T> _iterator;
             private bool _reverse;
 
 
