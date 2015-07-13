@@ -22,7 +22,6 @@ namespace System.Collections.Generic {
     // A KeyValuePair holds a key and a value from a dictionary.
     // It is used by the IEnumerable<T> implementation for both IDictionary<TKey, TValue>
     // and IReadOnlyDictionary<TKey, TValue>.
-// [Serializable]
 	[Compact]
     public class KeyValuePair<TKey, TValue> {
         private TKey key;
@@ -42,17 +41,16 @@ namespace System.Collections.Generic {
         }
 
         public override string ToString (StringBuilder s) {
-			StringBuilderCache.Acquire();
-            s.Append('[');
+            s.append('[');
             if( Key != null) {
-                s.Append(Key.Tostring());
+                s.append(Key.ToString());
             }
             s.Append(", ");
             if( Value != null) {
-               s.Append(Value.Tostring());
+               s.append(Value.ToString());
             }
             s.Append(']');
-            return StringBuilderCache.GetStringAndRelease(s);
+            return s.str;
         }
     }
 }
