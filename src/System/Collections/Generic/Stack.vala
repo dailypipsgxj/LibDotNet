@@ -114,7 +114,7 @@ namespace System.Collections.Generic
         {
             public Stack<T> _stack;
             public T _currentElement;
-			private Gee.Iterator _iterator;
+			public Gee.Iterator _iterator;
 
             public Enumerator(Stack<T> stack)
             {

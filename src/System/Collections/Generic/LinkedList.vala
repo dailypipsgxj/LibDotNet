@@ -7,8 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Collections.Generic
 {
-// [DebuggerTypeProxy(typeof(ICollectionDebugView<>))]
-// [DebuggerDisplay("Count = {Count}")]
 
     public class LinkedList<T> : Gee.LinkedList, ICollection<T>, System.Collections.ICollection, IReadOnlyCollection<T>
     {
@@ -311,7 +309,6 @@ namespace System.Collections.Generic
 
         private void InternalInsertNodeToEmptyList(LinkedListNode<T> newNode)
         {
-            Debug.Assert(head == null && count == 0, "LinkedList must be empty when this method is called!");
             newNode.next = newNode;
             newNode.prev = newNode;
             head = newNode;
@@ -321,11 +318,8 @@ namespace System.Collections.Generic
 
         internal void InternalRemoveNode(LinkedListNode<T> node)
         {
-            Debug.Assert(node.list == this, "Deleting the node from another list!");
-            Debug.Assert(head != null, "This method shouldn't be called on empty list!");
             if (node.next == node)
             {
-                Debug.Assert(count == 1 && head == node, "this should only be true for a list with only one node");
                 head = null;
             }
             else
@@ -344,10 +338,6 @@ namespace System.Collections.Generic
 
         internal void ValidateNewNode(LinkedListNode<T> node)
         {
-            if (node == null)
-            {
-                throw ArgumentNullException("node");
-            }
 
             if (node.list != null)
             {
@@ -358,10 +348,6 @@ namespace System.Collections.Generic
 
         internal void ValidateNode(LinkedListNode<T> node)
         {
-            if (node == null)
-            {
-                throw ArgumentNullException("node");
-            }
 
             if (node.list != this)
             {
@@ -455,8 +441,8 @@ namespace System.Collections.Generic
         [Compact]
         public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
-            private LinkedList<T> _list;
-            private LinkedListNode<T> _node;
+            public LinkedList<T> _list;
+            public LinkedListNode<T> _node;
             private int _version;
             private T _current;
             private int _index;
@@ -527,12 +513,12 @@ namespace System.Collections.Generic
     // Note following class is not serializable since we customized the serialization of LinkedList. 
     public class LinkedListNode<T>
     {
-        internal LinkedList<T> list;
-        internal LinkedListNode<T> next;
-        internal LinkedListNode<T> prev;
+        public LinkedList<T> list;
+        public LinkedListNode<T> next;
+        public LinkedListNode<T> prev;
         internal T item;
 
-        internal LinkedListNode(LinkedList<T>? list = null, T value)
+        public LinkedListNode(LinkedList<T>? list = null, T value)
         {
             if (list != null) this.list = list;
             this.item = value;
