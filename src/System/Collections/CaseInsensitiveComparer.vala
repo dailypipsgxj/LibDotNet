@@ -57,17 +57,12 @@ namespace System.Collections
         // 
         public int Compare(Object a, Object b)
         {
-            string sa = a as string;
-            string sb = b as string;
-            //if (sa != null && sb != null)
-                //return _compareInfo.Compare(sa, sb, CompareOptions.IgnoreCase);
-            //else
-            return Comparer.Default.Compare(a, b);
+            return -1;
         }
         
         public int compare_to (Object a)
         {
-			Compare (this, a);
+			return Compare (this, a);
 		}
     }
 }

@@ -575,7 +575,7 @@ static void system_collections_queue_synchronized_queue_real_Clear (SystemCollec
 			_tmp1_ = self->priv->_q;
 			system_collections_queue_Clear (_tmp1_);
 		}
-		__finally0:
+		__finally48:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -619,7 +619,7 @@ static GObject* system_collections_queue_synchronized_queue_real_Clone (SystemCo
 			}
 			return result;
 		}
-		__finally1:
+		__finally49:
 		{
 			GObject* _tmp7_ = NULL;
 			_tmp7_ = self->priv->_root;
@@ -657,7 +657,7 @@ static gboolean system_collections_queue_synchronized_queue_real_Contains (Syste
 			}
 			return result;
 		}
-		__finally2:
+		__finally50:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -688,7 +688,7 @@ static void system_collections_queue_synchronized_queue_real_CopyTo (SystemColle
 			_tmp3_ = arrayIndex;
 			system_collections_queue_CopyTo (_tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally3:
+		__finally51:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -719,7 +719,7 @@ static void system_collections_queue_synchronized_queue_real_Enqueue (SystemColl
 			_tmp2_ = value;
 			system_collections_queue_Enqueue (_tmp1_, _tmp2_);
 		}
-		__finally4:
+		__finally52:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -756,7 +756,7 @@ static GObject* system_collections_queue_synchronized_queue_real_Dequeue (System
 			}
 			return result;
 		}
-		__finally5:
+		__finally53:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -791,7 +791,7 @@ static SystemCollectionsIEnumerator* system_collections_queue_synchronized_queue
 			}
 			return result;
 		}
-		__finally6:
+		__finally54:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -826,7 +826,7 @@ static GObject* system_collections_queue_synchronized_queue_real_Peek (SystemCol
 			}
 			return result;
 		}
-		__finally7:
+		__finally55:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -869,7 +869,7 @@ static GObject** system_collections_queue_synchronized_queue_real_ToArray (Syste
 			}
 			return result;
 		}
-		__finally8:
+		__finally56:
 		{
 			GObject* _tmp6_ = NULL;
 			_tmp6_ = self->priv->_root;
@@ -895,7 +895,7 @@ static void system_collections_queue_synchronized_queue_real_TrimToSize (SystemC
 			_tmp1_ = self->priv->_q;
 			system_collections_queue_TrimToSize (_tmp1_);
 		}
-		__finally9:
+		__finally57:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -954,7 +954,7 @@ static gint system_collections_queue_synchronized_queue_real_get_Count (SystemCo
 			}
 			return result;
 		}
-		__finally10:
+		__finally58:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;

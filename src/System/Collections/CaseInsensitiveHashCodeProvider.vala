@@ -23,34 +23,19 @@ namespace System.Collections {
     using System.Collections;
     using System.Globalization;
     using System.Diagnostics.Contracts;
-// [Serializable]
-  
-// [Obsolete("Please usestringComparer instead.")]
-    
-// [System.Runtime.InteropServices.ComVisible(true)]
 
     public class CaseInsensitiveHashCodeProvider : IHashCodeProvider {
-        private TextInfo m_text;
+        private CultureInfo culture;
         private static CaseInsensitiveHashCodeProvider m_InvariantCaseInsensitiveHashCodeProvider = null;
 
-        public CaseInsensitiveHashCodeProvider() {
-            m_text = CultureInfo.CurrentCulture.TextInfo;
-        }
-
-        public CaseInsensitiveHashCodeProvider(CultureInfo culture) {
-            if (culture==null) {
-                throw ArgumentNullException("culture");
-            }
-            Contract.EndContractBlock();
-            m_text = culture.TextInfo;
+        public CaseInsensitiveHashCodeProvider(CultureInfo? culture) {
+           this.culture = culture;
         }
 
         public static CaseInsensitiveHashCodeProvider Default
         {
-            get
+            owned get
             {
-                Contract.Ensures(Contract.Result<CaseInsensitiveHashCodeProvider>() != null);
-
                 return new CaseInsensitiveHashCodeProvider(CultureInfo.CurrentCulture);
             }
         }
@@ -59,8 +44,6 @@ namespace System.Collections {
         {
             get
             {
-                Contract.Ensures(Contract.Result<CaseInsensitiveHashCodeProvider>() != null);
-
                 if (m_InvariantCaseInsensitiveHashCodeProvider == null) {
                     m_InvariantCaseInsensitiveHashCodeProvider = new CaseInsensitiveHashCodeProvider(CultureInfo.InvariantCulture);
                 }
@@ -69,15 +52,7 @@ namespace System.Collections {
         }
 
         public int GetHashCode(Object obj) {
-            if (obj==null) {
-                throw ArgumentNullException("obj");
-            }
-            Contract.EndContractBlockstring s = obj asstring;
-            if (s==null) {
-                return obj.GetHashCode();
-            }
-
-            return m_text.GetCaseInsensitiveHashCode(s);
+            return -1; //m_text.GetCaseInsensitiveHashCode(s);
         }
     }
 }

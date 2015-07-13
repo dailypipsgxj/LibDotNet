@@ -58,7 +58,7 @@ namespace System.Collections
 
         ICollection Keys
         {
-            get { return InnerHashtable.Keys; }
+            owned get { return InnerHashtable.Keys; }
         }
 
         Object SyncRoot
@@ -68,7 +68,7 @@ namespace System.Collections
 
         ICollection Values
         {
-            get { return InnerHashtable.Values; }
+            owned get { return InnerHashtable.Values; }
         }
 
         public void CopyTo(Array array, int index)
@@ -163,7 +163,7 @@ namespace System.Collections
         }
 
 
-        IEnumerator GetEnumerator()
+        public IDictionaryEnumerator GetEnumerator()
         {
             return InnerHashtable.GetEnumerator();
         }

@@ -36,7 +36,8 @@ LIBDOTNET_COLLECTIONS = \
 	System/Collections/SortedList.vala \
 	System/Collections/Stack.vala \
 	System/Collections/StructuralComparisons.vala \
-	System/Collections/DictionaryEntry.vala
+	System/Collections/DictionaryEntry.vala \
+	System/Collections/KeyValuePairs.vala
 
 LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/icollection.vala \
@@ -83,7 +84,8 @@ LIBDOTNET_SYSTEM = \
 LIBDOTNET_SYSTEM_IFACE = \
 	System/idisposable.vala \
 	System/icomparable.vala \
-	System/iequatable.vala
+	System/iequatable.vala \
+	System/icloneable.vala
 
 LIBDOTNET_SERIAL = \
 	System/Runtime/Serialization/iserializable.vala \

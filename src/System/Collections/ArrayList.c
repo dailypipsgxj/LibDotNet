@@ -429,7 +429,8 @@ typedef enum  {
 	SYSTEM_ARGUMENT_EXCEPTION_NULL,
 	SYSTEM_ARGUMENT_EXCEPTION_INVALIDOFFSETLENGTH,
 	SYSTEM_ARGUMENT_EXCEPTION_NOTFOUND,
-	SYSTEM_ARGUMENT_EXCEPTION_IMPLEMENTICOMPARABLE
+	SYSTEM_ARGUMENT_EXCEPTION_IMPLEMENTICOMPARABLE,
+	SYSTEM_ARGUMENT_EXCEPTION_INVALID_ARRAY_TYPE
 } SystemArgumentException;
 #define SYSTEM_ARGUMENT_EXCEPTION system_argument_exception_quark ()
 struct _SystemCollectionsArrayListArrayListEnumerator {
@@ -2788,7 +2789,7 @@ static GObject* system_collections_array_list_sync_array_list_real_get (GeeAbstr
 			}
 			return result;
 		}
-		__finally11:
+		__finally0:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -2819,7 +2820,7 @@ static void system_collections_array_list_sync_array_list_real_set (GeeAbstractL
 			_tmp3_ = value;
 			gee_abstract_list_set ((GeeAbstractList*) _tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally12:
+		__finally1:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -2858,7 +2859,7 @@ static gint system_collections_array_list_sync_array_list_Add (SystemCollections
 			}
 			return result;
 		}
-		__finally13:
+		__finally2:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -2887,7 +2888,7 @@ static void system_collections_array_list_sync_array_list_real_AddRange (SystemC
 			_tmp2_ = c;
 			system_collections_array_list_AddRange (_tmp1_, _tmp2_);
 		}
-		__finally14:
+		__finally3:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -2921,7 +2922,7 @@ static gint system_collections_array_list_sync_array_list_real_BinarySearch (Sys
 			}
 			return result;
 		}
-		__finally15:
+		__finally4:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -2964,7 +2965,7 @@ static gint system_collections_array_list_sync_array_list_BinarySearchFromIndex 
 			}
 			return result;
 		}
-		__finally16:
+		__finally5:
 		{
 			GObject* _tmp8_ = NULL;
 			_tmp8_ = self->priv->_root;
@@ -2989,7 +2990,7 @@ static void system_collections_array_list_sync_array_list_Clear (SystemCollectio
 			_tmp1_ = self->priv->_list;
 			system_collections_ilist_Clear ((SystemCollectionsIList*) _tmp1_);
 		}
-		__finally17:
+		__finally6:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -3033,7 +3034,7 @@ static GObject* system_collections_array_list_sync_array_list_real_Clone (System
 			}
 			return result;
 		}
-		__finally18:
+		__finally7:
 		{
 			GObject* _tmp7_ = NULL;
 			_tmp7_ = self->priv->_root;
@@ -3070,7 +3071,7 @@ static gboolean system_collections_array_list_sync_array_list_Contains (SystemCo
 			}
 			return result;
 		}
-		__finally19:
+		__finally8:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -3093,7 +3094,7 @@ static void system_collections_array_list_sync_array_list_CopyTo (SystemCollecti
 		g_static_rec_mutex_lock (&self->priv->__lock__root);
 		{
 		}
-		__finally20:
+		__finally9:
 		{
 			GObject* _tmp1_ = NULL;
 			_tmp1_ = self->priv->_root;
@@ -3130,7 +3131,7 @@ static SystemCollectionsIEnumerator* system_collections_array_list_sync_array_li
 			}
 			return result;
 		}
-		__finally21:
+		__finally10:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -3161,7 +3162,7 @@ static gint system_collections_array_list_sync_array_list_IndexOf (SystemCollect
 			}
 			return result;
 		}
-		__finally22:
+		__finally11:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -3191,7 +3192,7 @@ static void system_collections_array_list_sync_array_list_Insert (SystemCollecti
 			_tmp3_ = value;
 			system_collections_ilist_Insert ((SystemCollectionsIList*) _tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally23:
+		__finally12:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -3224,7 +3225,7 @@ static void system_collections_array_list_sync_array_list_real_InsertRange (Syst
 			_tmp3_ = c;
 			system_collections_array_list_InsertRange (_tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally24:
+		__finally13:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -3268,7 +3269,7 @@ static gint system_collections_array_list_sync_array_list_real_LastIndexOf (Syst
 			}
 			return result;
 		}
-		__finally25:
+		__finally14:
 		{
 			GObject* _tmp7_ = NULL;
 			_tmp7_ = self->priv->_root;
@@ -3296,7 +3297,7 @@ static void system_collections_array_list_sync_array_list_Remove (SystemCollecti
 			_tmp2_ = value;
 			system_collections_ilist_Remove ((SystemCollectionsIList*) _tmp1_, _tmp2_);
 		}
-		__finally26:
+		__finally15:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -3325,7 +3326,7 @@ static void system_collections_array_list_sync_array_list_RemoveAt (SystemCollec
 			_tmp2_ = index;
 			system_collections_ilist_RemoveAt ((SystemCollectionsIList*) _tmp1_, _tmp2_);
 		}
-		__finally27:
+		__finally16:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -3357,7 +3358,7 @@ static void system_collections_array_list_sync_array_list_real_RemoveRange (Syst
 			_tmp3_ = count;
 			system_collections_array_list_RemoveRange (_tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally28:
+		__finally17:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -3389,7 +3390,7 @@ static void system_collections_array_list_sync_array_list_real_Reverse (SystemCo
 			_tmp3_ = count;
 			system_collections_array_list_Reverse (_tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally29:
+		__finally18:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -3422,7 +3423,7 @@ static void system_collections_array_list_sync_array_list_real_SetRange (SystemC
 			_tmp3_ = c;
 			system_collections_array_list_SetRange (_tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally30:
+		__finally19:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -3463,7 +3464,7 @@ static SystemCollectionsArrayList* system_collections_array_list_sync_array_list
 			}
 			return result;
 		}
-		__finally31:
+		__finally20:
 		{
 			GObject* _tmp6_ = NULL;
 			_tmp6_ = self->priv->_root;
@@ -3485,7 +3486,7 @@ static void system_collections_array_list_sync_array_list_Sort (SystemCollection
 		g_static_rec_mutex_lock (&self->priv->__lock__root);
 		{
 		}
-		__finally32:
+		__finally21:
 		{
 			GObject* _tmp1_ = NULL;
 			_tmp1_ = self->priv->_root;
@@ -3519,7 +3520,7 @@ static void system_collections_array_list_sync_array_list_SortFromIndex (SystemC
 			_tmp4_ = comparer;
 			system_collections_array_list_Sort (_tmp1_, _tmp2_, _tmp3_, _tmp4_);
 		}
-		__finally33:
+		__finally22:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -3564,7 +3565,7 @@ static GObject** system_collections_array_list_sync_array_list_real_ToArray (Sys
 			}
 			return result;
 		}
-		__finally34:
+		__finally23:
 		{
 			GObject* _tmp6_ = NULL;
 			_tmp6_ = self->priv->_root;
@@ -3590,7 +3591,7 @@ static void system_collections_array_list_sync_array_list_real_TrimToSize (Syste
 			_tmp1_ = self->priv->_list;
 			system_collections_array_list_TrimToSize (_tmp1_);
 		}
-		__finally35:
+		__finally24:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -3629,7 +3630,7 @@ static gint system_collections_array_list_sync_array_list_real_get_Capacity (Sys
 			}
 			return result;
 		}
-		__finally36:
+		__finally25:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -3657,7 +3658,7 @@ static void system_collections_array_list_sync_array_list_real_set_Capacity (Sys
 			_tmp2_ = value;
 			system_collections_array_list_set_Capacity (_tmp1_, _tmp2_);
 		}
-		__finally37:
+		__finally26:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -3697,7 +3698,7 @@ static gint system_collections_array_list_sync_array_list_real_get_Count (System
 			}
 			return result;
 		}
-		__finally38:
+		__finally27:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -3916,7 +3917,7 @@ static GObject* system_collections_array_list_sync_ilist_real_get (GeeAbstractLi
 			}
 			return result;
 		}
-		__finally39:
+		__finally28:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -3947,7 +3948,7 @@ static void system_collections_array_list_sync_ilist_real_set (GeeAbstractList* 
 			_tmp3_ = value;
 			gee_list_set ((GeeList*) _tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally40:
+		__finally29:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -3986,7 +3987,7 @@ static gint system_collections_array_list_sync_ilist_Add (SystemCollectionsArray
 			}
 			return result;
 		}
-		__finally41:
+		__finally30:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -4010,7 +4011,7 @@ static void system_collections_array_list_sync_ilist_real_Clear (SystemCollectio
 			_tmp1_ = self->priv->_list;
 			system_collections_ilist_Clear (_tmp1_);
 		}
-		__finally42:
+		__finally31:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -4054,7 +4055,7 @@ static gboolean system_collections_array_list_sync_ilist_real_Contains (SystemCo
 			}
 			return result;
 		}
-		__finally43:
+		__finally32:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -4082,7 +4083,7 @@ static void system_collections_array_list_sync_ilist_real_CopyTo (SystemCollecti
 		g_static_rec_mutex_lock (&self->priv->__lock__root);
 		{
 		}
-		__finally44:
+		__finally33:
 		{
 			GObject* _tmp1_ = NULL;
 			_tmp1_ = self->priv->_root;
@@ -4125,7 +4126,7 @@ static SystemCollectionsIEnumerator* system_collections_array_list_sync_ilist_re
 			}
 			return result;
 		}
-		__finally45:
+		__finally34:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -4161,7 +4162,7 @@ static gint system_collections_array_list_sync_ilist_real_IndexOf (SystemCollect
 			}
 			return result;
 		}
-		__finally46:
+		__finally35:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -4196,7 +4197,7 @@ static void system_collections_array_list_sync_ilist_real_Insert (SystemCollecti
 			_tmp3_ = value;
 			system_collections_ilist_Insert (_tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally47:
+		__finally36:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -4231,7 +4232,7 @@ static void system_collections_array_list_sync_ilist_real_Remove (SystemCollecti
 			_tmp2_ = value;
 			system_collections_ilist_Remove (_tmp1_, _tmp2_);
 		}
-		__finally48:
+		__finally37:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -4265,7 +4266,7 @@ static void system_collections_array_list_sync_ilist_real_RemoveAt (SystemCollec
 			_tmp2_ = index;
 			system_collections_ilist_RemoveAt (_tmp1_, _tmp2_);
 		}
-		__finally49:
+		__finally38:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -4310,7 +4311,7 @@ static gint system_collections_array_list_sync_ilist_real_get_Count (SystemColle
 			}
 			return result;
 		}
-		__finally50:
+		__finally39:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;

@@ -43,28 +43,10 @@ namespace System.Collections
         }
     }
 
-    internal class StructuralEqualityComparerClass : IEqualityComparer
+    internal class StructuralEqualityComparerClass : Object, IEqualityComparer
     {
         public new bool Equals(Object x, Object y)
         {
-            if (x != null)
-            {
-                IStructuralEquatable seObj = x as IStructuralEquatable;
-
-                if (seObj != null)
-                {
-                    return seObj.Equals(y, this);
-                }
-
-                if (y != null)
-                {
-                    return (x==y);
-                }
-                else
-                {
-                    return false;
-                }
-            }
             if (y != null) return false;
             return true;
         }
@@ -84,7 +66,7 @@ namespace System.Collections
         }
     }
 
-    internal class StructuralComparerClass : IComparer
+    internal class StructuralComparerClass : Object, IComparer
     {
         public int Compare(Object x, Object y)
         {

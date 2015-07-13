@@ -87,6 +87,103 @@ namespace System {
 			}
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
+		public class ArrayList : Gee.ArrayList<GLib.Object>, System.Collections.IList, System.Collections.IEnumerable, System.Collections.ICollection {
+			public ArrayList (int capacity = _defaultCapacity);
+			public static System.Collections.ArrayList Adapter (System.Collections.IList list);
+			public virtual void AddRange (System.Collections.ICollection c);
+			public virtual int BinarySearch (int index = 0, int count = @this.Count - 1, GLib.Object value, System.Collections.IComparer? comparer = null);
+			public virtual GLib.Object Clone ();
+			public virtual void CopyToIndex (int index, GLib.Object[] array, int arrayIndex, int count);
+			public static System.Collections.IList FixedSize (System.Collections.IList list);
+			public virtual System.Collections.IEnumerator GetEnumerator ();
+			public virtual System.Collections.ArrayList GetRange (int index, int count);
+			public virtual void InsertRange (int index, System.Collections.ICollection c);
+			public virtual int LastIndexOf (GLib.Object value, int startIndex = @this.size, int count = 1);
+			public static System.Collections.IList ReadOnly (System.Collections.IList list);
+			public virtual void RemoveRange (int index, int count);
+			public static System.Collections.ArrayList Repeat (GLib.Object value, int count = 1);
+			public virtual void Reverse (int index = 0, int count = @this.Count);
+			public virtual void SetRange (int index, System.Collections.ICollection c);
+			public virtual void Sort (int index = 0, int count = @this.Count, System.Collections.IComparer? comparer = null);
+			public static System.Collections.IList Synchronized (System.Collections.IList list);
+			public virtual GLib.Object[] ToArray ();
+			public virtual void TrimToSize ();
+			public ArrayList.WithCollection (System.Collections.ICollection c);
+			public virtual int Capacity { get; set; }
+			public virtual int Count { get; }
+			public virtual bool IsFixedSize { get; }
+			public virtual bool IsReadOnly { get; }
+			public virtual bool IsSynchronized { get; }
+			public virtual GLib.Object SyncRoot { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public class BitArray : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable, System.ICloneable {
+			public BitArray (int length, bool defaultValue);
+			public System.Collections.BitArray And (System.Collections.BitArray value);
+			public bool Get (int index);
+			public System.Collections.BitArray Not ();
+			public System.Collections.BitArray Or (System.Collections.BitArray value);
+			public void Set (int index, bool value);
+			public void SetAll (bool value);
+			public System.Collections.BitArray Xor (System.Collections.BitArray value);
+			public bool IsReadOnly { get; }
+			public int Length { get; set; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public class CaseInsensitiveComparer : GLib.Object, Gee.Comparable<GLib.Object>, System.Collections.IComparer {
+			public CaseInsensitiveComparer ();
+			public static System.Collections.CaseInsensitiveComparer Default { owned get; }
+			public static System.Collections.CaseInsensitiveComparer DefaultInvariant { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public class CaseInsensitiveHashCodeProvider : System.Collections.IHashCodeProvider {
+			public CaseInsensitiveHashCodeProvider (System.Globalization.CultureInfo? culture);
+			public static System.Collections.CaseInsensitiveHashCodeProvider Default { owned get; }
+			public static System.Collections.CaseInsensitiveHashCodeProvider DefaultInvariant { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public abstract class CollectionBase : Gee.AbstractList<GLib.Object>, Gee.List<GLib.Object>, System.Collections.IList, System.Collections.IEnumerable, System.Collections.ICollection {
+			protected CollectionBase (int capacity = 0);
+			protected virtual void OnClear ();
+			protected virtual void OnClearComplete ();
+			protected virtual void OnInsert (int index, GLib.Object value);
+			protected virtual void OnInsertComplete (int index, GLib.Object value);
+			protected virtual void OnRemove (int index, GLib.Object value);
+			protected virtual void OnRemoveComplete (int index, GLib.Object value);
+			protected virtual void OnSet (int index, GLib.Object oldValue, GLib.Object newValue);
+			protected virtual void OnSetComplete (int index, GLib.Object oldValue, GLib.Object newValue);
+			protected virtual void OnValidate (GLib.Object value);
+			public virtual new GLib.Object @get (int index);
+			public virtual new void @set (int index, GLib.Object value);
+			public int Capacity { get; set; }
+			protected System.Collections.ArrayList InnerList { get; }
+			protected System.Collections.IList List { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public class Comparer : GLib.Object, System.Collections.IComparer {
+			public static System.Collections.Comparer Default;
+			public static System.Collections.Comparer DefaultInvariant;
+			public Comparer ();
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public abstract class DictionaryBase : Gee.AbstractMap<GLib.Object,GLib.Object>, System.Collections.IDictionary, System.Collections.IEnumerable, System.Collections.ICollection {
+			public DictionaryBase ();
+			protected virtual void OnClear ();
+			protected virtual void OnClearComplete ();
+			protected virtual GLib.Object OnGet (GLib.Object key, GLib.Object currentValue);
+			protected virtual void OnInsert (GLib.Object key, GLib.Object value);
+			protected virtual void OnInsertComplete (GLib.Object key, GLib.Object value);
+			protected virtual void OnRemove (GLib.Object key, GLib.Object value);
+			protected virtual void OnRemoveComplete (GLib.Object key, GLib.Object value);
+			protected virtual void OnSet (GLib.Object key, GLib.Object oldValue, GLib.Object newValue);
+			protected virtual void OnSetComplete (GLib.Object key, GLib.Object oldValue, GLib.Object newValue);
+			protected virtual void OnValidate (GLib.Object key, GLib.Object value);
+			public virtual new GLib.Object @get (GLib.Object key);
+			public virtual new void @set (GLib.Object key, GLib.Object value);
+			protected System.Collections.IDictionary Dictionary { get; }
+			protected System.Collections.Hashtable InnerHashtable { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
 		public class DictionaryEntry {
 			public DictionaryEntry (GLib.Object key, GLib.Object value);
 			public GLib.Object Key { get; set; }
@@ -180,6 +277,13 @@ namespace System {
 			public virtual GLib.Object SyncRoot { get; }
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
+		public abstract class ReadOnlyCollectionBase : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
+			public ReadOnlyCollectionBase ();
+			public virtual System.Collections.IEnumerator GetEnumerator ();
+			public virtual int Count { get; }
+			protected System.Collections.ArrayList InnerList { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
 		public class SortedList : Gee.TreeMap<GLib.Object,GLib.Object>, System.Collections.IDictionary, System.Collections.ICollection, System.Collections.IEnumerable {
 			public SortedList (System.Collections.IComparer? comparer = null, int capacity = _defaultCapacity);
 			public virtual GLib.Object Clone ();
@@ -206,6 +310,30 @@ namespace System {
 			public virtual System.Collections.ICollection Keys { owned get; }
 			public virtual GLib.Object SyncRoot { get; }
 			public virtual System.Collections.ICollection Values { owned get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public class Stack : Gee.LinkedList<GLib.Object>, System.Collections.ICollection, System.Collections.IEnumerable {
+			public Stack (int initialCapacity = _defaultCapacity);
+			public virtual void Clear ();
+			public virtual GLib.Object Clone ();
+			public virtual bool Contains (GLib.Object obj);
+			public virtual void CopyTo (GLib.Array array, int index);
+			public virtual System.Collections.IEnumerator GetEnumerator ();
+			public virtual GLib.Object Peek ();
+			public virtual GLib.Object Pop ();
+			public virtual void Push (GLib.Object obj);
+			public static System.Collections.Stack Synchronized (System.Collections.Stack stack);
+			public virtual GLib.Object[] ToArray ();
+			public Stack.WithCollection (System.Collections.ICollection col);
+			public virtual int Count { get; }
+			public virtual bool IsSynchronized { get; }
+			public virtual GLib.Object SyncRoot { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public class StructuralComparisons {
+			public StructuralComparisons ();
+			public static System.Collections.IComparer StructuralComparer { owned get; }
+			public static System.Collections.IEqualityComparer StructuralEqualityComparer { owned get; }
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
 		public interface ICollection : GLib.Object, System.Collections.IEnumerable {
@@ -272,11 +400,11 @@ namespace System {
 			public abstract bool IsReadOnly { get; }
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
-		public interface IStructuralComparable {
+		public interface IStructuralComparable : GLib.Object {
 			public abstract int32 CompareTo (GLib.Object other, System.Collections.IComparer comparer);
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
-		public interface IStructuralEquatable {
+		public interface IStructuralEquatable : GLib.Object {
 			public abstract bool Equals (GLib.Object other, System.Collections.IEqualityComparer comparer);
 			public abstract int GetHashCode (System.Collections.IEqualityComparer comparer);
 		}
@@ -321,6 +449,20 @@ namespace System {
 	namespace Text {
 	}
 	namespace Threading {
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public class Nullable<T> {
+		public Nullable (T value);
+		public bool Equals (GLib.Object other);
+		public int GetHashCode ();
+		public T GetValueOrDefault (T defaultValue);
+		public string ToString ();
+		public bool HasValue { get; }
+		public T Value { get; }
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public interface ICloneable {
+		public abstract GLib.Object Clone ();
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public interface IComparable<T> {

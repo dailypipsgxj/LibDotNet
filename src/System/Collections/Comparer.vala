@@ -16,7 +16,7 @@ using System.Diagnostics.Contracts;
 
 namespace System.Collections
 {
-    public class Comparer : IComparer
+    public class Comparer : Object, IComparer
     {
         public static Comparer Default = new Comparer();
         public static Comparer DefaultInvariant = new Comparer();

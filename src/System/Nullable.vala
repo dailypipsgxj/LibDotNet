@@ -22,8 +22,6 @@ namespace System
     // can be used where a boxed<T> is use, Nullable<T> can not implement any intefaces
     // at all (since T may not).   Do NOT add any interfaces to Nullable!
     // 
-// [Serializable]
-	[Compact]
     public class Nullable<T>
     {
         private bool hasValue; 
@@ -42,9 +40,6 @@ namespace System
 
         public T Value {
             get {
-                if (!HasValue) {
-                    //ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NoValue);
-                }
                 return value;
             }
         }
@@ -53,18 +48,16 @@ namespace System
             return HasValue ? value : defaultValue;
         }
 
-        public override bool Equals( Object other) {
-            if (!HasValue) return other == null;
-            if (other == null) return false;
-            return value.Equals(other);
+        public bool Equals( Object other) {
+            return false;
         }
 
-        public override int GetHashCode() {
-            return HasValue ? value.GetHashCode() : 0;
+        public int GetHashCode() {
+            return 0;
         }
 
-        public override string ToString() {
-            return HasValue ? value.ToString() : "";
+        public string ToString() {
+            return "";
         }
 
 	}

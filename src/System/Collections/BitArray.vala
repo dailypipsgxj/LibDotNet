@@ -21,22 +21,9 @@ namespace System.Collections {
     using System.Diagnostics.Contracts;
     // A vector of bits.  Use this to store bits efficiently, without having to do bit 
     // shifting yourself.
-// [System.Runtime.InteropServices.ComVisible(true)]
 
-// [Serializable()]
- public class BitArray : ICollection, ICloneable {
-        private BitArray() {
-        }
-
-        /*=========================================================================
-        ** Allocates space to hold length bit values. All of the values in the bit
-        ** array are set to false.
-        **
-        ** Exceptions: ArgumentException if length < 0.
-        =========================================================================*/
-        public BitArray(int length){
-			this(length, false);
-        }
+ public class BitArray : Object, ICollection, IEnumerable, ICloneable {
+ 
     
         /*=========================================================================
         ** Allocates space to hold length bit values. All of the values in the bit
@@ -45,147 +32,9 @@ namespace System.Collections {
         ** Exceptions: ArgumentOutOfRangeException if length < 0.
         =========================================================================*/
         public BitArray(int length, bool defaultValue) {
-            if (length < 0) {
-                throw ArgumentOutOfRangeException("length", Environment.GetResourcestring("ArgumentOutOfRange_NeedNonNegNum"));
-            }
-            Contract.EndContractBlock();
     
-            m_array = new int[GetArrayLength(length, BitsPerint32)];
-            m_length = length;
-    
-            int fillValue = defaultValue ? unchecked(((int)0xffffffff)) : 0;
-            for (int i = 0; i < m_array.Length; i++) {
-                m_array[i] = fillValue;
-            }
-
-            _version = 0;
         }
     
-        /*=========================================================================
-        ** Allocates space to hold the bit values in bytes. bytes[0] represents
-        ** bits 0 - 7, bytes[1] represents bits 8 - 15, etc. The LSB of each byte
-        ** represents the lowest index value; bytes[0] & 1 represents bit 0,
-        ** bytes[0] & 2 represents bit 1, bytes[0] & 4 represents bit 2, etc.
-        **
-        ** Exceptions: ArgumentException if bytes == null.
-        =========================================================================*/
-        public BitArray(byte[] bytes) {
-            if (bytes == null) {
-                throw ArgumentNullException("bytes");
-            }
-            Contract.EndContractBlock();
-            // this value is chosen to prevent overflow when computing m_length.
-            // m_length is of type int32 and is exposed as a property, so 
-            // type of m_length can't be changed to accommodate.
-            if (bytes.Length > int32.MaxValue / BitsPerByte) {
-                throw ArgumentException(Environment.GetResourcestring("Argument_ArrayTooLarge", BitsPerByte), "bytes");
-            }
-    
-            m_array = new int[GetArrayLength(bytes.Length, BytesPerint32)];
-            m_length = bytes.Length * BitsPerByte;
-    
-            int i = 0;
-            int j = 0;
-            while (bytes.Length - j >= 4) {
-                m_array[i++] = (bytes[j] & 0xff) |
-                              ((bytes[j + 1] & 0xff) << 8) |
-                              ((bytes[j + 2] & 0xff) << 16) |
-                              ((bytes[j + 3] & 0xff) << 24);
-                j += 4;
-            }
-    
-            Contract.Assert(bytes.Length - j >= 0, "BitArray byteLength problem");
-            Contract.Assert(bytes.Length - j < 4, "BitArray byteLength problem #2");
-    
-            switch (bytes.Length - j) {
-                case 3:
-                    m_array[i] = ((bytes[j + 2] & 0xff) << 16);
-                    goto case 2;
-                    // fall through
-                case 2:
-                    m_array[i] |= ((bytes[j + 1] & 0xff) << 8);
-                    goto case 1;
-                    // fall through
-                case 1:
-                    m_array[i] |= (bytes[j] & 0xff);
-            break;
-            }
-
-            _version = 0;
-        }
-
-        public BitArray(bool[] values) {
-            if (values == null) {
-                throw ArgumentNullException("values");
-            }
-            Contract.EndContractBlock();
-    
-            m_array = new int[GetArrayLength(values.Length, BitsPerint32)];
-            m_length = values.Length;
-    
-            for (int i = 0;i<values.Length;i++) {
-                if (values[i])
-                    m_array[i/32] |= (1 << (i%32));
-            }
-
-            _version = 0;
-
-        }
-    
-        /*=========================================================================
-        ** Allocates space to hold the bit values in values. values[0] represents
-        ** bits 0 - 31, values[1] represents bits 32 - 63, etc. The LSB of each
-        ** integer represents the lowest index value; values[0] & 1 represents bit
-        ** 0, values[0] & 2 represents bit 1, values[0] & 4 represents bit 2, etc.
-        **
-        ** Exceptions: ArgumentException if values == null.
-        =========================================================================*/
-        public BitArray(int[] values) {
-            if (values == null) {
-                throw ArgumentNullException("values");
-            }
-            Contract.EndContractBlock();
-            // this value is chosen to prevent overflow when computing m_length
-            if (values.Length > int32.MaxValue / BitsPerint32) {
-                throw ArgumentException(Environment.GetResourcestring("Argument_ArrayTooLarge", BitsPerint32), "values");
-            }
-    
-            m_array = new int[values.Length];
-            m_length = values.Length * BitsPerint32;
-    
-            Array.Copy(values, m_array, values.Length);
-
-            _version = 0;
-        }
-    
-        /*=========================================================================
-        ** Allocates a new BitArray with the same length and bit values as bits.
-        **
-        ** Exceptions: ArgumentException if bits == null.
-        =========================================================================*/
-        public BitArray(BitArray bits) {
-            if (bits == null) {
-                throw ArgumentNullException("bits");
-            }
-            Contract.EndContractBlock();
-    
-            int arrayLength = GetArrayLength(bits.m_length, BitsPerint32);
-            m_array = new int[arrayLength];
-            m_length = bits.m_length;
-    
-            Array.Copy(bits.m_array, m_array, arrayLength);
-
-            _version = bits._version;
-        }
-
-        public bool get (int index) {
-		{
-                    return Get(index);
-                }
-                set {
-                    Set(index,value);
-                }
-         }
     
         /*=========================================================================
         ** Returns the bit value at position index.
@@ -194,12 +43,7 @@ namespace System.Collections {
         **             index >= GetLength().
         =========================================================================*/
         public bool Get(int index) {
-            if (index < 0 || index >= Length) {
-                throw ArgumentOutOfRangeException("index", Environment.GetResourcestring("ArgumentOutOfRange_Index"));
-            }
-            Contract.EndContractBlock();
-    
-            return (m_array[index / 32] & (1 << (index % 32))) != 0;
+            return false;
         }
     
         /*=========================================================================
@@ -209,31 +53,12 @@ namespace System.Collections {
         **             index >= GetLength().
         =========================================================================*/
         public void Set(int index, bool value) {
-            if (index < 0 || index >= Length) {
-                throw ArgumentOutOfRangeException("index", Environment.GetResourcestring("ArgumentOutOfRange_Index"));
-            }
-            Contract.EndContractBlock();
-    
-            if (value) {
-                m_array[index / 32] |= (1 << (index % 32));
-            } else {
-                m_array[index / 32] &= ~(1 << (index % 32));
-            }
-
-            _version++;
         }
     
         /*=========================================================================
         ** Sets all the bit values to value.
         =========================================================================*/
         public void SetAll(bool value) {
-            int fillValue = value ? unchecked(((int)0xffffffff)) : 0;
-            int ints = GetArrayLength(m_length, BitsPerint32);
-            for (int i = 0; i < ints; i++) {
-                m_array[i] = fillValue;
-            }
-
-            _version++;
         }
     
         /*=========================================================================
@@ -243,18 +68,6 @@ namespace System.Collections {
         **             value.Length != this.Length.
         =========================================================================*/
         public BitArray And(BitArray value) {
-            if (value==null)
-                throw ArgumentNullException("value");
-            if (Length != value.Length)
-                throw ArgumentException(Environment.GetResourcestring("Arg_ArrayLengthsDiffer"));
-            Contract.EndContractBlock();
-    
-            int ints = GetArrayLength(m_length, BitsPerint32);
-            for (int i = 0; i < ints; i++) {
-                m_array[i] &= value.m_array[i];
-            }
-    
-            _version++;
             return this;
         }
     
@@ -265,18 +78,6 @@ namespace System.Collections {
         **             value.Length != this.Length.
         =========================================================================*/
         public BitArray Or(BitArray value) {
-            if (value==null)
-                throw ArgumentNullException("value");
-            if (Length != value.Length)
-                throw ArgumentException(Environment.GetResourcestring("Arg_ArrayLengthsDiffer"));
-            Contract.EndContractBlock();
-    
-            int ints = GetArrayLength(m_length, BitsPerint32);
-            for (int i = 0; i < ints; i++) {
-                m_array[i] |= value.m_array[i];
-            }
-    
-            _version++;
             return this;
         }
     
@@ -287,18 +88,6 @@ namespace System.Collections {
         **             value.Length != this.Length.
         =========================================================================*/
         public BitArray Xor(BitArray value) {
-            if (value==null)
-                throw ArgumentNullException("value");
-            if (Length != value.Length)
-                throw ArgumentException(Environment.GetResourcestring("Arg_ArrayLengthsDiffer"));
-            Contract.EndContractBlock();
-    
-            int ints = GetArrayLength(m_length, BitsPerint32);
-            for (int i = 0; i < ints; i++) {
-                m_array[i] ^= value.m_array[i];
-            }
-            
-            _version++;
             return this;
         }
     
@@ -308,120 +97,40 @@ namespace System.Collections {
         ** is updated and returned.
         =========================================================================*/
         public BitArray Not() {
-            int ints = GetArrayLength(m_length, BitsPerint32);
-            for (int i = 0; i < ints; i++) {
-                m_array[i] = ~m_array[i];
-            }
-    
-            _version++;
             return this;
         }
 
         public int Length {
             get {
-                Contract.Ensures(Contract.Result<int>() >= 0);
-                return m_length;
+                return -1;
             }
             set {
-                if (value < 0) {
-                    throw ArgumentOutOfRangeException("value", Environment.GetResourcestring("ArgumentOutOfRange_NeedNonNegNum"));
-                }
-                Contract.EndContractBlock();
-
-                int newints = GetArrayLength(value, BitsPerint32);
-                if (newints > m_array.Length || newints + _ShrinkThreshold < m_array.Length) {
-                    // grow or shrink (if wasting more than _ShrinkThreshold ints)
-                    int[] newarray = new int[newints];
-                    Array.Copy(m_array, newarray, newints > m_array.Length ? m_array.Length : newints);
-                    m_array = newarray;
-                }
-                
-                if (value > m_length) {
-                    // clear high bit values in the last int
-                    int last = GetArrayLength(m_length, BitsPerint32) - 1;
-                    int bits = m_length % 32;
-                    if (bits > 0) {
-                        m_array[last] &= (1 << bits) - 1;
-                    }
-                    
-                    // clear remaining int values
-                    Array.Clear(m_array, last + 1, newints - last - 1);
-                }
-                
-                m_length = value;
-                _version++;
             }
         }
 
         // ICollection implementation
         public void CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw ArgumentNullException("array");
 
-            if (index < 0)
-                throw ArgumentOutOfRangeException("index", Environment.GetResourcestring("ArgumentOutOfRange_NeedNonNegNum"));
-
-            if (array.Rank != 1)
-                throw ArgumentException(Environment.GetResourcestring("Arg_RankMultiDimNotSupported"));
-                
-            Contract.EndContractBlock();
-
-            if (array is int[])
-            {
-                Array.Copy(m_array, 0, array, index, GetArrayLength(m_length, BitsPerint32));
-            }
-            else if (array is byte[])
-            {
-                int arrayLength = GetArrayLength(m_length, BitsPerByte);
-                if ((array.Length - index) < arrayLength)
-                     throw ArgumentException(Environment.GetResourcestring("Argument_InvalidOffLen"));
-
-                byte [] b = (byte[])array;
-                for (int i = 0; i < arrayLength; i++)
-                    b[index + i] = (byte)((m_array[i/4] >> ((i%4)*8)) & 0x000000FF); // Shift to bring the required byte to LSB, then mask
-            }
-            else if (array is bool[])
-            {
-                if (array.Length - index < m_length)
-                     throw ArgumentException(Environment.GetResourcestring("Argument_InvalidOffLen"));
-
-                bool [] b = (bool[])array;
-                for (int i = 0;i<m_length;i++)
-                    b[index + i] = ((m_array[i/32] >> (i%32)) & 0x00000001) != 0;
-            }
-            else
-                throw ArgumentException(Environment.GetResourcestring("Arg_BitArrayTypeUnsupported"));
         }
         
         public int Count
         { 
             get
             {
-                Contract.Ensures(Contract.Result<int>() >= 0);
-
-                return m_length;
+                return -1;
             }
         }
 
         public Object Clone()
         {
-            Contract.Ensures(Contract.Result<Object>() != null);
-            Contract.Ensures(((BitArray)Contract.Result<Object>()).Length == this.Length);
-
-            BitArray bitArray = new BitArray(m_array);
-            bitArray._version = _version;
-            bitArray.m_length = m_length;
-            return bitArray;
+            return this;
         }
         
         public Object SyncRoot
         {
              get
              {
-                if( _syncRoot == null) {
-                    System.Threading.Interlocked.CompareExchange<Object>(ref _syncRoot, new Object(), null);    
-                }
                 return _syncRoot; 
              }
         }
@@ -468,30 +177,27 @@ namespace System.Collections {
         /// how many ints are required to store n bytes</param>
         /// <returns></returns>
         private static int GetArrayLength(int n, int div) {
-            Contract.Assert(div > 0, "GetArrayLength: div arg must be greater than 0");
             return n > 0 ? (((n - 1) / div) + 1) : 0;
         }
-// [Serializable]
 
-        private class BitArrayEnumeratorSimple : IEnumerator, ICloneable
+        private class BitArrayEnumeratorSimple : Object, IEnumerator, ICloneable
         {
             private BitArray bitarray;
             private int index;
-            private int version;
             private bool currentElement;
+			private Object _currentElement { get; set;}
+			private Gee.Iterator<Object> _iterator { get; set;}
                
             internal BitArrayEnumeratorSimple(BitArray bitarray) {
                 this.bitarray = bitarray;
                 this.index = -1;
-                version = bitarray._version;
             }
 
             public Object Clone() {
-                return MemberwiseClone();
+                return this as Object;
             }
                 
             public virtual bool MoveNext() {
-                if (version != bitarray._version) throw InvalidOperationException(Environment.GetResourcestring(ResId.InvalidOperation_EnumFailedVersion));
                 if (index < (bitarray.Count-1)) {
                     index++;
                     currentElement = bitarray.Get(index);
@@ -504,25 +210,18 @@ namespace System.Collections {
             }
     
             public virtual Object Current {
-                get {
-                    if (index == -1)
-                        throw InvalidOperationException(Environment.GetResourcestring(ResId.InvalidOperation_EnumNotStarted));
-                    if (index >= bitarray.Count)
-                        throw InvalidOperationException(Environment.GetResourcestring(ResId.InvalidOperation_EnumEnded)); 
-                    return currentElement;
+                owned get {
+                    return this as Object;
                 }
             }
     
             public void Reset() {
-                if (version != bitarray._version) throw InvalidOperationException(Environment.GetResourcestring(ResId.InvalidOperation_EnumFailedVersion));
-                index = -1;
             }
         }
     
         private int[] m_array;
         private int m_length;
         private int _version;
-// [NonSerialized]
 
         private Object _syncRoot;
     
