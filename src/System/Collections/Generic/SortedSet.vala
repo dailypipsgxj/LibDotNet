@@ -302,7 +302,7 @@ namespace System.Collections.Generic
         /// <typeparam name="T"></typeparam>   
         public class TreeSubSet : SortedSet<T>
         {
-            private SortedSet<T> _underlying;
+            public SortedSet<T> _underlying;
             private Gee.SortedSet _subset;
 
             public TreeSubSet(SortedSet<T> Underlying, T Min, T Max){
@@ -387,13 +387,13 @@ namespace System.Collections.Generic
 		[Compact]
         public class Enumerator : IEnumerator<T>
         {
-            private SortedSet<T> _tree;
-			private T _currentElement;
-			private Gee.Iterator<T> _iterator;
+            public SortedSet<T> _tree;
+			public T _currentElement;
+			public Gee.Iterator<T> _iterator;
             private bool _reverse;
 
 
-            internal Enumerator(SortedSet<T> tree, bool reverse = false)
+            public Enumerator(SortedSet<T> tree, bool reverse = false)
             {
                 _tree = tree;
                 _iterator = tree.bidir_iterator();
@@ -488,13 +488,6 @@ namespace System.Collections.Generic
         public int GetHashCode(SortedSet<T> obj)
         {
             int hashCode = 0;
-            if (obj != null)
-            {
-                foreach (T t in obj)
-                {
-                    hashCode = hashCode ^ (_eqComparer.GetHashCode(t) & 0x7FFFFFFF);
-                }
-            } // else returns hashcode of 0 for null HashSets
             return hashCode;
         }
 
