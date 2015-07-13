@@ -152,17 +152,17 @@ namespace System.Text.RegularExpressions
 				if ((options & RegexOptions.IgnorePatternWhitespace) ==  RegexOptions.IgnorePatternWhitespace)
 					flags |=  RegexCompileFlags.EXTENDED;
 					
-				if ((options & RegexOptions.RightToLeft) ==  RegexOptions.RightToLeft)
+				//if ((options & RegexOptions.RightToLeft) ==  RegexOptions.RightToLeft)
 					//flags |=  0;
 					
 				if ((options & RegexOptions.ECMAScript) ==  RegexOptions.ECMAScript)
 					flags |=  RegexCompileFlags.JAVASCRIPT_COMPAT;
 
-				if ((options & RegexOptions.CultureInvariant) ==  RegexOptions.CultureInvariant)
+				//if ((options & RegexOptions.CultureInvariant) ==  RegexOptions.CultureInvariant)
 					//flags |=  0;
-					
-				return flags;
+				
 			}
+			return flags;
 			
 		}
 		
@@ -294,7 +294,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public string[] GetGroupNames()
         {
-            string[] result;
+            string[] result = {};
 			return result;
         }
 
@@ -309,7 +309,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public int[] GetGroupNumbers()
         {
-            int[] result;
+            int[] result = {};
             return result;
         }
 

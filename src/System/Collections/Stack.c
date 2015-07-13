@@ -572,7 +572,7 @@ static gboolean system_collections_stack_sync_stack_real_Contains (SystemCollect
 			}
 			return result;
 		}
-		__finally81:
+		__finally83:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;
@@ -614,7 +614,7 @@ static GObject* system_collections_stack_sync_stack_real_Clone (SystemCollection
 			}
 			return result;
 		}
-		__finally82:
+		__finally84:
 		{
 			GObject* _tmp7_ = NULL;
 			_tmp7_ = self->priv->_root;
@@ -640,7 +640,7 @@ static void system_collections_stack_sync_stack_real_Clear (SystemCollectionsSta
 			_tmp1_ = self->priv->_s;
 			system_collections_stack_Clear (_tmp1_);
 		}
-		__finally83:
+		__finally85:
 		{
 			GObject* _tmp2_ = NULL;
 			_tmp2_ = self->priv->_root;
@@ -673,7 +673,7 @@ static void system_collections_stack_sync_stack_real_CopyTo (SystemCollectionsSt
 			_tmp3_ = arrayIndex;
 			system_collections_stack_CopyTo (_tmp1_, _tmp2_, _tmp3_);
 		}
-		__finally84:
+		__finally86:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -704,7 +704,7 @@ static void system_collections_stack_sync_stack_real_Push (SystemCollectionsStac
 			_tmp2_ = value;
 			system_collections_stack_Push (_tmp1_, _tmp2_);
 		}
-		__finally85:
+		__finally87:
 		{
 			GObject* _tmp3_ = NULL;
 			_tmp3_ = self->priv->_root;
@@ -741,7 +741,7 @@ static GObject* system_collections_stack_sync_stack_real_Pop (SystemCollectionsS
 			}
 			return result;
 		}
-		__finally86:
+		__finally88:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -776,7 +776,7 @@ static SystemCollectionsIEnumerator* system_collections_stack_sync_stack_real_Ge
 			}
 			return result;
 		}
-		__finally87:
+		__finally89:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -811,7 +811,7 @@ static GObject* system_collections_stack_sync_stack_real_Peek (SystemCollections
 			}
 			return result;
 		}
-		__finally88:
+		__finally90:
 		{
 			GObject* _tmp4_ = NULL;
 			_tmp4_ = self->priv->_root;
@@ -854,7 +854,7 @@ static GObject** system_collections_stack_sync_stack_real_ToArray (SystemCollect
 			}
 			return result;
 		}
-		__finally89:
+		__finally91:
 		{
 			GObject* _tmp6_ = NULL;
 			_tmp6_ = self->priv->_root;
@@ -911,7 +911,7 @@ static gint system_collections_stack_sync_stack_real_get_Count (SystemCollection
 			}
 			return result;
 		}
-		__finally90:
+		__finally92:
 		{
 			GObject* _tmp5_ = NULL;
 			_tmp5_ = self->priv->_root;

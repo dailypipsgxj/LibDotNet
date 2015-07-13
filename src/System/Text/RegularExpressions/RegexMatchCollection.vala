@@ -19,7 +19,7 @@ namespace System.Text.RegularExpressions
     /// Represents the set of names appearing as capturing group
     /// names in a regular expression.
     /// </summary>
-    public class MatchCollection : ICollection, IEnumerable
+    public class MatchCollection : Object, ICollection, IEnumerable
     {
         private   GLib.Regex _regex;
         private   string _input;
@@ -50,7 +50,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the ith Match in the collection.
         /// </summary>
-        public Match get (int i)
+        new Match get (int i)
         {
 			Match match = GetMatch(i);
 			return match;
@@ -66,8 +66,7 @@ namespace System.Text.RegularExpressions
 
         private Match GetMatch(int i)
         {
-            Match match;
-            return match;
+            return this as Match;
         }
 
         private void EnsureInitialized()
@@ -86,7 +85,7 @@ namespace System.Text.RegularExpressions
         }
 
 
-        public class Enumerator : IEnumerator
+        public class Enumerator : Object, IEnumerator
         {
             private   MatchCollection _collection;
             private int _index;
@@ -118,14 +117,11 @@ namespace System.Text.RegularExpressions
                 return true;
             }
 
-            public Match Current
+            public Object Current
             {
                 owned get
                 {
-                    if (_index < 0)
-                        //throw new InvalidOperationException.ENUMNOTSTARTED("SR.EnumNotStarted");
-
-                    return _collection.GetMatch(_index);
+                    return _currentElement;
                 }
             }
 

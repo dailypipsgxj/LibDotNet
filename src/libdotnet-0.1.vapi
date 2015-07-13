@@ -447,6 +447,91 @@ namespace System {
 		}
 	}
 	namespace Text {
+		namespace RegularExpressions {
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Capture {
+				public string ToString ();
+				public int Index { get; }
+				public int Length { get; }
+				public string Value { owned get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class CaptureCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
+				public class Enumerator : GLib.Object, System.Collections.IEnumerator {
+				}
+				public new System.Text.RegularExpressions.Capture @get (int i);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Group : System.Text.RegularExpressions.Capture {
+				public System.Text.RegularExpressions.CaptureCollection Captures { get; }
+				public bool Success { get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class GroupCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
+				public class Enumerator : GLib.Object, System.Collections.IEnumerator {
+					public Enumerator (System.Text.RegularExpressions.GroupCollection collection);
+				}
+				public GroupCollection (System.Text.RegularExpressions.Match match);
+				public new System.Text.RegularExpressions.Group @get (int groupnum);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Match : System.Text.RegularExpressions.Group {
+				public Match (GLib.MatchInfo matchinfo);
+				public System.Text.RegularExpressions.Match NextMatch ();
+				public virtual string Result (string replacement);
+				public virtual System.Text.RegularExpressions.GroupCollection Groups { get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class MatchCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
+				public class Enumerator : GLib.Object, System.Collections.IEnumerator {
+				}
+				public MatchCollection (GLib.Regex regex, string input, int beginning, int length, int startat);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Regex : System.Text.RegularExpressions.StaticRegex {
+				public static GLib.TimeSpan InfiniteMatchTimeout;
+				public Regex (string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout, bool useCache = false);
+				public string[] GetGroupNames ();
+				public int[] GetGroupNumbers ();
+				public string GroupNameFromNumber (int i);
+				public int GroupNumberFromName (string name);
+				public new bool IsMatch (string input, int startat);
+				public new System.Text.RegularExpressions.Match Match (string input, int beginning = 0, int length = -1);
+				public new System.Text.RegularExpressions.MatchCollection Matches (string input, int startat = 0);
+				public new string Replace (string input, string replacement, int count = -1, int startat = 0);
+				public new string[] Split (string input, int count = -1, int startat = 0);
+				public string ToString ();
+				public static int CacheSize { get; set; }
+				public GLib.TimeSpan MatchTimeout { get; }
+				public System.Text.RegularExpressions.RegexOptions Options { get; }
+				public bool RightToLeft { get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public abstract class StaticRegex {
+				public StaticRegex (string pattern = "", System.Text.RegularExpressions.RegexOptions options = RegexOptions.None);
+				protected static GLib.RegexCompileFlags ConvertOptions (System.Text.RegularExpressions.RegexOptions options);
+				public static string Escape (string str);
+				public static bool IsMatch (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static System.Text.RegularExpressions.Match Match (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static System.Text.RegularExpressions.MatchCollection Matches (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static string Replace (string input, string pattern, string replacement, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static string[] Split (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static string Unescape (string str);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public enum RegexOptions {
+				None,
+				IgnoreCase,
+				Multiline,
+				ExplicitCapture,
+				Compiled,
+				Singleline,
+				IgnorePatternWhitespace,
+				RightToLeft,
+				ECMAScript,
+				CultureInvariant
+			}
+		}
 	}
 	namespace Threading {
 	}

@@ -317,8 +317,8 @@ static void system_collections_collection_base_real_RemoveAt (SystemCollectionsI
 		_tmp14_ = index;
 		system_collections_collection_base_OnRemoveComplete (self, _tmp14_, temp);
 	}
-	goto __finally40;
-	__catch40_g_error:
+	goto __finally42;
+	__catch42_g_error:
 	{
 		SystemCollectionsArrayList* _tmp15_ = NULL;
 		SystemCollectionsArrayList* _tmp16_ = NULL;
@@ -330,7 +330,7 @@ static void system_collections_collection_base_real_RemoveAt (SystemCollectionsI
 		_tmp17_ = index;
 		system_collections_ilist_Insert ((SystemCollectionsIList*) _tmp16_, _tmp17_, temp);
 	}
-	__finally40:
+	__finally42:
 	if (G_UNLIKELY (_inner_error_ != NULL)) {
 		_g_object_unref0 (temp);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -460,8 +460,8 @@ static void system_collections_collection_base_real_set (SystemCollectionsCollec
 		_tmp18_ = value;
 		system_collections_collection_base_OnSetComplete (self, _tmp17_, temp, _tmp18_);
 	}
-	goto __finally41;
-	__catch41_g_error:
+	goto __finally43;
+	__catch43_g_error:
 	{
 		SystemCollectionsArrayList* _tmp19_ = NULL;
 		SystemCollectionsArrayList* _tmp20_ = NULL;
@@ -473,7 +473,7 @@ static void system_collections_collection_base_real_set (SystemCollectionsCollec
 		_tmp21_ = index;
 		gee_abstract_list_set ((GeeAbstractList*) _tmp20_, _tmp21_, temp);
 	}
-	__finally41:
+	__finally43:
 	if (G_UNLIKELY (_inner_error_ != NULL)) {
 		_g_object_unref0 (temp);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -543,8 +543,8 @@ static gint system_collections_collection_base_real_Add (SystemCollectionsIList*
 		_tmp10_ = value;
 		system_collections_collection_base_OnInsertComplete (self, index, _tmp10_);
 	}
-	goto __finally42;
-	__catch42_g_error:
+	goto __finally44;
+	__catch44_g_error:
 	{
 		SystemCollectionsArrayList* _tmp11_ = NULL;
 		SystemCollectionsArrayList* _tmp12_ = NULL;
@@ -554,7 +554,7 @@ static gint system_collections_collection_base_real_Add (SystemCollectionsIList*
 		_tmp12_ = _tmp11_;
 		system_collections_ilist_RemoveAt ((SystemCollectionsIList*) _tmp12_, index);
 	}
-	__finally42:
+	__finally44:
 	if (G_UNLIKELY (_inner_error_ != NULL)) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -612,8 +612,8 @@ static void system_collections_collection_base_real_Remove (SystemCollectionsILi
 		_tmp13_ = value;
 		system_collections_collection_base_OnRemoveComplete (self, _tmp12_, _tmp13_);
 	}
-	goto __finally43;
-	__catch43_g_error:
+	goto __finally45;
+	__catch45_g_error:
 	{
 		SystemCollectionsArrayList* _tmp14_ = NULL;
 		SystemCollectionsArrayList* _tmp15_ = NULL;
@@ -627,7 +627,7 @@ static void system_collections_collection_base_real_Remove (SystemCollectionsILi
 		_tmp17_ = value;
 		system_collections_ilist_Insert ((SystemCollectionsIList*) _tmp15_, _tmp16_, _tmp17_);
 	}
-	__finally43:
+	__finally45:
 	if (G_UNLIKELY (_inner_error_ != NULL)) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -705,8 +705,8 @@ static void system_collections_collection_base_real_Insert (SystemCollectionsILi
 		_tmp14_ = value;
 		system_collections_collection_base_OnInsertComplete (self, _tmp13_, _tmp14_);
 	}
-	goto __finally44;
-	__catch44_g_error:
+	goto __finally46;
+	__catch46_g_error:
 	{
 		SystemCollectionsArrayList* _tmp15_ = NULL;
 		SystemCollectionsArrayList* _tmp16_ = NULL;
@@ -718,7 +718,7 @@ static void system_collections_collection_base_real_Insert (SystemCollectionsILi
 		_tmp17_ = index;
 		system_collections_ilist_RemoveAt ((SystemCollectionsIList*) _tmp16_, _tmp17_);
 	}
-	__finally44:
+	__finally46:
 	if (G_UNLIKELY (_inner_error_ != NULL)) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

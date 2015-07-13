@@ -6,14 +6,25 @@
 
 #include <glib.h>
 #include <glib-object.h>
+#include <stdlib.h>
+#include <string.h>
 #include <gee.h>
 #include <float.h>
 #include <math.h>
-#include <stdlib.h>
-#include <string.h>
 
 G_BEGIN_DECLS
 
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE (system_text_regular_expressions_capture_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE, SystemTextRegularExpressionsCapture))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE, SystemTextRegularExpressionsCaptureClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_CAPTURE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_CAPTURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE, SystemTextRegularExpressionsCaptureClass))
+
+typedef struct _SystemTextRegularExpressionsCapture SystemTextRegularExpressionsCapture;
+typedef struct _SystemTextRegularExpressionsCaptureClass SystemTextRegularExpressionsCaptureClass;
+typedef struct _SystemTextRegularExpressionsCapturePrivate SystemTextRegularExpressionsCapturePrivate;
 
 #define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
@@ -38,6 +49,118 @@ typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIf
 
 typedef struct _SystemCollectionsICollection SystemCollectionsICollection;
 typedef struct _SystemCollectionsICollectionIface SystemCollectionsICollectionIface;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE_COLLECTION (system_text_regular_expressions_capture_collection_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE_COLLECTION, SystemTextRegularExpressionsCaptureCollection))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE_COLLECTION, SystemTextRegularExpressionsCaptureCollectionClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_CAPTURE_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE_COLLECTION))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_CAPTURE_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE_COLLECTION))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_CAPTURE_COLLECTION, SystemTextRegularExpressionsCaptureCollectionClass))
+
+typedef struct _SystemTextRegularExpressionsCaptureCollection SystemTextRegularExpressionsCaptureCollection;
+typedef struct _SystemTextRegularExpressionsCaptureCollectionClass SystemTextRegularExpressionsCaptureCollectionClass;
+typedef struct _SystemTextRegularExpressionsCaptureCollectionPrivate SystemTextRegularExpressionsCaptureCollectionPrivate;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_TYPE_ENUMERATOR (system_text_regular_expressions_capture_collection_enumerator_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsCaptureCollectionEnumerator))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsCaptureCollectionEnumeratorClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_IS_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_TYPE_ENUMERATOR))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_IS_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_TYPE_ENUMERATOR))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_CAPTURE_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsCaptureCollectionEnumeratorClass))
+
+typedef struct _SystemTextRegularExpressionsCaptureCollectionEnumerator SystemTextRegularExpressionsCaptureCollectionEnumerator;
+typedef struct _SystemTextRegularExpressionsCaptureCollectionEnumeratorClass SystemTextRegularExpressionsCaptureCollectionEnumeratorClass;
+typedef struct _SystemTextRegularExpressionsCaptureCollectionEnumeratorPrivate SystemTextRegularExpressionsCaptureCollectionEnumeratorPrivate;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP (system_text_regular_expressions_group_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP, SystemTextRegularExpressionsGroup))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP, SystemTextRegularExpressionsGroupClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_GROUP(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_GROUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP, SystemTextRegularExpressionsGroupClass))
+
+typedef struct _SystemTextRegularExpressionsGroup SystemTextRegularExpressionsGroup;
+typedef struct _SystemTextRegularExpressionsGroupClass SystemTextRegularExpressionsGroupClass;
+typedef struct _SystemTextRegularExpressionsGroupPrivate SystemTextRegularExpressionsGroupPrivate;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP_COLLECTION (system_text_regular_expressions_group_collection_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP_COLLECTION, SystemTextRegularExpressionsGroupCollection))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP_COLLECTION, SystemTextRegularExpressionsGroupCollectionClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_GROUP_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP_COLLECTION))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_GROUP_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP_COLLECTION))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_GROUP_COLLECTION, SystemTextRegularExpressionsGroupCollectionClass))
+
+typedef struct _SystemTextRegularExpressionsGroupCollection SystemTextRegularExpressionsGroupCollection;
+typedef struct _SystemTextRegularExpressionsGroupCollectionClass SystemTextRegularExpressionsGroupCollectionClass;
+typedef struct _SystemTextRegularExpressionsGroupCollectionPrivate SystemTextRegularExpressionsGroupCollectionPrivate;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH (system_text_regular_expressions_match_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH, SystemTextRegularExpressionsMatch))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH, SystemTextRegularExpressionsMatchClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_MATCH(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_MATCH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH, SystemTextRegularExpressionsMatchClass))
+
+typedef struct _SystemTextRegularExpressionsMatch SystemTextRegularExpressionsMatch;
+typedef struct _SystemTextRegularExpressionsMatchClass SystemTextRegularExpressionsMatchClass;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_TYPE_ENUMERATOR (system_text_regular_expressions_group_collection_enumerator_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsGroupCollectionEnumerator))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsGroupCollectionEnumeratorClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_IS_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_TYPE_ENUMERATOR))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_IS_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_TYPE_ENUMERATOR))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_GROUP_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsGroupCollectionEnumeratorClass))
+
+typedef struct _SystemTextRegularExpressionsGroupCollectionEnumerator SystemTextRegularExpressionsGroupCollectionEnumerator;
+typedef struct _SystemTextRegularExpressionsGroupCollectionEnumeratorClass SystemTextRegularExpressionsGroupCollectionEnumeratorClass;
+typedef struct _SystemTextRegularExpressionsGroupCollectionEnumeratorPrivate SystemTextRegularExpressionsGroupCollectionEnumeratorPrivate;
+typedef struct _SystemTextRegularExpressionsMatchPrivate SystemTextRegularExpressionsMatchPrivate;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_STATIC_REGEX (system_text_regular_expressions_static_regex_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_STATIC_REGEX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_STATIC_REGEX, SystemTextRegularExpressionsStaticRegex))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_STATIC_REGEX_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_STATIC_REGEX, SystemTextRegularExpressionsStaticRegexClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_STATIC_REGEX(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_STATIC_REGEX))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_STATIC_REGEX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_STATIC_REGEX))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_STATIC_REGEX_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_STATIC_REGEX, SystemTextRegularExpressionsStaticRegexClass))
+
+typedef struct _SystemTextRegularExpressionsStaticRegex SystemTextRegularExpressionsStaticRegex;
+typedef struct _SystemTextRegularExpressionsStaticRegexClass SystemTextRegularExpressionsStaticRegexClass;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_REGEX (system_text_regular_expressions_regex_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_REGEX, SystemTextRegularExpressionsRegex))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_REGEX, SystemTextRegularExpressionsRegexClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_REGEX(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_REGEX))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_REGEX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_REGEX))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_REGEX, SystemTextRegularExpressionsRegexClass))
+
+typedef struct _SystemTextRegularExpressionsRegex SystemTextRegularExpressionsRegex;
+typedef struct _SystemTextRegularExpressionsRegexClass SystemTextRegularExpressionsRegexClass;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH_COLLECTION (system_text_regular_expressions_match_collection_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH_COLLECTION, SystemTextRegularExpressionsMatchCollection))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH_COLLECTION, SystemTextRegularExpressionsMatchCollectionClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_MATCH_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH_COLLECTION))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_IS_MATCH_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH_COLLECTION))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_MATCH_COLLECTION, SystemTextRegularExpressionsMatchCollectionClass))
+
+typedef struct _SystemTextRegularExpressionsMatchCollection SystemTextRegularExpressionsMatchCollection;
+typedef struct _SystemTextRegularExpressionsMatchCollectionClass SystemTextRegularExpressionsMatchCollectionClass;
+typedef struct _SystemTextRegularExpressionsMatchCollectionPrivate SystemTextRegularExpressionsMatchCollectionPrivate;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_TYPE_ENUMERATOR (system_text_regular_expressions_match_collection_enumerator_get_type ())
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsMatchCollectionEnumerator))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsMatchCollectionEnumeratorClass))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_IS_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_TYPE_ENUMERATOR))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_IS_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_TYPE_ENUMERATOR))
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TEXT_REGULAR_EXPRESSIONS_MATCH_COLLECTION_TYPE_ENUMERATOR, SystemTextRegularExpressionsMatchCollectionEnumeratorClass))
+
+typedef struct _SystemTextRegularExpressionsMatchCollectionEnumerator SystemTextRegularExpressionsMatchCollectionEnumerator;
+typedef struct _SystemTextRegularExpressionsMatchCollectionEnumeratorClass SystemTextRegularExpressionsMatchCollectionEnumeratorClass;
+typedef struct _SystemTextRegularExpressionsMatchCollectionEnumeratorPrivate SystemTextRegularExpressionsMatchCollectionEnumeratorPrivate;
+typedef struct _SystemTextRegularExpressionsStaticRegexPrivate SystemTextRegularExpressionsStaticRegexPrivate;
+
+#define SYSTEM_TEXT_REGULAR_EXPRESSIONS_TYPE_REGEX_OPTIONS (system_text_regular_expressions_regex_options_get_type ())
+typedef struct _SystemTextRegularExpressionsRegexPrivate SystemTextRegularExpressionsRegexPrivate;
 
 #define SYSTEM_COLLECTIONS_TYPE_ICOMPARER (system_collections_icomparer_get_type ())
 #define SYSTEM_COLLECTIONS_ICOMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ICOMPARER, SystemCollectionsIComparer))
@@ -473,6 +596,20 @@ typedef struct _SystemRuntimeSerializationISerializableIface SystemRuntimeSerial
 typedef struct _SystemRuntimeSerializationIDeserializationCallback SystemRuntimeSerializationIDeserializationCallback;
 typedef struct _SystemRuntimeSerializationIDeserializationCallbackIface SystemRuntimeSerializationIDeserializationCallbackIface;
 
+struct _SystemTextRegularExpressionsCapture {
+	GTypeInstance parent_instance;
+	volatile int ref_count;
+	SystemTextRegularExpressionsCapturePrivate * priv;
+	gchar* _text;
+	gint _index;
+	gint _length;
+};
+
+struct _SystemTextRegularExpressionsCaptureClass {
+	GTypeClass parent_class;
+	void (*finalize) (SystemTextRegularExpressionsCapture *self);
+};
+
 struct _SystemCollectionsIEnumeratorIface {
 	GTypeInterface parent_iface;
 	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
@@ -498,6 +635,123 @@ struct _SystemCollectionsICollectionIface {
 	gint (*get_Count) (SystemCollectionsICollection* self);
 	GObject* (*get_SyncRoot) (SystemCollectionsICollection* self);
 	gboolean (*get_IsSynchronized) (SystemCollectionsICollection* self);
+};
+
+struct _SystemTextRegularExpressionsCaptureCollection {
+	GObject parent_instance;
+	SystemTextRegularExpressionsCaptureCollectionPrivate * priv;
+};
+
+struct _SystemTextRegularExpressionsCaptureCollectionClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemTextRegularExpressionsCaptureCollectionEnumerator {
+	GObject parent_instance;
+	SystemTextRegularExpressionsCaptureCollectionEnumeratorPrivate * priv;
+};
+
+struct _SystemTextRegularExpressionsCaptureCollectionEnumeratorClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemTextRegularExpressionsGroup {
+	SystemTextRegularExpressionsCapture parent_instance;
+	SystemTextRegularExpressionsGroupPrivate * priv;
+	gint _capcount;
+	SystemTextRegularExpressionsCaptureCollection* _capcoll;
+};
+
+struct _SystemTextRegularExpressionsGroupClass {
+	SystemTextRegularExpressionsCaptureClass parent_class;
+};
+
+struct _SystemTextRegularExpressionsGroupCollection {
+	GObject parent_instance;
+	SystemTextRegularExpressionsGroupCollectionPrivate * priv;
+};
+
+struct _SystemTextRegularExpressionsGroupCollectionClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemTextRegularExpressionsGroupCollectionEnumerator {
+	GObject parent_instance;
+	SystemTextRegularExpressionsGroupCollectionEnumeratorPrivate * priv;
+};
+
+struct _SystemTextRegularExpressionsGroupCollectionEnumeratorClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemTextRegularExpressionsMatch {
+	SystemTextRegularExpressionsGroup parent_instance;
+	SystemTextRegularExpressionsMatchPrivate * priv;
+	SystemTextRegularExpressionsGroupCollection* _groupcoll;
+	GMatchInfo* _matchinfo;
+};
+
+struct _SystemTextRegularExpressionsMatchClass {
+	SystemTextRegularExpressionsGroupClass parent_class;
+	void (*Reset) (SystemTextRegularExpressionsMatch* self, SystemTextRegularExpressionsRegex* regex, const gchar* text, gint textbeg, gint textend, gint textstart);
+	gchar* (*Result) (SystemTextRegularExpressionsMatch* self, const gchar* replacement);
+	SystemTextRegularExpressionsGroupCollection* (*get_Groups) (SystemTextRegularExpressionsMatch* self);
+};
+
+struct _SystemTextRegularExpressionsMatchCollection {
+	GObject parent_instance;
+	SystemTextRegularExpressionsMatchCollectionPrivate * priv;
+};
+
+struct _SystemTextRegularExpressionsMatchCollectionClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemTextRegularExpressionsMatchCollectionEnumerator {
+	GObject parent_instance;
+	SystemTextRegularExpressionsMatchCollectionEnumeratorPrivate * priv;
+};
+
+struct _SystemTextRegularExpressionsMatchCollectionEnumeratorClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemTextRegularExpressionsStaticRegex {
+	GTypeInstance parent_instance;
+	volatile int ref_count;
+	SystemTextRegularExpressionsStaticRegexPrivate * priv;
+};
+
+struct _SystemTextRegularExpressionsStaticRegexClass {
+	GTypeClass parent_class;
+	void (*finalize) (SystemTextRegularExpressionsStaticRegex *self);
+};
+
+typedef enum  {
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_None = 0x0000,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_IgnoreCase = 0x0001,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_Multiline = 0x0002,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_ExplicitCapture = 0x0004,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_Compiled = 0x0008,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_Singleline = 0x0010,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_IgnorePatternWhitespace = 0x0020,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_RightToLeft = 0x0040,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_ECMAScript = 0x0100,
+	SYSTEM_TEXT_REGULAR_EXPRESSIONS_REGEX_OPTIONS_CultureInvariant = 0x0200
+} SystemTextRegularExpressionsRegexOptions;
+
+struct _SystemTextRegularExpressionsRegex {
+	SystemTextRegularExpressionsStaticRegex parent_instance;
+	SystemTextRegularExpressionsRegexPrivate * priv;
+	gchar* _pattern;
+	SystemTextRegularExpressionsRegexOptions _roptions;
+	GRegex* _regex;
+	GTimeSpan _internalMatchTimeout;
+	gint _capsize;
+};
+
+struct _SystemTextRegularExpressionsRegexClass {
+	SystemTextRegularExpressionsStaticRegexClass parent_class;
 };
 
 struct _SystemCollectionsIComparerIface {
@@ -1020,9 +1274,79 @@ struct _SystemRuntimeSerializationIDeserializationCallbackIface {
 };
 
 
+gpointer system_text_regular_expressions_capture_ref (gpointer instance);
+void system_text_regular_expressions_capture_unref (gpointer instance);
+GParamSpec* system_text_regular_expressions_param_spec_capture (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
+void system_text_regular_expressions_value_set_capture (GValue* value, gpointer v_object);
+void system_text_regular_expressions_value_take_capture (GValue* value, gpointer v_object);
+gpointer system_text_regular_expressions_value_get_capture (const GValue* value);
+GType system_text_regular_expressions_capture_get_type (void) G_GNUC_CONST;
+gchar* system_text_regular_expressions_capture_ToString (SystemTextRegularExpressionsCapture* self);
+gint system_text_regular_expressions_capture_get_Index (SystemTextRegularExpressionsCapture* self);
+gint system_text_regular_expressions_capture_get_Length (SystemTextRegularExpressionsCapture* self);
+gchar* system_text_regular_expressions_capture_get_Value (SystemTextRegularExpressionsCapture* self);
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_icollection_get_type (void) G_GNUC_CONST;
+GType system_text_regular_expressions_capture_collection_get_type (void) G_GNUC_CONST;
+SystemTextRegularExpressionsCapture* system_text_regular_expressions_capture_collection_get (SystemTextRegularExpressionsCaptureCollection* self, gint i);
+GType system_text_regular_expressions_capture_collection_enumerator_get_type (void) G_GNUC_CONST;
+GType system_text_regular_expressions_group_get_type (void) G_GNUC_CONST;
+gboolean system_text_regular_expressions_group_get_Success (SystemTextRegularExpressionsGroup* self);
+SystemTextRegularExpressionsCaptureCollection* system_text_regular_expressions_group_get_Captures (SystemTextRegularExpressionsGroup* self);
+GType system_text_regular_expressions_group_collection_get_type (void) G_GNUC_CONST;
+GType system_text_regular_expressions_match_get_type (void) G_GNUC_CONST;
+SystemTextRegularExpressionsGroupCollection* system_text_regular_expressions_group_collection_new (SystemTextRegularExpressionsMatch* match);
+SystemTextRegularExpressionsGroupCollection* system_text_regular_expressions_group_collection_construct (GType object_type, SystemTextRegularExpressionsMatch* match);
+SystemTextRegularExpressionsGroup* system_text_regular_expressions_group_collection_get (SystemTextRegularExpressionsGroupCollection* self, gint groupnum);
+GType system_text_regular_expressions_group_collection_enumerator_get_type (void) G_GNUC_CONST;
+SystemTextRegularExpressionsGroupCollectionEnumerator* system_text_regular_expressions_group_collection_enumerator_new (SystemTextRegularExpressionsGroupCollection* collection);
+SystemTextRegularExpressionsGroupCollectionEnumerator* system_text_regular_expressions_group_collection_enumerator_construct (GType object_type, SystemTextRegularExpressionsGroupCollection* collection);
+gpointer system_text_regular_expressions_static_regex_ref (gpointer instance);
+void system_text_regular_expressions_static_regex_unref (gpointer instance);
+GParamSpec* system_text_regular_expressions_param_spec_static_regex (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
+void system_text_regular_expressions_value_set_static_regex (GValue* value, gpointer v_object);
+void system_text_regular_expressions_value_take_static_regex (GValue* value, gpointer v_object);
+gpointer system_text_regular_expressions_value_get_static_regex (const GValue* value);
+GType system_text_regular_expressions_static_regex_get_type (void) G_GNUC_CONST;
+GType system_text_regular_expressions_regex_get_type (void) G_GNUC_CONST;
+SystemTextRegularExpressionsMatch* system_text_regular_expressions_match_new (GMatchInfo* matchinfo);
+SystemTextRegularExpressionsMatch* system_text_regular_expressions_match_construct (GType object_type, GMatchInfo* matchinfo);
+SystemTextRegularExpressionsMatch* system_text_regular_expressions_match_NextMatch (SystemTextRegularExpressionsMatch* self);
+gchar* system_text_regular_expressions_match_Result (SystemTextRegularExpressionsMatch* self, const gchar* replacement);
+SystemTextRegularExpressionsGroupCollection* system_text_regular_expressions_match_get_Groups (SystemTextRegularExpressionsMatch* self);
+GType system_text_regular_expressions_match_collection_get_type (void) G_GNUC_CONST;
+SystemTextRegularExpressionsMatchCollection* system_text_regular_expressions_match_collection_new (GRegex* regex, const gchar* input, gint beginning, gint length, gint startat);
+SystemTextRegularExpressionsMatchCollection* system_text_regular_expressions_match_collection_construct (GType object_type, GRegex* regex, const gchar* input, gint beginning, gint length, gint startat);
+GType system_text_regular_expressions_match_collection_enumerator_get_type (void) G_GNUC_CONST;
+GType system_text_regular_expressions_regex_options_get_type (void) G_GNUC_CONST;
+SystemTextRegularExpressionsStaticRegex* system_text_regular_expressions_static_regex_construct (GType object_type, const gchar* pattern, SystemTextRegularExpressionsRegexOptions options);
+gboolean system_text_regular_expressions_static_regex_IsMatch (const gchar* input, const gchar* pattern, SystemTextRegularExpressionsRegexOptions options, GTimeSpan matchTimeout);
+SystemTextRegularExpressionsMatch* system_text_regular_expressions_static_regex_Match (const gchar* input, const gchar* pattern, SystemTextRegularExpressionsRegexOptions options, GTimeSpan matchTimeout);
+SystemTextRegularExpressionsMatchCollection* system_text_regular_expressions_static_regex_Matches (const gchar* input, const gchar* pattern, SystemTextRegularExpressionsRegexOptions options, GTimeSpan matchTimeout);
+gchar* system_text_regular_expressions_static_regex_Replace (const gchar* input, const gchar* pattern, const gchar* replacement, SystemTextRegularExpressionsRegexOptions options, GTimeSpan matchTimeout);
+gchar** system_text_regular_expressions_static_regex_Split (const gchar* input, const gchar* pattern, SystemTextRegularExpressionsRegexOptions options, GTimeSpan matchTimeout, int* result_length1);
+gchar* system_text_regular_expressions_static_regex_Escape (const gchar* str);
+gchar* system_text_regular_expressions_static_regex_Unescape (const gchar* str);
+GRegexCompileFlags system_text_regular_expressions_static_regex_ConvertOptions (SystemTextRegularExpressionsRegexOptions options);
+extern GTimeSpan system_text_regular_expressions_regex_InfiniteMatchTimeout;
+SystemTextRegularExpressionsRegex* system_text_regular_expressions_regex_new (const gchar* pattern, SystemTextRegularExpressionsRegexOptions options, GTimeSpan matchTimeout, gboolean useCache);
+SystemTextRegularExpressionsRegex* system_text_regular_expressions_regex_construct (GType object_type, const gchar* pattern, SystemTextRegularExpressionsRegexOptions options, GTimeSpan matchTimeout, gboolean useCache);
+gchar* system_text_regular_expressions_regex_ToString (SystemTextRegularExpressionsRegex* self);
+gchar** system_text_regular_expressions_regex_GetGroupNames (SystemTextRegularExpressionsRegex* self, int* result_length1);
+gint* system_text_regular_expressions_regex_GetGroupNumbers (SystemTextRegularExpressionsRegex* self, int* result_length1);
+gchar* system_text_regular_expressions_regex_GroupNameFromNumber (SystemTextRegularExpressionsRegex* self, gint i);
+gint system_text_regular_expressions_regex_GroupNumberFromName (SystemTextRegularExpressionsRegex* self, const gchar* name);
+gboolean system_text_regular_expressions_regex_IsMatch (SystemTextRegularExpressionsRegex* self, const gchar* input, gint startat);
+SystemTextRegularExpressionsMatch* system_text_regular_expressions_regex_Match (SystemTextRegularExpressionsRegex* self, const gchar* input, gint beginning, gint length);
+SystemTextRegularExpressionsMatchCollection* system_text_regular_expressions_regex_Matches (SystemTextRegularExpressionsRegex* self, const gchar* input, gint startat);
+gchar* system_text_regular_expressions_regex_Replace (SystemTextRegularExpressionsRegex* self, const gchar* input, const gchar* replacement, gint count, gint startat);
+gchar** system_text_regular_expressions_regex_Split (SystemTextRegularExpressionsRegex* self, const gchar* input, gint count, gint startat, int* result_length1);
+gint system_text_regular_expressions_regex_get_CacheSize (void);
+void system_text_regular_expressions_regex_set_CacheSize (gint value);
+SystemTextRegularExpressionsRegexOptions system_text_regular_expressions_regex_get_Options (SystemTextRegularExpressionsRegex* self);
+GTimeSpan system_text_regular_expressions_regex_get_MatchTimeout (SystemTextRegularExpressionsRegex* self);
+gboolean system_text_regular_expressions_regex_get_RightToLeft (SystemTextRegularExpressionsRegex* self);
 void system_collections_icollection_CopyTo (SystemCollectionsICollection* self, GArray* array, gint arrayIndex);
 SystemCollectionsIEnumerator* system_collections_icollection_iterator (SystemCollectionsICollection* self);
 gint system_collections_icollection_get_Count (SystemCollectionsICollection* self);

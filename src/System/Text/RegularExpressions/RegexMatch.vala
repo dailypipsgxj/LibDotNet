@@ -37,18 +37,9 @@ namespace System.Text.RegularExpressions
     {
         //internal static Match s_empty = new Match(null, 1, "", 0, 0, 0);
         internal GroupCollection _groupcoll;
-		internal GLib.MatchInfo _matchinfo;
+		internal unowned GLib.MatchInfo _matchinfo;
 
-        /// <summary>
-        /// Returns an empty Match object.
-        /// </summary>
-        public static Match Empty
-        {
-            get
-            {
-            }
-        }
-
+ 
         public Match(GLib.MatchInfo matchinfo){
 			_matchinfo = matchinfo;
 			base();
@@ -80,7 +71,7 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public Match NextMatch()
         {
-            //return _regex.Run(false, _length, _text, _textbeg, _textend - _textbeg, _textpos);
+            return this;//return _regex.Run(false, _length, _text, _textbeg, _textend - _textbeg, _textpos);
         }
 
         /// <summary>

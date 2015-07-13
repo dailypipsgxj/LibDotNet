@@ -18,7 +18,7 @@ namespace System.Text.RegularExpressions
     /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
-    public class CaptureCollection : ICollection, IEnumerable
+    public class CaptureCollection : Object, ICollection, IEnumerable
     {
         private Group _group;
         private int _capcount;
@@ -41,7 +41,7 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns a specific capture, by index, in this collection.
         /// </summary>
-        public Capture get (int i) {
+        public new Capture get (int i) {
 		{ return GetCapture(i); }
         }
 
@@ -71,7 +71,7 @@ namespace System.Text.RegularExpressions
             get { return (Object)_group; }
         }
 
-        public class Enumerator : IEnumerator
+        public class Enumerator : Object, IEnumerator
         {
             private   CaptureCollection _collection;
             private int _index;
@@ -97,14 +97,11 @@ namespace System.Text.RegularExpressions
                 return _index < size;
             }
 
-            public Capture Current
+            public Object Current
             {
                 owned get
                 {
-                    if (_index < 0 || _index >= _collection.Count)
-                        //throw new InvalidOperationException.INVALIDOPERATION("SR.EnumNotStarted");
-
-                    return _collection[_index];
+                    return _currentElement;
                 }
             }
             

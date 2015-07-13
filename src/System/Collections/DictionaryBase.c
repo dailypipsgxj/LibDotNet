@@ -364,8 +364,8 @@ static void system_collections_dictionary_base_real_set (SystemCollectionsDictio
 		_tmp20_ = value;
 		system_collections_dictionary_base_OnSetComplete (self, _tmp18_, _tmp19_, _tmp20_);
 	}
-	goto __finally45;
-	__catch45_g_error:
+	goto __finally47;
+	__catch47_g_error:
 	{
 		gboolean _tmp21_ = FALSE;
 		g_clear_error (&_inner_error_);
@@ -391,7 +391,7 @@ static void system_collections_dictionary_base_real_set (SystemCollectionsDictio
 			system_collections_idictionary_Remove ((SystemCollectionsIDictionary*) _tmp27_, _tmp28_);
 		}
 	}
-	__finally45:
+	__finally47:
 	if (G_UNLIKELY (_inner_error_ != NULL)) {
 		_g_object_unref0 (temp);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -458,8 +458,8 @@ static void system_collections_dictionary_base_real_Add (SystemCollectionsIDicti
 		_tmp9_ = value;
 		system_collections_dictionary_base_OnInsertComplete (self, _tmp8_, _tmp9_);
 	}
-	goto __finally46;
-	__catch46_g_error:
+	goto __finally48;
+	__catch48_g_error:
 	{
 		SystemCollectionsHashtable* _tmp10_ = NULL;
 		SystemCollectionsHashtable* _tmp11_ = NULL;
@@ -471,7 +471,7 @@ static void system_collections_dictionary_base_real_Add (SystemCollectionsIDicti
 		_tmp12_ = key;
 		system_collections_idictionary_Remove ((SystemCollectionsIDictionary*) _tmp11_, _tmp12_);
 	}
-	__finally46:
+	__finally48:
 	if (G_UNLIKELY (_inner_error_ != NULL)) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -541,8 +541,8 @@ static void system_collections_dictionary_base_real_Remove (SystemCollectionsIDi
 			_tmp16_ = temp;
 			system_collections_dictionary_base_OnRemoveComplete (self, _tmp15_, _tmp16_);
 		}
-		goto __finally47;
-		__catch47_g_error:
+		goto __finally49;
+		__catch49_g_error:
 		{
 			SystemCollectionsHashtable* _tmp17_ = NULL;
 			SystemCollectionsHashtable* _tmp18_ = NULL;
@@ -556,7 +556,7 @@ static void system_collections_dictionary_base_real_Remove (SystemCollectionsIDi
 			_tmp20_ = temp;
 			system_collections_idictionary_Add ((SystemCollectionsIDictionary*) _tmp18_, _tmp19_, _tmp20_);
 		}
-		__finally47:
+		__finally49:
 		if (G_UNLIKELY (_inner_error_ != NULL)) {
 			_g_object_unref0 (temp);
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
