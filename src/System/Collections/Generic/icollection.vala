@@ -34,6 +34,11 @@ namespace System.Collections.Generic {
         // Number of items in the collections.        
         public abstract int Count { get; }
 
+        public virtual IEnumerator iterator()
+		{
+			return GetEnumerator();
+		}
+
         public abstract bool IsReadOnly { get; }
 
         public virtual void Add(T item) {

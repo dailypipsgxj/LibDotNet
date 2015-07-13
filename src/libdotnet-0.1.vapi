@@ -18,6 +18,7 @@ namespace System {
 				public virtual bool Contains (T item);
 				public virtual void CopyTo (T[] array, int arrayIndex);
 				public virtual bool Remove (T item);
+				public virtual System.Collections.Generic.IEnumerator iterator ();
 				public abstract int Count { get; }
 				public abstract bool IsReadOnly { get; }
 			}
@@ -84,36 +85,6 @@ namespace System {
 				public abstract void SymmetricExceptWith (System.Collections.Generic.IEnumerable<T> other);
 				public abstract void UnionWith (System.Collections.Generic.IEnumerable<T> other);
 			}
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class ArrayList : Gee.ArrayList<GLib.Object>, System.Collections.IList, System.Collections.IEnumerable, System.Collections.ICollection {
-			public ArrayList (int capacity = _defaultCapacity);
-			public static System.Collections.ArrayList Adapter (System.Collections.IList list);
-			public virtual void AddRange (System.Collections.ICollection c);
-			public virtual int BinarySearch (int index = 0, int count = @this.Count - 1, GLib.Object value, System.Collections.IComparer? comparer = null);
-			public virtual GLib.Object Clone ();
-			public virtual void CopyToIndex (int index, GLib.Object[] array, int arrayIndex, int count);
-			public static System.Collections.IList FixedSize (System.Collections.IList list);
-			public virtual System.Collections.IEnumerator GetEnumerator ();
-			public virtual System.Collections.ArrayList GetRange (int index, int count);
-			public virtual void InsertRange (int index, System.Collections.ICollection c);
-			public virtual int LastIndexOf (GLib.Object value, int startIndex = @this.size, int count = 1);
-			public static System.Collections.IList ReadOnly (System.Collections.IList list);
-			public virtual void RemoveRange (int index, int count);
-			public static System.Collections.ArrayList Repeat (GLib.Object value, int count = 1);
-			public virtual void Reverse (int index = 0, int count = @this.Count);
-			public virtual void SetRange (int index, System.Collections.ICollection c);
-			public virtual void Sort (int index = 0, int count = @this.Count, System.Collections.IComparer? comparer = null);
-			public static System.Collections.IList Synchronized (System.Collections.IList list);
-			public virtual GLib.Object[] ToArray ();
-			public virtual void TrimToSize ();
-			public ArrayList.WithCollection (System.Collections.ICollection c);
-			public virtual int Capacity { get; set; }
-			public virtual int Count { get; }
-			public virtual bool IsFixedSize { get; }
-			public virtual bool IsReadOnly { get; }
-			public virtual bool IsSynchronized { get; }
-			public virtual GLib.Object SyncRoot { get; }
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
 		public class DictionaryEntry {

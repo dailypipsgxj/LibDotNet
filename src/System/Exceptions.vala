@@ -16,7 +16,8 @@ namespace System {
 		NULL,
 		INVALIDOFFSETLENGTH,
 		NOTFOUND,
-		IMPLEMENTICOMPARABLE
+		IMPLEMENTICOMPARABLE,
+		INVALID_ARRAY_TYPE
 	}
 
 	errordomain ArgumentNullException {

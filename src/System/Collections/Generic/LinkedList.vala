@@ -8,21 +8,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace System.Collections.Generic
 {
 
-    public class LinkedList<T> : Gee.LinkedList, ICollection<T>, System.Collections.ICollection, IReadOnlyCollection<T>
+    public class LinkedList<T> : Gee.LinkedList<T>, ICollection<T>, System.Collections.ICollection, IReadOnlyCollection<T>
     {
         // This LinkedList is a doubly-Linked circular list.
-        internal LinkedListNode<T> head;
-        internal int count;
-        internal int version;
         private Object _syncRoot;
 
-        public LinkedList(IEnumerable<T> collection)
+        public LinkedList(IEnumerable<T>? collection = null)
         {
-            if (collection == null)
-            {
-                throw ArgumentNullException("collection");
-            }
-
             foreach (T item in collection)
             {
                 AddLast(item);
@@ -31,7 +23,7 @@ namespace System.Collections.Generic
 
         public int Count
         {
-            get { return count; }
+            get { return size; }
         }
 
         public LinkedListNode<T> First
@@ -411,7 +403,7 @@ namespace System.Collections.Generic
                 Object[] objects = array as Object[];
                 if (objects == null)
                 {
-                    throw ArgumentException(SR.Invalid_Array_Type);
+                    throw new ArgumentException.INVALID_ARRAY_TYPE("SR.Invalid_Array_Type");
                 }
                 LinkedListNode<T> node = head;
                 try
@@ -427,7 +419,7 @@ namespace System.Collections.Generic
                 }
                 catch (ArrayTypeMismatchException e)
                 {
-                    throw ArgumentException(SR.Invalid_Array_Type);
+                    throw new ArgumentException.INVALID_ARRAY_TYPE("SR.Invalid_Array_Type");
                 }
             }
         }
@@ -437,7 +429,6 @@ namespace System.Collections.Generic
             return GetEnumerator();
         }
 
-        // [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
         [Compact]
         public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {

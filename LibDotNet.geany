@@ -23,13 +23,14 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=1
-FILE_NAME_0=2105;Vala;0;EUTF-8;1;1;0;%2Fhome%2Fdeveloper%2FLibDotNet%2Fsrc%2FSystem%2FText%2FRegularExpressions%2FRegexCapture.vala;0;4
-FILE_NAME_1=125;Make;0;EUTF-8;1;1;0;%2Fhome%2Fdeveloper%2FLibDotNet%2FMakefile.am;0;4
-FILE_NAME_2=3619;Vala;0;EUTF-8;1;1;0;%2Fhome%2Fdeveloper%2FLibDotNet%2Fsrc%2FSystem%2FText%2FRegularExpressions%2FRegexCaptureCollection.vala;0;4
+current_page=0
+FILE_NAME_0=0;Make;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2FMakefile.am;0;4
+FILE_NAME_1=138;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2FGeneric%2FEqualityComparer.vala;0;4
+FILE_NAME_2=13993;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2FGeneric%2FLinkedList.vala;0;4
+FILE_NAME_3=0;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2Fiequalitycomparer.vala;0;4
 
 [VTE]
-last_dir=/home/developer
+last_dir=/home
 
 [build-menu]
 NF_00_LB=_Make

@@ -298,17 +298,6 @@ typedef struct _SystemCollectionsQueueQueueEnumerator SystemCollectionsQueueQueu
 typedef struct _SystemCollectionsQueueQueueEnumeratorClass SystemCollectionsQueueQueueEnumeratorClass;
 typedef struct _SystemCollectionsQueueQueueEnumeratorPrivate SystemCollectionsQueueQueueEnumeratorPrivate;
 
-#define SYSTEM_COLLECTIONS_TYPE_ARRAY_LIST (system_collections_array_list_get_type ())
-#define SYSTEM_COLLECTIONS_ARRAY_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ARRAY_LIST, SystemCollectionsArrayList))
-#define SYSTEM_COLLECTIONS_ARRAY_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_TYPE_ARRAY_LIST, SystemCollectionsArrayListClass))
-#define SYSTEM_COLLECTIONS_IS_ARRAY_LIST(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ARRAY_LIST))
-#define SYSTEM_COLLECTIONS_IS_ARRAY_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_TYPE_ARRAY_LIST))
-#define SYSTEM_COLLECTIONS_ARRAY_LIST_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_TYPE_ARRAY_LIST, SystemCollectionsArrayListClass))
-
-typedef struct _SystemCollectionsArrayList SystemCollectionsArrayList;
-typedef struct _SystemCollectionsArrayListClass SystemCollectionsArrayListClass;
-typedef struct _SystemCollectionsArrayListPrivate SystemCollectionsArrayListPrivate;
-
 #define SYSTEM_COLLECTIONS_TYPE_SORTED_LIST (system_collections_sorted_list_get_type ())
 #define SYSTEM_COLLECTIONS_SORTED_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_SORTED_LIST, SystemCollectionsSortedList))
 #define SYSTEM_COLLECTIONS_SORTED_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_TYPE_SORTED_LIST, SystemCollectionsSortedListClass))
@@ -464,6 +453,7 @@ struct _SystemCollectionsGenericICollectionIface {
 	GType (*get_t_type) (SystemCollectionsGenericICollection* self);
 	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericICollection* self);
 	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericICollection* self);
+	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericICollection* self);
 	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*Clear) (SystemCollectionsGenericICollection* self);
 	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
@@ -659,36 +649,6 @@ struct _SystemCollectionsQueueQueueEnumeratorClass {
 	GObject* (*get_Current) (SystemCollectionsQueueQueueEnumerator* self);
 };
 
-struct _SystemCollectionsArrayList {
-	GeeArrayList parent_instance;
-	SystemCollectionsArrayListPrivate * priv;
-};
-
-struct _SystemCollectionsArrayListClass {
-	GeeArrayListClass parent_class;
-	void (*AddRange) (SystemCollectionsArrayList* self, SystemCollectionsICollection* c);
-	gint (*BinarySearch) (SystemCollectionsArrayList* self, gint index, gint count, GObject* value, SystemCollectionsIComparer* comparer);
-	GObject* (*Clone) (SystemCollectionsArrayList* self);
-	void (*CopyToIndex) (SystemCollectionsArrayList* self, gint index, GObject** array, int array_length1, gint arrayIndex, gint count);
-	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsArrayList* self);
-	void (*InsertRange) (SystemCollectionsArrayList* self, gint index, SystemCollectionsICollection* c);
-	gint (*LastIndexOf) (SystemCollectionsArrayList* self, GObject* value, gint startIndex, gint count);
-	void (*RemoveRange) (SystemCollectionsArrayList* self, gint index, gint count);
-	void (*Reverse) (SystemCollectionsArrayList* self, gint index, gint count);
-	void (*SetRange) (SystemCollectionsArrayList* self, gint index, SystemCollectionsICollection* c);
-	SystemCollectionsArrayList* (*GetRange) (SystemCollectionsArrayList* self, gint index, gint count);
-	void (*Sort) (SystemCollectionsArrayList* self, gint index, gint count, SystemCollectionsIComparer* comparer);
-	GObject** (*ToArray) (SystemCollectionsArrayList* self, int* result_length1);
-	void (*TrimToSize) (SystemCollectionsArrayList* self);
-	gint (*get_Capacity) (SystemCollectionsArrayList* self);
-	void (*set_Capacity) (SystemCollectionsArrayList* self, gint value);
-	gint (*get_Count) (SystemCollectionsArrayList* self);
-	gboolean (*get_IsFixedSize) (SystemCollectionsArrayList* self);
-	gboolean (*get_IsReadOnly) (SystemCollectionsArrayList* self);
-	gboolean (*get_IsSynchronized) (SystemCollectionsArrayList* self);
-	GObject* (*get_SyncRoot) (SystemCollectionsArrayList* self);
-};
-
 struct _SystemCollectionsSortedList {
 	GeeTreeMap parent_instance;
 	SystemCollectionsSortedListPrivate * priv;
@@ -827,6 +787,7 @@ GType system_idisposable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_iterator (SystemCollectionsGenericICollection* self);
 void system_collections_generic_icollection_Add (SystemCollectionsGenericICollection* self, gconstpointer item);
 void system_collections_generic_icollection_Clear (SystemCollectionsGenericICollection* self);
 gboolean system_collections_generic_icollection_Contains (SystemCollectionsGenericICollection* self, gconstpointer item);
@@ -950,37 +911,6 @@ SystemCollectionsQueueQueueEnumerator* system_collections_queue_queue_enumerator
 gboolean system_collections_queue_queue_enumerator_MoveNext (SystemCollectionsQueueQueueEnumerator* self);
 void system_collections_queue_queue_enumerator_Reset (SystemCollectionsQueueQueueEnumerator* self);
 GObject* system_collections_queue_queue_enumerator_get_Current (SystemCollectionsQueueQueueEnumerator* self);
-GType system_collections_array_list_get_type (void) G_GNUC_CONST;
-SystemCollectionsArrayList* system_collections_array_list_new (gint capacity);
-SystemCollectionsArrayList* system_collections_array_list_construct (GType object_type, gint capacity);
-SystemCollectionsArrayList* system_collections_array_list_new_WithCollection (SystemCollectionsICollection* c);
-SystemCollectionsArrayList* system_collections_array_list_construct_WithCollection (GType object_type, SystemCollectionsICollection* c);
-SystemCollectionsArrayList* system_collections_array_list_Adapter (SystemCollectionsIList* list);
-void system_collections_array_list_AddRange (SystemCollectionsArrayList* self, SystemCollectionsICollection* c);
-gint system_collections_array_list_BinarySearch (SystemCollectionsArrayList* self, gint index, gint count, GObject* value, SystemCollectionsIComparer* comparer);
-GObject* system_collections_array_list_Clone (SystemCollectionsArrayList* self);
-void system_collections_array_list_CopyToIndex (SystemCollectionsArrayList* self, gint index, GObject** array, int array_length1, gint arrayIndex, gint count);
-SystemCollectionsIList* system_collections_array_list_FixedSize (SystemCollectionsIList* list);
-SystemCollectionsIEnumerator* system_collections_array_list_GetEnumerator (SystemCollectionsArrayList* self);
-void system_collections_array_list_InsertRange (SystemCollectionsArrayList* self, gint index, SystemCollectionsICollection* c);
-gint system_collections_array_list_LastIndexOf (SystemCollectionsArrayList* self, GObject* value, gint startIndex, gint count);
-SystemCollectionsIList* system_collections_array_list_ReadOnly (SystemCollectionsIList* list);
-void system_collections_array_list_RemoveRange (SystemCollectionsArrayList* self, gint index, gint count);
-SystemCollectionsArrayList* system_collections_array_list_Repeat (GObject* value, gint count);
-void system_collections_array_list_Reverse (SystemCollectionsArrayList* self, gint index, gint count);
-void system_collections_array_list_SetRange (SystemCollectionsArrayList* self, gint index, SystemCollectionsICollection* c);
-SystemCollectionsArrayList* system_collections_array_list_GetRange (SystemCollectionsArrayList* self, gint index, gint count);
-void system_collections_array_list_Sort (SystemCollectionsArrayList* self, gint index, gint count, SystemCollectionsIComparer* comparer);
-SystemCollectionsIList* system_collections_array_list_Synchronized (SystemCollectionsIList* list);
-GObject** system_collections_array_list_ToArray (SystemCollectionsArrayList* self, int* result_length1);
-void system_collections_array_list_TrimToSize (SystemCollectionsArrayList* self);
-gint system_collections_array_list_get_Capacity (SystemCollectionsArrayList* self);
-void system_collections_array_list_set_Capacity (SystemCollectionsArrayList* self, gint value);
-gint system_collections_array_list_get_Count (SystemCollectionsArrayList* self);
-gboolean system_collections_array_list_get_IsFixedSize (SystemCollectionsArrayList* self);
-gboolean system_collections_array_list_get_IsReadOnly (SystemCollectionsArrayList* self);
-gboolean system_collections_array_list_get_IsSynchronized (SystemCollectionsArrayList* self);
-GObject* system_collections_array_list_get_SyncRoot (SystemCollectionsArrayList* self);
 GType system_collections_sorted_list_get_type (void) G_GNUC_CONST;
 SystemCollectionsSortedList* system_collections_sorted_list_new (SystemCollectionsIComparer* comparer, gint capacity);
 SystemCollectionsSortedList* system_collections_sorted_list_construct (GType object_type, SystemCollectionsIComparer* comparer, gint capacity);

@@ -7,7 +7,7 @@
 // 
 
 using System;
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 
@@ -18,12 +18,12 @@ namespace System.Collections.Generic
     using System.Runtime.CompilerServices;
     using System.Diagnostics.Contracts;
 
-    public abstract class EqualityComparer<T> : IEqualityComparer, IEqualityComparer<T>
+    public abstract class EqualityComparer<T> : IEqualityComparer<T>
     {
         static EqualityComparer<T> defaultComparer;
 
         public static EqualityComparer<T> Default {
-            get {
+            owned get {
                 EqualityComparer<T> comparer = defaultComparer;
                 if (comparer == null) {
                     comparer = CreateComparer();
@@ -57,20 +57,7 @@ namespace System.Collections.Generic
             return -1;
         }
 
-        int IEqualityComparer.GetHashCode( Object obj) {
-            if (obj == null) return 0;
-            if (obj is T) return GetHashCode((T)obj);
-            //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArgumentForComparison);
-            return 0;            
-        }                        
 
-        bool IEqualityComparer.Equals( Object x, Object y) {
-            if (x == y) return true;
-            if (x == null || y == null) return false;
-            if ((x is T) && (y is T)) return Equals((T)x, (T)y);
-            //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArgumentForComparison);
-            return false;
-        }
     }
 
     // The methods in this class look identical to the inherited methods, but the calls
@@ -178,7 +165,7 @@ namespace System.Collections.Generic
 
         public override bool Equals(T x, T y) {
             if (x != null) {
-                if (y != null) return x.Equals(y);
+                if (y != null) return (x == y);
                 return false;
             }
             if (y != null) return false;
@@ -187,7 +174,7 @@ namespace System.Collections.Generic
 
         public override int GetHashCode(T obj) {
             if (obj == null) return 0;
-            return obj.GetHashCode();
+            return -1;// obj.GetHashCode();
         }
 
         internal override int IndexOf(T[] array, T value, int startIndex, int count) {
@@ -199,7 +186,7 @@ namespace System.Collections.Generic
             }
             else {
                 for (int i = startIndex; i < endIndex; i++) {
-                    if (array[i] != null && array[i].Equals(value)) return i;
+                    if (array[i] != null && array[i] == value) return i;
                 }
             }
             return -1;
@@ -214,7 +201,7 @@ namespace System.Collections.Generic
             }
             else {
                 for (int i = startIndex; i >= endIndex; i--) {
-                    if (array[i] != null && array[i].Equals(value)) return i;
+                    if (array[i] != null && array[i] == value) return i;
                 }
             }
             return -1;

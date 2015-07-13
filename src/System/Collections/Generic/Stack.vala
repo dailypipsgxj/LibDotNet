@@ -35,9 +35,11 @@ namespace System.Collections.Generic
         //
         public Stack.FromCollection(IEnumerable<T> collection)
         {
-            foreach (T item in collection) {
+            /*
+             foreach (T item in collection) {
                 add (item.Key, item.Value);
             }
+            */
 
         }
 

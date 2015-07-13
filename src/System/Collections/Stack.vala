@@ -20,14 +20,10 @@ namespace System.Collections
 {
     // A simple stack of objects.  Internally it is implemented as an array,
     // so Push can be O(n).  Pop is O(1).
-// [DebuggerTypeProxy(typeof(System.Collections.Stack.StackDebugView))]
-
-// [DebuggerDisplay("Count = {Count}")]
 
     public class Stack : Gee.LinkedList, ICollection
     {
         private Object[] _array;     // Storage for stack elements
-// [ContractPublicPropertyName("Count")]
 
         private int _size;           // Number of items in the stack.
         private int _version;        // Used to keep enumerator in sync w/ collection.
@@ -305,8 +301,7 @@ namespace System.Collections
                     _s.Push(value);
                 }
             }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Thread safety problems with precondition - can't express the precondition as of Dev10.
+
             public override Object Pop()
             {
                 lock (_root)
@@ -322,8 +317,7 @@ namespace System.Collections
                     return _s.GetEnumerator();
                 }
             }
-// [SuppressMessage("Microsoft.Contracts", "CC1055")]
-  // Thread safety problems with precondition - can't express the precondition
+
             public override Object Peek()
             {
                 lock (_root)
@@ -400,27 +394,5 @@ namespace System.Collections
             }
         }
 
-        internal class StackDebugView
-        {
-            private Stack _stack;
-
-            public StackDebugView(Stack stack)
-            {
-                if (stack == null)
-                    throw ArgumentNullException("stack");
-                Contract.EndContractBlock();
-
-                _stack = stack;
-            }
-// [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-
-            public Object[] Items
-            {
-                get
-                {
-                    return _stack.ToArray();
-                }
-            }
-        }
     }
 }
