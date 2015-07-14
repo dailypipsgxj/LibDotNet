@@ -64,7 +64,7 @@ namespace System.Collections.Generic
 
         IEnumerator<T> GetEnumerator()
         {
-            return new Enumerator(this);
+            return new Enumerator<T>(this);
         }
 
 
@@ -77,8 +77,6 @@ namespace System.Collections.Generic
         public T Peek()
         {
 			var poke = peek ();
-            if (poke == null)
-                throw InvalidOperationException("SR.InvalidOperation_EmptyStack");
             return poke;
         }
 
@@ -87,8 +85,6 @@ namespace System.Collections.Generic
         public T Pop()
         {
 			var pop = poll();
-            if (pop == null)
-                throw InvalidOperationException("SR.InvalidOperation_EmptyStack");
             return pop;
         }
 
@@ -112,17 +108,17 @@ namespace System.Collections.Generic
         }
 
 		//[Compact]
-        public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
+        public class Enumerator<T> : IEnumerator<T>, System.Collections.IEnumerator
         {
             public Stack<T> _stack;
-            public T _currentElement;
-			public Gee.Iterator _iterator;
+            public Object _currentElement;
+			public Gee.Iterator<T> _iterator;
 
             public Enumerator(Stack<T> stack)
             {
                 _stack = stack;
-                _iterator = stack.iterator ();
-                _currentElement = default(T);
+                _iterator = stack.list_iterator ();
+                //_currentElement = default(T);
             }
 
             public void Dispose()
@@ -141,7 +137,7 @@ namespace System.Collections.Generic
             void Reset()
             {
 				iterator = stack.list_iterator();
-                _currentElement = default(T);
+                //_currentElement = default(T);
             }
         }
     }
