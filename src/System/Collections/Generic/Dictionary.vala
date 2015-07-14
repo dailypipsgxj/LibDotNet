@@ -46,7 +46,7 @@
 namespace System.Collections.Generic {
 
     using System;
-    using System.Collections;
+    //using System.Collections;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Runtime.Serialization;
@@ -56,9 +56,8 @@ namespace System.Collections.Generic {
 		Gee.HashMap<TKey,TValue>,
 		IDictionary<TKey,TValue>,
 		ICollection<KeyValuePair<TKey, TValue>>,
-		IReadOnlyDictionary<TKey, TValue>,
-		ISerializable,
-		IDeserializationCallback  {
+		IReadOnlyDictionary<TKey, TValue>
+		{
     
         private IEqualityComparer<TKey> comparer;
         private KeyCollection _keys;
@@ -188,9 +187,6 @@ namespace System.Collections.Generic {
 			base.set (key, value);
         }
 
-        public virtual void OnDeserialization(Object sender) {
-
-        }
 
         private void Resize(int newSize, bool forceNewHashCodes) {
         }
@@ -232,7 +228,7 @@ namespace System.Collections.Generic {
         }
   
     
-		[Compact]
+		//[Compact]
         public class Enumerator: IEnumerator<KeyValuePair<TKey,TValue>>, IDictionaryEnumerator
         {
             public Dictionary<TKey,TValue> dictionary;
@@ -313,11 +309,11 @@ namespace System.Collections.Generic {
             }
 
             void Add(TKey item){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
             }
             
             void Clear(){
-                ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
+                //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_KeyCollectionSet);
             }
 
             bool Contains(TKey item){
@@ -337,7 +333,7 @@ namespace System.Collections.Generic {
                 get { return ((ICollection)dictionary).SyncRoot; }
             }
 
-			[Compact]
+			//[Compact]
             public class Enumerator : IEnumerator<TKey>, System.Collections.IEnumerator
             {
                 public Dictionary<TKey, TValue> dictionary;
@@ -429,31 +425,21 @@ namespace System.Collections.Generic {
                 get { return ((ICollection)dictionary).SyncRoot; }
             }
 
-			[Compact]
+			//[Compact]
             public class Enumerator : IEnumerator<TValue>, System.Collections.IEnumerator
             {
                 public Dictionary<TKey, TValue> dictionary;
-                private int index;
-                private int version;
                 public TValue currentValue;
             
                 public Enumerator(Dictionary<TKey, TValue> dictionary) {
                     this.dictionary = dictionary;
-                    version = dictionary.version;
-                    index = 0;
-                    currentValue = default(TValue);
+                    //currentValue = default(TValue);
                 }
 
                 public void Dispose() {
                 }
 
-                public bool MoveNext() {                    
-                    if (index < dictionary.Count) {
-						currentValue = dictionary.entries[index].value;
-                        index++;
-                        return true;
-                    }
-                    currentValue = default(TValue);
+                public bool MoveNext() {
                     return false;
                 }
                 
@@ -464,8 +450,7 @@ namespace System.Collections.Generic {
                 }
 
                 void Reset() {
-                    index = 0;                    
-                    currentValue = default(TValue);
+                    index = 0;
                 }
             }
         }

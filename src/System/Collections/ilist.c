@@ -85,8 +85,8 @@ struct _SystemCollectionsICollectionIface {
 struct _SystemCollectionsIListIface {
 	GTypeInterface parent_iface;
 	gint (*Add) (SystemCollectionsIList* self, GObject* value);
-	gboolean (*Contains) (SystemCollectionsIList* self, GObject* value);
 	void (*Clear) (SystemCollectionsIList* self);
+	gboolean (*Contains) (SystemCollectionsIList* self, GObject* value);
 	gint (*IndexOf) (SystemCollectionsIList* self, GObject* value);
 	void (*Insert) (SystemCollectionsIList* self, gint index, GObject* value);
 	void (*Remove) (SystemCollectionsIList* self, GObject* value);
@@ -103,10 +103,10 @@ GType system_collections_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_ilist_get_type (void) G_GNUC_CONST;
 gint system_collections_ilist_Add (SystemCollectionsIList* self, GObject* value);
 static gint system_collections_ilist_real_Add (SystemCollectionsIList* self, GObject* value);
-gboolean system_collections_ilist_Contains (SystemCollectionsIList* self, GObject* value);
-static gboolean system_collections_ilist_real_Contains (SystemCollectionsIList* self, GObject* value);
 void system_collections_ilist_Clear (SystemCollectionsIList* self);
 static void system_collections_ilist_real_Clear (SystemCollectionsIList* self);
+gboolean system_collections_ilist_Contains (SystemCollectionsIList* self, GObject* value);
+static gboolean system_collections_ilist_real_Contains (SystemCollectionsIList* self, GObject* value);
 gint system_collections_ilist_IndexOf (SystemCollectionsIList* self, GObject* value);
 static gint system_collections_ilist_real_IndexOf (SystemCollectionsIList* self, GObject* value);
 void system_collections_ilist_Insert (SystemCollectionsIList* self, gint index, GObject* value);
@@ -140,6 +140,17 @@ gint system_collections_ilist_Add (SystemCollectionsIList* self, GObject* value)
 }
 
 
+static void system_collections_ilist_real_Clear (SystemCollectionsIList* self) {
+	gee_collection_clear ((GeeCollection*) self);
+}
+
+
+void system_collections_ilist_Clear (SystemCollectionsIList* self) {
+	g_return_if_fail (self != NULL);
+	SYSTEM_COLLECTIONS_ILIST_GET_INTERFACE (self)->Clear (self);
+}
+
+
 static gboolean system_collections_ilist_real_Contains (SystemCollectionsIList* self, GObject* value) {
 	gboolean result = FALSE;
 	GObject* _tmp0_ = NULL;
@@ -155,17 +166,6 @@ static gboolean system_collections_ilist_real_Contains (SystemCollectionsIList* 
 gboolean system_collections_ilist_Contains (SystemCollectionsIList* self, GObject* value) {
 	g_return_val_if_fail (self != NULL, FALSE);
 	return SYSTEM_COLLECTIONS_ILIST_GET_INTERFACE (self)->Contains (self, value);
-}
-
-
-static void system_collections_ilist_real_Clear (SystemCollectionsIList* self) {
-	gee_collection_clear ((GeeCollection*) self);
-}
-
-
-void system_collections_ilist_Clear (SystemCollectionsIList* self) {
-	g_return_if_fail (self != NULL);
-	SYSTEM_COLLECTIONS_ILIST_GET_INTERFACE (self)->Clear (self);
 }
 
 
@@ -253,8 +253,8 @@ static void system_collections_ilist_base_init (SystemCollectionsIListIface * if
 		g_object_interface_install_property (iface, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 		g_object_interface_install_property (iface, g_param_spec_boolean ("IsFixedSize", "IsFixedSize", "IsFixedSize", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 		iface->Add = system_collections_ilist_real_Add;
-		iface->Contains = system_collections_ilist_real_Contains;
 		iface->Clear = system_collections_ilist_real_Clear;
+		iface->Contains = system_collections_ilist_real_Contains;
 		iface->IndexOf = system_collections_ilist_real_IndexOf;
 		iface->Insert = system_collections_ilist_real_Insert;
 		iface->Remove = system_collections_ilist_real_Remove;

@@ -117,11 +117,11 @@ struct _SystemCollectionsGenericICollectionIface {
 	GType (*get_t_type) (SystemCollectionsGenericICollection* self);
 	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericICollection* self);
 	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericICollection* self);
-	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericICollection* self);
 	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*Clear) (SystemCollectionsGenericICollection* self);
 	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
+	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericICollection* self);
 	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gint (*get_Count) (SystemCollectionsGenericICollection* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);

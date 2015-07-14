@@ -34,12 +34,8 @@ namespace System.Collections.Generic {
         // Number of items in the collections.        
         public abstract int Count { get; }
 
-        public virtual IEnumerator iterator()
-		{
-			return GetEnumerator();
-		}
-
         public abstract bool IsReadOnly { get; }
+
 
         public virtual void Add(T item) {
 			add(item);
@@ -56,13 +52,18 @@ namespace System.Collections.Generic {
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
+        //void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int count);
         public virtual void CopyTo(T[] array, int arrayIndex) {
 			foreach (T item in this) {
 				array[arrayIndex++] = item;
 			}
 		}
-                
-        //void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int count);
+
+        public virtual IEnumerator iterator()
+		{
+			return GetEnumerator();
+		}
+
 
         public virtual bool Remove(T item) {
 			return remove(item);

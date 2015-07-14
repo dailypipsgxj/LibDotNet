@@ -110,11 +110,11 @@ struct _SystemCollectionsGenericICollectionIface {
 	GType (*get_t_type) (SystemCollectionsGenericICollection* self);
 	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericICollection* self);
 	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericICollection* self);
-	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericICollection* self);
 	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*Clear) (SystemCollectionsGenericICollection* self);
 	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
+	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericICollection* self);
 	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gint (*get_Count) (SystemCollectionsGenericICollection* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
@@ -128,9 +128,6 @@ GType system_idisposable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_iterator (SystemCollectionsGenericICollection* self);
-static SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_real_iterator (SystemCollectionsGenericICollection* self);
-SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_GetEnumerator (SystemCollectionsGenericIEnumerable* self);
 void system_collections_generic_icollection_Add (SystemCollectionsGenericICollection* self, gconstpointer item);
 static void system_collections_generic_icollection_real_Add (SystemCollectionsGenericICollection* self, gconstpointer item);
 void system_collections_generic_icollection_Clear (SystemCollectionsGenericICollection* self);
@@ -139,27 +136,15 @@ gboolean system_collections_generic_icollection_Contains (SystemCollectionsGener
 static gboolean system_collections_generic_icollection_real_Contains (SystemCollectionsGenericICollection* self, gconstpointer item);
 void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
 static void system_collections_generic_icollection_real_CopyTo (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
+SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_iterator (SystemCollectionsGenericICollection* self);
 gboolean system_collections_ienumerator_next (SystemCollectionsIEnumerator* self);
 GObject* system_collections_ienumerator_get (SystemCollectionsIEnumerator* self);
+static SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_real_iterator (SystemCollectionsGenericICollection* self);
+SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_GetEnumerator (SystemCollectionsGenericIEnumerable* self);
 gboolean system_collections_generic_icollection_Remove (SystemCollectionsGenericICollection* self, gconstpointer item);
 static gboolean system_collections_generic_icollection_real_Remove (SystemCollectionsGenericICollection* self, gconstpointer item);
 gint system_collections_generic_icollection_get_Count (SystemCollectionsGenericICollection* self);
 gboolean system_collections_generic_icollection_get_IsReadOnly (SystemCollectionsGenericICollection* self);
-
-
-static SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_real_iterator (SystemCollectionsGenericICollection* self) {
-	SystemCollectionsGenericIEnumerator* result = NULL;
-	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
-	_tmp0_ = system_collections_generic_ienumerable_GetEnumerator ((SystemCollectionsGenericIEnumerable*) self);
-	result = _tmp0_;
-	return result;
-}
-
-
-SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_iterator (SystemCollectionsGenericICollection* self) {
-	g_return_val_if_fail (self != NULL, NULL);
-	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->iterator (self);
-}
 
 
 static void system_collections_generic_icollection_real_Add (SystemCollectionsGenericICollection* self, gconstpointer item) {
@@ -251,6 +236,21 @@ void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICol
 }
 
 
+static SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_real_iterator (SystemCollectionsGenericICollection* self) {
+	SystemCollectionsGenericIEnumerator* result = NULL;
+	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
+	_tmp0_ = system_collections_generic_ienumerable_GetEnumerator ((SystemCollectionsGenericIEnumerable*) self);
+	result = _tmp0_;
+	return result;
+}
+
+
+SystemCollectionsGenericIEnumerator* system_collections_generic_icollection_iterator (SystemCollectionsGenericICollection* self) {
+	g_return_val_if_fail (self != NULL, NULL);
+	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->iterator (self);
+}
+
+
 static gboolean system_collections_generic_icollection_real_Remove (SystemCollectionsGenericICollection* self, gconstpointer item) {
 	gboolean result = FALSE;
 	gconstpointer _tmp0_ = NULL;
@@ -286,11 +286,11 @@ static void system_collections_generic_icollection_base_init (SystemCollectionsG
 		initialized = TRUE;
 		g_object_interface_install_property (iface, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 		g_object_interface_install_property (iface, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-		iface->iterator = system_collections_generic_icollection_real_iterator;
 		iface->Add = system_collections_generic_icollection_real_Add;
 		iface->Clear = system_collections_generic_icollection_real_Clear;
 		iface->Contains = system_collections_generic_icollection_real_Contains;
 		iface->CopyTo = system_collections_generic_icollection_real_CopyTo;
+		iface->iterator = system_collections_generic_icollection_real_iterator;
 		iface->Remove = system_collections_generic_icollection_real_Remove;
 	}
 }

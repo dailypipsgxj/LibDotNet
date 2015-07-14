@@ -35,7 +35,7 @@ namespace System.Collections.Generic {
     {
         // Returns the index of a particular item, if it is in the list.
         // Returns -1 if the item isn't in the list.
-        public abstract int IndexOf(T item);
+        public abstract int IndexOf(T item, int index = 0);
     
         // Inserts value into the list at position index.
         // index must be non-negative and less than or equal to the 

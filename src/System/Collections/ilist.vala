@@ -25,6 +25,9 @@ namespace System.Collections {
 
     public interface IList : Gee.List, ICollection
     {
+        public abstract bool IsReadOnly { get; }
+        public abstract bool IsFixedSize { get; }
+
         // Adds an item to the list.  The exact position in the list is 
         // implementation-dependent, so while ArrayList may always insert
         // in the last available location, a SortedList most likely would not.
@@ -34,25 +37,22 @@ namespace System.Collections {
 			return size;
 		}
     
-        // Returns whether the list contains a particular item.
-        public virtual bool Contains(Object value) {
-			return contains(value);
-		}
-    
-        // Removes all items from the list.
+         // Removes all items from the list.
         public virtual void Clear() {
 			clear();
 		}
 
-        public abstract bool IsReadOnly { get; }
-
-        public abstract bool IsFixedSize { get; }
-        
+       // Returns whether the list contains a particular item.
+        public virtual bool Contains(Object value) {
+			return contains(value);
+		}
+    
         // Returns the index of a particular item, if it is in the list.
         // Returns -1 if the item isn't in the list.
         public virtual int IndexOf(Object value) {
 			return index_of(value);
 		}
+
         // Inserts value into the list at position index.
         // index must be non-negative and less than or equal to the 
         // number of elements in the list.  If index equals the number

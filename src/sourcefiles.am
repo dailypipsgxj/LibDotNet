@@ -20,7 +20,9 @@ LIBDOTNET_COLLECTIONS_IFACE = \
 	System/Collections/ihashcodeprovider.vala \
 	System/Collections/ilist.vala \
 	System/Collections/istructuralcomparable.vala \
-	System/Collections/istructuralequatable.vala
+	System/Collections/istructuralequatable.vala \
+	System/Collections/DictionaryEntry.vala \
+	System/Collections/KeyValuePairs.vala
 
 LIBDOTNET_COLLECTIONS = \
 	System/Collections/ArrayList.vala \
@@ -35,9 +37,7 @@ LIBDOTNET_COLLECTIONS = \
 	System/Collections/ReadOnlyCollectionBase.vala \
 	System/Collections/SortedList.vala \
 	System/Collections/Stack.vala \
-	System/Collections/StructuralComparisons.vala \
-	System/Collections/DictionaryEntry.vala \
-	System/Collections/KeyValuePairs.vala
+	System/Collections/StructuralComparisons.vala
 
 LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/icollection.vala \
@@ -50,20 +50,21 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/iset.vala \
 	System/Collections/Generic/ireadonlycollection.vala \
 	System/Collections/Generic/ireadonlydictionary.vala \
-	System/Collections/Generic/ireadonlylist.vala
+	System/Collections/Generic/ireadonlylist.vala \
+	System/Collections/Generic/KeyValuePair.vala
 	
 LIBDOTNET_COLLECTIONS_GEN = \
-	System/Collections/Generic/Comparer.vala \
-	System/Collections/Generic/KeyValuePair.vala
+	System/Collections/Generic/List.vala
 
 LIBDOTNET_COLLECTIONS_GENX = \
+	System/Collections/Generic/SortedDictionary.vala \
+	System/Collections/Generic/Comparer.vala \
 	System/Collections/Generic/Dictionary.vala \
 	System/Collections/Generic/EqualityComparer.vala \
 	System/Collections/Generic/HashSet.vala \
 	System/Collections/Generic/LinkedList.vala \
 	System/Collections/Generic/List.vala \
 	System/Collections/Generic/Queue.vala \
-	System/Collections/Generic/SortedDictionary.vala \
 	System/Collections/Generic/SortedList.vala \
 	System/Collections/Generic/SortedSet.vala \
 	System/Collections/Generic/Stack.vala
@@ -97,9 +98,18 @@ LIBDOTNET_SYSTEM_MISC = \
 	System/Globalization/CultureInfo.vala
 
 LIBDOTNET_SOURCES = \
+	$(LIBDOTNET_COLLECTIONS_IFACE) \
+	$(LIBDOTNET_COLLECTIONS) \
+	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
+	$(LIBDOTNET_COLLECTIONS_GEN) \
+	$(LIBDOTNET_SYSTEM_NS) \
+	$(LIBDOTNET_SYSTEM) \
+	$(LIBDOTNET_SYSTEM_IFACE) \
+	$(LIBDOTNET_SYSTEM_MISC)
+
+LIBDOTNET_SOURCESX = \
 	$(LIBDOTNET_REGEX) \
 	$(LIBDOTNET_COLLECTIONS_IFACE) \
-	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
 	$(LIBDOTNET_COLLECTIONS) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
 	$(LIBDOTNET_SYSTEM_NS) \

@@ -117,11 +117,11 @@ struct _SystemCollectionsGenericICollectionIface {
 	GType (*get_t_type) (SystemCollectionsGenericICollection* self);
 	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericICollection* self);
 	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericICollection* self);
-	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericICollection* self);
 	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*Clear) (SystemCollectionsGenericICollection* self);
 	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
+	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericICollection* self);
 	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gint (*get_Count) (SystemCollectionsGenericICollection* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
@@ -129,7 +129,7 @@ struct _SystemCollectionsGenericICollectionIface {
 
 struct _SystemCollectionsGenericIListIface {
 	GTypeInterface parent_iface;
-	gint (*IndexOf) (SystemCollectionsGenericIList* self, gconstpointer item);
+	gint (*IndexOf) (SystemCollectionsGenericIList* self, gconstpointer item, gint index);
 	void (*Insert) (SystemCollectionsGenericIList* self, gint index, gconstpointer item);
 	void (*RemoveAt) (SystemCollectionsGenericIList* self, gint index);
 };
@@ -143,14 +143,14 @@ GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ilist_get_type (void) G_GNUC_CONST;
-gint system_collections_generic_ilist_IndexOf (SystemCollectionsGenericIList* self, gconstpointer item);
+gint system_collections_generic_ilist_IndexOf (SystemCollectionsGenericIList* self, gconstpointer item, gint index);
 void system_collections_generic_ilist_Insert (SystemCollectionsGenericIList* self, gint index, gconstpointer item);
 void system_collections_generic_ilist_RemoveAt (SystemCollectionsGenericIList* self, gint index);
 
 
-gint system_collections_generic_ilist_IndexOf (SystemCollectionsGenericIList* self, gconstpointer item) {
+gint system_collections_generic_ilist_IndexOf (SystemCollectionsGenericIList* self, gconstpointer item, gint index) {
 	g_return_val_if_fail (self != NULL, 0);
-	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->IndexOf (self, item);
+	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->IndexOf (self, item, index);
 }
 
 

@@ -16,7 +16,7 @@ using System.Runtime.CompilerServices;
 namespace System.Collections.Generic
 {    
  
-    public abstract class Comparer<T> : IComparer<T>
+    public abstract class Comparer<T> : Object, IComparer<T>
     {
         static Comparer<T> defaultComparer;    
 
@@ -33,7 +33,6 @@ namespace System.Collections.Generic
 
         public static Comparer<T> Create(Comparison<T> comparison)
         {
-
             return new ComparisonComparer<T>(comparison);
         }
 
@@ -43,7 +42,7 @@ namespace System.Collections.Generic
         //
         private static Comparer<T> CreateComparer() {
           // Otherwise return an ObjectComparer<T>
-          return new ObjectComparer<T>();
+			return new ObjectComparer<T>();
         }
 
         public abstract int Compare(T x, T y);
@@ -52,6 +51,7 @@ namespace System.Collections.Generic
 
     internal class GenericComparer<T> : Comparer<T>
     {    
+
         public override int Compare(T x, T y) {
             if (x != null) {
                 if (y != null) return (int)(x == y);
@@ -60,6 +60,7 @@ namespace System.Collections.Generic
             if (y != null) return -1;
             return 0;
         }
+
 
         // Equals method for the comparer itself. 
         public bool Equals(Object obj){
@@ -112,9 +113,9 @@ namespace System.Collections.Generic
         }
     }
 
-    internal class ComparisonComparer<T> : Comparer<T>
+    public class ComparisonComparer<T> : Comparer<T>
     {
-        private Comparison<T> _comparison;
+        protected weak Comparison<T> _comparison;
 
         public ComparisonComparer(Comparison<T> comparison) {
             _comparison = comparison;

@@ -11,7 +11,6 @@
 
 #include <glib.h>
 #include <glib-object.h>
-#include <gobject/gvaluecollector.h>
 
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOMPARER (system_collections_generic_icomparer_get_type ())
@@ -52,8 +51,7 @@ typedef struct _SystemCollectionsGenericComparisonComparerClass SystemCollection
 
 typedef struct _SystemCollectionsGenericObjectComparer SystemCollectionsGenericObjectComparer;
 typedef struct _SystemCollectionsGenericObjectComparerClass SystemCollectionsGenericObjectComparerClass;
-#define _system_collections_generic_comparer_unref0(var) ((var == NULL) ? NULL : (var = (system_collections_generic_comparer_unref (var), NULL)))
-typedef struct _SystemCollectionsGenericParamSpecComparer SystemCollectionsGenericParamSpecComparer;
+#define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER (system_collections_generic_generic_comparer_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER, SystemCollectionsGenericGenericComparer))
@@ -114,14 +112,12 @@ struct _SystemCollectionsGenericIComparerIface {
 };
 
 struct _SystemCollectionsGenericComparer {
-	GTypeInstance parent_instance;
-	volatile int ref_count;
+	GObject parent_instance;
 	SystemCollectionsGenericComparerPrivate * priv;
 };
 
 struct _SystemCollectionsGenericComparerClass {
-	GTypeClass parent_class;
-	void (*finalize) (SystemCollectionsGenericComparer *self);
+	GObjectClass parent_class;
 	gint (*Compare) (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
 };
 
@@ -132,10 +128,6 @@ struct _SystemCollectionsGenericComparerPrivate {
 };
 
 typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
-struct _SystemCollectionsGenericParamSpecComparer {
-	GParamSpec parent_instance;
-};
-
 struct _SystemCollectionsGenericGenericComparer {
 	SystemCollectionsGenericComparer parent_instance;
 	SystemCollectionsGenericGenericComparerPrivate * priv;
@@ -201,6 +193,8 @@ struct _SystemCollectionsIComparerIface {
 struct _SystemCollectionsGenericComparisonComparer {
 	SystemCollectionsGenericComparer parent_instance;
 	SystemCollectionsGenericComparisonComparerPrivate * priv;
+	SystemComparison _comparison;
+	gpointer _comparison_target;
 };
 
 struct _SystemCollectionsGenericComparisonComparerClass {
@@ -211,9 +205,6 @@ struct _SystemCollectionsGenericComparisonComparerPrivate {
 	GType t_type;
 	GBoxedCopyFunc t_dup_func;
 	GDestroyNotify t_destroy_func;
-	SystemComparison _comparison;
-	gpointer _comparison_target;
-	GDestroyNotify _comparison_target_destroy_notify;
 };
 
 
@@ -228,16 +219,13 @@ extern SystemCollectionsComparer* system_collections_comparer_Default;
 static gpointer system_collections_generic_comparison_comparer_parent_class = NULL;
 
 GType system_collections_generic_icomparer_get_type (void) G_GNUC_CONST;
-gpointer system_collections_generic_comparer_ref (gpointer instance);
-void system_collections_generic_comparer_unref (gpointer instance);
-GParamSpec* system_collections_generic_param_spec_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
-void system_collections_generic_value_set_comparer (GValue* value, gpointer v_object);
-void system_collections_generic_value_take_comparer (GValue* value, gpointer v_object);
-gpointer system_collections_generic_value_get_comparer (const GValue* value);
 GType system_collections_generic_comparer_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DESTROY_FUNC
 };
 SystemCollectionsGenericComparer* system_collections_generic_comparer_Create (SystemComparison comparison, void* comparison_target);
 SystemCollectionsGenericComparisonComparer* system_collections_generic_comparison_comparer_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemComparison comparison, void* comparison_target);
@@ -251,21 +239,31 @@ gint system_collections_generic_comparer_Compare (SystemCollectionsGenericCompar
 static gint system_collections_generic_comparer_real_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
 SystemCollectionsGenericComparer* system_collections_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 SystemCollectionsGenericComparer* system_collections_generic_comparer_get_Default (void);
-static void system_collections_generic_comparer_finalize (SystemCollectionsGenericComparer* obj);
+static void system_collections_generic_comparer_finalize (GObject* obj);
+static void _vala_system_collections_generic_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 GType system_collections_generic_generic_comparer_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER, SystemCollectionsGenericGenericComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_DESTROY_FUNC
 };
 static gint system_collections_generic_generic_comparer_real_Compare (SystemCollectionsGenericComparer* base, gconstpointer x, gconstpointer y);
 gboolean system_collections_generic_generic_comparer_Equals (SystemCollectionsGenericGenericComparer* self, GObject* obj);
 gint system_collections_generic_generic_comparer_GetHashCode (SystemCollectionsGenericGenericComparer* self);
 SystemCollectionsGenericGenericComparer* system_collections_generic_generic_comparer_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 SystemCollectionsGenericGenericComparer* system_collections_generic_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
+static void _vala_system_collections_generic_generic_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_generic_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 GType system_collections_generic_nullable_comparer_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_NULLABLE_COMPARER, SystemCollectionsGenericNullableComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_DESTROY_FUNC
 };
 gpointer system_nullable_ref (gpointer instance);
 void system_nullable_unref (gpointer instance);
@@ -280,9 +278,14 @@ gboolean system_collections_generic_nullable_comparer_Equals (SystemCollectionsG
 gint system_collections_generic_nullable_comparer_GetHashCode (SystemCollectionsGenericNullableComparer* self);
 SystemCollectionsGenericNullableComparer* system_collections_generic_nullable_comparer_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 SystemCollectionsGenericNullableComparer* system_collections_generic_nullable_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
+static void _vala_system_collections_generic_nullable_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_nullable_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 #define SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER, SystemCollectionsGenericObjectComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_DESTROY_FUNC
 };
 static gint system_collections_generic_object_comparer_real_Compare (SystemCollectionsGenericComparer* base, gconstpointer x, gconstpointer y);
 GType system_collections_comparer_get_type (void) G_GNUC_CONST;
@@ -290,12 +293,19 @@ GType system_collections_icomparer_get_type (void) G_GNUC_CONST;
 gint system_collections_icomparer_Compare (SystemCollectionsIComparer* self, GObject* x, GObject* y);
 gboolean system_collections_generic_object_comparer_Equals (SystemCollectionsGenericObjectComparer* self, GObject* obj);
 gint system_collections_generic_object_comparer_GetHashCode (SystemCollectionsGenericObjectComparer* self);
+static void _vala_system_collections_generic_object_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_object_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 #define SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DESTROY_FUNC
 };
 static gint system_collections_generic_comparison_comparer_real_Compare (SystemCollectionsGenericComparer* base, gconstpointer x, gconstpointer y);
-static void system_collections_generic_comparison_comparer_finalize (SystemCollectionsGenericComparer* obj);
+static void system_collections_generic_comparison_comparer_finalize (GObject* obj);
+static void _vala_system_collections_generic_comparison_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_comparison_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 
 
 SystemCollectionsGenericComparer* system_collections_generic_comparer_Create (SystemComparison comparison, void* comparison_target) {
@@ -333,8 +343,8 @@ gint system_collections_generic_comparer_Compare (SystemCollectionsGenericCompar
 
 
 SystemCollectionsGenericComparer* system_collections_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
-	SystemCollectionsGenericComparer* self = NULL;
-	self = (SystemCollectionsGenericComparer*) g_type_create_instance (object_type);
+	SystemCollectionsGenericComparer * self = NULL;
+	self = (SystemCollectionsGenericComparer*) g_object_new (object_type, NULL);
 	self->priv->t_type = t_type;
 	self->priv->t_dup_func = t_dup_func;
 	self->priv->t_destroy_func = t_destroy_func;
@@ -342,8 +352,8 @@ SystemCollectionsGenericComparer* system_collections_generic_comparer_construct 
 }
 
 
-static gpointer _system_collections_generic_comparer_ref0 (gpointer self) {
-	return self ? system_collections_generic_comparer_ref (self) : NULL;
+static gpointer _g_object_ref0 (gpointer self) {
+	return self ? g_object_ref (self) : NULL;
 }
 
 
@@ -354,7 +364,7 @@ SystemCollectionsGenericComparer* system_collections_generic_comparer_get_Defaul
 	SystemCollectionsGenericComparer* _tmp1_ = NULL;
 	SystemCollectionsGenericComparer* _tmp2_ = NULL;
 	_tmp0_ = system_collections_generic_comparer_defaultComparer;
-	_tmp1_ = _system_collections_generic_comparer_ref0 (_tmp0_);
+	_tmp1_ = _g_object_ref0 (_tmp0_);
 	comparer = _tmp1_;
 	_tmp2_ = comparer;
 	if (_tmp2_ == NULL) {
@@ -362,11 +372,11 @@ SystemCollectionsGenericComparer* system_collections_generic_comparer_get_Defaul
 		SystemCollectionsGenericComparer* _tmp4_ = NULL;
 		SystemCollectionsGenericComparer* _tmp5_ = NULL;
 		_tmp3_ = system_collections_generic_comparer_CreateComparer ();
-		_system_collections_generic_comparer_unref0 (comparer);
+		_g_object_unref0 (comparer);
 		comparer = _tmp3_;
 		_tmp4_ = comparer;
-		_tmp5_ = _system_collections_generic_comparer_ref0 (_tmp4_);
-		_system_collections_generic_comparer_unref0 (system_collections_generic_comparer_defaultComparer);
+		_tmp5_ = _g_object_ref0 (_tmp4_);
+		_g_object_unref0 (system_collections_generic_comparer_defaultComparer);
 		system_collections_generic_comparer_defaultComparer = _tmp5_;
 	}
 	result = comparer;
@@ -374,121 +384,16 @@ SystemCollectionsGenericComparer* system_collections_generic_comparer_get_Defaul
 }
 
 
-static void system_collections_generic_value_comparer_init (GValue* value) {
-	value->data[0].v_pointer = NULL;
-}
-
-
-static void system_collections_generic_value_comparer_free_value (GValue* value) {
-	if (value->data[0].v_pointer) {
-		system_collections_generic_comparer_unref (value->data[0].v_pointer);
-	}
-}
-
-
-static void system_collections_generic_value_comparer_copy_value (const GValue* src_value, GValue* dest_value) {
-	if (src_value->data[0].v_pointer) {
-		dest_value->data[0].v_pointer = system_collections_generic_comparer_ref (src_value->data[0].v_pointer);
-	} else {
-		dest_value->data[0].v_pointer = NULL;
-	}
-}
-
-
-static gpointer system_collections_generic_value_comparer_peek_pointer (const GValue* value) {
-	return value->data[0].v_pointer;
-}
-
-
-static gchar* system_collections_generic_value_comparer_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-	if (collect_values[0].v_pointer) {
-		SystemCollectionsGenericComparer* object;
-		object = collect_values[0].v_pointer;
-		if (object->parent_instance.g_class == NULL) {
-			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
-			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-		}
-		value->data[0].v_pointer = system_collections_generic_comparer_ref (object);
-	} else {
-		value->data[0].v_pointer = NULL;
-	}
-	return NULL;
-}
-
-
-static gchar* system_collections_generic_value_comparer_lcopy_value (const GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-	SystemCollectionsGenericComparer** object_p;
-	object_p = collect_values[0].v_pointer;
-	if (!object_p) {
-		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-	}
-	if (!value->data[0].v_pointer) {
-		*object_p = NULL;
-	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
-		*object_p = value->data[0].v_pointer;
-	} else {
-		*object_p = system_collections_generic_comparer_ref (value->data[0].v_pointer);
-	}
-	return NULL;
-}
-
-
-GParamSpec* system_collections_generic_param_spec_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags) {
-	SystemCollectionsGenericParamSpecComparer* spec;
-	g_return_val_if_fail (g_type_is_a (object_type, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER), NULL);
-	spec = g_param_spec_internal (G_TYPE_PARAM_OBJECT, name, nick, blurb, flags);
-	G_PARAM_SPEC (spec)->value_type = object_type;
-	return G_PARAM_SPEC (spec);
-}
-
-
-gpointer system_collections_generic_value_get_comparer (const GValue* value) {
-	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER), NULL);
-	return value->data[0].v_pointer;
-}
-
-
-void system_collections_generic_value_set_comparer (GValue* value, gpointer v_object) {
-	SystemCollectionsGenericComparer* old;
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-	old = value->data[0].v_pointer;
-	if (v_object) {
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-		value->data[0].v_pointer = v_object;
-		system_collections_generic_comparer_ref (value->data[0].v_pointer);
-	} else {
-		value->data[0].v_pointer = NULL;
-	}
-	if (old) {
-		system_collections_generic_comparer_unref (old);
-	}
-}
-
-
-void system_collections_generic_value_take_comparer (GValue* value, gpointer v_object) {
-	SystemCollectionsGenericComparer* old;
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-	old = value->data[0].v_pointer;
-	if (v_object) {
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-		value->data[0].v_pointer = v_object;
-	} else {
-		value->data[0].v_pointer = NULL;
-	}
-	if (old) {
-		system_collections_generic_comparer_unref (old);
-	}
-}
-
-
 static void system_collections_generic_comparer_class_init (SystemCollectionsGenericComparerClass * klass) {
 	system_collections_generic_comparer_parent_class = g_type_class_peek_parent (klass);
-	((SystemCollectionsGenericComparerClass *) klass)->finalize = system_collections_generic_comparer_finalize;
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericComparerPrivate));
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_comparer_real_Compare;
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_comparer_get_property;
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_comparer_set_property;
+	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_comparer_finalize;
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 
@@ -500,26 +405,23 @@ static void system_collections_generic_comparer_system_collections_generic_icomp
 
 static void system_collections_generic_comparer_instance_init (SystemCollectionsGenericComparer * self) {
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_PRIVATE (self);
-	self->ref_count = 1;
 }
 
 
-static void system_collections_generic_comparer_finalize (SystemCollectionsGenericComparer* obj) {
+static void system_collections_generic_comparer_finalize (GObject* obj) {
 	SystemCollectionsGenericComparer * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer);
-	g_signal_handlers_destroy (self);
+	G_OBJECT_CLASS (system_collections_generic_comparer_parent_class)->finalize (obj);
 }
 
 
 GType system_collections_generic_comparer_get_type (void) {
 	static volatile gsize system_collections_generic_comparer_type_id__volatile = 0;
 	if (g_once_init_enter (&system_collections_generic_comparer_type_id__volatile)) {
-		static const GTypeValueTable g_define_type_value_table = { system_collections_generic_value_comparer_init, system_collections_generic_value_comparer_free_value, system_collections_generic_value_comparer_copy_value, system_collections_generic_value_comparer_peek_pointer, "p", system_collections_generic_value_comparer_collect_value, "p", system_collections_generic_value_comparer_lcopy_value };
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericComparer), 0, (GInstanceInitFunc) system_collections_generic_comparer_instance_init, &g_define_type_value_table };
-		static const GTypeFundamentalInfo g_define_type_fundamental_info = { (G_TYPE_FLAG_CLASSED | G_TYPE_FLAG_INSTANTIATABLE | G_TYPE_FLAG_DERIVABLE | G_TYPE_FLAG_DEEP_DERIVABLE) };
+		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericComparer), 0, (GInstanceInitFunc) system_collections_generic_comparer_instance_init, NULL };
 		static const GInterfaceInfo system_collections_generic_icomparer_info = { (GInterfaceInitFunc) system_collections_generic_comparer_system_collections_generic_icomparer_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_comparer_type_id;
-		system_collections_generic_comparer_type_id = g_type_register_fundamental (g_type_fundamental_next (), "SystemCollectionsGenericComparer", &g_define_type_info, &g_define_type_fundamental_info, G_TYPE_FLAG_ABSTRACT);
+		system_collections_generic_comparer_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericComparer", &g_define_type_info, G_TYPE_FLAG_ABSTRACT);
 		g_type_add_interface_static (system_collections_generic_comparer_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOMPARER, &system_collections_generic_icomparer_info);
 		g_once_init_leave (&system_collections_generic_comparer_type_id__volatile, system_collections_generic_comparer_type_id);
 	}
@@ -527,20 +429,33 @@ GType system_collections_generic_comparer_get_type (void) {
 }
 
 
-gpointer system_collections_generic_comparer_ref (gpointer instance) {
-	SystemCollectionsGenericComparer* self;
-	self = instance;
-	g_atomic_int_inc (&self->ref_count);
-	return instance;
+static void _vala_system_collections_generic_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer);
+	switch (property_id) {
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
 }
 
 
-void system_collections_generic_comparer_unref (gpointer instance) {
-	SystemCollectionsGenericComparer* self;
-	self = instance;
-	if (g_atomic_int_dec_and_test (&self->ref_count)) {
-		SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_CLASS (self)->finalize (self);
-		g_type_free_instance ((GTypeInstance *) self);
+static void _vala_system_collections_generic_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer);
+	switch (property_id) {
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_TYPE:
+		self->priv->t_type = g_value_get_gtype (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DUP_FUNC:
+		self->priv->t_dup_func = g_value_get_pointer (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DESTROY_FUNC:
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+		break;
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
 	}
 }
 
@@ -584,10 +499,10 @@ gboolean system_collections_generic_generic_comparer_Equals (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, FALSE);
 	g_return_val_if_fail (obj != NULL, FALSE);
 	_tmp0_ = obj;
-	_tmp1_ = _system_collections_generic_comparer_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER) ? ((SystemCollectionsGenericGenericComparer*) _tmp0_) : NULL);
+	_tmp1_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER) ? ((SystemCollectionsGenericGenericComparer*) _tmp0_) : NULL);
 	comparer = _tmp1_;
 	result = comparer != NULL;
-	_system_collections_generic_comparer_unref0 (comparer);
+	_g_object_unref0 (comparer);
 	return result;
 }
 
@@ -601,7 +516,7 @@ gint system_collections_generic_generic_comparer_GetHashCode (SystemCollectionsG
 
 
 SystemCollectionsGenericGenericComparer* system_collections_generic_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
-	SystemCollectionsGenericGenericComparer* self = NULL;
+	SystemCollectionsGenericGenericComparer * self = NULL;
 	self = (SystemCollectionsGenericGenericComparer*) system_collections_generic_comparer_construct (object_type, t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func);
 	self->priv->t_type = t_type;
 	self->priv->t_dup_func = t_dup_func;
@@ -619,6 +534,11 @@ static void system_collections_generic_generic_comparer_class_init (SystemCollec
 	system_collections_generic_generic_comparer_parent_class = g_type_class_peek_parent (klass);
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericGenericComparerPrivate));
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_generic_comparer_real_Compare;
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_generic_comparer_get_property;
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_generic_comparer_set_property;
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 
@@ -636,6 +556,37 @@ GType system_collections_generic_generic_comparer_get_type (void) {
 		g_once_init_leave (&system_collections_generic_generic_comparer_type_id__volatile, system_collections_generic_generic_comparer_type_id);
 	}
 	return system_collections_generic_generic_comparer_type_id__volatile;
+}
+
+
+static void _vala_system_collections_generic_generic_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericGenericComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER, SystemCollectionsGenericGenericComparer);
+	switch (property_id) {
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
+}
+
+
+static void _vala_system_collections_generic_generic_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericGenericComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER, SystemCollectionsGenericGenericComparer);
+	switch (property_id) {
+		case SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_TYPE:
+		self->priv->t_type = g_value_get_gtype (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_DUP_FUNC:
+		self->priv->t_dup_func = g_value_get_pointer (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_T_DESTROY_FUNC:
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+		break;
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
 }
 
 
@@ -696,10 +647,10 @@ gboolean system_collections_generic_nullable_comparer_Equals (SystemCollectionsG
 	g_return_val_if_fail (self != NULL, FALSE);
 	g_return_val_if_fail (obj != NULL, FALSE);
 	_tmp0_ = obj;
-	_tmp1_ = _system_collections_generic_comparer_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_NULLABLE_COMPARER) ? ((SystemCollectionsGenericNullableComparer*) _tmp0_) : NULL);
+	_tmp1_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_NULLABLE_COMPARER) ? ((SystemCollectionsGenericNullableComparer*) _tmp0_) : NULL);
 	comparer = _tmp1_;
 	result = comparer != NULL;
-	_system_collections_generic_comparer_unref0 (comparer);
+	_g_object_unref0 (comparer);
 	return result;
 }
 
@@ -713,7 +664,7 @@ gint system_collections_generic_nullable_comparer_GetHashCode (SystemCollections
 
 
 SystemCollectionsGenericNullableComparer* system_collections_generic_nullable_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
-	SystemCollectionsGenericNullableComparer* self = NULL;
+	SystemCollectionsGenericNullableComparer * self = NULL;
 	self = (SystemCollectionsGenericNullableComparer*) system_collections_generic_comparer_construct (object_type, SYSTEM_TYPE_NULLABLE, (GBoxedCopyFunc) system_nullable_ref, system_nullable_unref);
 	self->priv->t_type = t_type;
 	self->priv->t_dup_func = t_dup_func;
@@ -731,6 +682,11 @@ static void system_collections_generic_nullable_comparer_class_init (SystemColle
 	system_collections_generic_nullable_comparer_parent_class = g_type_class_peek_parent (klass);
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericNullableComparerPrivate));
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_nullable_comparer_real_Compare;
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_nullable_comparer_get_property;
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_nullable_comparer_set_property;
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 
@@ -748,6 +704,37 @@ GType system_collections_generic_nullable_comparer_get_type (void) {
 		g_once_init_leave (&system_collections_generic_nullable_comparer_type_id__volatile, system_collections_generic_nullable_comparer_type_id);
 	}
 	return system_collections_generic_nullable_comparer_type_id__volatile;
+}
+
+
+static void _vala_system_collections_generic_nullable_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericNullableComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_NULLABLE_COMPARER, SystemCollectionsGenericNullableComparer);
+	switch (property_id) {
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
+}
+
+
+static void _vala_system_collections_generic_nullable_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericNullableComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_NULLABLE_COMPARER, SystemCollectionsGenericNullableComparer);
+	switch (property_id) {
+		case SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_TYPE:
+		self->priv->t_type = g_value_get_gtype (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_DUP_FUNC:
+		self->priv->t_dup_func = g_value_get_pointer (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_NULLABLE_COMPARER_T_DESTROY_FUNC:
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+		break;
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
 }
 
 
@@ -776,10 +763,10 @@ gboolean system_collections_generic_object_comparer_Equals (SystemCollectionsGen
 	g_return_val_if_fail (self != NULL, FALSE);
 	g_return_val_if_fail (obj != NULL, FALSE);
 	_tmp0_ = obj;
-	_tmp1_ = _system_collections_generic_comparer_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER) ? ((SystemCollectionsGenericObjectComparer*) _tmp0_) : NULL);
+	_tmp1_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER) ? ((SystemCollectionsGenericObjectComparer*) _tmp0_) : NULL);
 	comparer = _tmp1_;
 	result = comparer != NULL;
-	_system_collections_generic_comparer_unref0 (comparer);
+	_g_object_unref0 (comparer);
 	return result;
 }
 
@@ -793,7 +780,7 @@ gint system_collections_generic_object_comparer_GetHashCode (SystemCollectionsGe
 
 
 SystemCollectionsGenericObjectComparer* system_collections_generic_object_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
-	SystemCollectionsGenericObjectComparer* self = NULL;
+	SystemCollectionsGenericObjectComparer * self = NULL;
 	self = (SystemCollectionsGenericObjectComparer*) system_collections_generic_comparer_construct (object_type, t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func);
 	self->priv->t_type = t_type;
 	self->priv->t_dup_func = t_dup_func;
@@ -811,6 +798,11 @@ static void system_collections_generic_object_comparer_class_init (SystemCollect
 	system_collections_generic_object_comparer_parent_class = g_type_class_peek_parent (klass);
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericObjectComparerPrivate));
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_object_comparer_real_Compare;
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_object_comparer_get_property;
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_object_comparer_set_property;
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 
@@ -831,8 +823,39 @@ GType system_collections_generic_object_comparer_get_type (void) {
 }
 
 
+static void _vala_system_collections_generic_object_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericObjectComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER, SystemCollectionsGenericObjectComparer);
+	switch (property_id) {
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
+}
+
+
+static void _vala_system_collections_generic_object_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericObjectComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER, SystemCollectionsGenericObjectComparer);
+	switch (property_id) {
+		case SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_TYPE:
+		self->priv->t_type = g_value_get_gtype (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_DUP_FUNC:
+		self->priv->t_dup_func = g_value_get_pointer (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_T_DESTROY_FUNC:
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+		break;
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
+}
+
+
 SystemCollectionsGenericComparisonComparer* system_collections_generic_comparison_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemComparison comparison, void* comparison_target) {
-	SystemCollectionsGenericComparisonComparer* self = NULL;
+	SystemCollectionsGenericComparisonComparer * self = NULL;
 	SystemComparison _tmp0_ = NULL;
 	void* _tmp0__target = NULL;
 	self = (SystemCollectionsGenericComparisonComparer*) system_collections_generic_comparer_construct (object_type, t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func);
@@ -841,13 +864,8 @@ SystemCollectionsGenericComparisonComparer* system_collections_generic_compariso
 	self->priv->t_destroy_func = t_destroy_func;
 	_tmp0_ = comparison;
 	_tmp0__target = comparison_target;
-	(self->priv->_comparison_target_destroy_notify == NULL) ? NULL : (self->priv->_comparison_target_destroy_notify (self->priv->_comparison_target), NULL);
-	self->priv->_comparison = NULL;
-	self->priv->_comparison_target = NULL;
-	self->priv->_comparison_target_destroy_notify = NULL;
-	self->priv->_comparison = _tmp0_;
-	self->priv->_comparison_target = _tmp0__target;
-	self->priv->_comparison_target_destroy_notify = NULL;
+	self->_comparison = _tmp0_;
+	self->_comparison_target = _tmp0__target;
 	return self;
 }
 
@@ -866,8 +884,8 @@ static gint system_collections_generic_comparison_comparer_real_Compare (SystemC
 	gconstpointer _tmp2_ = NULL;
 	gint _tmp3_ = 0;
 	self = (SystemCollectionsGenericComparisonComparer*) base;
-	_tmp0_ = self->priv->_comparison;
-	_tmp0__target = self->priv->_comparison_target;
+	_tmp0_ = self->_comparison;
+	_tmp0__target = self->_comparison_target;
 	_tmp1_ = x;
 	_tmp2_ = y;
 	_tmp3_ = _tmp0_ (_tmp1_, _tmp2_, _tmp0__target);
@@ -878,9 +896,14 @@ static gint system_collections_generic_comparison_comparer_real_Compare (SystemC
 
 static void system_collections_generic_comparison_comparer_class_init (SystemCollectionsGenericComparisonComparerClass * klass) {
 	system_collections_generic_comparison_comparer_parent_class = g_type_class_peek_parent (klass);
-	((SystemCollectionsGenericComparerClass *) klass)->finalize = system_collections_generic_comparison_comparer_finalize;
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericComparisonComparerPrivate));
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_comparison_comparer_real_Compare;
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_comparison_comparer_get_property;
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_comparison_comparer_set_property;
+	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_comparison_comparer_finalize;
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 
@@ -889,14 +912,10 @@ static void system_collections_generic_comparison_comparer_instance_init (System
 }
 
 
-static void system_collections_generic_comparison_comparer_finalize (SystemCollectionsGenericComparer* obj) {
+static void system_collections_generic_comparison_comparer_finalize (GObject* obj) {
 	SystemCollectionsGenericComparisonComparer * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparer);
-	(self->priv->_comparison_target_destroy_notify == NULL) ? NULL : (self->priv->_comparison_target_destroy_notify (self->priv->_comparison_target), NULL);
-	self->priv->_comparison = NULL;
-	self->priv->_comparison_target = NULL;
-	self->priv->_comparison_target_destroy_notify = NULL;
-	SYSTEM_COLLECTIONS_GENERIC_COMPARER_CLASS (system_collections_generic_comparison_comparer_parent_class)->finalize (obj);
+	G_OBJECT_CLASS (system_collections_generic_comparison_comparer_parent_class)->finalize (obj);
 }
 
 
@@ -909,6 +928,37 @@ GType system_collections_generic_comparison_comparer_get_type (void) {
 		g_once_init_leave (&system_collections_generic_comparison_comparer_type_id__volatile, system_collections_generic_comparison_comparer_type_id);
 	}
 	return system_collections_generic_comparison_comparer_type_id__volatile;
+}
+
+
+static void _vala_system_collections_generic_comparison_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparisonComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparer);
+	switch (property_id) {
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
+}
+
+
+static void _vala_system_collections_generic_comparison_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparisonComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparer);
+	switch (property_id) {
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_TYPE:
+		self->priv->t_type = g_value_get_gtype (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DUP_FUNC:
+		self->priv->t_dup_func = g_value_get_pointer (value);
+		break;
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DESTROY_FUNC:
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+		break;
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
 }
 
 

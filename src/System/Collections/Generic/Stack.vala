@@ -111,7 +111,7 @@ namespace System.Collections.Generic
             return objArray;
         }
 
-		[Compact]
+		//[Compact]
         public class Enumerator : IEnumerator<T>, System.Collections.IEnumerator
         {
             public Stack<T> _stack;

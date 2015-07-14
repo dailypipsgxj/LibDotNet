@@ -4,18 +4,38 @@ namespace System {
 	namespace Collections {
 		namespace Generic {
 			[CCode (cheader_filename = "libdotnet.h")]
-			public abstract class Comparer<T> : System.Collections.Generic.IComparer<T> {
-				public Comparer ();
-				public abstract int Compare (T x, T y);
-				public static System.Collections.Generic.Comparer<T> Create (System.Comparison<T> comparison);
-				public static System.Collections.Generic.Comparer<T> Default { owned get; }
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
 			public class KeyValuePair<TKey,TValue> {
 				public KeyValuePair (TKey key, TValue value);
 				public string ToString (GLib.StringBuilder s);
 				public TKey Key { get; }
 				public TValue Value { get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class List<T> : Gee.ArrayList<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.ICollection<T>, System.Collections.Generic.IEnumerable<T>, System.Collections.IList, System.Collections.IEnumerable, System.Collections.ICollection, System.Collections.Generic.IReadOnlyList<T>, System.Collections.Generic.IReadOnlyCollection<T> {
+				public class Enumerator<T> : GLib.Object, System.Collections.Generic.IEnumerator<T>, System.Collections.IEnumerator, System.IDisposable {
+					public T current;
+					public System.Collections.Generic.List<T> list;
+					public Enumerator (System.Collections.Generic.List<T> list);
+				}
+				public List (int defaultSize = 0);
+				public void AddRange (System.Collections.Generic.IEnumerable<T> collection);
+				public int BinarySearch (int index, int count, T item, System.Collections.Generic.IComparer<T> comparer);
+				public virtual void Clear ();
+				public virtual bool Contains (T item);
+				public void ForEach (System.Action<T> action);
+				public System.Collections.Generic.List<T> GetRange (int index, int count);
+				public virtual int IndexOf (T item, int index = 0);
+				public virtual void Insert (int index, T item);
+				public void InsertRange (int index, System.Collections.Generic.IEnumerable<T> collection);
+				public int LastIndexOf (T item);
+				public int RemoveAll (System.Predicate<T> match);
+				public virtual void RemoveAt (int index);
+				public void RemoveRange (int index, int count);
+				public void Reverse ();
+				public void Sort (System.Collections.Generic.IComparer<T>? comparer = null);
+				public void TrimExcess ();
+				public int Capacity { get; set; }
+				public virtual bool IsFixedSize { get; }
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
 			[GenericAccessors]
@@ -30,7 +50,7 @@ namespace System {
 				public abstract bool IsReadOnly { get; }
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
-			public interface IComparer<T> {
+			public interface IComparer<T> : GLib.Object {
 				public abstract int Compare (T x, T y);
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
@@ -59,7 +79,7 @@ namespace System {
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
 			public interface IList<T> : System.Collections.Generic.ICollection<T> {
-				public abstract int IndexOf (T item);
+				public abstract int IndexOf (T item, int index = 0);
 				public abstract void Insert (int index, T item);
 				public abstract void RemoveAt (int index);
 			}
@@ -94,147 +114,10 @@ namespace System {
 			}
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
-		public class ArrayList : Gee.ArrayList<GLib.Object>, System.Collections.IList, System.Collections.IEnumerable, System.Collections.ICollection {
-			public ArrayList (int capacity = _defaultCapacity);
-			public static System.Collections.ArrayList Adapter (System.Collections.IList list);
-			public virtual void AddRange (System.Collections.ICollection c);
-			public virtual int BinarySearch (int index = 0, int count = @this.Count - 1, GLib.Object value, System.Collections.IComparer? comparer = null);
-			public virtual GLib.Object Clone ();
-			public virtual void CopyToIndex (int index, GLib.Object[] array, int arrayIndex, int count);
-			public static System.Collections.IList FixedSize (System.Collections.IList list);
-			public virtual System.Collections.IEnumerator GetEnumerator ();
-			public virtual System.Collections.ArrayList GetRange (int index, int count);
-			public virtual void InsertRange (int index, System.Collections.ICollection c);
-			public virtual int LastIndexOf (GLib.Object value, int startIndex = @this.size, int count = 1);
-			public static System.Collections.IList ReadOnly (System.Collections.IList list);
-			public virtual void RemoveRange (int index, int count);
-			public static System.Collections.ArrayList Repeat (GLib.Object value, int count = 1);
-			public virtual void Reverse (int index = 0, int count = @this.Count);
-			public virtual void SetRange (int index, System.Collections.ICollection c);
-			public virtual void Sort (int index = 0, int count = @this.Count, System.Collections.IComparer? comparer = null);
-			public static System.Collections.IList Synchronized (System.Collections.IList list);
-			public virtual GLib.Object[] ToArray ();
-			public virtual void TrimToSize ();
-			public ArrayList.WithCollection (System.Collections.ICollection c);
-			public virtual int Capacity { get; set; }
-			public virtual int Count { get; }
-			public virtual bool IsFixedSize { get; }
-			public virtual bool IsReadOnly { get; }
-			public virtual bool IsSynchronized { get; }
-			public virtual GLib.Object SyncRoot { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class BitArray : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable, System.ICloneable {
-			public BitArray (int length, bool defaultValue);
-			public System.Collections.BitArray And (System.Collections.BitArray value);
-			public bool Get (int index);
-			public System.Collections.BitArray Not ();
-			public System.Collections.BitArray Or (System.Collections.BitArray value);
-			public void Set (int index, bool value);
-			public void SetAll (bool value);
-			public System.Collections.BitArray Xor (System.Collections.BitArray value);
-			public bool IsReadOnly { get; }
-			public int Length { get; set; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class CaseInsensitiveComparer : GLib.Object, Gee.Comparable<GLib.Object>, System.Collections.IComparer {
-			public CaseInsensitiveComparer ();
-			public static System.Collections.CaseInsensitiveComparer Default { owned get; }
-			public static System.Collections.CaseInsensitiveComparer DefaultInvariant { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class CaseInsensitiveHashCodeProvider : System.Collections.IHashCodeProvider {
-			public CaseInsensitiveHashCodeProvider (System.Globalization.CultureInfo.StringComparison? culture);
-			public static System.Collections.CaseInsensitiveHashCodeProvider Default { owned get; }
-			public static System.Collections.CaseInsensitiveHashCodeProvider DefaultInvariant { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public abstract class CollectionBase : Gee.AbstractList<GLib.Object>, Gee.List<GLib.Object>, System.Collections.IList, System.Collections.IEnumerable, System.Collections.ICollection {
-			protected CollectionBase (int capacity = 0);
-			protected virtual void OnClear ();
-			protected virtual void OnClearComplete ();
-			protected virtual void OnInsert (int index, GLib.Object value);
-			protected virtual void OnInsertComplete (int index, GLib.Object value);
-			protected virtual void OnRemove (int index, GLib.Object value);
-			protected virtual void OnRemoveComplete (int index, GLib.Object value);
-			protected virtual void OnSet (int index, GLib.Object oldValue, GLib.Object newValue);
-			protected virtual void OnSetComplete (int index, GLib.Object oldValue, GLib.Object newValue);
-			protected virtual void OnValidate (GLib.Object value);
-			public virtual new GLib.Object @get (int index);
-			public virtual new void @set (int index, GLib.Object value);
-			public int Capacity { get; set; }
-			protected System.Collections.ArrayList InnerList { get; }
-			protected System.Collections.IList List { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class Comparer : GLib.Object, System.Collections.IComparer {
-			public static System.Collections.Comparer Default;
-			public static System.Collections.Comparer DefaultInvariant;
-			public Comparer ();
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public abstract class DictionaryBase : Gee.AbstractMap<GLib.Object,GLib.Object>, System.Collections.IDictionary, System.Collections.IEnumerable, System.Collections.ICollection {
-			public DictionaryBase ();
-			protected virtual void OnClear ();
-			protected virtual void OnClearComplete ();
-			protected virtual GLib.Object OnGet (GLib.Object key, GLib.Object currentValue);
-			protected virtual void OnInsert (GLib.Object key, GLib.Object value);
-			protected virtual void OnInsertComplete (GLib.Object key, GLib.Object value);
-			protected virtual void OnRemove (GLib.Object key, GLib.Object value);
-			protected virtual void OnRemoveComplete (GLib.Object key, GLib.Object value);
-			protected virtual void OnSet (GLib.Object key, GLib.Object oldValue, GLib.Object newValue);
-			protected virtual void OnSetComplete (GLib.Object key, GLib.Object oldValue, GLib.Object newValue);
-			protected virtual void OnValidate (GLib.Object key, GLib.Object value);
-			public virtual new GLib.Object @get (GLib.Object key);
-			public virtual new void @set (GLib.Object key, GLib.Object value);
-			protected System.Collections.IDictionary Dictionary { get; }
-			protected System.Collections.Hashtable InnerHashtable { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
 		public class DictionaryEntry {
 			public DictionaryEntry (GLib.Object key, GLib.Object value);
 			public GLib.Object Key { get; set; }
 			public GLib.Object Value { get; set; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class Hashtable : Gee.HashMap<GLib.Object,GLib.Object>, System.Collections.IDictionary, System.Collections.IEnumerable, System.Collections.ICollection {
-			public class HashtableEnumerator : GLib.Object, System.Collections.IDictionaryEnumerator, System.Collections.IEnumerator {
-				public virtual void Reset ();
-				public virtual GLib.Object Current { owned get; }
-				public virtual System.Collections.DictionaryEntry Entry { owned get; }
-				public virtual GLib.Object Key { owned get; }
-				public virtual GLib.Object Value { owned get; }
-			}
-			public class KeyCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
-				public virtual System.Collections.IEnumerator GetEnumerator ();
-				public virtual int Count { get; }
-				public virtual bool IsSynchronized { get; }
-				public virtual GLib.Object SyncRoot { get; }
-			}
-			public class ValueCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
-				public virtual void CopyTo (GLib.Array<GLib.Object> array, int arrayIndex);
-				public virtual System.Collections.IEnumerator GetEnumerator ();
-				public virtual int Count { get; }
-				public virtual bool IsSynchronized { get; }
-				public virtual GLib.Object SyncRoot { get; }
-			}
-			protected GLib.Object _syncRoot;
-			public Hashtable (System.Collections.IEqualityComparer? equalityComparer = null);
-			public virtual GLib.Object Clone ();
-			public virtual bool ContainsKey (GLib.Object key);
-			public virtual bool ContainsValue (GLib.Object value);
-			protected void CopyKeys (GLib.Array<GLib.Object> array, int arrayIndex);
-			protected virtual int GetHash (GLib.Object key);
-			public Hashtable.WithCapacity (int capacity = 0, float loadFactor = 1.0f, System.Collections.IEqualityComparer? equalityComparer = null);
-			public Hashtable.WithDictionary (System.Collections.IDictionary d, float loadFactor = 1.0f, System.Collections.IEqualityComparer? equalityComparer = null);
-			public virtual int Count { get; }
-			protected System.Collections.IEqualityComparer EqualityComparer { get; }
-			public virtual bool IsFixedSize { get; }
-			public virtual bool IsReadOnly { get; }
-			public virtual bool IsSynchronized { get; }
-			public virtual System.Collections.ICollection Keys { owned get; }
-			public virtual GLib.Object SyncRoot { get; }
-			public virtual System.Collections.ICollection Values { owned get; }
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
 		[Compact]
@@ -242,105 +125,6 @@ namespace System {
 			public GLib.Object _key;
 			public GLib.Object _value;
 			public KeyValuePairs (GLib.Object key, GLib.Object value);
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class Queue : Gee.PriorityQueue<GLib.Object>, System.Collections.ICollection, System.Collections.IEnumerable {
-			public class QueueEnumerator : GLib.Object, System.Collections.IEnumerator {
-				public QueueEnumerator (System.Collections.Queue q);
-				public virtual bool MoveNext ();
-				public virtual void Reset ();
-				public virtual GLib.Object Current { owned get; }
-			}
-			public class SynchronizedQueue : System.Collections.Queue {
-				public override void Clear ();
-				public override GLib.Object Clone ();
-				public override bool Contains (GLib.Object obj);
-				public override void CopyTo (GLib.Array array, int arrayIndex);
-				public override GLib.Object Dequeue ();
-				public override void Enqueue (GLib.Object value);
-				public override System.Collections.IEnumerator GetEnumerator ();
-				public override GLib.Object Peek ();
-				public override GLib.Object[] ToArray ();
-				public override void TrimToSize ();
-				public override int Count { get; }
-				public override bool IsSynchronized { get; }
-				public override GLib.Object SyncRoot { get; }
-			}
-			public Queue (int capacity = 32, float growFactor = 2.0f);
-			public virtual void Clear ();
-			public virtual GLib.Object Clone ();
-			public virtual bool Contains (GLib.Object obj);
-			public virtual void CopyTo (GLib.Array array, int index);
-			public virtual GLib.Object Dequeue ();
-			public virtual void Enqueue (GLib.Object obj);
-			public virtual System.Collections.IEnumerator GetEnumerator ();
-			public virtual GLib.Object Peek ();
-			public static System.Collections.Queue Synchronized (System.Collections.Queue queue);
-			public virtual GLib.Object[] ToArray ();
-			public virtual void TrimToSize ();
-			public Queue.WithCollection (System.Collections.ICollection col);
-			public virtual int Count { get; }
-			public virtual bool IsSynchronized { get; }
-			public virtual GLib.Object SyncRoot { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public abstract class ReadOnlyCollectionBase : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
-			public ReadOnlyCollectionBase ();
-			public virtual System.Collections.IEnumerator GetEnumerator ();
-			public virtual int Count { get; }
-			protected System.Collections.ArrayList InnerList { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class SortedList : Gee.TreeMap<GLib.Object,GLib.Object>, System.Collections.IDictionary, System.Collections.ICollection, System.Collections.IEnumerable {
-			public SortedList (System.Collections.IComparer? comparer = null, int capacity = _defaultCapacity);
-			public virtual GLib.Object Clone ();
-			public virtual bool ContainsKey (GLib.Object key);
-			public virtual bool ContainsValue (GLib.Object value);
-			public SortedList.FromDictionary (System.Collections.IDictionary d, System.Collections.IComparer? comparer = null);
-			public virtual GLib.Object GetByIndex (int index);
-			public virtual System.Collections.IDictionaryEnumerator GetEnumerator ();
-			public virtual GLib.Object GetKey (int index);
-			public virtual System.Collections.IList GetKeyList ();
-			public virtual System.Collections.IList GetValueList ();
-			public virtual int IndexOfKey (GLib.Object key);
-			public virtual int IndexOfValue (GLib.Object value);
-			public virtual void Remove (GLib.Object key);
-			public virtual void RemoveAt (int index);
-			public virtual void SetByIndex (int index, GLib.Object value);
-			public static System.Collections.SortedList Synchronized (System.Collections.SortedList list);
-			public virtual void TrimToSize ();
-			public virtual int Capacity { get; set; }
-			public virtual int Count { get; }
-			public virtual bool IsFixedSize { get; }
-			public virtual bool IsReadOnly { get; }
-			public virtual bool IsSynchronized { get; }
-			public virtual System.Collections.ICollection Keys { owned get; }
-			public virtual GLib.Object SyncRoot { get; }
-			public virtual System.Collections.ICollection Values { owned get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class Stack : Gee.LinkedList<GLib.Object>, System.Collections.ICollection, System.Collections.IEnumerable {
-			public Stack (int initialCapacity = _defaultCapacity);
-			public virtual void Clear ();
-			public virtual GLib.Object Clone ();
-			public virtual bool Contains (GLib.Object obj);
-			public virtual void CopyTo (GLib.Array array, int index);
-			public virtual System.Collections.IEnumerator GetEnumerator ();
-			public virtual GLib.Object Peek ();
-			public virtual GLib.Object Pop ();
-			public virtual void Push (GLib.Object obj);
-			public static System.Collections.Stack Synchronized (System.Collections.Stack stack);
-			public virtual GLib.Object[] ToArray ();
-			public Stack.WithCollection (System.Collections.ICollection col);
-			public virtual int Count { get; }
-			public virtual bool IsSynchronized { get; }
-			public virtual GLib.Object SyncRoot { get; }
-		}
-		[CCode (cheader_filename = "libdotnet.h")]
-		public class StructuralComparisons {
-			public StructuralComparisons ();
-			public static System.Collections.IComparer StructuralComparer { owned get; }
-			public static System.Collections.IEqualityComparer StructuralEqualityComparer { owned get; }
 		}
 		[CCode (cheader_filename = "libdotnet.h")]
 		public interface ICollection : GLib.Object, System.Collections.IEnumerable {
@@ -447,12 +231,6 @@ namespace System {
 		namespace Remoting {
 		}
 		namespace Serialization {
-			[CCode (cheader_filename = "libdotnet.h")]
-			public interface IDeserializationCallback {
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public interface ISerializable {
-			}
 		}
 	}
 	namespace Security {
@@ -460,91 +238,6 @@ namespace System {
 		}
 	}
 	namespace Text {
-		namespace RegularExpressions {
-			[CCode (cheader_filename = "libdotnet.h")]
-			public class Capture {
-				public string ToString ();
-				public int Index { get; }
-				public int Length { get; }
-				public string Value { owned get; }
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public class CaptureCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
-				public class Enumerator : GLib.Object, System.Collections.IEnumerator {
-				}
-				public new System.Text.RegularExpressions.Capture @get (int i);
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public class Group : System.Text.RegularExpressions.Capture {
-				public System.Text.RegularExpressions.CaptureCollection Captures { get; }
-				public bool Success { get; }
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public class GroupCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
-				public class Enumerator : GLib.Object, System.Collections.IEnumerator {
-					public Enumerator (System.Text.RegularExpressions.GroupCollection collection);
-				}
-				public GroupCollection (System.Text.RegularExpressions.Match match);
-				public new System.Text.RegularExpressions.Group @get (int groupnum);
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public class Match : System.Text.RegularExpressions.Group {
-				public Match (GLib.MatchInfo matchinfo);
-				public System.Text.RegularExpressions.Match NextMatch ();
-				public virtual string Result (string replacement);
-				public virtual System.Text.RegularExpressions.GroupCollection Groups { get; }
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public class MatchCollection : GLib.Object, System.Collections.ICollection, System.Collections.IEnumerable {
-				public class Enumerator : GLib.Object, System.Collections.IEnumerator {
-				}
-				public MatchCollection (GLib.Regex regex, string input, int beginning, int length, int startat);
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public class Regex : System.Text.RegularExpressions.StaticRegex {
-				public static GLib.TimeSpan InfiniteMatchTimeout;
-				public Regex (string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout, bool useCache = false);
-				public string[] GetGroupNames ();
-				public int[] GetGroupNumbers ();
-				public string GroupNameFromNumber (int i);
-				public int GroupNumberFromName (string name);
-				public new bool IsMatch (string input, int startat);
-				public new System.Text.RegularExpressions.Match Match (string input, int beginning = 0, int length = -1);
-				public new System.Text.RegularExpressions.MatchCollection Matches (string input, int startat = 0);
-				public new string Replace (string input, string replacement, int count = -1, int startat = 0);
-				public new string[] Split (string input, int count = -1, int startat = 0);
-				public string ToString ();
-				public static int CacheSize { get; set; }
-				public GLib.TimeSpan MatchTimeout { get; }
-				public System.Text.RegularExpressions.RegexOptions Options { get; }
-				public bool RightToLeft { get; }
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public abstract class StaticRegex {
-				public StaticRegex (string pattern = "", System.Text.RegularExpressions.RegexOptions options = RegexOptions.None);
-				protected static GLib.RegexCompileFlags ConvertOptions (System.Text.RegularExpressions.RegexOptions options);
-				public static string Escape (string str);
-				public static bool IsMatch (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
-				public static System.Text.RegularExpressions.Match Match (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
-				public static System.Text.RegularExpressions.MatchCollection Matches (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
-				public static string Replace (string input, string pattern, string replacement, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
-				public static string[] Split (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
-				public static string Unescape (string str);
-			}
-			[CCode (cheader_filename = "libdotnet.h")]
-			public enum RegexOptions {
-				None,
-				IgnoreCase,
-				Multiline,
-				ExplicitCapture,
-				Compiled,
-				Singleline,
-				IgnorePatternWhitespace,
-				RightToLeft,
-				ECMAScript,
-				CultureInvariant
-			}
-		}
 	}
 	namespace Threading {
 	}

@@ -7,11 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.Collections.Generic
 {
-// [DebuggerTypeProxy(typeof(IDictionaryDebugView<,>))]
 
-// [DebuggerDisplay("Count = {Count}")]
-
-    public class SortedDictionary<TKey, TValue> : Gee.TreeMap<TKey, TValue>, IDictionary<TKey, TValue>, IDictionary, IReadOnlyDictionary<TKey, TValue>
+    public class SortedDictionary<TKey, TValue> : Gee.TreeMap<TKey, TValue>, IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
     {
         private KeyCollection _keys;
 
@@ -156,8 +153,7 @@ namespace System.Collections.Generic
             get { return ((ICollection)_set).SyncRoot; }
         }
 
-        [Compact]
-        public class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>, IDictionaryEnumerator
+        public class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>> //, IDictionaryEnumerator
         {
             /*
             private Gee.TreeMap<KeyValuePair<TKey, TValue>>.Enumerator _treeEnum;
@@ -209,11 +205,6 @@ namespace System.Collections.Generic
             {
                 get
                 {
-                    if (NotStartedOrEnded)
-                    {
-                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
-
                     return Current.Key;
                 }
             }
@@ -222,40 +213,29 @@ namespace System.Collections.Generic
             {
                 get
                 {
-                    if (NotStartedOrEnded)
-                    {
-                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
 
                     return Current.Value;
                 }
             }
-
+/*
             DictionaryEntry Entry
             {
                 get
                 {
-                    if (NotStartedOrEnded)
-                    {
-                        throw new InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                    }
 
                     return new DictionaryEntry(Current.Key, Current.Value);
                 }
             }
+            */
         }
        
 
-        public class KeyCollection : ICollection<TKey>, ICollection, IReadOnlyCollection<TKey>
+        public class KeyCollection : ICollection<TKey>, IReadOnlyCollection<TKey>
         {
             private SortedDictionary<TKey, TValue> _dictionary;
 
             public KeyCollection(SortedDictionary<TKey, TValue> dictionary)
             {
-                if (dictionary == null)
-                {
-                    throw ArgumentNullException("dictionary");
-                }
                 _dictionary = dictionary;
             }
 
@@ -266,76 +246,11 @@ namespace System.Collections.Generic
 
             public void CopyTo(TKey[] array, int index)
             {
-                if (array == null)
-                {
-                    throw ArgumentNullException("array");
-                }
-
-                if (index < 0)
-                {
-                    throw ArgumentOutOfRangeException("index");
-                }
-
-                if (array.Length - index < Count)
-                {
-                    throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
-                }
-
-                _dictionary._set.InOrderTreeWalk((node) => { array[index++] = node.Item.Key; return true; });
             }
 
             void ICollection.CopyTo(Array array, int index)
             {
-                if (array == null)
-                {
-                    throw ArgumentNullException("array");
-                }
-
-                if (array.Rank != 1)
-                {
-                    throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
-                }
-
-                if (array.GetLowerBound(0) != 0)
-                {
-                    throw ArgumentException(SR.Arg_NonZeroLowerBound);
-                }
-
-                if (index < 0)
-                {
-                    throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
-                }
-
-                if (array.Length - index < _dictionary.Count)
-                {
-                    throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
-                }
-
-                TKey[] keys = array as TKey[];
-                if (keys != null)
-                {
-                    CopyTo(keys, index);
-                }
-                else
-                {
-                    Object[] objects = (Object[])array;
-                    if (objects == null)
-                    {
-                        throw ArgumentException(SR.Argument_InvalidArrayType);
-                    }
-
-                    try
-                    {
-                        _dictionary._set.InOrderTreeWalk((node) => { objects[index++] = node.Item.Key; return true; });
-                    }
-                    catch (ArrayTypeMismatchException e)
-                    {
-                        throw ArgumentException(SR.Argument_InvalidArrayType);
-                    }
-                }
             }
-
-
 
 
             Object SyncRoot
@@ -343,9 +258,6 @@ namespace System.Collections.Generic
                 get { return ((ICollection)_dictionary).SyncRoot; }
             }
             
-// [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-// [Compact]
-
             public class Enumerator : IEnumerator<TKey>, IEnumerator
             {
                 private SortedDictionary.Enumerator _dictEnum;
@@ -377,11 +289,6 @@ namespace System.Collections.Generic
                 {
                     get
                     {
-                        if (_dictEnum.NotStartedOrEnded)
-                        {
-                            throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                        }
-
                         return Current;
                     }
                 }
@@ -392,9 +299,6 @@ namespace System.Collections.Generic
                 }
             }
         }
-// [DebuggerTypeProxy(typeof(DictionaryValueCollectionDebugView<,>))]
-
-// [DebuggerDisplay("Count = {Count}")]
 
         public class ValueCollection : ICollection<TValue>, ICollection, IReadOnlyCollection<TValue>
         {
@@ -402,10 +306,6 @@ namespace System.Collections.Generic
 
             public ValueCollection(SortedDictionary<TKey, TValue> dictionary)
             {
-                if (dictionary == null)
-                {
-                    throw ArgumentNullException("dictionary");
-                }
                 _dictionary = dictionary;
             }
 
@@ -416,79 +316,12 @@ namespace System.Collections.Generic
 
             public void CopyTo(TValue[] array, int index)
             {
-                if (array == null)
-                {
-                    throw ArgumentNullException("array");
-                }
-
-                if (index < 0)
-                {
-                    throw ArgumentOutOfRangeException("index");
-                }
-
-                if (array.Length - index < Count)
-                {
-                    throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
-                }
-
-                _dictionary._set.InOrderTreeWalk((node) => { array[index++] = node.Item.Value; return true; });
             }
 
             void ICollection.CopyTo(Array array, int index)
             {
-                if (array == null)
-                {
-                    throw ArgumentNullException("array");
-                }
-
-                if (array.Rank != 1)
-                {
-                    throw ArgumentException(SR.Arg_RankMultiDimNotSupported);
-                }
-
-                if (array.GetLowerBound(0) != 0)
-                {
-                    throw ArgumentException(SR.Arg_NonZeroLowerBound);
-                }
-
-                if (index < 0)
-                {
-                    throw ArgumentOutOfRangeException("arrayIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
-                }
-
-                if (array.Length - index < _dictionary.Count)
-                {
-                    throw ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
-                }
-
-                TValue[] values = array as TValue[];
-                if (values != null)
-                {
-                    CopyTo(values, index);
-                }
-                else
-                {
-                    Object[] objects = (Object[])array;
-                    if (objects == null)
-                    {
-                        throw ArgumentException(SR.Argument_InvalidArrayType);
-                    }
-
-                    try
-                    {
-                        _dictionary._set.InOrderTreeWalk((node) => { objects[index++] = node.Item.Value; return true; });
-                    }
-                    catch (ArrayTypeMismatchException e)
-                    {
-                        throw ArgumentException(SR.Argument_InvalidArrayType);
-                    }
-                }
             }
 
-
-            
-// [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-// [Compact]
 
             public class Enumerator : IEnumerator<TValue>, IEnumerator
             {
@@ -511,11 +344,6 @@ namespace System.Collections.Generic
                 {
                     get
                     {
-                        if (_dictEnum.NotStartedOrEnded)
-                        {
-                            throw InvalidOperationException(SR.InvalidOperation_EnumOpCantHappen);
-                        }
-
                         return _dictEnum.Current.Value;
                     }
                 }
@@ -527,9 +355,9 @@ namespace System.Collections.Generic
             }
         }
 
-        internal class KeyValuePairComparer : Comparer<KeyValuePair<TKey, TValue>>
+        public class KeyValuePairComparer : Comparer<KeyValuePair<TKey, TValue>>
         {
-            internal IComparer<TKey> keyComparer;
+            public IComparer<TKey> keyComparer;
 
             public KeyValuePairComparer(IComparer<TKey> keyComparer)
             {
