@@ -23,56 +23,41 @@ namespace System.Collections {
     // You can look up a value in an IDictionary via the default indexed
     // property, Items.  
 
-    public interface IDictionary : Gee.Map, ICollection
+    public interface IDictionary : ICollection, IEnumerable
     {
+
+        public abstract bool IsFixedSize { get; }
+        public abstract bool IsReadOnly { get; }
+
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
         // in the Dictionary.
-        //abstract Object get (Object key) {}
-
-        //abstract void set (Object key) {}
+		public abstract GLib.Object get (GLib.Object key);
+        public abstract void set (GLib.Object key);
     
         // Returns a collections of the keys in this dictionary.
-        public abstract ICollection Keys {
-            owned get;
-        }
+        public abstract ICollection Keys { owned get; }
     
         // Returns a collections of the values in this dictionary.
-        public abstract ICollection Values {
-            owned get;
-        }
-    
-        // Returns whether this dictionary contains a particular key.
-        //
-        public virtual bool Contains(Object key) {
-			return has_key(key);
-		}
-    
+        public abstract ICollection Values { owned get; }
+ 
         // Adds a key-value pair to the dictionary.
         // 
-        public virtual void Add(Object key, Object value) {
-			set(key, value);
-		}
-    
+        public abstract void Add(GLib.Object key, GLib.Object value);
+ 
         // Removes all pairs from the dictionary.
-        public virtual void Clear() {
-			clear();
-		}
-    
-        abstract bool IsReadOnly 
-        { get; }
-
-        abstract bool IsFixedSize
-        { get; }
+        public abstract void Clear();
+            
+        // Returns whether this dictionary contains a particular key.
+        //
+        public abstract bool Contains(GLib.Object key);
 
         // Returns an IDictionaryEnumerator for this dictionary.
         public abstract IDictionaryEnumerator GetEnumerator();
     
         // Removes a particular key from the dictionary.
         //
-        public virtual void Remove(Object key) {
-			unset(key);
-		}
+        public abstract void Remove(GLib.Object key);
     }
 
 }

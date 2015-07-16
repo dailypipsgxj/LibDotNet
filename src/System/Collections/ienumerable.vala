@@ -22,6 +22,7 @@ namespace System.Collections {
     // Implement this interface if you need to support VB's foreach semantics.
     // Also, COM classes that support an enumerator will also implement this interface.
 
+	//[GenericAccessors]
     public interface IEnumerable
     {
         // Interfaces are not serializable

@@ -33,8 +33,8 @@ namespace System.Collections {
     // 
     // IDictionaryEnumerator e = ...;
     // while (e.MoveNext()) {
-    //     Object key = e.Key;
-    //     Object value = e.Value;
+    //     GLib.Object key = e.Key;
+    //     GLib.Object value = e.Value;
     //     ...
     // }
     // 
@@ -48,15 +48,13 @@ namespace System.Collections {
 
     public interface IDictionaryEnumerator : IEnumerator
     {
-		protected abstract Gee.MapIterator<Object, Object> _iterator { get; set;}
-
         // Returns the key of the current element of the enumeration. The returned
         // value is undefined before the first call to GetNext and following
         // a call to GetNext that returned false. Multiple calls to
         // GetKey with no intervening calls to GetNext will return
         // the same object.
         // 
-        public abstract Object Key { owned get; }
+        public abstract GLib.Object Key { owned get; }
         
         // Returns the value of the current element of the enumeration. The
         // returned value is undefined before the first call to GetNext and
@@ -64,7 +62,7 @@ namespace System.Collections {
         // to GetValue with no intervening calls to GetNext will
         // return the same object.
         // 
-        public abstract Object Value { owned get; }
+        public abstract GLib.Object Value { owned get; }
         
         // GetBlock will copy dictionary values into the given Array.  It will either
         // fill up the array, or if there aren't enough elements, it will

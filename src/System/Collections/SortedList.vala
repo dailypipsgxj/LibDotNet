@@ -66,7 +66,7 @@ namespace System.Collections
         private ValueList _valueList;
         private Object _syncRoot;
 
-        private const int _defaultCapacity = 16;
+        public const int _defaultCapacity = 16;
 
         // Constructs a new sorted list with a given IComparer
         // implementation and a given initial capacity. The sorted list is

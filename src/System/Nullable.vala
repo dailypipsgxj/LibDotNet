@@ -17,7 +17,7 @@ namespace System
     using System.Diagnostics.Contracts;
 
     // Warning, don't put System.Runtime.Serialization.On*Serializ*Attribute
-    // on this class without first fixing ObjectClone::InvokeVtsCallbacks
+    // on this class without first fixing GLib.ObjectClone::InvokeVtsCallbacks
     // Also, because we have special type system support that says a a boxed Nullable<T>
     // can be used where a boxed<T> is use, Nullable<T> can not implement any intefaces
     // at all (since T may not).   Do NOT add any interfaces to Nullable!
@@ -48,7 +48,7 @@ namespace System
             return HasValue ? value : defaultValue;
         }
 
-        public bool Equals( Object other) {
+        public bool Equals( GLib.Object other) {
             return false;
         }
 

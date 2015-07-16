@@ -17,10 +17,10 @@ namespace System.Collections
 	[Compact]
     public class KeyValuePairs
     {
-        public Object _key;
-        public Object _value;
+        public GLib.Object _key;
+        public GLib.Object _value;
 
-        public KeyValuePairs(Object key, Object value)
+        public KeyValuePairs(GLib.Object key, GLib.Object value)
         {
             _value = value;
             _key = key;

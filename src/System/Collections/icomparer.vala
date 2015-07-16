@@ -10,7 +10,7 @@
 ** <OWNER>[....]</OWNER>
 **
 **
-** Purpose: Interface for comparing two Objects.
+** Purpose: Interface for comparing two GLib.Objects.
 **
 ** 
 ===========================================================*/
@@ -23,11 +23,11 @@ namespace System.Collections {
     // 
     // Interfaces are not serializable
 
-    public interface IComparer : Object {
+    public interface IComparer {
         // Compares two objects. An implementation of this method must return a
         // value less than zero if x is less than y, zero if x is equal to y, or a
         // value greater than zero if x is greater than y.
         // 
-        public abstract int Compare(Object x, Object y);
+        public abstract int Compare(GLib.Object x, GLib.Object y);
     }
 }

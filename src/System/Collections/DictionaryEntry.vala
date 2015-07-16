@@ -23,17 +23,17 @@ namespace System.Collections {
 	//[Compact]
     public class DictionaryEntry
     {
-        private Object _key;
-        private Object _value;
+        private GLib.Object _key;
+        private GLib.Object _value;
     
         // Constructs a new DictionaryEnumerator by setting the Key
         // and Value fields appropriately.
-        public DictionaryEntry(Object key, Object value) {
+        public DictionaryEntry(GLib.Object key, GLib.Object value) {
             _key = key;
             _value = value;
         }
 
-        public Object Key {
+        public GLib.Object Key {
             get {
                 return _key;
             }
@@ -43,7 +43,7 @@ namespace System.Collections {
             }
         }
 
-        public Object Value {
+        public GLib.Object Value {
             get {
                 return _value;
             }

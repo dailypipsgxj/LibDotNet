@@ -29,11 +29,25 @@ namespace System.Collections.Generic {
     // This is a special hack internally though - see VM\compile.cpp.
     // The same attribute is on IList<T> and ICollection<T>.
 
+	//[GenericAccessors]
     public interface IEnumerable<T> : System.Collections.IEnumerable
     {
+		public abstract GLib.Type get_element_type ();
+
+		/**
+		 * Returns a Iterator that can be used for simple iteration over a
+		 * collection.
+		 *
+		 * @return a Iterator that can be used for simple iteration over a
+		 *         collection
+		 */
+		public abstract IEnumerator<T> iterator ();
+		
         // Returns an IEnumerator for this enumerable Object.  The enumerator provides
         // a simple way to access all the contents of a collection.
-        public abstract IEnumerator<T> GetEnumerator();
+        public virtual IEnumerator<T> GetEnumerator() {
+			return iterator();
+		}
     }
 
 }

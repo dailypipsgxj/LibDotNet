@@ -7,9 +7,10 @@
  * Code is present with GPL licence.
  */
 
+using LibDotNet;
 using System.Collections;
 
-public class SystemCollectionsArrayListTests : Dia3.TestCase {
+public class SystemCollectionsArrayListTests : LibDotNet.TestCase {
 	
 	public SystemCollectionsArrayListTests () {
 		base ("System.Collections.ArrayList");
@@ -55,22 +56,22 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 		assert_true (myAL.Capacity == 4);
 	}
 
-	public void new_with_default_constructor () {
+	public void new_with_collection () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add("Hello");
-		myAL.Add("World");
-		myAL.Add("!");
+		myAL.Add("Hello" as Object);
+		myAL.Add("World"as Object);
+		myAL.Add("!" as Object);
 
-		ArrayList newAL = new ArrayList(myAL);
+		ArrayList newAL = new ArrayList.WithCollection(myAL);
 		assert_true (newAL is ArrayList);
 		assert_true (newAL.Count == 3);
-		assert_true (newAL[0] == "Hello");
-		assert_true (newAL[1] == "World");
-		assert_true (newAL[2] == "!");
+		assert_true (newAL[0] == "Hello" as Object);
+		assert_true (newAL[1] == "World" as Object);
+		assert_true (newAL[2] == "!" as Object);
 	}
 
 	public void new_with_capacity () {
-		ArrayList myAL = new ArrayList.WithCapacity(12);
+		ArrayList myAL = new ArrayList(12);
 		assert_true (myAL is ArrayList);
 		assert_true (myAL.Capacity == 12);
 	}
@@ -84,9 +85,9 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 		ArrayList myAL = new ArrayList();
 		myAL.Capacity = 2;
 		assert_true (myAL.Capacity == 2);
-		myAL.Add("Hello");
-		myAL.Add("World");
-		myAL.Add("!");
+		myAL.Add("Hello" as Object);
+		myAL.Add("World" as Object);
+		myAL.Add("!" as Object);
 		assert_true (myAL.Capacity == 3);
 		myAL.Capacity = 2;
 		assert_true (myAL.Capacity == 3);
@@ -95,9 +96,9 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 	public void properties_get_count () {
 		ArrayList myAL = new ArrayList();
 		assert_true (myAL.Count == 0);
-		myAL.Add("Hello");
-		myAL.Add("World");
-		myAL.Add("!");
+		myAL.Add("Hello" as Object);
+		myAL.Add("World" as Object);
+		myAL.Add("!" as Object);
 		assert_true (myAL.Count == 3);
 	}
 
@@ -118,25 +119,25 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 
 	public void properties_get_item () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add("Hello");
-		myAL.Add("World");
-		myAL.Add("!");
-		assert_true (myAL[0] == "Hello");
-		assert_true (myAL[1] == "World");
-		assert_true (myAL[2] == "!");
+		myAL.Add("Hello" as Object);
+		myAL.Add("World" as Object);
+		myAL.Add("!" as Object);
+		assert_true (myAL[0] == "Hello" as Object);
+		assert_true (myAL[1] == "World" as Object);
+		assert_true (myAL[2] == "!" as Object);
 	}
 
 	public void properties_set_item () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add("Hello");
-		myAL.Add("World");
-		myAL.Add("!");
-		myAL[0] = "Goodbye";
-		myAL[2] = "?";
-		assert_true (myAL[0] == "Goodbye");
-		assert_true (myAL[1] == "World");
-		assert_true (myAL[2] == "?");
-		myAl[3] = "Forever";
+		myAL.Add("Hello" as Object);
+		myAL.Add("World" as Object);
+		myAL.Add("!" as Object);
+		myAL[0] = "Goodbye" as Object;
+		myAL[2] = "?" as Object;
+		assert_true (myAL[0] == "Goodbye" as Object);
+		assert_true (myAL[1] == "World" as Object);
+		assert_true (myAL[2] == "?" as Object);
+		myAL[3] = "Forever" as Object;
 	}
 
 	public void properties_get_syncroot () {
@@ -147,18 +148,18 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 	public void methods_adapter () {
 		ArrayList myAL = new ArrayList();
 		ArrayList testAL = new ArrayList();
-		myAL.Add("Hello");
-		myAL.Add("World");
-		myAL.Add("!");
+		myAL.Add("Hello" as Object);
+		myAL.Add("World" as Object);
+		myAL.Add("!" as Object);
 		assert_true (testAL.Adapter(myAL) is ArrayList);
 	}
 
 	public void methods_add () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add("Hello");
-		myAL.Add("World");
-		myAL.Add("!");
-		myAL.Add("!");
+		myAL.Add("Hello" as Object);
+		myAL.Add("World" as Object);
+		myAL.Add("!" as Object);
+		myAL.Add("!" as Object);
 		myAL.Add(null);
 		myAL.Add(null);
 		assert_true (myAL.Count == 6);
@@ -167,160 +168,148 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 
 	public void methods_add_range () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		Queue myQueue = new Queue();
-		myQueue.Enqueue( "jumped" );
-		myQueue.Enqueue( "over" );
-		myQueue.Enqueue( "the" );
-		myQueue.Enqueue( "lazy" );
-		myQueue.Enqueue( "dog" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		var myQueue = new System.Collections.Queue();
+		myQueue.Enqueue( "jumped"  as Object);
+		myQueue.Enqueue( "over"  as Object);
+		myQueue.Enqueue( "the"  as Object);
+		myQueue.Enqueue( "lazy"  as Object);
+		myQueue.Enqueue( "dog"  as Object);
 		myAL.AddRange( myQueue );
 		assert_true (myAL.Count == 9);
-		assert_true (myAL[0] == "The");
-		assert_true (myAL[1] == "quick");
-		assert_true (myAL[2] == "brown");
-		assert_true (myAL[3] == "fox");
-		assert_true (myAL[4] == "jumped");
-		assert_true (myAL[5] == "over");
-		assert_true (myAL[6] == "the");
-		assert_true (myAL[7] == "lazy");
-		assert_true (myAL[8] == "dog");
+		assert_true (myAL[0] == "The" as Object);
+		assert_true (myAL[1] == "quick" as Object);
+		assert_true (myAL[2] == "brown" as Object);
+		assert_true (myAL[3] == "fox" as Object);
+		assert_true (myAL[4] == "jumped" as Object);
+		assert_true (myAL[5] == "over" as Object);
+		assert_true (myAL[6] == "the" as Object);
+		assert_true (myAL[7] == "lazy" as Object);
+		assert_true (myAL[8] == "dog" as Object);
 	}
 
 	public void methods_binary_search () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		int result = myAL.BinarySearch("brown");
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		int result = myAL.BinarySearch("brown" as Object);
 		assert_true (result == 3);
 	}
 
 	public void methods_binary_search_with_comparer () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
 		int result = myAL.BinarySearch("brown", new SimpleStringComparer());
 		assert_true (result == 3);
 	}
 
 	public void methods_binary_search_from_index () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
 		int result = myAL.BinarySearchFromIndex(1,3,"brown");
 		assert_true (result == 3);
 	}
 
 	public void methods_binary_search_from_index_with_comparer () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
 		int result = myAL.BinarySearchFromIndex(1,3,"brown", new SimpleStringComparer());
 		assert_true (result == 3);
 	}
 
 	public void methods_clear () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
 		myAL.Clear();
 		assert_true (myAL.Count == 0);
 	}
 
 	public void methods_contains () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		assert_true (myAL.Contains("The");
-		assert_true (myAL.Contains("quick");
-		assert_true (myAL.Contains("brown");
-		assert_true (myAL.Contains("fox");
-	}
-
-	public void methods_contains () {
-		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		assert_true (myAL.Contains("The");
-		assert_true (myAL.Contains("quick");
-		assert_true (myAL.Contains("brown");
-		assert_true (myAL.Contains("fox");
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		assert_true (myAL.Contains("The"));
+		assert_true (myAL.Contains("quick"));
+		assert_true (myAL.Contains("brown"));
+		assert_true (myAL.Contains("fox"));
 	}
 
 	public void methods_copy_to () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
 		Array<string> array = new Array<string>();
 		MyAL.CopyTo(array);
 		assert_true (array.length == 4);
-		assert_true (array.data[0] == "The");
-		assert_true (array.data[1] == "quick");
-		assert_true (array.data[2] == "brown");
-		assert_true (array.data[3] == "fox");
+		assert_true (array.data[0] == "The" as Object);
+		assert_true (array.data[1] == "quick" as Object);
+		assert_true (array.data[2] == "brown" as Object);
+		assert_true (array.data[3] == "fox" as Object);
 	}
 
 	public void methods_copy_to_index () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
 		Array<string> array = new Array<string>();
 		array.append("Who");
 		array.append("is");
 		MyAL.CopyTo(array, 2);
 		assert_true (array.length == 7);
-		assert_true (array.data[0] == "Who");
-		assert_true (array.data[1] == "is");
-		assert_true (array.data[2] == "The");
-		assert_true (array.data[3] == "quick");
-		assert_true (array.data[4] == "brown");
-		assert_true (array.data[5] == "dog");
-		assert_true (array.data[6] == "!");
+		assert_true (array.data[0] == "Who" as Object);
+		assert_true (array.data[1] == "is" as Object);
+		assert_true (array.data[2] == "The" as Object);
+		assert_true (array.data[3] == "quick" as Object);
+		assert_true (array.data[4] == "brown" as Object);
+		assert_true (array.data[5] == "dog" as Object);
+		assert_true (array.data[6] == "!" as Object);
 	}
 
 	public void methods_copy_to_index_with_count () {
 		ArrayList myAL = new ArrayList();
-		myAL.Add("jumped");
-		myAL.Add("over");
-		myAL.Add("lazy");
-		myAL.Add("dog");
-		myAL.Add("bowl");
+		myAL.Add("jumped" as Object);
+		myAL.Add("over" as Object);
+		myAL.Add("lazy" as Object);
+		myAL.Add("dog" as Object);
+		myAL.Add("bowl" as Object);
 		Array<string> array = new Array<string>();
-		array.append( "The" );
-		array.append( "quick" );
-		array.append( "brown" );
-		array.append( "fox" );
+		array.append( "The"  as Object);
+		array.append( "quick"  as Object);
+		array.append( "brown"  as Object);
+		array.append( "fox"  as Object);
 		MyAL.CopyTo(array, 4, 4);
 		assert_true (array.length == 8);
-		assert_true (array.data[0] == "The");
-		assert_true (array.data[1] == "quick");
-		assert_true (array.data[2] == "brown");
-		assert_true (array.data[3] == "fox");
-		assert_true (array.data[4] == "jumped");
-		assert_true (array.data[5] == "over");
-		assert_true (array.data[6] == "lazy");
-		assert_true (array.data[7] == "dog");
+		assert_true (array.data[0] == "The" as Object);
+		assert_true (array.data[1] == "quick" as Object);
+		assert_true (array.data[2] == "brown" as Object);
+		assert_true (array.data[3] == "fox" as Object);
+		assert_true (array.data[4] == "jumped" as Object);
+		assert_true (array.data[5] == "over" as Object);
+		assert_true (array.data[6] == "lazy" as Object);
+		assert_true (array.data[7] == "dog" as Object);
 	}
 
 	public void methods_fixed_size_array_list () {
@@ -341,36 +330,36 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 
 	public void methods_get_enumerator () {
 		ArrayList myVal = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
 		IEnumerator e = myVal.GetEnumerator();
 		assert_true (e is IEnumerator);
 		string result = "";
 		while (e.MoveNext()) {
 			result += e.Current;
 		}
-		assert_true(result == "Thequickbrownfox");
+		assert_true(result == "Thequickbrownfox" as Object);
 		e.Reset();
 		result = "";
 		while (e.MoveNext()) {
 			result += e.Current;
 		}
-		assert_true(result == "Thequickbrownfox");
+		assert_true(result == "Thequickbrownfox" as Object);
 	}
 
 	public void methods_get_enumerator_within_range () {
 		ArrayList myVal = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		myAL.Add("jumped");
-		myAL.Add("over");
-		myAL.Add("the");
-		myAL.Add("lazy");
-		myAL.Add("dog");
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		myAL.Add("jumped" as Object);
+		myAL.Add("over" as Object);
+		myAL.Add("the" as Object);
+		myAL.Add("lazy" as Object);
+		myAL.Add("dog" as Object);
 		IEnumerator e = myVal.GetEnumerator(4,4);
 		assert_true (e is IEnumerator);
 		string result = "";
@@ -388,34 +377,34 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 
 	public void methods_get_range () {
 		ArrayList myVal = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		myAL.Add("jumped");
-		myAL.Add("over");
-		myAL.Add("the");
-		myAL.Add("lazy");
-		myAL.Add("dog");
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		myAL.Add("jumped" as Object);
+		myAL.Add("over" as Object);
+		myAL.Add("the" as Object);
+		myAL.Add("lazy" as Object);
+		myAL.Add("dog" as Object);
 		var newVal = myVal.GetRange(3,3);
 		assert_true(newVal is ArrayList);
 		assert_true(newVal.Count = 3);
-		assert_true (myAL[0] == "fox");
-		assert_true (myAL[1] == "jumped");
-		assert_true (myAL[2] == "over");
+		assert_true (myAL[0] == "fox" as Object);
+		assert_true (myAL[1] == "jumped" as Object);
+		assert_true (myAL[2] == "over" as Object);
 	}
 
 	public void methods_index_of () {
 		ArrayList myVal = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		myAL.Add("jumped");
-		myAL.Add("over");
-		myAL.Add("the");
-		myAL.Add("lazy");
-		myAL.Add("dog");
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		myAL.Add("jumped" as Object);
+		myAL.Add("over" as Object);
+		myAL.Add("the" as Object);
+		myAL.Add("lazy" as Object);
+		myAL.Add("dog" as Object);
 		assert_true (myAL.IndexOf("The") == 0);
 		assert_true (myAL.IndexOf("quick") == 1);
 		assert_true (myAL.IndexOf("brown") == 2);
@@ -429,15 +418,15 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 
 	public void methods_index_of_with_start () {
 		ArrayList myVal = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		myAL.Add("jumped");
-		myAL.Add("over");
-		myAL.Add("the");
-		myAL.Add("lazy");
-		myAL.Add("dog");
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		myAL.Add("jumped" as Object);
+		myAL.Add("over" as Object);
+		myAL.Add("the" as Object);
+		myAL.Add("lazy" as Object);
+		myAL.Add("dog" as Object);
 		assert_true (myAL.IndexOf("The", 0) == 0);
 		assert_true (myAL.IndexOf("The", 1) == -1);
 		assert_true (myAL.IndexOf("jumped", 2) == 4);
@@ -450,15 +439,15 @@ public class SystemCollectionsArrayListTests : Dia3.TestCase {
 
 	public void methods_index_of_with_range () {
 		ArrayList myVal = new ArrayList();
-		myAL.Add( "The" );
-		myAL.Add( "quick" );
-		myAL.Add( "brown" );
-		myAL.Add( "fox" );
-		myAL.Add("jumped");
-		myAL.Add("over");
-		myAL.Add("the");
-		myAL.Add("lazy");
-		myAL.Add("dog");
+		myAL.Add( "The"  as Object);
+		myAL.Add( "quick"  as Object);
+		myAL.Add( "brown"  as Object);
+		myAL.Add( "fox"  as Object);
+		myAL.Add("jumped" as Object);
+		myAL.Add("over" as Object);
+		myAL.Add("the" as Object);
+		myAL.Add("lazy" as Object);
+		myAL.Add("dog" as Object);
 		assert_true (myAL.IndexOf("The", 0, 7) == 0);
 		assert_true (myAL.IndexOf("The", 1, 8) == -1);
 		assert_true (myAL.IndexOf("jumped", 2, 7) == 4);

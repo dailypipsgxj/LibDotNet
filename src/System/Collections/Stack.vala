@@ -25,7 +25,7 @@ namespace System.Collections
     {
         private Object _syncRoot;
 
-        private const int _defaultCapacity = 10;
+        public const int _defaultCapacity = 10;
 
         // Create a stack with a specific initial capacity.  The initial capacity
         // must be a non-negative number.

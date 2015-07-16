@@ -30,7 +30,7 @@ namespace System.Collections
     public class ArrayList : Gee.ArrayList<Object>, IList, IEnumerable, ICollection
     {
         private Object _syncRoot;
-        private const int _defaultCapacity = 4;
+        public const int _defaultCapacity = 4;
 
         // Constructs a ArrayList with a given initial capacity. The list is
         // initially empty, but will have room for the given number of elements

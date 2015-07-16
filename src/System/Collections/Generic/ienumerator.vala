@@ -28,8 +28,6 @@ namespace System.Collections.Generic {
         // GetCurrent with no intervening calls to MoveNext 
         // will return the same object.
         // 
-        abstract new T Current {
-            get; 
-        }
+        public abstract T Current { owned get; }
     }
 }

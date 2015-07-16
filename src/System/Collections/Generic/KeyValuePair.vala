@@ -40,7 +40,7 @@ namespace System.Collections.Generic {
             get { return value; }
         }
 
-        public string ToString (StringBuilder s) {
+        public string ToString (GLib.StringBuilder s) {
             /*
             s.append('[');
             if( Key != null) {

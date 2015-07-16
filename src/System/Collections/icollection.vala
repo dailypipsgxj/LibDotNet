@@ -21,45 +21,22 @@ namespace System.Collections {
     // Base interface for all collections, defining enumerators, size, and 
     // synchronization methods.
 
-    public interface ICollection : Object, IEnumerable
+	//[GenericAccessors]
+    public interface ICollection : IEnumerable
     {
-        // Interfaces are not serialable
-        // CopyTo copies a collection into an Array, starting at a particular
-        // index into the array.
-        // 
-        public virtual void CopyTo(Array<Object> array, int arrayIndex) {
-			foreach (var item in this) {
-				array.insert_val(arrayIndex++, (Object)item);
-			}
-		}
-        
+		/**
+		 * The number of items in this collection.
+		 */
+		public abstract int size { get; }
         // Number of items in the collections.
         public abstract int Count { get; }
-        
-        public virtual IEnumerator iterator()
-		{
-			return GetEnumerator();
-		}
-
-
-        
-        // SyncRoot will return an Object to use for synchronization 
-        // (thread safety).  You can use this Object in your code to take a
-        // lock on the collection, even if this collection is a wrapper around
-        // another collection.  The intent is to tunnel through to a real 
-        // implementation of a collection, and use one of the internal objects
-        // found in that code.
-        //
-        // In the absense of a static Synchronized method on a collection, 
-        // the expected usage for SyncRoot would look like this:
-        // 
-        // ICollection col = ...
-        // lock (col.SyncRoot) {
-        //     // Some operation on the collection, which is now thread safe.
-        //     // This may include multiple operations.
-        // }
-        // 
-        // 
+        // Is this collection synchronized (i.e., thread-safe)?  If you want a 
+        // thread-safe collection, you can use SyncRoot as an GLib.Object to 
+        // synchronize your collection with.  If you're using one of the 
+        // collections in System.Collections, you could call the static 
+        // Synchronized method to get a thread-safe wrapper around the 
+        // underlying collection.
+        public abstract bool IsSynchronized { get; }
         // The system-provided collections have a static method called 
         // Synchronized which will create a thread-safe wrapper around the 
         // collection.  All access to the collection that you want to be 
@@ -76,16 +53,30 @@ namespace System.Collections {
         // that the this pointer may not be sufficient for collections that 
         // wrap other collections;  those should return the underlying 
         // collection's SyncRoot property.
-        public abstract Object SyncRoot { get; }
+        // SyncRoot will return an GLib.Object to use for synchronization 
+        // (thread safety).  You can use this GLib.Object in your code to take a
+        // lock on the collection, even if this collection is a wrapper around
+        // another collection.  The intent is to tunnel through to a real 
+        // implementation of a collection, and use one of the internal objects
+        // found in that code.
+        //
+        // In the absense of a static Synchronized method on a collection, 
+        // the expected usage for SyncRoot would look like this:
+        // 
+        // ICollection col = ...
+        // lock (col.SyncRoot) {
+        //     // Some operation on the collection, which is now thread safe.
+        //     // This may include multiple operations.
+        // }
+        // 
+        // 
+        public abstract GLib.Object SyncRoot { get; }
             
-        // Is this collection synchronized (i.e., thread-safe)?  If you want a 
-        // thread-safe collection, you can use SyncRoot as an Object to 
-        // synchronize your collection with.  If you're using one of the 
-        // collections in System.Collections, you could call the static 
-        // Synchronized method to get a thread-safe wrapper around the 
-        // underlying collection.
-        public abstract bool IsSynchronized
-        { get; }
+        // CopyTo copies a collection into an Array, starting at a particular
+        // index into the array.
+        // 
+        public abstract void CopyTo(GLib.Array<GLib.Object> array, int arrayIndex);
+      
     }
 
 }

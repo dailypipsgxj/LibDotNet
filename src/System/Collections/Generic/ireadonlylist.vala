@@ -28,9 +28,10 @@ namespace System.Collections.Generic
     // The same attribute is on IList<T>, IEnumerable<T>, ICollection<T> and IReadOnlyCollection<T>.
 
     // If we ever implement more interfaces on IReadOnlyList, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
+	[GenericAccessors]
     public interface IReadOnlyList<T> : IReadOnlyCollection<T>
     {
-        public abstract T get (int index); 
+        public abstract T? get (int index); 
 		
     }
 

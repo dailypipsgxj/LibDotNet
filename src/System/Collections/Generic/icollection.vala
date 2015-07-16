@@ -28,22 +28,43 @@ namespace System.Collections.Generic {
     // This is a special hack internally though - see VM\compile.cpp.
     // The same attribute is on IEnumerable<T> and ICollection<T>.
 
-	[GenericAccessors]
-    public interface ICollection<T> : Object, Gee.Collection<T>, IEnumerable<T>
+	//[GenericAccessors]
+    public interface ICollection<T> : IEnumerable<T>
     {
+		/**
+		 * The number of items in this collection.
+		 */
+		public abstract int size { get; }
+
         // Number of items in the collections.        
         public abstract int Count { get; }
 
         public abstract bool IsReadOnly { get; }
 
+		/**
+		 * Adds an item to this collection. Must not be called on read-only
+		 * collections.
+		 *
+		 * @param item the item to add to the collection
+		 *
+		 * @return     true if the collection has been changed, false otherwise
+		 */
+		public abstract void Add (T item);
 
-        public virtual void Add(T item) {
-			add(item);
-		}
+		/**
+		 * Removes all items from this collection. Must not be called on
+		 * read-only collections.
+		 */
+        public abstract void Clear();
 
-        public virtual void Clear() {
-			clear();
-		}
+		/**
+		 * Determines whether this collection contains the specified item.
+		 *
+		 * @param item the item to locate in the collection
+		 *
+		 * @return     true if item is found, false otherwise
+		 */
+		public abstract bool contains (T item);
 
         public virtual bool Contains(T item) {
 			return contains (item);
@@ -52,22 +73,17 @@ namespace System.Collections.Generic {
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        //void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int count);
-        public virtual void CopyTo(T[] array, int arrayIndex) {
-			foreach (T item in this) {
-				array[arrayIndex++] = item;
-			}
-		}
+        public abstract void CopyTo(GLib.Array<T> array, int arrayIndex);
 
-        public virtual IEnumerator iterator()
-		{
-			return GetEnumerator();
-		}
-
-
-        public virtual bool Remove(T item) {
-			return remove(item);
-		}
+		/**
+		 * Removes the first occurrence of an item from this collection. Must not
+		 * be called on read-only collections.
+		 *
+		 * @param item the item to remove from the collection
+		 *
+		 * @return     true if the collection has been changed, false otherwise
+		 */
+        public abstract bool Remove(T item);
     }
 
 }

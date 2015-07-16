@@ -1,32 +1,20 @@
-dnl Process this file with autoconf to produce a configure script.
-dnl Created by Anjuta application wizard.
+AC_INIT([libdotnet],
+        [0.1],
+        [https://github.com/chebizarro/LibDotNet/issues],
+        [dia3],
+        [https://github.com/chebizarro/LibDotNet])
 
-AC_INIT(libdotnet, 0.1)
-
+AC_CONFIG_SRCDIR([Makefile.am])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
-
 AM_INIT_AUTOMAKE([1.11 foreign subdir-objects])
+AM_MAINTAINER_MODE([enable])
 
-AM_SILENT_RULES([yes])
+dnl AM_SILENT_RULES([yes])
 
 AC_PROG_CC
-
 AM_PROG_AR
-
 AM_PROG_VALAC
-
-
-dnl ***************************************************************************
-dnl Internationalization
-dnl ***************************************************************************
-IT_PROG_INTLTOOL([0.35.0])
-
-GETTEXT_PACKAGE=libdotnet
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
-AM_GLIB_GNU_GETTEXT
-
-
 
 dnl ***************************************************************************
 dnl Check for Windows
@@ -50,17 +38,31 @@ esac
 AM_CONDITIONAL(PLATFORM_WIN32, test x"$platform_win32" = "xyes")
 AM_CONDITIONAL(NATIVE_WIN32, test x"$native_win32" = "xyes")
 
-
 LT_INIT([win32-dll])
 
 
+dnl ***************************************************************************
+dnl Internationalization
+dnl ***************************************************************************
+IT_PROG_INTLTOOL(0.40)
+AM_GNU_GETTEXT_VERSION([0.17])
+GETTEXT_PACKAGE=AC_PACKAGE_NAME
+AC_SUBST([GETTEXT_PACKAGE])
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[The name of the gettext domain])
+
 pkg_modules="gobject-2.0 gee-0.8"
+
 AC_SUBST(pkg_modules)
-PKG_CHECK_MODULES(LIBDOTNET, [gobject-2.0, gee-0.8])
 
+PKG_CHECK_MODULES([LIBDOTNET], [gobject-2.0, gee-0.8])
 
-AC_OUTPUT([
-Makefile
-src/libdotnet-0.1.pc
-src/Makefile
-po/Makefile.in])
+AC_CONFIG_FILES([
+	Makefile
+	src/libdotnet-0.1.pc
+	src/Makefile
+	po/Makefile.in
+	tests/Makefile
+	vapi/Makefile
+])
+
+AC_OUTPUT

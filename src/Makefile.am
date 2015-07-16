@@ -1,3 +1,4 @@
+include $(top_srcdir)/base.am
 include $(top_srcdir)/src/sourcefiles.am
 
 AM_CPPFLAGS = \
@@ -12,7 +13,7 @@ AM_CFLAGS =\
 
 lib_LTLIBRARIES = libdotnet.la
 
-vapidir = $(datadir)/vala/vapi
+vapidir = $(top_srcdir)/vapi
 dist_vapi_DATA = libdotnet-0.1.vapi
 
 libdotnet_la_SOURCES = $(LIBDOTNET_SOURCES)
@@ -21,7 +22,8 @@ libdotnet_la_LDFLAGS =
 	
 libdotnet_la_VALAFLAGS =  \
 	--library libdotnet-0.1 --vapi libdotnet-0.1.vapi -H libdotnet.h \
-	--pkg gobject-2.0 --pkg gee-0.8
+	--pkg gobject-2.0 --pkg gee-0.8 \
+	-g --save-temps
 
 libdotnet_la_LIBADD = $(LIBDOTNET_LIBS)
 
@@ -43,3 +45,5 @@ pkgconfig_DATA = libdotnet-0.1.pc
 
 EXTRA_DIST = \
 	libdotnet-0.1.pc.in
+
+-include $(top_srcdir)/git.mk

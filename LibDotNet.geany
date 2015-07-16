@@ -23,14 +23,18 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
-FILE_NAME_0=0;Make;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2FMakefile.am;0;4
-FILE_NAME_1=138;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2FGeneric%2FEqualityComparer.vala;0;4
-FILE_NAME_2=13993;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2FGeneric%2FLinkedList.vala;0;4
-FILE_NAME_3=0;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2Fiequalitycomparer.vala;0;4
+current_page=5
+FILE_NAME_0=0;Make;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2Ftests%2FMakefile.am;0;4
+FILE_NAME_1=260;Make;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2FMakefile.am;0;4
+FILE_NAME_2=569;Make;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FMakefile.am;0;4
+FILE_NAME_3=0;Sh;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fconfigure.ac;0;4
+FILE_NAME_4=0;Make;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2Fdia3-vala%2FMakefile.am;0;4
+FILE_NAME_5=172;None;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2Fdia3-vala%2Fbase.am;0;4
+FILE_NAME_6=213;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2Ftests%2Ftestmain.vala;0;4
+FILE_NAME_7=0;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2Ftests%2FSystem.Collections%2Ftestsystemcollectionsarraylist.vala;0;4
 
 [VTE]
-last_dir=/home
+last_dir=/media/shared/projects/Backup/LibDotNet
 
 [build-menu]
 NF_00_LB=_Make

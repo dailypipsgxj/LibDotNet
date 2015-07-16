@@ -16,9 +16,13 @@ using System.Runtime.CompilerServices;
 namespace System.Collections.Generic
 {    
  
-    public abstract class Comparer<T> : Object, IComparer<T>
+    public abstract class Comparer<T> : Object, IComparer<T>, System.Collections.IComparer
     {
         static Comparer<T> defaultComparer;    
+
+		protected Comparer () {
+		
+		}
 
         public static Comparer<T> Default {
             owned get {
@@ -42,14 +46,16 @@ namespace System.Collections.Generic
         //
         private static Comparer<T> CreateComparer() {
           // Otherwise return an ObjectComparer<T>
-			return new ObjectComparer<T>();
+			return new GenericComparer<T>();
         }
 
-        public abstract int Compare(T x, T y);
+        public virtual int Compare(T x, T y) {
+			return -1;
+		}
 
     }
 
-    internal class GenericComparer<T> : Comparer<T>
+    public class GenericComparer<T> : Comparer<T>
     {    
 
         public override int Compare(T x, T y) {
@@ -96,9 +102,9 @@ namespace System.Collections.Generic
         }
     }
 
-    internal class ObjectComparer<T> : Comparer<T>
+    public class ObjectComparer<T> : Comparer<T>
     {
-        public override int Compare(T x, T y) {
+        public int Compare(T x, T y) {
             return System.Collections.Comparer.Default.Compare(x as Object, y as Object);
         }
 
@@ -113,7 +119,7 @@ namespace System.Collections.Generic
         }
     }
 
-    public class ComparisonComparer<T> : Comparer<T>
+    internal class ComparisonComparer<T> : Comparer<T>
     {
         protected weak Comparison<T> _comparison;
 
@@ -121,7 +127,7 @@ namespace System.Collections.Generic
             _comparison = comparison;
         }
 
-        public override int Compare(T x, T y) {
+        public int Compare(T x, T y) {
             return _comparison(x, y);
         }
     }
