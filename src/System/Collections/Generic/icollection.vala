@@ -29,7 +29,7 @@ namespace System.Collections.Generic {
     // The same attribute is on IEnumerable<T> and ICollection<T>.
 
 	//[GenericAccessors]
-    public interface ICollection<T> : IEnumerable<T>
+    public interface ICollection<T> : GLib.Object
     {
 		/**
 		 * The number of items in this collection.

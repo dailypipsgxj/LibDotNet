@@ -36,10 +36,9 @@ namespace System.Collections {
         public abstract void set (GLib.Object key);
     
         // Returns a collections of the keys in this dictionary.
-        public abstract ICollection Keys { owned get; }
-    
+        public abstract ICollection? Keys { owned get; private set; }
         // Returns a collections of the values in this dictionary.
-        public abstract ICollection Values { owned get; }
+        public abstract ICollection? Values { owned get; }
  
         // Adds a key-value pair to the dictionary.
         // 

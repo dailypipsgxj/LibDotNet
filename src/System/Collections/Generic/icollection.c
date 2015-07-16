@@ -22,46 +22,6 @@
 #include <glib-object.h>
 
 
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
-#define SYSTEM_COLLECTIONS_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE))
-#define SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerableIface))
-
-typedef struct _SystemCollectionsIEnumerable SystemCollectionsIEnumerable;
-typedef struct _SystemCollectionsIEnumerableIface SystemCollectionsIEnumerableIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerableIface))
-
-typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
-typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
-
-#define SYSTEM_TYPE_IDISPOSABLE (system_idisposable_get_type ())
-#define SYSTEM_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable))
-#define SYSTEM_IS_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_IDISPOSABLE))
-#define SYSTEM_IDISPOSABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposableIface))
-
-typedef struct _SystemIDisposable SystemIDisposable;
-typedef struct _SystemIDisposableIface SystemIDisposableIface;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumeratorIface))
-
-typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
-typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
@@ -69,35 +29,6 @@ typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGeneri
 
 typedef struct _SystemCollectionsGenericICollection SystemCollectionsGenericICollection;
 typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGenericICollectionIface;
-
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
-
-struct _SystemCollectionsIEnumerableIface {
-	GTypeInterface parent_iface;
-	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
-};
-
-struct _SystemIDisposableIface {
-	GTypeInterface parent_iface;
-	void (*Dispose) (SystemIDisposable* self);
-};
-
-struct _SystemCollectionsGenericIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
-};
-
-struct _SystemCollectionsGenericIEnumerableIface {
-	GTypeInterface parent_iface;
-	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
-	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
-	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
-};
 
 struct _SystemCollectionsGenericICollectionIface {
 	GTypeInterface parent_iface;
@@ -114,11 +45,6 @@ struct _SystemCollectionsGenericICollectionIface {
 
 
 
-GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
-GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
-GType system_idisposable_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 void system_collections_generic_icollection_Add (SystemCollectionsGenericICollection* self, gconstpointer item);
 void system_collections_generic_icollection_Clear (SystemCollectionsGenericICollection* self);
@@ -145,7 +71,7 @@ void system_collections_generic_icollection_Add (SystemCollectionsGenericICollec
 	g_return_if_fail (self != NULL);
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Add (self, item);
-#line 149 "icollection.c"
+#line 75 "icollection.c"
 }
 
 
@@ -158,7 +84,7 @@ void system_collections_generic_icollection_Clear (SystemCollectionsGenericIColl
 	g_return_if_fail (self != NULL);
 #line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Clear (self);
-#line 162 "icollection.c"
+#line 88 "icollection.c"
 }
 
 
@@ -174,7 +100,7 @@ gboolean system_collections_generic_icollection_contains (SystemCollectionsGener
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->contains (self, item);
-#line 178 "icollection.c"
+#line 104 "icollection.c"
 }
 
 
@@ -190,7 +116,7 @@ static gboolean system_collections_generic_icollection_real_Contains (SystemColl
 	result = _tmp1_;
 #line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return result;
-#line 194 "icollection.c"
+#line 120 "icollection.c"
 }
 
 
@@ -199,7 +125,7 @@ gboolean system_collections_generic_icollection_Contains (SystemCollectionsGener
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Contains (self, item);
-#line 203 "icollection.c"
+#line 129 "icollection.c"
 }
 
 
@@ -208,7 +134,7 @@ void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICol
 	g_return_if_fail (self != NULL);
 #line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->CopyTo (self, array, arrayIndex);
-#line 212 "icollection.c"
+#line 138 "icollection.c"
 }
 
 
@@ -225,7 +151,7 @@ gboolean system_collections_generic_icollection_Remove (SystemCollectionsGeneric
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 86 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Remove (self, item);
-#line 229 "icollection.c"
+#line 155 "icollection.c"
 }
 
 
@@ -234,7 +160,7 @@ gint system_collections_generic_icollection_get_size (SystemCollectionsGenericIC
 	g_return_val_if_fail (self != NULL, 0);
 #line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->get_size (self);
-#line 238 "icollection.c"
+#line 164 "icollection.c"
 }
 
 
@@ -243,7 +169,7 @@ gint system_collections_generic_icollection_get_Count (SystemCollectionsGenericI
 	g_return_val_if_fail (self != NULL, 0);
 #line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->get_Count (self);
-#line 247 "icollection.c"
+#line 173 "icollection.c"
 }
 
 
@@ -252,7 +178,7 @@ gboolean system_collections_generic_icollection_get_IsReadOnly (SystemCollection
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->get_IsReadOnly (self);
-#line 256 "icollection.c"
+#line 182 "icollection.c"
 }
 
 
@@ -263,9 +189,19 @@ static void system_collections_generic_icollection_base_init (SystemCollectionsG
 	if (!initialized) {
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 		initialized = TRUE;
+#line 193 "icollection.c"
+		/**
+		 * The number of items in this collection.
+		 */
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
+		g_object_interface_install_property (iface, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
+		g_object_interface_install_property (iface, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
+		g_object_interface_install_property (iface, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 		iface->Contains = system_collections_generic_icollection_real_Contains;
-#line 269 "icollection.c"
+#line 205 "icollection.c"
 	}
 }
 
@@ -276,7 +212,7 @@ GType system_collections_generic_icollection_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericICollectionIface), (GBaseInitFunc) system_collections_generic_icollection_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_generic_icollection_type_id;
 		system_collections_generic_icollection_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsGenericICollection", &g_define_type_info, 0);
-		g_type_interface_add_prerequisite (system_collections_generic_icollection_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE);
+		g_type_interface_add_prerequisite (system_collections_generic_icollection_type_id, G_TYPE_OBJECT);
 		g_once_init_leave (&system_collections_generic_icollection_type_id__volatile, system_collections_generic_icollection_type_id);
 	}
 	return system_collections_generic_icollection_type_id__volatile;

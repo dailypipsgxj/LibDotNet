@@ -40,13 +40,16 @@ typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIf
 
 struct _SystemCollectionsIEnumeratorIface {
 	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
 	void (*Reset) (SystemCollectionsIEnumerator* self);
 	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
 };
 
 struct _SystemCollectionsIEnumerableIface {
 	GTypeInterface parent_iface;
+	SystemCollectionsIEnumerator* (*iterator) (SystemCollectionsIEnumerable* self);
 	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
 };
 
@@ -54,15 +57,39 @@ struct _SystemCollectionsIEnumerableIface {
 
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
+SystemCollectionsIEnumerator* system_collections_ienumerable_iterator (SystemCollectionsIEnumerable* self);
 SystemCollectionsIEnumerator* system_collections_ienumerable_GetEnumerator (SystemCollectionsIEnumerable* self);
+static SystemCollectionsIEnumerator* system_collections_ienumerable_real_GetEnumerator (SystemCollectionsIEnumerable* self);
+
+
+SystemCollectionsIEnumerator* system_collections_ienumerable_iterator (SystemCollectionsIEnumerable* self) {
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+	g_return_val_if_fail (self != NULL, NULL);
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+	return SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE (self)->iterator (self);
+#line 71 "ienumerable.c"
+}
+
+
+static SystemCollectionsIEnumerator* system_collections_ienumerable_real_GetEnumerator (SystemCollectionsIEnumerable* self) {
+	SystemCollectionsIEnumerator* result = NULL;
+	SystemCollectionsIEnumerator* _tmp0_ = NULL;
+#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+	_tmp0_ = system_collections_ienumerable_iterator (self);
+#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+	result = _tmp0_;
+#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+	return result;
+#line 84 "ienumerable.c"
+}
 
 
 SystemCollectionsIEnumerator* system_collections_ienumerable_GetEnumerator (SystemCollectionsIEnumerable* self) {
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
 	return SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE (self)->GetEnumerator (self);
-#line 66 "ienumerable.c"
+#line 93 "ienumerable.c"
 }
 
 
@@ -73,7 +100,9 @@ static void system_collections_ienumerable_base_init (SystemCollectionsIEnumerab
 	if (!initialized) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
 		initialized = TRUE;
-#line 77 "ienumerable.c"
+#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerable.vala"
+		iface->GetEnumerator = system_collections_ienumerable_real_GetEnumerator;
+#line 106 "ienumerable.c"
 	}
 }
 
@@ -84,6 +113,7 @@ GType system_collections_ienumerable_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsIEnumerableIface), (GBaseInitFunc) system_collections_ienumerable_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_ienumerable_type_id;
 		system_collections_ienumerable_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsIEnumerable", &g_define_type_info, 0);
+		g_type_interface_add_prerequisite (system_collections_ienumerable_type_id, G_TYPE_OBJECT);
 		g_once_init_leave (&system_collections_ienumerable_type_id__volatile, system_collections_ienumerable_type_id);
 	}
 	return system_collections_ienumerable_type_id__volatile;

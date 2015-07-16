@@ -23,46 +23,6 @@
 #include <gee.h>
 
 
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
-#define SYSTEM_COLLECTIONS_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE))
-#define SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerableIface))
-
-typedef struct _SystemCollectionsIEnumerable SystemCollectionsIEnumerable;
-typedef struct _SystemCollectionsIEnumerableIface SystemCollectionsIEnumerableIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerableIface))
-
-typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
-typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
-
-#define SYSTEM_TYPE_IDISPOSABLE (system_idisposable_get_type ())
-#define SYSTEM_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable))
-#define SYSTEM_IS_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_IDISPOSABLE))
-#define SYSTEM_IDISPOSABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposableIface))
-
-typedef struct _SystemIDisposable SystemIDisposable;
-typedef struct _SystemIDisposableIface SystemIDisposableIface;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumeratorIface))
-
-typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
-typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
@@ -79,34 +39,29 @@ typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGeneri
 typedef struct _SystemCollectionsGenericISet SystemCollectionsGenericISet;
 typedef struct _SystemCollectionsGenericISetIface SystemCollectionsGenericISetIface;
 
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
+#define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerableIface))
 
-struct _SystemCollectionsIEnumerableIface {
-	GTypeInterface parent_iface;
-	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
-};
+typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
+typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
 
-struct _SystemIDisposableIface {
-	GTypeInterface parent_iface;
-	void (*Dispose) (SystemIDisposable* self);
-};
+#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
+#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
+#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
+#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
 
-struct _SystemCollectionsGenericIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
-};
+typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
+typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
 
-struct _SystemCollectionsGenericIEnumerableIface {
-	GTypeInterface parent_iface;
-	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
-	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
-	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
-};
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR))
+#define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumeratorIface))
+
+typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
+typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
 
 struct _SystemCollectionsGenericICollectionIface {
 	GTypeInterface parent_iface;
@@ -119,6 +74,28 @@ struct _SystemCollectionsGenericICollectionIface {
 	gint (*get_size) (SystemCollectionsGenericICollection* self);
 	gint (*get_Count) (SystemCollectionsGenericICollection* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
+};
+
+struct _SystemCollectionsIEnumeratorIface {
+	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
+	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
+	void (*Reset) (SystemCollectionsIEnumerator* self);
+	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
+};
+
+struct _SystemCollectionsGenericIEnumeratorIface {
+	GTypeInterface parent_iface;
+	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
+	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
+};
+
+struct _SystemCollectionsGenericIEnumerableIface {
+	GTypeInterface parent_iface;
+	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
+	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
+	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
 };
 
 struct _SystemCollectionsGenericISetIface {
@@ -138,12 +115,10 @@ struct _SystemCollectionsGenericISetIface {
 
 
 
+GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
-GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
-GType system_idisposable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_iset_get_type (void) G_GNUC_CONST;
 gboolean system_collections_generic_iset_Add (SystemCollectionsGenericISet* self, gconstpointer value);
 static gboolean system_collections_generic_iset_real_Add (SystemCollectionsGenericISet* self, gconstpointer value);
@@ -171,7 +146,7 @@ static gboolean system_collections_generic_iset_real_Add (SystemCollectionsGener
 	result = _tmp1_;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return result;
-#line 175 "iset.c"
+#line 150 "iset.c"
 }
 
 
@@ -180,7 +155,7 @@ gboolean system_collections_generic_iset_Add (SystemCollectionsGenericISet* self
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->Add (self, value);
-#line 184 "iset.c"
+#line 159 "iset.c"
 }
 
 
@@ -189,7 +164,7 @@ void system_collections_generic_iset_ExceptWith (SystemCollectionsGenericISet* s
 	g_return_if_fail (self != NULL);
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->ExceptWith (self, other);
-#line 193 "iset.c"
+#line 168 "iset.c"
 }
 
 
@@ -198,7 +173,7 @@ void system_collections_generic_iset_IntersectWith (SystemCollectionsGenericISet
 	g_return_if_fail (self != NULL);
 #line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IntersectWith (self, other);
-#line 202 "iset.c"
+#line 177 "iset.c"
 }
 
 
@@ -207,7 +182,7 @@ gboolean system_collections_generic_iset_IsProperSupersetOf (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsProperSupersetOf (self, other);
-#line 211 "iset.c"
+#line 186 "iset.c"
 }
 
 
@@ -216,7 +191,7 @@ gboolean system_collections_generic_iset_IsProperSubsetOf (SystemCollectionsGene
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsProperSubsetOf (self, other);
-#line 220 "iset.c"
+#line 195 "iset.c"
 }
 
 
@@ -225,7 +200,7 @@ gboolean system_collections_generic_iset_IsSubsetOf (SystemCollectionsGenericISe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsSubsetOf (self, other);
-#line 229 "iset.c"
+#line 204 "iset.c"
 }
 
 
@@ -234,7 +209,7 @@ gboolean system_collections_generic_iset_IsSupersetOf (SystemCollectionsGenericI
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsSupersetOf (self, other);
-#line 238 "iset.c"
+#line 213 "iset.c"
 }
 
 
@@ -243,7 +218,7 @@ gboolean system_collections_generic_iset_Overlaps (SystemCollectionsGenericISet*
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->Overlaps (self, other);
-#line 247 "iset.c"
+#line 222 "iset.c"
 }
 
 
@@ -252,7 +227,7 @@ gboolean system_collections_generic_iset_SetEquals (SystemCollectionsGenericISet
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->SetEquals (self, other);
-#line 256 "iset.c"
+#line 231 "iset.c"
 }
 
 
@@ -261,7 +236,7 @@ void system_collections_generic_iset_SymmetricExceptWith (SystemCollectionsGener
 	g_return_if_fail (self != NULL);
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->SymmetricExceptWith (self, other);
-#line 265 "iset.c"
+#line 240 "iset.c"
 }
 
 
@@ -270,7 +245,7 @@ void system_collections_generic_iset_UnionWith (SystemCollectionsGenericISet* se
 	g_return_if_fail (self != NULL);
 #line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->UnionWith (self, other);
-#line 274 "iset.c"
+#line 249 "iset.c"
 }
 
 
@@ -283,7 +258,7 @@ static void system_collections_generic_iset_base_init (SystemCollectionsGenericI
 		initialized = TRUE;
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 		iface->Add = system_collections_generic_iset_real_Add;
-#line 287 "iset.c"
+#line 262 "iset.c"
 	}
 }
 

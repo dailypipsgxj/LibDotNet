@@ -22,22 +22,6 @@
 #include <glib-object.h>
 
 
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
-#define SYSTEM_COLLECTIONS_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE))
-#define SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerableIface))
-
-typedef struct _SystemCollectionsIEnumerable SystemCollectionsIEnumerable;
-typedef struct _SystemCollectionsIEnumerableIface SystemCollectionsIEnumerableIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -46,13 +30,13 @@ typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIf
 typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
 typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
 
-#define SYSTEM_TYPE_IDISPOSABLE (system_idisposable_get_type ())
-#define SYSTEM_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable))
-#define SYSTEM_IS_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_IDISPOSABLE))
-#define SYSTEM_IDISPOSABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposableIface))
+#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
+#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
+#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
+#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
 
-typedef struct _SystemIDisposable SystemIDisposable;
-typedef struct _SystemIDisposableIface SystemIDisposableIface;
+typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
+typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
@@ -64,23 +48,16 @@ typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGeneri
 
 struct _SystemCollectionsIEnumeratorIface {
 	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
 	void (*Reset) (SystemCollectionsIEnumerator* self);
 	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
 };
 
-struct _SystemCollectionsIEnumerableIface {
-	GTypeInterface parent_iface;
-	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
-};
-
-struct _SystemIDisposableIface {
-	GTypeInterface parent_iface;
-	void (*Dispose) (SystemIDisposable* self);
-};
-
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
+	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
 };
 
@@ -94,8 +71,6 @@ struct _SystemCollectionsGenericIEnumerableIface {
 
 
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
-GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
-GType system_idisposable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_element_type (SystemCollectionsGenericIEnumerable* self);
@@ -105,11 +80,11 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerab
 
 
 GType system_collections_generic_ienumerable_get_element_type (SystemCollectionsGenericIEnumerable* self) {
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	g_return_val_if_fail (self != NULL, 0UL);
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE (self)->get_element_type (self);
-#line 113 "ienumerable.c"
+#line 88 "ienumerable.c"
 }
 
 
@@ -121,46 +96,46 @@ GType system_collections_generic_ienumerable_get_element_type (SystemCollections
  *         collection
  */
 SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_iterator (SystemCollectionsGenericIEnumerable* self) {
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE (self)->iterator (self);
-#line 129 "ienumerable.c"
+#line 104 "ienumerable.c"
 }
 
 
 static SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_real_GetEnumerator (SystemCollectionsGenericIEnumerable* self) {
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	_tmp0_ = system_collections_generic_ienumerable_iterator (self);
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	result = _tmp0_;
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return result;
-#line 142 "ienumerable.c"
+#line 117 "ienumerable.c"
 }
 
 
 SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_GetEnumerator (SystemCollectionsGenericIEnumerable* self) {
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE (self)->GetEnumerator (self);
-#line 151 "ienumerable.c"
+#line 126 "ienumerable.c"
 }
 
 
 static void system_collections_generic_ienumerable_base_init (SystemCollectionsGenericIEnumerableIface * iface) {
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	static gboolean initialized = FALSE;
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	if (!initialized) {
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 		initialized = TRUE;
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 		iface->GetEnumerator = system_collections_generic_ienumerable_real_GetEnumerator;
-#line 164 "ienumerable.c"
+#line 139 "ienumerable.c"
 	}
 }
 
@@ -171,7 +146,6 @@ GType system_collections_generic_ienumerable_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericIEnumerableIface), (GBaseInitFunc) system_collections_generic_ienumerable_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_generic_ienumerable_type_id;
 		system_collections_generic_ienumerable_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsGenericIEnumerable", &g_define_type_info, 0);
-		g_type_interface_add_prerequisite (system_collections_generic_ienumerable_type_id, SYSTEM_COLLECTIONS_TYPE_IENUMERABLE);
 		g_once_init_leave (&system_collections_generic_ienumerable_type_id__volatile, system_collections_generic_ienumerable_type_id);
 	}
 	return system_collections_generic_ienumerable_type_id__volatile;

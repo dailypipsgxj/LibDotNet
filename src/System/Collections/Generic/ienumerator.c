@@ -22,14 +22,6 @@
 #include <glib-object.h>
 
 
-#define SYSTEM_TYPE_IDISPOSABLE (system_idisposable_get_type ())
-#define SYSTEM_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable))
-#define SYSTEM_IS_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_IDISPOSABLE))
-#define SYSTEM_IDISPOSABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposableIface))
-
-typedef struct _SystemIDisposable SystemIDisposable;
-typedef struct _SystemIDisposableIface SystemIDisposableIface;
-
 #define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
 #define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
 #define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
@@ -46,29 +38,36 @@ typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIf
 typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
 typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
 
-struct _SystemIDisposableIface {
-	GTypeInterface parent_iface;
-	void (*Dispose) (SystemIDisposable* self);
-};
-
 struct _SystemCollectionsIEnumeratorIface {
 	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
 	void (*Reset) (SystemCollectionsIEnumerator* self);
 	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
 };
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
+	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
 };
 
 
 
-GType system_idisposable_get_type (void) G_GNUC_CONST;
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
+gpointer system_collections_generic_ienumerator_get (SystemCollectionsGenericIEnumerator* self);
 gpointer system_collections_generic_ienumerator_get_Current (SystemCollectionsGenericIEnumerator* self);
+
+
+gpointer system_collections_generic_ienumerator_get (SystemCollectionsGenericIEnumerator* self) {
+#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerator.vala"
+	g_return_val_if_fail (self != NULL, NULL);
+#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerator.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR_GET_INTERFACE (self)->get (self);
+#line 70 "ienumerator.c"
+}
 
 
 gpointer system_collections_generic_ienumerator_get_Current (SystemCollectionsGenericIEnumerator* self) {
@@ -76,7 +75,7 @@ gpointer system_collections_generic_ienumerator_get_Current (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, NULL);
 #line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerator.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR_GET_INTERFACE (self)->get_Current (self);
-#line 80 "ienumerator.c"
+#line 79 "ienumerator.c"
 }
 
 
@@ -87,7 +86,9 @@ static void system_collections_generic_ienumerator_base_init (SystemCollectionsG
 	if (!initialized) {
 #line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerator.vala"
 		initialized = TRUE;
-#line 91 "ienumerator.c"
+#line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerator.vala"
+		g_object_interface_install_property (iface, g_param_spec_pointer ("Current", "Current", "Current", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 92 "ienumerator.c"
 	}
 }
 
@@ -98,7 +99,6 @@ GType system_collections_generic_ienumerator_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericIEnumeratorIface), (GBaseInitFunc) system_collections_generic_ienumerator_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_generic_ienumerator_type_id;
 		system_collections_generic_ienumerator_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsGenericIEnumerator", &g_define_type_info, 0);
-		g_type_interface_add_prerequisite (system_collections_generic_ienumerator_type_id, SYSTEM_TYPE_IDISPOSABLE);
 		g_type_interface_add_prerequisite (system_collections_generic_ienumerator_type_id, SYSTEM_COLLECTIONS_TYPE_IENUMERATOR);
 		g_once_init_leave (&system_collections_generic_ienumerator_type_id__volatile, system_collections_generic_ienumerator_type_id);
 	}

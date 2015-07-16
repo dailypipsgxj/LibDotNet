@@ -16,7 +16,6 @@
 ===========================================================*/
 namespace System.Collections.Generic {
     using System;
-    using System.Collections;
     using System.Runtime.InteropServices;
     using System.Runtime.CompilerServices;
     using System.Diagnostics.Contracts;
@@ -30,7 +29,7 @@ namespace System.Collections.Generic {
     // The same attribute is on IList<T> and ICollection<T>.
 
 	//[GenericAccessors]
-    public interface IEnumerable<T> : System.Collections.IEnumerable
+    public interface IEnumerable<T>
     {
 		public abstract GLib.Type get_element_type ();
 

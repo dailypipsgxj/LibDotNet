@@ -29,7 +29,7 @@ namespace System.Collections.Generic
 
     // If we ever implement more interfaces on IReadOnlyCollection, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
    	//[GenericAccessors]
-    public interface IReadOnlyCollection<T> : IEnumerable<T>
+    public interface IReadOnlyCollection<T>
     {
         public abstract int size { get; }
         public abstract int Count { get; }

@@ -32,9 +32,11 @@ public class SystemCollectionsGenricListTests : LibDotNet.TestCase {
 	}
 
 	public void string_list_new_with_enumerable () {
-		string[] input = { "Brachiosaurus", 
-                           "Amargasaurus", 
-                           "Mamenchisaurus" };
+		var input = new List<string> ();
+		input.Add ("Brachiosaurus"); 
+        input.Add ("Amargasaurus"); 
+        input.Add ("Mamenchisaurus");
+                           
 		var myL = new System.Collections.Generic.List<string> (input as IEnumerable<string>);
 		GLib.assert_true (myL is System.Collections.Generic.List);
 		GLib.assert_true (myL.Capacity == 3);

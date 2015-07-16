@@ -22,21 +22,13 @@
 #include <glib-object.h>
 
 
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
-#define SYSTEM_COLLECTIONS_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE))
-#define SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerableIface))
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
+#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollectionIface))
 
-typedef struct _SystemCollectionsIEnumerable SystemCollectionsIEnumerable;
-typedef struct _SystemCollectionsIEnumerableIface SystemCollectionsIEnumerableIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
+typedef struct _SystemCollectionsGenericICollection SystemCollectionsGenericICollection;
+typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGenericICollectionIface;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
@@ -46,13 +38,13 @@ typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIf
 typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
 typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
 
-#define SYSTEM_TYPE_IDISPOSABLE (system_idisposable_get_type ())
-#define SYSTEM_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable))
-#define SYSTEM_IS_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_IDISPOSABLE))
-#define SYSTEM_IDISPOSABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposableIface))
+#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
+#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
+#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
+#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
 
-typedef struct _SystemIDisposable SystemIDisposable;
-typedef struct _SystemIDisposableIface SystemIDisposableIface;
+typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
+typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
@@ -62,13 +54,13 @@ typedef struct _SystemIDisposableIface SystemIDisposableIface;
 typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
 typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollectionIface))
+#define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
+#define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
+#define SYSTEM_COLLECTIONS_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE))
+#define SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerableIface))
 
-typedef struct _SystemCollectionsGenericICollection SystemCollectionsGenericICollection;
-typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGenericICollectionIface;
+typedef struct _SystemCollectionsIEnumerable SystemCollectionsIEnumerable;
+typedef struct _SystemCollectionsIEnumerableIface SystemCollectionsIEnumerableIface;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IDICTIONARY (system_collections_generic_idictionary_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IDICTIONARY, SystemCollectionsGenericIDictionary))
@@ -77,35 +69,6 @@ typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGeneri
 
 typedef struct _SystemCollectionsGenericIDictionary SystemCollectionsGenericIDictionary;
 typedef struct _SystemCollectionsGenericIDictionaryIface SystemCollectionsGenericIDictionaryIface;
-
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
-
-struct _SystemCollectionsIEnumerableIface {
-	GTypeInterface parent_iface;
-	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
-};
-
-struct _SystemIDisposableIface {
-	GTypeInterface parent_iface;
-	void (*Dispose) (SystemIDisposable* self);
-};
-
-struct _SystemCollectionsGenericIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
-};
-
-struct _SystemCollectionsGenericIEnumerableIface {
-	GTypeInterface parent_iface;
-	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
-	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
-	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
-};
 
 struct _SystemCollectionsGenericICollectionIface {
 	GTypeInterface parent_iface;
@@ -120,6 +83,34 @@ struct _SystemCollectionsGenericICollectionIface {
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
 };
 
+struct _SystemCollectionsIEnumeratorIface {
+	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
+	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
+	void (*Reset) (SystemCollectionsIEnumerator* self);
+	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
+};
+
+struct _SystemCollectionsGenericIEnumeratorIface {
+	GTypeInterface parent_iface;
+	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
+	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
+};
+
+struct _SystemCollectionsGenericIEnumerableIface {
+	GTypeInterface parent_iface;
+	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
+	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
+	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
+};
+
+struct _SystemCollectionsIEnumerableIface {
+	GTypeInterface parent_iface;
+	SystemCollectionsIEnumerator* (*iterator) (SystemCollectionsIEnumerable* self);
+	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
+};
+
 struct _SystemCollectionsGenericIDictionaryIface {
 	GTypeInterface parent_iface;
 	gpointer (*get) (SystemCollectionsGenericIDictionary* self, gconstpointer key);
@@ -130,17 +121,17 @@ struct _SystemCollectionsGenericIDictionaryIface {
 	gboolean (*Remove) (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 	gboolean (*TryGetValue) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gpointer* value);
 	SystemCollectionsGenericICollection* (*get_Keys) (SystemCollectionsGenericIDictionary* self);
+	void (*set_Keys) (SystemCollectionsGenericIDictionary* self, SystemCollectionsGenericICollection* value);
 	SystemCollectionsGenericICollection* (*get_Values) (SystemCollectionsGenericIDictionary* self);
 };
 
 
 
+GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
-GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
-GType system_idisposable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
+GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_idictionary_get_type (void) G_GNUC_CONST;
 gpointer system_collections_generic_idictionary_get (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 void system_collections_generic_idictionary_set (SystemCollectionsGenericIDictionary* self, gconstpointer key);
@@ -150,6 +141,7 @@ gboolean system_collections_generic_idictionary_ContainsValue (SystemCollections
 gboolean system_collections_generic_idictionary_Remove (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 gboolean system_collections_generic_idictionary_TryGetValue (SystemCollectionsGenericIDictionary* self, gconstpointer key, gpointer* value);
 SystemCollectionsGenericICollection* system_collections_generic_idictionary_get_Keys (SystemCollectionsGenericIDictionary* self);
+static void system_collections_generic_idictionary_set_Keys (SystemCollectionsGenericIDictionary* self, SystemCollectionsGenericICollection* value);
 SystemCollectionsGenericICollection* system_collections_generic_idictionary_get_Values (SystemCollectionsGenericIDictionary* self);
 
 
@@ -158,7 +150,7 @@ gpointer system_collections_generic_idictionary_get (SystemCollectionsGenericIDi
 	g_return_val_if_fail (self != NULL, NULL);
 #line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->get (self, key);
-#line 162 "idictionary.c"
+#line 154 "idictionary.c"
 }
 
 
@@ -167,7 +159,7 @@ void system_collections_generic_idictionary_set (SystemCollectionsGenericIDictio
 	g_return_if_fail (self != NULL);
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->set (self, key);
-#line 171 "idictionary.c"
+#line 163 "idictionary.c"
 }
 
 
@@ -176,7 +168,7 @@ void system_collections_generic_idictionary_Add (SystemCollectionsGenericIDictio
 	g_return_if_fail (self != NULL);
 #line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->Add (self, key, value);
-#line 180 "idictionary.c"
+#line 172 "idictionary.c"
 }
 
 
@@ -185,7 +177,7 @@ gboolean system_collections_generic_idictionary_ContainsKey (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->ContainsKey (self, key);
-#line 189 "idictionary.c"
+#line 181 "idictionary.c"
 }
 
 
@@ -194,7 +186,7 @@ gboolean system_collections_generic_idictionary_ContainsValue (SystemCollections
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->ContainsValue (self, value);
-#line 198 "idictionary.c"
+#line 190 "idictionary.c"
 }
 
 
@@ -203,7 +195,7 @@ gboolean system_collections_generic_idictionary_Remove (SystemCollectionsGeneric
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->Remove (self, key);
-#line 207 "idictionary.c"
+#line 199 "idictionary.c"
 }
 
 
@@ -212,7 +204,7 @@ gboolean system_collections_generic_idictionary_TryGetValue (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->TryGetValue (self, key, value);
-#line 216 "idictionary.c"
+#line 208 "idictionary.c"
 }
 
 
@@ -221,7 +213,16 @@ SystemCollectionsGenericICollection* system_collections_generic_idictionary_get_
 	g_return_val_if_fail (self != NULL, NULL);
 #line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->get_Keys (self);
-#line 225 "idictionary.c"
+#line 217 "idictionary.c"
+}
+
+
+static void system_collections_generic_idictionary_set_Keys (SystemCollectionsGenericIDictionary* self, SystemCollectionsGenericICollection* value) {
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
+	g_return_if_fail (self != NULL);
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
+	SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->set_Keys (self, value);
+#line 226 "idictionary.c"
 }
 
 
@@ -230,7 +231,7 @@ SystemCollectionsGenericICollection* system_collections_generic_idictionary_get_
 	g_return_val_if_fail (self != NULL, NULL);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_GET_INTERFACE (self)->get_Values (self);
-#line 234 "idictionary.c"
+#line 235 "idictionary.c"
 }
 
 
@@ -241,7 +242,11 @@ static void system_collections_generic_idictionary_base_init (SystemCollectionsG
 	if (!initialized) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
 		initialized = TRUE;
-#line 245 "idictionary.c"
+#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Keys", "Keys", "Keys", SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/idictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Values", "Values", "Values", SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 250 "idictionary.c"
 	}
 }
 
@@ -254,7 +259,7 @@ GType system_collections_generic_idictionary_get_type (void) {
 		system_collections_generic_idictionary_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsGenericIDictionary", &g_define_type_info, 0);
 		g_type_interface_add_prerequisite (system_collections_generic_idictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION);
 		g_type_interface_add_prerequisite (system_collections_generic_idictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE);
-		g_type_interface_add_prerequisite (system_collections_generic_idictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE);
+		g_type_interface_add_prerequisite (system_collections_generic_idictionary_type_id, SYSTEM_COLLECTIONS_TYPE_IENUMERABLE);
 		g_once_init_leave (&system_collections_generic_idictionary_type_id__volatile, system_collections_generic_idictionary_type_id);
 	}
 	return system_collections_generic_idictionary_type_id__volatile;

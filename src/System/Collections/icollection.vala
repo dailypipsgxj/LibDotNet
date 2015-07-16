@@ -22,7 +22,7 @@ namespace System.Collections {
     // synchronization methods.
 
 	//[GenericAccessors]
-    public interface ICollection : IEnumerable
+    public interface ICollection : GLib.Object
     {
 		/**
 		 * The number of items in this collection.

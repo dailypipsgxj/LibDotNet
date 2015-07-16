@@ -22,6 +22,14 @@
 #include <glib-object.h>
 
 
+#define SYSTEM_COLLECTIONS_TYPE_ICOLLECTION (system_collections_icollection_get_type ())
+#define SYSTEM_COLLECTIONS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollection))
+#define SYSTEM_COLLECTIONS_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION))
+#define SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollectionIface))
+
+typedef struct _SystemCollectionsICollection SystemCollectionsICollection;
+typedef struct _SystemCollectionsICollectionIface SystemCollectionsICollectionIface;
+
 #define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
 #define SYSTEM_COLLECTIONS_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE))
@@ -37,14 +45,6 @@ typedef struct _SystemCollectionsIEnumerableIface SystemCollectionsIEnumerableIf
 
 typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
 typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_ICOLLECTION (system_collections_icollection_get_type ())
-#define SYSTEM_COLLECTIONS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollection))
-#define SYSTEM_COLLECTIONS_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION))
-#define SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollectionIface))
-
-typedef struct _SystemCollectionsICollection SystemCollectionsICollection;
-typedef struct _SystemCollectionsICollectionIface SystemCollectionsICollectionIface;
 
 #define SYSTEM_COLLECTIONS_TYPE_IDICTIONARY (system_collections_idictionary_get_type ())
 #define SYSTEM_COLLECTIONS_IDICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IDICTIONARY, SystemCollectionsIDictionary))
@@ -72,18 +72,6 @@ typedef struct _SystemCollectionsIDictionaryEnumeratorIface SystemCollectionsIDi
 typedef struct _SystemCollectionsDictionaryEntry SystemCollectionsDictionaryEntry;
 typedef struct _SystemCollectionsDictionaryEntryClass SystemCollectionsDictionaryEntryClass;
 
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
-
-struct _SystemCollectionsIEnumerableIface {
-	GTypeInterface parent_iface;
-	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
-};
-
 struct _SystemCollectionsICollectionIface {
 	GTypeInterface parent_iface;
 	void (*CopyTo) (SystemCollectionsICollection* self, GArray* array, gint arrayIndex);
@@ -91,6 +79,21 @@ struct _SystemCollectionsICollectionIface {
 	gint (*get_Count) (SystemCollectionsICollection* self);
 	gboolean (*get_IsSynchronized) (SystemCollectionsICollection* self);
 	GObject* (*get_SyncRoot) (SystemCollectionsICollection* self);
+};
+
+struct _SystemCollectionsIEnumeratorIface {
+	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
+	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
+	void (*Reset) (SystemCollectionsIEnumerator* self);
+	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
+};
+
+struct _SystemCollectionsIEnumerableIface {
+	GTypeInterface parent_iface;
+	SystemCollectionsIEnumerator* (*iterator) (SystemCollectionsIEnumerable* self);
+	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
 };
 
 struct _SystemCollectionsIDictionaryEnumeratorIface {
@@ -112,14 +115,15 @@ struct _SystemCollectionsIDictionaryIface {
 	gboolean (*get_IsFixedSize) (SystemCollectionsIDictionary* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsIDictionary* self);
 	SystemCollectionsICollection* (*get_Keys) (SystemCollectionsIDictionary* self);
+	void (*set_Keys) (SystemCollectionsIDictionary* self, SystemCollectionsICollection* value);
 	SystemCollectionsICollection* (*get_Values) (SystemCollectionsIDictionary* self);
 };
 
 
 
+GType system_collections_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
-GType system_collections_icollection_get_type (void) G_GNUC_CONST;
 gpointer system_collections_dictionary_entry_ref (gpointer instance);
 void system_collections_dictionary_entry_unref (gpointer instance);
 GParamSpec* system_collections_param_spec_dictionary_entry (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
@@ -139,6 +143,7 @@ void system_collections_idictionary_Remove (SystemCollectionsIDictionary* self, 
 gboolean system_collections_idictionary_get_IsFixedSize (SystemCollectionsIDictionary* self);
 gboolean system_collections_idictionary_get_IsReadOnly (SystemCollectionsIDictionary* self);
 SystemCollectionsICollection* system_collections_idictionary_get_Keys (SystemCollectionsIDictionary* self);
+static void system_collections_idictionary_set_Keys (SystemCollectionsIDictionary* self, SystemCollectionsICollection* value);
 SystemCollectionsICollection* system_collections_idictionary_get_Values (SystemCollectionsIDictionary* self);
 
 
@@ -147,7 +152,7 @@ GObject* system_collections_idictionary_get (SystemCollectionsIDictionary* self,
 	g_return_val_if_fail (self != NULL, NULL);
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->get (self, key);
-#line 151 "idictionary.c"
+#line 156 "idictionary.c"
 }
 
 
@@ -156,52 +161,52 @@ void system_collections_idictionary_set (SystemCollectionsIDictionary* self, GOb
 	g_return_if_fail (self != NULL);
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->set (self, key);
-#line 160 "idictionary.c"
+#line 165 "idictionary.c"
 }
 
 
 void system_collections_idictionary_Add (SystemCollectionsIDictionary* self, GObject* key, GObject* value) {
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->Add (self, key, value);
-#line 169 "idictionary.c"
+#line 174 "idictionary.c"
 }
 
 
 void system_collections_idictionary_Clear (SystemCollectionsIDictionary* self) {
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->Clear (self);
-#line 178 "idictionary.c"
+#line 183 "idictionary.c"
 }
 
 
 gboolean system_collections_idictionary_Contains (SystemCollectionsIDictionary* self, GObject* key) {
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->Contains (self, key);
-#line 187 "idictionary.c"
+#line 192 "idictionary.c"
 }
 
 
 SystemCollectionsIDictionaryEnumerator* system_collections_idictionary_GetEnumerator (SystemCollectionsIDictionary* self) {
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->GetEnumerator (self);
-#line 196 "idictionary.c"
+#line 201 "idictionary.c"
 }
 
 
 void system_collections_idictionary_Remove (SystemCollectionsIDictionary* self, GObject* key) {
-#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->Remove (self, key);
-#line 205 "idictionary.c"
+#line 210 "idictionary.c"
 }
 
 
@@ -210,7 +215,7 @@ gboolean system_collections_idictionary_get_IsFixedSize (SystemCollectionsIDicti
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 29 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->get_IsFixedSize (self);
-#line 214 "idictionary.c"
+#line 219 "idictionary.c"
 }
 
 
@@ -219,7 +224,7 @@ gboolean system_collections_idictionary_get_IsReadOnly (SystemCollectionsIDictio
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->get_IsReadOnly (self);
-#line 223 "idictionary.c"
+#line 228 "idictionary.c"
 }
 
 
@@ -228,16 +233,25 @@ SystemCollectionsICollection* system_collections_idictionary_get_Keys (SystemCol
 	g_return_val_if_fail (self != NULL, NULL);
 #line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->get_Keys (self);
-#line 232 "idictionary.c"
+#line 237 "idictionary.c"
+}
+
+
+static void system_collections_idictionary_set_Keys (SystemCollectionsIDictionary* self, SystemCollectionsICollection* value) {
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+	g_return_if_fail (self != NULL);
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+	SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->set_Keys (self, value);
+#line 246 "idictionary.c"
 }
 
 
 SystemCollectionsICollection* system_collections_idictionary_get_Values (SystemCollectionsIDictionary* self) {
-#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE (self)->get_Values (self);
-#line 241 "idictionary.c"
+#line 255 "idictionary.c"
 }
 
 
@@ -248,7 +262,15 @@ static void system_collections_idictionary_base_init (SystemCollectionsIDictiona
 	if (!initialized) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
 		initialized = TRUE;
-#line 252 "idictionary.c"
+#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_boolean ("IsFixedSize", "IsFixedSize", "IsFixedSize", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Keys", "Keys", "Keys", SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Values", "Values", "Values", SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 274 "idictionary.c"
 	}
 }
 

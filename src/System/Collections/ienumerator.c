@@ -32,7 +32,9 @@ typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIf
 
 struct _SystemCollectionsIEnumeratorIface {
 	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
 	void (*Reset) (SystemCollectionsIEnumerator* self);
 	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
 };
@@ -40,35 +42,69 @@ struct _SystemCollectionsIEnumeratorIface {
 
 
 GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
+gboolean system_collections_ienumerator_next (SystemCollectionsIEnumerator* self);
 gboolean system_collections_ienumerator_MoveNext (SystemCollectionsIEnumerator* self);
+static gboolean system_collections_ienumerator_real_MoveNext (SystemCollectionsIEnumerator* self);
+GObject* system_collections_ienumerator_get (SystemCollectionsIEnumerator* self);
 void system_collections_ienumerator_Reset (SystemCollectionsIEnumerator* self);
 GObject* system_collections_ienumerator_get_Current (SystemCollectionsIEnumerator* self);
 
 
-gboolean system_collections_ienumerator_MoveNext (SystemCollectionsIEnumerator* self) {
+gboolean system_collections_ienumerator_next (SystemCollectionsIEnumerator* self) {
 #line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+	return SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE (self)->next (self);
+#line 59 "ienumerator.c"
+}
+
+
+static gboolean system_collections_ienumerator_real_MoveNext (SystemCollectionsIEnumerator* self) {
+	gboolean result = FALSE;
+	gboolean _tmp0_ = FALSE;
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+	_tmp0_ = system_collections_ienumerator_next (self);
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+	result = _tmp0_;
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+	return result;
+#line 72 "ienumerator.c"
+}
+
+
+gboolean system_collections_ienumerator_MoveNext (SystemCollectionsIEnumerator* self) {
+#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
 	return SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE (self)->MoveNext (self);
-#line 54 "ienumerator.c"
+#line 81 "ienumerator.c"
+}
+
+
+GObject* system_collections_ienumerator_get (SystemCollectionsIEnumerator* self) {
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+	g_return_val_if_fail (self != NULL, NULL);
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+	return SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE (self)->get (self);
+#line 90 "ienumerator.c"
 }
 
 
 void system_collections_ienumerator_Reset (SystemCollectionsIEnumerator* self) {
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
 	g_return_if_fail (self != NULL);
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
 	SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE (self)->Reset (self);
-#line 63 "ienumerator.c"
+#line 99 "ienumerator.c"
 }
 
 
 GObject* system_collections_ienumerator_get_Current (SystemCollectionsIEnumerator* self) {
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
 	return SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE (self)->get_Current (self);
-#line 72 "ienumerator.c"
+#line 108 "ienumerator.c"
 }
 
 
@@ -79,7 +115,11 @@ static void system_collections_ienumerator_base_init (SystemCollectionsIEnumerat
 	if (!initialized) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
 		initialized = TRUE;
-#line 83 "ienumerator.c"
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Current", "Current", "Current", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ienumerator.vala"
+		iface->MoveNext = system_collections_ienumerator_real_MoveNext;
+#line 123 "ienumerator.c"
 	}
 }
 
@@ -90,6 +130,7 @@ GType system_collections_ienumerator_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsIEnumeratorIface), (GBaseInitFunc) system_collections_ienumerator_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_ienumerator_type_id;
 		system_collections_ienumerator_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsIEnumerator", &g_define_type_info, 0);
+		g_type_interface_add_prerequisite (system_collections_ienumerator_type_id, G_TYPE_OBJECT);
 		g_once_init_leave (&system_collections_ienumerator_type_id__volatile, system_collections_ienumerator_type_id);
 	}
 	return system_collections_ienumerator_type_id__volatile;

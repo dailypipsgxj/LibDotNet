@@ -26,7 +26,7 @@ namespace System.Collections.Generic {
     public interface IDictionary<TKey, TValue> :
 		ICollection<KeyValuePair<TKey, TValue>>,
 		IEnumerable<KeyValuePair<TKey, TValue>>,
-		IEnumerable
+		System.Collections.IEnumerable
     {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
@@ -37,7 +37,7 @@ namespace System.Collections.Generic {
     
         // Returns a collections of the keys in this dictionary.
         public abstract ICollection<TKey> Keys {
-            owned get;
+            owned get; private set;
         }
     
         // Returns a collections of the values in this dictionary.

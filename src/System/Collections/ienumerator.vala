@@ -20,8 +20,8 @@ namespace System.Collections {
 
     // Base interface for all enumerators, providing a simple approach
     // to iterating over a collection.
-
-    public interface IEnumerator
+	//[GenericAccessors]
+    public interface IEnumerator : GLib.Object
     {
         // Interfaces are not serializable
         // Advances the enumerator to the next element of the enumeration and
@@ -30,9 +30,13 @@ namespace System.Collections {
         // element of the enumeration, and the first call to MoveNext 
         // brings the first element of the enumeration into view.
         // 
-        public abstract bool MoveNext();
+        public abstract bool next();
    
-		//public abstract GLib.Object get();
+		public virtual bool MoveNext() {
+			return next();
+		}
+   
+		public abstract GLib.Object get();
     
         // Returns the current element of the enumeration. The returned value is
         // undefined before the first call to MoveNext and following a

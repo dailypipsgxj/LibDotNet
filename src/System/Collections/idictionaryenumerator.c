@@ -50,7 +50,9 @@ typedef struct _SystemCollectionsDictionaryEntryClass SystemCollectionsDictionar
 
 struct _SystemCollectionsIEnumeratorIface {
 	GTypeInterface parent_iface;
+	gboolean (*next) (SystemCollectionsIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
+	GObject* (*get) (SystemCollectionsIEnumerator* self);
 	void (*Reset) (SystemCollectionsIEnumerator* self);
 	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
 };
@@ -83,7 +85,7 @@ GObject* system_collections_idictionary_enumerator_get_Key (SystemCollectionsIDi
 	g_return_val_if_fail (self != NULL, NULL);
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionaryenumerator.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_ENUMERATOR_GET_INTERFACE (self)->get_Key (self);
-#line 87 "idictionaryenumerator.c"
+#line 89 "idictionaryenumerator.c"
 }
 
 
@@ -92,7 +94,7 @@ GObject* system_collections_idictionary_enumerator_get_Value (SystemCollectionsI
 	g_return_val_if_fail (self != NULL, NULL);
 #line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionaryenumerator.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_ENUMERATOR_GET_INTERFACE (self)->get_Value (self);
-#line 96 "idictionaryenumerator.c"
+#line 98 "idictionaryenumerator.c"
 }
 
 
@@ -101,7 +103,7 @@ SystemCollectionsDictionaryEntry* system_collections_idictionary_enumerator_get_
 	g_return_val_if_fail (self != NULL, NULL);
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionaryenumerator.vala"
 	return SYSTEM_COLLECTIONS_IDICTIONARY_ENUMERATOR_GET_INTERFACE (self)->get_Entry (self);
-#line 105 "idictionaryenumerator.c"
+#line 107 "idictionaryenumerator.c"
 }
 
 
@@ -112,7 +114,13 @@ static void system_collections_idictionary_enumerator_base_init (SystemCollectio
 	if (!initialized) {
 #line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionaryenumerator.vala"
 		initialized = TRUE;
-#line 116 "idictionaryenumerator.c"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionaryenumerator.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Key", "Key", "Key", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionaryenumerator.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Value", "Value", "Value", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/idictionaryenumerator.vala"
+		g_object_interface_install_property (iface, system_collections_param_spec_dictionary_entry ("Entry", "Entry", "Entry", SYSTEM_COLLECTIONS_TYPE_DICTIONARY_ENTRY, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 124 "idictionaryenumerator.c"
 	}
 }
 
