@@ -7,7 +7,7 @@
 // 
 
 using System;
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
@@ -16,108 +16,83 @@ using System.Runtime.CompilerServices;
 namespace System.Collections.Generic
 {    
  
-    public abstract class Comparer<T> : Object, IComparer<T>, System.Collections.IComparer
+    public abstract class Comparer<T> : IComparer<T>
     {
         static Comparer<T> defaultComparer;    
 
-		protected Comparer () {
-		
-		}
-
-        public static Comparer<T> Default {
-            owned get {
-                Comparer<T> comparer = defaultComparer;
-                if (comparer == null) {
-                    comparer = CreateComparer();
-                    defaultComparer = comparer;
-                }
-                return comparer;
-            }
+        public static Comparer<T> Default<T> () {
+			Comparer<T> comparer = defaultComparer;
+			if (comparer == null) {
+				GLib.Type comparer_type = typeof(T);
+				switch (comparer_type.name()) {
+					case ("gchararray"):
+						comparer = new StringComparer();
+						break;
+					case ("gint"):
+						comparer = new IntComparer();
+						break;
+					case ("glong"):
+						comparer = new Int64Comparer();
+						break;
+					default:
+						comparer = new ObjectComparer();
+						break;
+					}
+				defaultComparer = comparer;
+			}
+			return comparer;
         }
 
-        public static Comparer<T> Create(Comparison<T> comparison)
+        public static Comparer<T> Create<T>(Comparison<T> comparison)
         {
             return new ComparisonComparer<T>(comparison);
         }
 
-        //
-        // Note that logic in this method is replicated in vm\compile.cpp to ensure that NGen
-        // saves the right instantiations
-        //
-        private static Comparer<T> CreateComparer() {
-          // Otherwise return an ObjectComparer<T>
-			return new GenericComparer<T>();
-        }
+        public abstract int Compare(T x, T y);
 
-        public virtual int Compare(T x, T y) {
+    }
+
+    internal class StringComparer: Comparer<string>
+    {
+
+        public override int Compare(string x, string y) {
+			return GLib.strcmp(x, y);
+        }
+    }
+
+    internal class ObjectComparer: Comparer<GLib.Object>
+    {
+        public override int Compare(GLib.Object x,GLib.Object y) {
+			if (GLib.direct_equal(x, y)) return 0;
 			return -1;
-		}
+        }
 
     }
 
-    public class GenericComparer<T> : Comparer<T>
-    {    
-
-        public override int Compare(T x, T y) {
-            if (x != null) {
-                if (y != null) return (int)(x == y);
-                return 1;
-            }
-            if (y != null) return -1;
-            return 0;
-        }
-
-
-        // Equals method for the comparer itself. 
-        public bool Equals(Object obj){
-            GenericComparer<T> comparer = obj as GenericComparer<T>;
-            return comparer != null;
-        }        
-
-        public int GetHashCode() {
-            return -1;
-        }
-    }
-
-    internal class NullableComparer<T> : Comparer<Nullable<T>> 
+    internal class IntComparer: Comparer<int>
     {
-        public override int Compare(Nullable<T> x, Nullable<T> y) {
-            if (x.HasValue) {
-                if (y.HasValue) return (int)(x.value == y.value);
-                return 1;
-            }
-            if (y.HasValue) return -1;
-            return 0;
+
+        public override int Compare(int x, int y) {
+			if (x < y) return -1;
+			if (x == y) return 0;
+			if (x > y) return 1;
+			return 0;
         }
 
-        // Equals method for the comparer itself. 
-        public bool Equals(Object obj){
-            NullableComparer<T> comparer = obj as NullableComparer<T>;
-            return comparer != null;
-        }        
-
-
-        public int GetHashCode() {
-            return -1;
-        }
     }
 
-    public class ObjectComparer<T> : Comparer<T>
+    internal class Int64Comparer: Comparer<int64>
     {
-        public int Compare(T x, T y) {
-            return System.Collections.Comparer.Default.Compare(x as Object, y as Object);
+
+        public override int Compare(int64 x, int64 y) {
+			if (x < y) return -1;
+			if (x == y) return 0;
+			if (x > y) return 1;
+			return 0;
         }
 
-        // Equals method for the comparer itself. 
-        public bool Equals(Object obj){
-            ObjectComparer<T> comparer = obj as ObjectComparer<T>;
-            return comparer != null;
-        }        
-
-        public int GetHashCode() {
-            return -1;
-        }
     }
+
 
     internal class ComparisonComparer<T> : Comparer<T>
     {
@@ -127,7 +102,7 @@ namespace System.Collections.Generic
             _comparison = comparison;
         }
 
-        public int Compare(T x, T y) {
+        public override int Compare(T x, T y) {
             return _comparison(x, y);
         }
     }

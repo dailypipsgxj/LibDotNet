@@ -15,7 +15,7 @@ namespace System.Collections.Generic {
     public interface IEqualityComparer<T>
     {
         public abstract bool Equals(T x, T y);
-        public abstract int GetHashCode(T obj);                
+        public abstract uint GetHashCode(T obj);                
     }
 }
 

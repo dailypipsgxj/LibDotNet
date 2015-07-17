@@ -82,19 +82,7 @@ build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/base.am $(top_srcdir)/src/sourcefiles.am \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(srcdir)/libdotnet-0.1.pc.in System/Collections/icollection.c \
-	System/Collections/icomparer.c \
-	System/Collections/idictionary.c \
-	System/Collections/idictionaryenumerator.c \
-	System/Collections/ienumerable.c \
-	System/Collections/ienumerator.c \
-	System/Collections/iequalitycomparer.c \
-	System/Collections/ihashcodeprovider.c \
-	System/Collections/ilist.c \
-	System/Collections/istructuralcomparable.c \
-	System/Collections/istructuralequatable.c \
-	System/Collections/DictionaryEntry.c \
-	System/Collections/KeyValuePairs.c \
+	$(srcdir)/libdotnet-0.1.pc.in \
 	System/Collections/Generic/icollection.c \
 	System/Collections/Generic/icomparer.c \
 	System/Collections/Generic/idictionary.c \
@@ -107,6 +95,9 @@ DIST_COMMON = $(top_srcdir)/base.am $(top_srcdir)/src/sourcefiles.am \
 	System/Collections/Generic/ireadonlydictionary.c \
 	System/Collections/Generic/ireadonlylist.c \
 	System/Collections/Generic/KeyValuePair.c \
+	System/Collections/Generic/timsort.c \
+	System/Collections/Generic/Comparer.c \
+	System/Collections/Generic/EqualityComparer.c \
 	System/Collections/Generic/List.c System/Text/Text.c \
 	System/Globalization/Globalization.c \
 	System/Diagnostics/Diagnostics.c \
@@ -166,20 +157,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libdotnet_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = System/Collections/icollection.lo \
-	System/Collections/icomparer.lo \
-	System/Collections/idictionary.lo \
-	System/Collections/idictionaryenumerator.lo \
-	System/Collections/ienumerable.lo \
-	System/Collections/ienumerator.lo \
-	System/Collections/iequalitycomparer.lo \
-	System/Collections/ihashcodeprovider.lo \
-	System/Collections/ilist.lo \
-	System/Collections/istructuralcomparable.lo \
-	System/Collections/istructuralequatable.lo \
-	System/Collections/DictionaryEntry.lo \
-	System/Collections/KeyValuePairs.lo
-am__objects_2 = System/Collections/Generic/icollection.lo \
+am__objects_1 = System/Collections/Generic/icollection.lo \
 	System/Collections/Generic/icomparer.lo \
 	System/Collections/Generic/idictionary.lo \
 	System/Collections/Generic/ienumerable.lo \
@@ -191,22 +169,24 @@ am__objects_2 = System/Collections/Generic/icollection.lo \
 	System/Collections/Generic/ireadonlydictionary.lo \
 	System/Collections/Generic/ireadonlylist.lo \
 	System/Collections/Generic/KeyValuePair.lo
-am__objects_3 = System/Collections/Generic/List.lo
-am__objects_4 = System/Text/Text.lo \
+am__objects_2 = System/Collections/Generic/timsort.lo \
+	System/Collections/Generic/Comparer.lo \
+	System/Collections/Generic/EqualityComparer.lo \
+	System/Collections/Generic/List.lo
+am__objects_3 = System/Text/Text.lo \
 	System/Globalization/Globalization.lo \
 	System/Diagnostics/Diagnostics.lo \
 	System/Reflection/Reflection.lo System/Runtime/Runtime.lo \
 	System/Security/Security.lo System/Threading/Threading.lo
-am__objects_5 = System/Nullable.lo System/Exceptions.lo \
+am__objects_4 = System/Nullable.lo System/Exceptions.lo \
 	System/action.lo
-am__objects_6 = System/idisposable.lo System/icomparable.lo \
+am__objects_5 = System/idisposable.lo System/icomparable.lo \
 	System/iequatable.lo System/icloneable.lo
-am__objects_7 = System/Linq/Errors.lo \
+am__objects_6 = System/Linq/Errors.lo \
 	System/Globalization/CultureInfo.lo
-am__objects_8 = $(am__objects_1) $(am__objects_2) $(am__objects_3) \
-	$(am__objects_4) $(am__objects_5) $(am__objects_6) \
-	$(am__objects_7)
-am_libdotnet_la_OBJECTS = $(am__objects_8)
+am__objects_7 = $(am__objects_1) $(am__objects_2) $(am__objects_3) \
+	$(am__objects_4) $(am__objects_5) $(am__objects_6)
+am_libdotnet_la_OBJECTS = $(am__objects_7)
 libdotnet_la_OBJECTS = $(am_libdotnet_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -501,6 +481,9 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/KeyValuePair.vala
 
 LIBDOTNET_COLLECTIONS_GEN = \
+	System/Collections/Generic/timsort.vala \
+	System/Collections/Generic/Comparer.vala \
+	System/Collections/Generic/EqualityComparer.vala \
 	System/Collections/Generic/List.vala
 
 LIBDOTNET_COLLECTIONS_GENX = \
@@ -545,7 +528,6 @@ LIBDOTNET_SYSTEM_MISC = \
 	System/Globalization/CultureInfo.vala
 
 LIBDOTNET_SOURCES = \
-	$(LIBDOTNET_COLLECTIONS_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
 	$(LIBDOTNET_SYSTEM_NS) \
@@ -666,45 +648,6 @@ clean-libLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
-System/Collections/$(am__dirstamp):
-	@$(MKDIR_P) System/Collections
-	@: > System/Collections/$(am__dirstamp)
-System/Collections/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) System/Collections/$(DEPDIR)
-	@: > System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/icollection.lo: System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/icomparer.lo: System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/idictionary.lo: System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/idictionaryenumerator.lo:  \
-	System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/ienumerable.lo: System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/ienumerator.lo: System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/iequalitycomparer.lo:  \
-	System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/ihashcodeprovider.lo:  \
-	System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/ilist.lo: System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/istructuralcomparable.lo:  \
-	System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/istructuralequatable.lo:  \
-	System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/DictionaryEntry.lo:  \
-	System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
-System/Collections/KeyValuePairs.lo:  \
-	System/Collections/$(am__dirstamp) \
-	System/Collections/$(DEPDIR)/$(am__dirstamp)
 System/Collections/Generic/$(am__dirstamp):
 	@$(MKDIR_P) System/Collections/Generic
 	@: > System/Collections/Generic/$(am__dirstamp)
@@ -745,6 +688,15 @@ System/Collections/Generic/ireadonlylist.lo:  \
 	System/Collections/Generic/$(am__dirstamp) \
 	System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
 System/Collections/Generic/KeyValuePair.lo:  \
+	System/Collections/Generic/$(am__dirstamp) \
+	System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
+System/Collections/Generic/timsort.lo:  \
+	System/Collections/Generic/$(am__dirstamp) \
+	System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
+System/Collections/Generic/Comparer.lo:  \
+	System/Collections/Generic/$(am__dirstamp) \
+	System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
+System/Collections/Generic/EqualityComparer.lo:  \
 	System/Collections/Generic/$(am__dirstamp) \
 	System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
 System/Collections/Generic/List.lo:  \
@@ -846,8 +798,6 @@ mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f System/*.$(OBJEXT)
 	-rm -f System/*.lo
-	-rm -f System/Collections/*.$(OBJEXT)
-	-rm -f System/Collections/*.lo
 	-rm -f System/Collections/Generic/*.$(OBJEXT)
 	-rm -f System/Collections/Generic/*.lo
 	-rm -f System/Diagnostics/*.$(OBJEXT)
@@ -877,19 +827,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/icomparable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/idisposable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/iequatable.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/DictionaryEntry.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/KeyValuePairs.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/icollection.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/icomparer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/idictionary.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/idictionaryenumerator.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/ienumerable.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/ienumerator.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/iequalitycomparer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/ihashcodeprovider.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/ilist.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/istructuralcomparable.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/$(DEPDIR)/istructuralequatable.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/Comparer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/EqualityComparer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/KeyValuePair.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/List.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/icollection.Plo@am__quote@
@@ -903,6 +842,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/ireadonlydictionary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/ireadonlylist.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/iset.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/timsort.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Diagnostics/$(DEPDIR)/Diagnostics.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Globalization/$(DEPDIR)/CultureInfo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Globalization/$(DEPDIR)/Globalization.Plo@am__quote@
@@ -936,71 +876,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
-$(srcdir)/System/Collections/icollection.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/icomparer.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/idictionary.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/idictionaryenumerator.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/ienumerable.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/ienumerator.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/iequalitycomparer.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/ihashcodeprovider.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/ilist.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/istructuralcomparable.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/istructuralequatable.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/DictionaryEntry.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
-$(srcdir)/System/Collections/KeyValuePairs.c: $(srcdir)/libdotnet_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
-	fi
 $(srcdir)/System/Collections/Generic/icollection.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -1057,6 +932,21 @@ $(srcdir)/System/Collections/Generic/ireadonlylist.c: $(srcdir)/libdotnet_la_val
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
 $(srcdir)/System/Collections/Generic/KeyValuePair.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/Collections/Generic/timsort.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/Collections/Generic/Comparer.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/Collections/Generic/EqualityComparer.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
@@ -1161,9 +1051,9 @@ $(srcdir)/--save-temps: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
-$(srcdir)/libdotnet_la_vala.stamp: System/Collections/icollection.vala System/Collections/icomparer.vala System/Collections/idictionary.vala System/Collections/idictionaryenumerator.vala System/Collections/ienumerable.vala System/Collections/ienumerator.vala System/Collections/iequalitycomparer.vala System/Collections/ihashcodeprovider.vala System/Collections/ilist.vala System/Collections/istructuralcomparable.vala System/Collections/istructuralequatable.vala System/Collections/DictionaryEntry.vala System/Collections/KeyValuePairs.vala System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/List.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/Nullable.vala System/Exceptions.vala System/action.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
+$(srcdir)/libdotnet_la_vala.stamp: System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/timsort.vala System/Collections/Generic/Comparer.vala System/Collections/Generic/EqualityComparer.vala System/Collections/Generic/List.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/Nullable.vala System/Exceptions.vala System/action.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(libdotnet_la_VALAFLAGS) $(VALAFLAGS) -C System/Collections/icollection.vala System/Collections/icomparer.vala System/Collections/idictionary.vala System/Collections/idictionaryenumerator.vala System/Collections/ienumerable.vala System/Collections/ienumerator.vala System/Collections/iequalitycomparer.vala System/Collections/ihashcodeprovider.vala System/Collections/ilist.vala System/Collections/istructuralcomparable.vala System/Collections/istructuralequatable.vala System/Collections/DictionaryEntry.vala System/Collections/KeyValuePairs.vala System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/List.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/Nullable.vala System/Exceptions.vala System/action.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(libdotnet_la_VALAFLAGS) $(VALAFLAGS) -C System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/timsort.vala System/Collections/Generic/Comparer.vala System/Collections/Generic/EqualityComparer.vala System/Collections/Generic/List.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/Nullable.vala System/Exceptions.vala System/action.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -1172,7 +1062,6 @@ mostlyclean-libtool:
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf System/.libs System/_libs
-	-rm -rf System/Collections/.libs System/Collections/_libs
 	-rm -rf System/Collections/Generic/.libs System/Collections/Generic/_libs
 	-rm -rf System/Diagnostics/.libs System/Diagnostics/_libs
 	-rm -rf System/Globalization/.libs System/Globalization/_libs
@@ -1364,8 +1253,6 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f System/$(DEPDIR)/$(am__dirstamp)
 	-rm -f System/$(am__dirstamp)
-	-rm -f System/Collections/$(DEPDIR)/$(am__dirstamp)
-	-rm -f System/Collections/$(am__dirstamp)
 	-rm -f System/Collections/Generic/$(DEPDIR)/$(am__dirstamp)
 	-rm -f System/Collections/Generic/$(am__dirstamp)
 	-rm -f System/Diagnostics/$(DEPDIR)/$(am__dirstamp)
@@ -1389,7 +1276,8 @@ maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 	-rm -f $(srcdir)/--save-temps
-	-rm -f $(srcdir)/System/Collections/DictionaryEntry.c
+	-rm -f $(srcdir)/System/Collections/Generic/Comparer.c
+	-rm -f $(srcdir)/System/Collections/Generic/EqualityComparer.c
 	-rm -f $(srcdir)/System/Collections/Generic/KeyValuePair.c
 	-rm -f $(srcdir)/System/Collections/Generic/List.c
 	-rm -f $(srcdir)/System/Collections/Generic/icollection.c
@@ -1403,18 +1291,7 @@ maintainer-clean-generic:
 	-rm -f $(srcdir)/System/Collections/Generic/ireadonlydictionary.c
 	-rm -f $(srcdir)/System/Collections/Generic/ireadonlylist.c
 	-rm -f $(srcdir)/System/Collections/Generic/iset.c
-	-rm -f $(srcdir)/System/Collections/KeyValuePairs.c
-	-rm -f $(srcdir)/System/Collections/icollection.c
-	-rm -f $(srcdir)/System/Collections/icomparer.c
-	-rm -f $(srcdir)/System/Collections/idictionary.c
-	-rm -f $(srcdir)/System/Collections/idictionaryenumerator.c
-	-rm -f $(srcdir)/System/Collections/ienumerable.c
-	-rm -f $(srcdir)/System/Collections/ienumerator.c
-	-rm -f $(srcdir)/System/Collections/iequalitycomparer.c
-	-rm -f $(srcdir)/System/Collections/ihashcodeprovider.c
-	-rm -f $(srcdir)/System/Collections/ilist.c
-	-rm -f $(srcdir)/System/Collections/istructuralcomparable.c
-	-rm -f $(srcdir)/System/Collections/istructuralequatable.c
+	-rm -f $(srcdir)/System/Collections/Generic/timsort.c
 	-rm -f $(srcdir)/System/Diagnostics/Diagnostics.c
 	-rm -f $(srcdir)/System/Exceptions.c
 	-rm -f $(srcdir)/System/Globalization/CultureInfo.c
@@ -1434,7 +1311,8 @@ maintainer-clean-generic:
 	-rm -f $(srcdir)/libdotnet-0.1.vapi
 	-rm -f $(srcdir)/libdotnet.h
 	-rm -f $(srcdir)/libdotnet_la_vala.stamp
-	-rm -f System/Collections/DictionaryEntry.c
+	-rm -f System/Collections/Generic/Comparer.c
+	-rm -f System/Collections/Generic/EqualityComparer.c
 	-rm -f System/Collections/Generic/KeyValuePair.c
 	-rm -f System/Collections/Generic/List.c
 	-rm -f System/Collections/Generic/icollection.c
@@ -1448,18 +1326,7 @@ maintainer-clean-generic:
 	-rm -f System/Collections/Generic/ireadonlydictionary.c
 	-rm -f System/Collections/Generic/ireadonlylist.c
 	-rm -f System/Collections/Generic/iset.c
-	-rm -f System/Collections/KeyValuePairs.c
-	-rm -f System/Collections/icollection.c
-	-rm -f System/Collections/icomparer.c
-	-rm -f System/Collections/idictionary.c
-	-rm -f System/Collections/idictionaryenumerator.c
-	-rm -f System/Collections/ienumerable.c
-	-rm -f System/Collections/ienumerator.c
-	-rm -f System/Collections/iequalitycomparer.c
-	-rm -f System/Collections/ihashcodeprovider.c
-	-rm -f System/Collections/ilist.c
-	-rm -f System/Collections/istructuralcomparable.c
-	-rm -f System/Collections/istructuralequatable.c
+	-rm -f System/Collections/Generic/timsort.c
 	-rm -f System/Diagnostics/Diagnostics.c
 	-rm -f System/Exceptions.c
 	-rm -f System/Globalization/CultureInfo.c
@@ -1482,7 +1349,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf System/$(DEPDIR) System/Collections/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
+	-rm -rf System/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1529,7 +1396,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf System/$(DEPDIR) System/Collections/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
+	-rm -rf System/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

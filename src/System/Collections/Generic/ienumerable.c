@@ -30,14 +30,6 @@
 typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
 typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
 
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR))
@@ -46,18 +38,12 @@ typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIf
 typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
 typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
 
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*next) (SystemCollectionsIEnumerator* self);
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	GObject* (*get) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
-
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
+	void (*Reset) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
 };
 
@@ -70,7 +56,6 @@ struct _SystemCollectionsGenericIEnumerableIface {
 
 
 
-GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_element_type (SystemCollectionsGenericIEnumerable* self);
@@ -84,7 +69,7 @@ GType system_collections_generic_ienumerable_get_element_type (SystemCollections
 	g_return_val_if_fail (self != NULL, 0UL);
 #line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE (self)->get_element_type (self);
-#line 88 "ienumerable.c"
+#line 73 "ienumerable.c"
 }
 
 
@@ -100,7 +85,7 @@ SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_iter
 	g_return_val_if_fail (self != NULL, NULL);
 #line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE (self)->iterator (self);
-#line 104 "ienumerable.c"
+#line 89 "ienumerable.c"
 }
 
 
@@ -113,7 +98,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerab
 	result = _tmp0_;
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return result;
-#line 117 "ienumerable.c"
+#line 102 "ienumerable.c"
 }
 
 
@@ -122,7 +107,7 @@ SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_GetE
 	g_return_val_if_fail (self != NULL, NULL);
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE_GET_INTERFACE (self)->GetEnumerator (self);
-#line 126 "ienumerable.c"
+#line 111 "ienumerable.c"
 }
 
 
@@ -135,7 +120,7 @@ static void system_collections_generic_ienumerable_base_init (SystemCollectionsG
 		initialized = TRUE;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ienumerable.vala"
 		iface->GetEnumerator = system_collections_generic_ienumerable_real_GetEnumerator;
-#line 139 "ienumerable.c"
+#line 124 "ienumerable.c"
 	}
 }
 

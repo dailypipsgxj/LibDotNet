@@ -36,7 +36,7 @@ struct _SystemCollectionsGenericICollectionIface {
 	void (*Clear) (SystemCollectionsGenericICollection* self);
 	gboolean (*contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
-	void (*CopyTo) (SystemCollectionsGenericICollection* self, GArray* array, gint arrayIndex);
+	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
 	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gint (*get_size) (SystemCollectionsGenericICollection* self);
 	gint (*get_Count) (SystemCollectionsGenericICollection* self);
@@ -51,7 +51,7 @@ void system_collections_generic_icollection_Clear (SystemCollectionsGenericIColl
 gboolean system_collections_generic_icollection_contains (SystemCollectionsGenericICollection* self, gconstpointer item);
 gboolean system_collections_generic_icollection_Contains (SystemCollectionsGenericICollection* self, gconstpointer item);
 static gboolean system_collections_generic_icollection_real_Contains (SystemCollectionsGenericICollection* self, gconstpointer item);
-void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICollection* self, GArray* array, gint arrayIndex);
+void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
 gboolean system_collections_generic_icollection_Remove (SystemCollectionsGenericICollection* self, gconstpointer item);
 gint system_collections_generic_icollection_get_size (SystemCollectionsGenericICollection* self);
 gint system_collections_generic_icollection_get_Count (SystemCollectionsGenericICollection* self);
@@ -129,11 +129,11 @@ gboolean system_collections_generic_icollection_Contains (SystemCollectionsGener
 }
 
 
-void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICollection* self, GArray* array, gint arrayIndex) {
+void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex) {
 #line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	g_return_if_fail (self != NULL);
 #line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
-	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->CopyTo (self, array, arrayIndex);
+	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->CopyTo (self, array, array_length1, arrayIndex);
 #line 138 "icollection.c"
 }
 

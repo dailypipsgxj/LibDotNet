@@ -20,7 +20,7 @@ namespace System.Collections.Generic {
 
     // Base interface for all generic enumerators, providing a simple approach
     // to iterating over a collection.
-    public interface IEnumerator<T> : System.Collections.IEnumerator
+    public interface IEnumerator<T> : GLib.Object
     {    
         // Returns the current element of the enumeration. The returned value is
         // undefined before the first call to MoveNext and following a
@@ -29,7 +29,21 @@ namespace System.Collections.Generic {
         // will return the same object.
         // 
         public abstract T Current { owned get; }
-        
         public abstract T get ();
+        // Interfaces are not serializable
+        // Advances the enumerator to the next element of the enumeration and
+        // returns a boolean indicating whether an element is available. Upon
+        // creation, an enumerator is conceptually positioned before the first
+        // element of the enumeration, and the first call to MoveNext 
+        // brings the first element of the enumeration into view.
+        // 
+		public virtual bool MoveNext() {
+			return next();
+		}
+        public abstract bool next();
+   
+        public abstract void Reset();
+        
+        
     }
 }

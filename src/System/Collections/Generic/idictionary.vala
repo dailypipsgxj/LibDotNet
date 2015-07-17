@@ -25,8 +25,7 @@ namespace System.Collections.Generic {
 	//[GenericAccessors]
     public interface IDictionary<TKey, TValue> :
 		ICollection<KeyValuePair<TKey, TValue>>,
-		IEnumerable<KeyValuePair<TKey, TValue>>,
-		System.Collections.IEnumerable
+		IEnumerable<KeyValuePair<TKey, TValue>>
     {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
@@ -58,6 +57,13 @@ namespace System.Collections.Generic {
 
         public abstract bool TryGetValue(TKey key, out TValue value);
 		
+        // Returns an IEnumerator for this enumerable Object.  The enumerator provides
+        // a simple way to access all the contents of a collection.
+		public abstract IEnumerator iterator ();
+
+        public virtual IEnumerator GetEnumerator() {
+			return iterator();
+		}
 		
     }
 

@@ -24,14 +24,14 @@ typedef struct _SystemCollectionsGenericIEqualityComparerIface SystemCollections
 struct _SystemCollectionsGenericIEqualityComparerIface {
 	GTypeInterface parent_iface;
 	gboolean (*Equals) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y);
-	gint (*GetHashCode) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
+	guint (*GetHashCode) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
 };
 
 
 
 GType system_collections_generic_iequality_comparer_get_type (void) G_GNUC_CONST;
 gboolean system_collections_generic_iequality_comparer_Equals (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y);
-gint system_collections_generic_iequality_comparer_GetHashCode (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
+guint system_collections_generic_iequality_comparer_GetHashCode (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
 
 
 gboolean system_collections_generic_iequality_comparer_Equals (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y) {
@@ -43,9 +43,9 @@ gboolean system_collections_generic_iequality_comparer_Equals (SystemCollections
 }
 
 
-gint system_collections_generic_iequality_comparer_GetHashCode (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj) {
+guint system_collections_generic_iequality_comparer_GetHashCode (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj) {
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iequalitycomparer.vala"
-	g_return_val_if_fail (self != NULL, 0);
+	g_return_val_if_fail (self != NULL, 0U);
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iequalitycomparer.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IEQUALITY_COMPARER_GET_INTERFACE (self)->GetHashCode (self, obj);
 #line 52 "iequalitycomparer.c"

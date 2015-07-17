@@ -73,7 +73,7 @@ namespace System.Collections.Generic {
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        public abstract void CopyTo(GLib.Array<T> array, int arrayIndex);
+        public abstract void CopyTo(T[] array, int arrayIndex = 0);
 
 		/**
 		 * Removes the first occurrence of an item from this collection. Must not

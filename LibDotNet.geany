@@ -14,7 +14,7 @@ indent_mode=2
 
 [project]
 name=LibDotNet
-base_path=/home/developer/projects/LibDotNet
+base_path=/home/developer/projects/Backup/LibDotNet
 description=
 file_patterns=
 
@@ -24,13 +24,22 @@ long_line_column=72
 
 [files]
 current_page=0
-FILE_NAME_0=12292;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2FGeneric%2FList.vala;0;4
-FILE_NAME_1=657;Vala;0;EUTF-8;1;1;0;%2Fmedia%2Fshared%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2FGeneric%2Fienumerator.vala;0;4
+FILE_NAME_0=0;Vala;0;EUTF-8;1;1;0;%2Fhome%2Fdeveloper%2Fprojects%2FBackup%2FLibDotNet%2Fsrc%2FSystem%2FCollections%2FGeneric%2FList.vala;0;4
 
 [VTE]
-last_dir=/media/shared/projects/Backup/LibDotNet
+last_dir=/home/developer/projects/Backup/LibDotNet
 
 [build-menu]
 NF_00_LB=_Make
 NF_00_CM=make
-NF_00_WD=
+NF_00_WD=%p
+NF_01_LB=Check
+NF_01_CM=make check
+NF_01_WD=%p
+NoneFT_00_LB=
+NoneFT_00_CM=
+NoneFT_00_WD=
+filetypes=None;Vala;
+ValaFT_01_LB=_Build
+ValaFT_01_CM=make
+ValaFT_01_WD=%p

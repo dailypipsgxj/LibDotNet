@@ -8,12 +8,10 @@ using System.Threading;
 
 namespace System.Linq
 {
-    public class Enumerable
+    public abstract class Enumerable
     {
         public static IEnumerable<TSource> Where<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (predicate == null) throw Error.ArgumentNull("predicate");
             if (source is Iterator<TSource>) return ((Iterator<TSource>)source).Where(predicate);
             if (source is TSource[]) return new WhereArrayIterator<TSource>((TSource[])source, predicate);
             if (source is List<TSource>) return new WhereListIterator<TSource>((List<TSource>)source, predicate);

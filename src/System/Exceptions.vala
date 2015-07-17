@@ -4,7 +4,7 @@ namespace System {
 		ARRAYTYPEMISMATCH
 	}
 
-	errordomain ArgumentOutOfRangeException {
+	public errordomain ArgumentOutOfRangeException {
 		INDEX,
 		VALUE,
 		NEEDNONNEGNUM,

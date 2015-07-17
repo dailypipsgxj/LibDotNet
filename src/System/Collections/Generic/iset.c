@@ -47,14 +47,6 @@ typedef struct _SystemCollectionsGenericISetIface SystemCollectionsGenericISetIf
 typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
 typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
 
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR))
@@ -69,25 +61,19 @@ struct _SystemCollectionsGenericICollectionIface {
 	void (*Clear) (SystemCollectionsGenericICollection* self);
 	gboolean (*contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
-	void (*CopyTo) (SystemCollectionsGenericICollection* self, GArray* array, gint arrayIndex);
+	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
 	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gint (*get_size) (SystemCollectionsGenericICollection* self);
 	gint (*get_Count) (SystemCollectionsGenericICollection* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
 };
 
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*next) (SystemCollectionsIEnumerator* self);
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	GObject* (*get) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
-
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
+	void (*Reset) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
 };
 
@@ -116,7 +102,6 @@ struct _SystemCollectionsGenericISetIface {
 
 
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
-GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_iset_get_type (void) G_GNUC_CONST;
@@ -146,7 +131,7 @@ static gboolean system_collections_generic_iset_real_Add (SystemCollectionsGener
 	result = _tmp1_;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return result;
-#line 150 "iset.c"
+#line 135 "iset.c"
 }
 
 
@@ -155,7 +140,7 @@ gboolean system_collections_generic_iset_Add (SystemCollectionsGenericISet* self
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->Add (self, value);
-#line 159 "iset.c"
+#line 144 "iset.c"
 }
 
 
@@ -164,7 +149,7 @@ void system_collections_generic_iset_ExceptWith (SystemCollectionsGenericISet* s
 	g_return_if_fail (self != NULL);
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->ExceptWith (self, other);
-#line 168 "iset.c"
+#line 153 "iset.c"
 }
 
 
@@ -173,7 +158,7 @@ void system_collections_generic_iset_IntersectWith (SystemCollectionsGenericISet
 	g_return_if_fail (self != NULL);
 #line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IntersectWith (self, other);
-#line 177 "iset.c"
+#line 162 "iset.c"
 }
 
 
@@ -182,7 +167,7 @@ gboolean system_collections_generic_iset_IsProperSupersetOf (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsProperSupersetOf (self, other);
-#line 186 "iset.c"
+#line 171 "iset.c"
 }
 
 
@@ -191,7 +176,7 @@ gboolean system_collections_generic_iset_IsProperSubsetOf (SystemCollectionsGene
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsProperSubsetOf (self, other);
-#line 195 "iset.c"
+#line 180 "iset.c"
 }
 
 
@@ -200,7 +185,7 @@ gboolean system_collections_generic_iset_IsSubsetOf (SystemCollectionsGenericISe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsSubsetOf (self, other);
-#line 204 "iset.c"
+#line 189 "iset.c"
 }
 
 
@@ -209,7 +194,7 @@ gboolean system_collections_generic_iset_IsSupersetOf (SystemCollectionsGenericI
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsSupersetOf (self, other);
-#line 213 "iset.c"
+#line 198 "iset.c"
 }
 
 
@@ -218,7 +203,7 @@ gboolean system_collections_generic_iset_Overlaps (SystemCollectionsGenericISet*
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->Overlaps (self, other);
-#line 222 "iset.c"
+#line 207 "iset.c"
 }
 
 
@@ -227,7 +212,7 @@ gboolean system_collections_generic_iset_SetEquals (SystemCollectionsGenericISet
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->SetEquals (self, other);
-#line 231 "iset.c"
+#line 216 "iset.c"
 }
 
 
@@ -236,7 +221,7 @@ void system_collections_generic_iset_SymmetricExceptWith (SystemCollectionsGener
 	g_return_if_fail (self != NULL);
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->SymmetricExceptWith (self, other);
-#line 240 "iset.c"
+#line 225 "iset.c"
 }
 
 
@@ -245,7 +230,7 @@ void system_collections_generic_iset_UnionWith (SystemCollectionsGenericISet* se
 	g_return_if_fail (self != NULL);
 #line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->UnionWith (self, other);
-#line 249 "iset.c"
+#line 234 "iset.c"
 }
 
 
@@ -258,7 +243,7 @@ static void system_collections_generic_iset_base_init (SystemCollectionsGenericI
 		initialized = TRUE;
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 		iface->Add = system_collections_generic_iset_real_Add;
-#line 262 "iset.c"
+#line 247 "iset.c"
 	}
 }
 

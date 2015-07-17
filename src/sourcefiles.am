@@ -54,6 +54,9 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/KeyValuePair.vala
 	
 LIBDOTNET_COLLECTIONS_GEN = \
+	System/Collections/Generic/timsort.vala \
+	System/Collections/Generic/Comparer.vala \
+	System/Collections/Generic/EqualityComparer.vala \
 	System/Collections/Generic/List.vala
 
 LIBDOTNET_COLLECTIONS_GENX = \
@@ -98,7 +101,6 @@ LIBDOTNET_SYSTEM_MISC = \
 	System/Globalization/CultureInfo.vala
 
 LIBDOTNET_SOURCES = \
-	$(LIBDOTNET_COLLECTIONS_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
 	$(LIBDOTNET_SYSTEM_NS) \

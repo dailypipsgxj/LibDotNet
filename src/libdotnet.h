@@ -13,106 +13,6 @@
 G_BEGIN_DECLS
 
 
-#define SYSTEM_COLLECTIONS_TYPE_ICOLLECTION (system_collections_icollection_get_type ())
-#define SYSTEM_COLLECTIONS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollection))
-#define SYSTEM_COLLECTIONS_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION))
-#define SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollectionIface))
-
-typedef struct _SystemCollectionsICollection SystemCollectionsICollection;
-typedef struct _SystemCollectionsICollectionIface SystemCollectionsICollectionIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_ICOMPARER (system_collections_icomparer_get_type ())
-#define SYSTEM_COLLECTIONS_ICOMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ICOMPARER, SystemCollectionsIComparer))
-#define SYSTEM_COLLECTIONS_IS_ICOMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOMPARER))
-#define SYSTEM_COLLECTIONS_ICOMPARER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOMPARER, SystemCollectionsIComparerIface))
-
-typedef struct _SystemCollectionsIComparer SystemCollectionsIComparer;
-typedef struct _SystemCollectionsIComparerIface SystemCollectionsIComparerIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERABLE (system_collections_ienumerable_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerable))
-#define SYSTEM_COLLECTIONS_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE))
-#define SYSTEM_COLLECTIONS_IENUMERABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERABLE, SystemCollectionsIEnumerableIface))
-
-typedef struct _SystemCollectionsIEnumerable SystemCollectionsIEnumerable;
-typedef struct _SystemCollectionsIEnumerableIface SystemCollectionsIEnumerableIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IDICTIONARY (system_collections_idictionary_get_type ())
-#define SYSTEM_COLLECTIONS_IDICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IDICTIONARY, SystemCollectionsIDictionary))
-#define SYSTEM_COLLECTIONS_IS_IDICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IDICTIONARY))
-#define SYSTEM_COLLECTIONS_IDICTIONARY_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IDICTIONARY, SystemCollectionsIDictionaryIface))
-
-typedef struct _SystemCollectionsIDictionary SystemCollectionsIDictionary;
-typedef struct _SystemCollectionsIDictionaryIface SystemCollectionsIDictionaryIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IDICTIONARY_ENUMERATOR (system_collections_idictionary_enumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IDICTIONARY_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IDICTIONARY_ENUMERATOR, SystemCollectionsIDictionaryEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IDICTIONARY_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IDICTIONARY_ENUMERATOR))
-#define SYSTEM_COLLECTIONS_IDICTIONARY_ENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IDICTIONARY_ENUMERATOR, SystemCollectionsIDictionaryEnumeratorIface))
-
-typedef struct _SystemCollectionsIDictionaryEnumerator SystemCollectionsIDictionaryEnumerator;
-typedef struct _SystemCollectionsIDictionaryEnumeratorIface SystemCollectionsIDictionaryEnumeratorIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_DICTIONARY_ENTRY (system_collections_dictionary_entry_get_type ())
-#define SYSTEM_COLLECTIONS_DICTIONARY_ENTRY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_DICTIONARY_ENTRY, SystemCollectionsDictionaryEntry))
-#define SYSTEM_COLLECTIONS_DICTIONARY_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_TYPE_DICTIONARY_ENTRY, SystemCollectionsDictionaryEntryClass))
-#define SYSTEM_COLLECTIONS_IS_DICTIONARY_ENTRY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_DICTIONARY_ENTRY))
-#define SYSTEM_COLLECTIONS_IS_DICTIONARY_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_TYPE_DICTIONARY_ENTRY))
-#define SYSTEM_COLLECTIONS_DICTIONARY_ENTRY_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_TYPE_DICTIONARY_ENTRY, SystemCollectionsDictionaryEntryClass))
-
-typedef struct _SystemCollectionsDictionaryEntry SystemCollectionsDictionaryEntry;
-typedef struct _SystemCollectionsDictionaryEntryClass SystemCollectionsDictionaryEntryClass;
-
-#define SYSTEM_COLLECTIONS_TYPE_IEQUALITY_COMPARER (system_collections_iequality_comparer_get_type ())
-#define SYSTEM_COLLECTIONS_IEQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IEQUALITY_COMPARER, SystemCollectionsIEqualityComparer))
-#define SYSTEM_COLLECTIONS_IS_IEQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IEQUALITY_COMPARER))
-#define SYSTEM_COLLECTIONS_IEQUALITY_COMPARER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IEQUALITY_COMPARER, SystemCollectionsIEqualityComparerIface))
-
-typedef struct _SystemCollectionsIEqualityComparer SystemCollectionsIEqualityComparer;
-typedef struct _SystemCollectionsIEqualityComparerIface SystemCollectionsIEqualityComparerIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_IHASH_CODE_PROVIDER (system_collections_ihash_code_provider_get_type ())
-#define SYSTEM_COLLECTIONS_IHASH_CODE_PROVIDER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IHASH_CODE_PROVIDER, SystemCollectionsIHashCodeProvider))
-#define SYSTEM_COLLECTIONS_IS_IHASH_CODE_PROVIDER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IHASH_CODE_PROVIDER))
-#define SYSTEM_COLLECTIONS_IHASH_CODE_PROVIDER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IHASH_CODE_PROVIDER, SystemCollectionsIHashCodeProviderIface))
-
-typedef struct _SystemCollectionsIHashCodeProvider SystemCollectionsIHashCodeProvider;
-typedef struct _SystemCollectionsIHashCodeProviderIface SystemCollectionsIHashCodeProviderIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_ILIST (system_collections_ilist_get_type ())
-#define SYSTEM_COLLECTIONS_ILIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ILIST, SystemCollectionsIList))
-#define SYSTEM_COLLECTIONS_IS_ILIST(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ILIST))
-#define SYSTEM_COLLECTIONS_ILIST_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ILIST, SystemCollectionsIListIface))
-
-typedef struct _SystemCollectionsIList SystemCollectionsIList;
-typedef struct _SystemCollectionsIListIface SystemCollectionsIListIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_COMPARABLE (system_collections_istructural_comparable_get_type ())
-#define SYSTEM_COLLECTIONS_ISTRUCTURAL_COMPARABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_COMPARABLE, SystemCollectionsIStructuralComparable))
-#define SYSTEM_COLLECTIONS_IS_ISTRUCTURAL_COMPARABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_COMPARABLE))
-#define SYSTEM_COLLECTIONS_ISTRUCTURAL_COMPARABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_COMPARABLE, SystemCollectionsIStructuralComparableIface))
-
-typedef struct _SystemCollectionsIStructuralComparable SystemCollectionsIStructuralComparable;
-typedef struct _SystemCollectionsIStructuralComparableIface SystemCollectionsIStructuralComparableIface;
-
-#define SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_EQUATABLE (system_collections_istructural_equatable_get_type ())
-#define SYSTEM_COLLECTIONS_ISTRUCTURAL_EQUATABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_EQUATABLE, SystemCollectionsIStructuralEquatable))
-#define SYSTEM_COLLECTIONS_IS_ISTRUCTURAL_EQUATABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_EQUATABLE))
-#define SYSTEM_COLLECTIONS_ISTRUCTURAL_EQUATABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ISTRUCTURAL_EQUATABLE, SystemCollectionsIStructuralEquatableIface))
-
-typedef struct _SystemCollectionsIStructuralEquatable SystemCollectionsIStructuralEquatable;
-typedef struct _SystemCollectionsIStructuralEquatableIface SystemCollectionsIStructuralEquatableIface;
-typedef struct _SystemCollectionsDictionaryEntryPrivate SystemCollectionsDictionaryEntryPrivate;
-typedef struct _SystemCollectionsKeyValuePairs SystemCollectionsKeyValuePairs;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
@@ -212,6 +112,28 @@ typedef struct _SystemCollectionsGenericKeyValuePair SystemCollectionsGenericKey
 typedef struct _SystemCollectionsGenericKeyValuePairClass SystemCollectionsGenericKeyValuePairClass;
 typedef struct _SystemCollectionsGenericKeyValuePairPrivate SystemCollectionsGenericKeyValuePairPrivate;
 
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER (system_collections_generic_comparer_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer))
+#define SYSTEM_COLLECTIONS_GENERIC_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparerClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparerClass))
+
+typedef struct _SystemCollectionsGenericComparer SystemCollectionsGenericComparer;
+typedef struct _SystemCollectionsGenericComparerClass SystemCollectionsGenericComparerClass;
+typedef struct _SystemCollectionsGenericComparerPrivate SystemCollectionsGenericComparerPrivate;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER (system_collections_generic_equality_comparer_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparer))
+#define SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparerClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparerClass))
+
+typedef struct _SystemCollectionsGenericEqualityComparer SystemCollectionsGenericEqualityComparer;
+typedef struct _SystemCollectionsGenericEqualityComparerClass SystemCollectionsGenericEqualityComparerClass;
+typedef struct _SystemCollectionsGenericEqualityComparerPrivate SystemCollectionsGenericEqualityComparerPrivate;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_LIST (system_collections_generic_abstract_list_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_LIST, SystemCollectionsGenericAbstractList))
 #define SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_LIST, SystemCollectionsGenericAbstractListClass))
@@ -279,119 +201,13 @@ typedef struct _SystemICloneableIface SystemICloneableIface;
 
 #define SYSTEM_GLOBALIZATION_CULTURE_INFO_TYPE_STRING_COMPARISON (system_globalization_culture_info_string_comparison_get_type ())
 
-struct _SystemCollectionsICollectionIface {
-	GTypeInterface parent_iface;
-	void (*CopyTo) (SystemCollectionsICollection* self, GArray* array, gint arrayIndex);
-	gint (*get_size) (SystemCollectionsICollection* self);
-	gint (*get_Count) (SystemCollectionsICollection* self);
-	gboolean (*get_IsSynchronized) (SystemCollectionsICollection* self);
-	GObject* (*get_SyncRoot) (SystemCollectionsICollection* self);
-};
-
-struct _SystemCollectionsIComparerIface {
-	GTypeInterface parent_iface;
-	gint (*Compare) (SystemCollectionsIComparer* self, GObject* x, GObject* y);
-};
-
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*next) (SystemCollectionsIEnumerator* self);
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	GObject* (*get) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
-
-struct _SystemCollectionsIEnumerableIface {
-	GTypeInterface parent_iface;
-	SystemCollectionsIEnumerator* (*iterator) (SystemCollectionsIEnumerable* self);
-	SystemCollectionsIEnumerator* (*GetEnumerator) (SystemCollectionsIEnumerable* self);
-};
-
-struct _SystemCollectionsIDictionaryEnumeratorIface {
-	GTypeInterface parent_iface;
-	GObject* (*get_Key) (SystemCollectionsIDictionaryEnumerator* self);
-	GObject* (*get_Value) (SystemCollectionsIDictionaryEnumerator* self);
-	SystemCollectionsDictionaryEntry* (*get_Entry) (SystemCollectionsIDictionaryEnumerator* self);
-};
-
-struct _SystemCollectionsIDictionaryIface {
-	GTypeInterface parent_iface;
-	GObject* (*get) (SystemCollectionsIDictionary* self, GObject* key);
-	void (*set) (SystemCollectionsIDictionary* self, GObject* key);
-	void (*Add) (SystemCollectionsIDictionary* self, GObject* key, GObject* value);
-	void (*Clear) (SystemCollectionsIDictionary* self);
-	gboolean (*Contains) (SystemCollectionsIDictionary* self, GObject* key);
-	SystemCollectionsIDictionaryEnumerator* (*GetEnumerator) (SystemCollectionsIDictionary* self);
-	void (*Remove) (SystemCollectionsIDictionary* self, GObject* key);
-	gboolean (*get_IsFixedSize) (SystemCollectionsIDictionary* self);
-	gboolean (*get_IsReadOnly) (SystemCollectionsIDictionary* self);
-	SystemCollectionsICollection* (*get_Keys) (SystemCollectionsIDictionary* self);
-	void (*set_Keys) (SystemCollectionsIDictionary* self, SystemCollectionsICollection* value);
-	SystemCollectionsICollection* (*get_Values) (SystemCollectionsIDictionary* self);
-};
-
-struct _SystemCollectionsIEqualityComparerIface {
-	GTypeInterface parent_iface;
-	gboolean (*Equals) (SystemCollectionsIEqualityComparer* self, GObject* x, GObject* y);
-	gint (*GetHashCode) (SystemCollectionsIEqualityComparer* self, GObject* obj);
-};
-
-struct _SystemCollectionsIHashCodeProviderIface {
-	GTypeInterface parent_iface;
-	gint (*GetHashCode) (SystemCollectionsIHashCodeProvider* self, GObject* obj);
-};
-
-struct _SystemCollectionsIListIface {
-	GTypeInterface parent_iface;
-	GObject* (*get) (SystemCollectionsIList* self, gint index);
-	void (*set) (SystemCollectionsIList* self, gint index, GObject* item);
-	gint (*Add) (SystemCollectionsIList* self, GObject* item);
-	void (*Clear) (SystemCollectionsIList* self);
-	gboolean (*contains) (SystemCollectionsIList* self, GObject* item);
-	gboolean (*Contains) (SystemCollectionsIList* self, GObject* item);
-	gint (*IndexOf) (SystemCollectionsIList* self, GObject* item);
-	void (*Insert) (SystemCollectionsIList* self, gint index, GObject* value);
-	void (*Remove) (SystemCollectionsIList* self, GObject* value);
-	void (*RemoveAt) (SystemCollectionsIList* self, gint index);
-	gboolean (*get_IsFixedSize) (SystemCollectionsIList* self);
-	gboolean (*get_IsReadOnly) (SystemCollectionsIList* self);
-};
-
-struct _SystemCollectionsIStructuralComparableIface {
-	GTypeInterface parent_iface;
-	gint32 (*CompareTo) (SystemCollectionsIStructuralComparable* self, GObject* other, SystemCollectionsIComparer* comparer);
-};
-
-struct _SystemCollectionsIStructuralEquatableIface {
-	GTypeInterface parent_iface;
-	gboolean (*Equals) (SystemCollectionsIStructuralEquatable* self, GObject* other, SystemCollectionsIEqualityComparer* comparer);
-	gint (*GetHashCode) (SystemCollectionsIStructuralEquatable* self, SystemCollectionsIEqualityComparer* comparer);
-};
-
-struct _SystemCollectionsDictionaryEntry {
-	GTypeInstance parent_instance;
-	volatile int ref_count;
-	SystemCollectionsDictionaryEntryPrivate * priv;
-};
-
-struct _SystemCollectionsDictionaryEntryClass {
-	GTypeClass parent_class;
-	void (*finalize) (SystemCollectionsDictionaryEntry *self);
-};
-
-struct _SystemCollectionsKeyValuePairs {
-	GObject* _key;
-	GObject* _value;
-};
-
 struct _SystemCollectionsGenericICollectionIface {
 	GTypeInterface parent_iface;
 	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	void (*Clear) (SystemCollectionsGenericICollection* self);
 	gboolean (*contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
-	void (*CopyTo) (SystemCollectionsGenericICollection* self, GArray* array, gint arrayIndex);
+	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
 	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
 	gint (*get_size) (SystemCollectionsGenericICollection* self);
 	gint (*get_Count) (SystemCollectionsGenericICollection* self);
@@ -406,6 +222,9 @@ struct _SystemCollectionsGenericIComparerIface {
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
+	void (*Reset) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
 };
 
@@ -425,6 +244,8 @@ struct _SystemCollectionsGenericIDictionaryIface {
 	gboolean (*ContainsValue) (SystemCollectionsGenericIDictionary* self, gconstpointer value);
 	gboolean (*Remove) (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 	gboolean (*TryGetValue) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gpointer* value);
+	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIDictionary* self);
+	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Keys) (SystemCollectionsGenericIDictionary* self);
 	void (*set_Keys) (SystemCollectionsGenericIDictionary* self, SystemCollectionsGenericICollection* value);
 	SystemCollectionsGenericICollection* (*get_Values) (SystemCollectionsGenericIDictionary* self);
@@ -433,7 +254,7 @@ struct _SystemCollectionsGenericIDictionaryIface {
 struct _SystemCollectionsGenericIEqualityComparerIface {
 	GTypeInterface parent_iface;
 	gboolean (*Equals) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y);
-	gint (*GetHashCode) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
+	guint (*GetHashCode) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
 };
 
 struct _SystemCollectionsGenericIListIface {
@@ -493,8 +314,36 @@ struct _SystemCollectionsGenericKeyValuePairClass {
 	void (*finalize) (SystemCollectionsGenericKeyValuePair *self);
 };
 
-typedef void (*SystemAction) (gconstpointer obj, void* user_data);
+struct _SystemCollectionsGenericComparer {
+	GTypeInstance parent_instance;
+	volatile int ref_count;
+	SystemCollectionsGenericComparerPrivate * priv;
+};
+
+struct _SystemCollectionsGenericComparerClass {
+	GTypeClass parent_class;
+	void (*finalize) (SystemCollectionsGenericComparer *self);
+	gint (*Compare) (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
+};
+
+typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
+struct _SystemCollectionsGenericEqualityComparer {
+	GTypeInstance parent_instance;
+	volatile int ref_count;
+	SystemCollectionsGenericEqualityComparerPrivate * priv;
+};
+
+struct _SystemCollectionsGenericEqualityComparerClass {
+	GTypeClass parent_class;
+	void (*finalize) (SystemCollectionsGenericEqualityComparer *self);
+	gboolean (*Equals) (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y);
+	guint (*GetHashCode) (SystemCollectionsGenericEqualityComparer* self, gconstpointer obj);
+	gint (*IndexOf) (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
+	gint (*LastIndexOf) (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
+};
+
 typedef gboolean (*SystemPredicate) (gconstpointer obj, void* user_data);
+typedef void (*SystemAction) (gconstpointer obj, void* user_data);
 struct _SystemCollectionsGenericAbstractList {
 	GObject parent_instance;
 	SystemCollectionsGenericAbstractListPrivate * priv;
@@ -512,10 +361,16 @@ struct _SystemCollectionsGenericAbstractListClass {
 	void (*AddRange) (SystemCollectionsGenericAbstractList* self, SystemCollectionsGenericIEnumerable* collection);
 	gint (*BinarySearch) (SystemCollectionsGenericAbstractList* self, gint index, gint count, gconstpointer item, SystemCollectionsGenericIComparer* comparer);
 	void (*Clear) (SystemCollectionsGenericAbstractList* self);
-	void (*CopyTo) (SystemCollectionsGenericAbstractList* self, GArray* array, gint arrayIndex);
+	void (*CopyTo) (SystemCollectionsGenericAbstractList* self, gpointer* array, int array_length1, gint arrayIndex);
+	gboolean (*Exists) (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+	gpointer (*Find) (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+	SystemCollectionsGenericList* (*FindAll) (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+	gint (*FindIndex) (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+	gpointer (*FindLast) (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+	gint (*FindLastIndex) (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
 	void (*ForEach) (SystemCollectionsGenericAbstractList* self, SystemAction action, void* action_target);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericAbstractList* self);
-	SystemCollectionsGenericIList* (*GetRange) (SystemCollectionsGenericAbstractList* self, gint index, gint count);
+	SystemCollectionsGenericList* (*GetRange) (SystemCollectionsGenericAbstractList* self, gint index, gint count);
 	void (*InsertRange) (SystemCollectionsGenericAbstractList* self, gint index, SystemCollectionsGenericIEnumerable* collection);
 	void (*Insert) (SystemCollectionsGenericAbstractList* self, gint index, gconstpointer item);
 	gint (*LastIndexOf) (SystemCollectionsGenericAbstractList* self, gconstpointer item);
@@ -525,7 +380,9 @@ struct _SystemCollectionsGenericAbstractListClass {
 	void (*RemoveRange) (SystemCollectionsGenericAbstractList* self, gint index, gint count);
 	void (*Reverse) (SystemCollectionsGenericAbstractList* self);
 	void (*Sort) (SystemCollectionsGenericAbstractList* self, SystemCollectionsGenericIComparer* comparer);
+	gpointer* (*ToArray) (SystemCollectionsGenericAbstractList* self, int* result_length1);
 	void (*TrimExcess) (SystemCollectionsGenericAbstractList* self);
+	gboolean (*TrueForAll) (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
 	gint (*get_size) (SystemCollectionsGenericAbstractList* self);
 	gint (*get_Capacity) (SystemCollectionsGenericAbstractList* self);
 	void (*set_Capacity) (SystemCollectionsGenericAbstractList* self, gint value);
@@ -539,6 +396,10 @@ struct _SystemCollectionsGenericAbstractListClass {
 struct _SystemCollectionsGenericList {
 	SystemCollectionsGenericAbstractList parent_instance;
 	SystemCollectionsGenericListPrivate * priv;
+	gpointer* _items;
+	gint _items_length1;
+	gint __items_size_;
+	gint _size;
 };
 
 struct _SystemCollectionsGenericListClass {
@@ -557,7 +418,14 @@ struct _SystemNullableClass {
 	void (*finalize) (SystemNullable *self);
 };
 
-typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
+typedef enum  {
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_INDEX,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_VALUE,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_NEEDNONNEGNUM,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_BEGININDEXNOTNEGATIVE,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_LENGTHNOTNEGATIVE
+} SystemArgumentOutOfRangeException;
+#define SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION system_argument_out_of_range_exception_quark ()
 struct _SystemIDisposableIface {
 	GTypeInterface parent_iface;
 	void (*Dispose) (SystemIDisposable* self);
@@ -588,84 +456,12 @@ typedef enum  {
 } SystemGlobalizationCultureInfoStringComparison;
 
 
-GType system_collections_icollection_get_type (void) G_GNUC_CONST;
-void system_collections_icollection_CopyTo (SystemCollectionsICollection* self, GArray* array, gint arrayIndex);
-gint system_collections_icollection_get_size (SystemCollectionsICollection* self);
-gint system_collections_icollection_get_Count (SystemCollectionsICollection* self);
-gboolean system_collections_icollection_get_IsSynchronized (SystemCollectionsICollection* self);
-GObject* system_collections_icollection_get_SyncRoot (SystemCollectionsICollection* self);
-GType system_collections_icomparer_get_type (void) G_GNUC_CONST;
-gint system_collections_icomparer_Compare (SystemCollectionsIComparer* self, GObject* x, GObject* y);
-GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
-GType system_collections_ienumerable_get_type (void) G_GNUC_CONST;
-gpointer system_collections_dictionary_entry_ref (gpointer instance);
-void system_collections_dictionary_entry_unref (gpointer instance);
-GParamSpec* system_collections_param_spec_dictionary_entry (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
-void system_collections_value_set_dictionary_entry (GValue* value, gpointer v_object);
-void system_collections_value_take_dictionary_entry (GValue* value, gpointer v_object);
-gpointer system_collections_value_get_dictionary_entry (const GValue* value);
-GType system_collections_dictionary_entry_get_type (void) G_GNUC_CONST;
-GType system_collections_idictionary_enumerator_get_type (void) G_GNUC_CONST;
-GType system_collections_idictionary_get_type (void) G_GNUC_CONST;
-GObject* system_collections_idictionary_get (SystemCollectionsIDictionary* self, GObject* key);
-void system_collections_idictionary_set (SystemCollectionsIDictionary* self, GObject* key);
-void system_collections_idictionary_Add (SystemCollectionsIDictionary* self, GObject* key, GObject* value);
-void system_collections_idictionary_Clear (SystemCollectionsIDictionary* self);
-gboolean system_collections_idictionary_Contains (SystemCollectionsIDictionary* self, GObject* key);
-SystemCollectionsIDictionaryEnumerator* system_collections_idictionary_GetEnumerator (SystemCollectionsIDictionary* self);
-void system_collections_idictionary_Remove (SystemCollectionsIDictionary* self, GObject* key);
-gboolean system_collections_idictionary_get_IsFixedSize (SystemCollectionsIDictionary* self);
-gboolean system_collections_idictionary_get_IsReadOnly (SystemCollectionsIDictionary* self);
-SystemCollectionsICollection* system_collections_idictionary_get_Keys (SystemCollectionsIDictionary* self);
-SystemCollectionsICollection* system_collections_idictionary_get_Values (SystemCollectionsIDictionary* self);
-GObject* system_collections_idictionary_enumerator_get_Key (SystemCollectionsIDictionaryEnumerator* self);
-GObject* system_collections_idictionary_enumerator_get_Value (SystemCollectionsIDictionaryEnumerator* self);
-SystemCollectionsDictionaryEntry* system_collections_idictionary_enumerator_get_Entry (SystemCollectionsIDictionaryEnumerator* self);
-SystemCollectionsIEnumerator* system_collections_ienumerable_iterator (SystemCollectionsIEnumerable* self);
-SystemCollectionsIEnumerator* system_collections_ienumerable_GetEnumerator (SystemCollectionsIEnumerable* self);
-gboolean system_collections_ienumerator_next (SystemCollectionsIEnumerator* self);
-gboolean system_collections_ienumerator_MoveNext (SystemCollectionsIEnumerator* self);
-GObject* system_collections_ienumerator_get (SystemCollectionsIEnumerator* self);
-void system_collections_ienumerator_Reset (SystemCollectionsIEnumerator* self);
-GObject* system_collections_ienumerator_get_Current (SystemCollectionsIEnumerator* self);
-GType system_collections_iequality_comparer_get_type (void) G_GNUC_CONST;
-gboolean system_collections_iequality_comparer_Equals (SystemCollectionsIEqualityComparer* self, GObject* x, GObject* y);
-gint system_collections_iequality_comparer_GetHashCode (SystemCollectionsIEqualityComparer* self, GObject* obj);
-GType system_collections_ihash_code_provider_get_type (void) G_GNUC_CONST;
-gint system_collections_ihash_code_provider_GetHashCode (SystemCollectionsIHashCodeProvider* self, GObject* obj);
-GType system_collections_ilist_get_type (void) G_GNUC_CONST;
-GObject* system_collections_ilist_get (SystemCollectionsIList* self, gint index);
-void system_collections_ilist_set (SystemCollectionsIList* self, gint index, GObject* item);
-gint system_collections_ilist_Add (SystemCollectionsIList* self, GObject* item);
-void system_collections_ilist_Clear (SystemCollectionsIList* self);
-gboolean system_collections_ilist_contains (SystemCollectionsIList* self, GObject* item);
-gboolean system_collections_ilist_Contains (SystemCollectionsIList* self, GObject* item);
-gint system_collections_ilist_IndexOf (SystemCollectionsIList* self, GObject* item);
-void system_collections_ilist_Insert (SystemCollectionsIList* self, gint index, GObject* value);
-void system_collections_ilist_Remove (SystemCollectionsIList* self, GObject* value);
-void system_collections_ilist_RemoveAt (SystemCollectionsIList* self, gint index);
-gboolean system_collections_ilist_get_IsFixedSize (SystemCollectionsIList* self);
-gboolean system_collections_ilist_get_IsReadOnly (SystemCollectionsIList* self);
-GType system_collections_istructural_comparable_get_type (void) G_GNUC_CONST;
-gint32 system_collections_istructural_comparable_CompareTo (SystemCollectionsIStructuralComparable* self, GObject* other, SystemCollectionsIComparer* comparer);
-GType system_collections_istructural_equatable_get_type (void) G_GNUC_CONST;
-gboolean system_collections_istructural_equatable_Equals (SystemCollectionsIStructuralEquatable* self, GObject* other, SystemCollectionsIEqualityComparer* comparer);
-gint system_collections_istructural_equatable_GetHashCode (SystemCollectionsIStructuralEquatable* self, SystemCollectionsIEqualityComparer* comparer);
-SystemCollectionsDictionaryEntry* system_collections_dictionary_entry_new (GObject* key, GObject* value);
-SystemCollectionsDictionaryEntry* system_collections_dictionary_entry_construct (GType object_type, GObject* key, GObject* value);
-GObject* system_collections_dictionary_entry_get_Key (SystemCollectionsDictionaryEntry* self);
-void system_collections_dictionary_entry_set_Key (SystemCollectionsDictionaryEntry* self, GObject* value);
-GObject* system_collections_dictionary_entry_get_Value (SystemCollectionsDictionaryEntry* self);
-void system_collections_dictionary_entry_set_Value (SystemCollectionsDictionaryEntry* self, GObject* value);
-void system_collections_key_value_pairs_free (SystemCollectionsKeyValuePairs* self);
-SystemCollectionsKeyValuePairs* system_collections_key_value_pairs_new (GObject* key, GObject* value);
-SystemCollectionsKeyValuePairs* system_collections_key_value_pairs_new (GObject* key, GObject* value);
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 void system_collections_generic_icollection_Add (SystemCollectionsGenericICollection* self, gconstpointer item);
 void system_collections_generic_icollection_Clear (SystemCollectionsGenericICollection* self);
 gboolean system_collections_generic_icollection_contains (SystemCollectionsGenericICollection* self, gconstpointer item);
 gboolean system_collections_generic_icollection_Contains (SystemCollectionsGenericICollection* self, gconstpointer item);
-void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICollection* self, GArray* array, gint arrayIndex);
+void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
 gboolean system_collections_generic_icollection_Remove (SystemCollectionsGenericICollection* self, gconstpointer item);
 gint system_collections_generic_icollection_get_size (SystemCollectionsGenericICollection* self);
 gint system_collections_generic_icollection_get_Count (SystemCollectionsGenericICollection* self);
@@ -682,16 +478,21 @@ gboolean system_collections_generic_idictionary_ContainsKey (SystemCollectionsGe
 gboolean system_collections_generic_idictionary_ContainsValue (SystemCollectionsGenericIDictionary* self, gconstpointer value);
 gboolean system_collections_generic_idictionary_Remove (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 gboolean system_collections_generic_idictionary_TryGetValue (SystemCollectionsGenericIDictionary* self, gconstpointer key, gpointer* value);
+SystemCollectionsGenericIEnumerator* system_collections_generic_idictionary_iterator (SystemCollectionsGenericIDictionary* self);
+SystemCollectionsGenericIEnumerator* system_collections_generic_idictionary_GetEnumerator (SystemCollectionsGenericIDictionary* self);
 SystemCollectionsGenericICollection* system_collections_generic_idictionary_get_Keys (SystemCollectionsGenericIDictionary* self);
 SystemCollectionsGenericICollection* system_collections_generic_idictionary_get_Values (SystemCollectionsGenericIDictionary* self);
 GType system_collections_generic_ienumerable_get_element_type (SystemCollectionsGenericIEnumerable* self);
 SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_iterator (SystemCollectionsGenericIEnumerable* self);
 SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_GetEnumerator (SystemCollectionsGenericIEnumerable* self);
 gpointer system_collections_generic_ienumerator_get (SystemCollectionsGenericIEnumerator* self);
+gboolean system_collections_generic_ienumerator_MoveNext (SystemCollectionsGenericIEnumerator* self);
+gboolean system_collections_generic_ienumerator_next (SystemCollectionsGenericIEnumerator* self);
+void system_collections_generic_ienumerator_Reset (SystemCollectionsGenericIEnumerator* self);
 gpointer system_collections_generic_ienumerator_get_Current (SystemCollectionsGenericIEnumerator* self);
 GType system_collections_generic_iequality_comparer_get_type (void) G_GNUC_CONST;
 gboolean system_collections_generic_iequality_comparer_Equals (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y);
-gint system_collections_generic_iequality_comparer_GetHashCode (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
+guint system_collections_generic_iequality_comparer_GetHashCode (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
 GType system_collections_generic_ilist_get_type (void) G_GNUC_CONST;
 gpointer system_collections_generic_ilist_get (SystemCollectionsGenericIList* self, gint index);
 void system_collections_generic_ilist_set (SystemCollectionsGenericIList* self, gint index, gconstpointer item);
@@ -732,7 +533,30 @@ SystemCollectionsGenericKeyValuePair* system_collections_generic_key_value_pair_
 gchar* system_collections_generic_key_value_pair_ToString (SystemCollectionsGenericKeyValuePair* self, GString* s);
 gconstpointer system_collections_generic_key_value_pair_get_Key (SystemCollectionsGenericKeyValuePair* self);
 gconstpointer system_collections_generic_key_value_pair_get_Value (SystemCollectionsGenericKeyValuePair* self);
+gpointer system_collections_generic_comparer_ref (gpointer instance);
+void system_collections_generic_comparer_unref (gpointer instance);
+GParamSpec* system_collections_generic_param_spec_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
+void system_collections_generic_value_set_comparer (GValue* value, gpointer v_object);
+void system_collections_generic_value_take_comparer (GValue* value, gpointer v_object);
+gpointer system_collections_generic_value_get_comparer (const GValue* value);
+GType system_collections_generic_comparer_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericComparer* system_collections_generic_comparer_Default (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
+SystemCollectionsGenericComparer* system_collections_generic_comparer_Create (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemComparison comparison, void* comparison_target);
+gint system_collections_generic_comparer_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
+SystemCollectionsGenericComparer* system_collections_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
+gpointer system_collections_generic_equality_comparer_ref (gpointer instance);
+void system_collections_generic_equality_comparer_unref (gpointer instance);
+GParamSpec* system_collections_generic_param_spec_equality_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
+void system_collections_generic_value_set_equality_comparer (GValue* value, gpointer v_object);
+void system_collections_generic_value_take_equality_comparer (GValue* value, gpointer v_object);
+gpointer system_collections_generic_value_get_equality_comparer (const GValue* value);
+GType system_collections_generic_equality_comparer_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_Default (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
+gboolean system_collections_generic_equality_comparer_Equals (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y);
+guint system_collections_generic_equality_comparer_GetHashCode (SystemCollectionsGenericEqualityComparer* self, gconstpointer obj);
+SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 GType system_collections_generic_abstract_list_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_list_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_abstract_list_get_element_type (SystemCollectionsGenericAbstractList* self);
 SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_list_iterator (SystemCollectionsGenericAbstractList* self);
 gboolean system_collections_generic_abstract_list_contains (SystemCollectionsGenericAbstractList* self, gconstpointer item);
@@ -743,10 +567,16 @@ void system_collections_generic_abstract_list_Add (SystemCollectionsGenericAbstr
 void system_collections_generic_abstract_list_AddRange (SystemCollectionsGenericAbstractList* self, SystemCollectionsGenericIEnumerable* collection);
 gint system_collections_generic_abstract_list_BinarySearch (SystemCollectionsGenericAbstractList* self, gint index, gint count, gconstpointer item, SystemCollectionsGenericIComparer* comparer);
 void system_collections_generic_abstract_list_Clear (SystemCollectionsGenericAbstractList* self);
-void system_collections_generic_abstract_list_CopyTo (SystemCollectionsGenericAbstractList* self, GArray* array, gint arrayIndex);
+void system_collections_generic_abstract_list_CopyTo (SystemCollectionsGenericAbstractList* self, gpointer* array, int array_length1, gint arrayIndex);
+gboolean system_collections_generic_abstract_list_Exists (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+gpointer system_collections_generic_abstract_list_Find (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+SystemCollectionsGenericList* system_collections_generic_abstract_list_FindAll (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+gint system_collections_generic_abstract_list_FindIndex (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+gpointer system_collections_generic_abstract_list_FindLast (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
+gint system_collections_generic_abstract_list_FindLastIndex (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
 void system_collections_generic_abstract_list_ForEach (SystemCollectionsGenericAbstractList* self, SystemAction action, void* action_target);
 SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_list_GetEnumerator (SystemCollectionsGenericAbstractList* self);
-SystemCollectionsGenericIList* system_collections_generic_abstract_list_GetRange (SystemCollectionsGenericAbstractList* self, gint index, gint count);
+SystemCollectionsGenericList* system_collections_generic_abstract_list_GetRange (SystemCollectionsGenericAbstractList* self, gint index, gint count);
 void system_collections_generic_abstract_list_InsertRange (SystemCollectionsGenericAbstractList* self, gint index, SystemCollectionsGenericIEnumerable* collection);
 void system_collections_generic_abstract_list_Insert (SystemCollectionsGenericAbstractList* self, gint index, gconstpointer item);
 gint system_collections_generic_abstract_list_LastIndexOf (SystemCollectionsGenericAbstractList* self, gconstpointer item);
@@ -756,7 +586,9 @@ gint system_collections_generic_abstract_list_RemoveAll (SystemCollectionsGeneri
 void system_collections_generic_abstract_list_RemoveRange (SystemCollectionsGenericAbstractList* self, gint index, gint count);
 void system_collections_generic_abstract_list_Reverse (SystemCollectionsGenericAbstractList* self);
 void system_collections_generic_abstract_list_Sort (SystemCollectionsGenericAbstractList* self, SystemCollectionsGenericIComparer* comparer);
+gpointer* system_collections_generic_abstract_list_ToArray (SystemCollectionsGenericAbstractList* self, int* result_length1);
 void system_collections_generic_abstract_list_TrimExcess (SystemCollectionsGenericAbstractList* self);
+gboolean system_collections_generic_abstract_list_TrueForAll (SystemCollectionsGenericAbstractList* self, SystemPredicate match, void* match_target);
 SystemCollectionsGenericAbstractList* system_collections_generic_abstract_list_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 gint system_collections_generic_abstract_list_get_size (SystemCollectionsGenericAbstractList* self);
 gint system_collections_generic_abstract_list_get_Capacity (SystemCollectionsGenericAbstractList* self);
@@ -766,7 +598,6 @@ gboolean system_collections_generic_abstract_list_get_IsFixedSize (SystemCollect
 gboolean system_collections_generic_abstract_list_get_IsReadOnly (SystemCollectionsGenericAbstractList* self);
 gboolean system_collections_generic_abstract_list_get_IsSynchronized (SystemCollectionsGenericAbstractList* self);
 GObject* system_collections_generic_abstract_list_get_SyncRoot (SystemCollectionsGenericAbstractList* self);
-GType system_collections_generic_list_get_type (void) G_GNUC_CONST;
 SystemCollectionsGenericList* system_collections_generic_list_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* enumerable);
 SystemCollectionsGenericList* system_collections_generic_list_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* enumerable);
 SystemCollectionsGenericList* system_collections_generic_list_new_WithCapacity (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint defaultCapacity);
@@ -786,6 +617,7 @@ gint system_nullable_GetHashCode (SystemNullable* self);
 gchar* system_nullable_ToString (SystemNullable* self);
 gboolean system_nullable_get_HasValue (SystemNullable* self);
 gconstpointer system_nullable_get_Value (SystemNullable* self);
+GQuark system_argument_out_of_range_exception_quark (void);
 GType system_idisposable_get_type (void) G_GNUC_CONST;
 void system_idisposable_Dispose (SystemIDisposable* self);
 GType system_icomparable_get_type (void) G_GNUC_CONST;

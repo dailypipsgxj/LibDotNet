@@ -44,14 +44,6 @@ typedef struct _SystemCollectionsGenericIReadOnlyDictionaryIface SystemCollectio
 typedef struct _SystemCollectionsGenericIEnumerable SystemCollectionsGenericIEnumerable;
 typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGenericIEnumerableIface;
 
-#define SYSTEM_COLLECTIONS_TYPE_IENUMERATOR (system_collections_ienumerator_get_type ())
-#define SYSTEM_COLLECTIONS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumerator))
-#define SYSTEM_COLLECTIONS_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR))
-#define SYSTEM_COLLECTIONS_IENUMERATOR_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_IENUMERATOR, SystemCollectionsIEnumeratorIface))
-
-typedef struct _SystemCollectionsIEnumerator SystemCollectionsIEnumerator;
-typedef struct _SystemCollectionsIEnumeratorIface SystemCollectionsIEnumeratorIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR (system_collections_generic_ienumerator_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, SystemCollectionsGenericIEnumerator))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR))
@@ -66,18 +58,12 @@ struct _SystemCollectionsGenericIReadOnlyCollectionIface {
 	gint (*get_Count) (SystemCollectionsGenericIReadOnlyCollection* self);
 };
 
-struct _SystemCollectionsIEnumeratorIface {
-	GTypeInterface parent_iface;
-	gboolean (*next) (SystemCollectionsIEnumerator* self);
-	gboolean (*MoveNext) (SystemCollectionsIEnumerator* self);
-	GObject* (*get) (SystemCollectionsIEnumerator* self);
-	void (*Reset) (SystemCollectionsIEnumerator* self);
-	GObject* (*get_Current) (SystemCollectionsIEnumerator* self);
-};
-
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
+	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
+	void (*Reset) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get_Current) (SystemCollectionsGenericIEnumerator* self);
 };
 
@@ -99,7 +85,6 @@ struct _SystemCollectionsGenericIReadOnlyDictionaryIface {
 
 
 GType system_collections_generic_iread_only_collection_get_type (void) G_GNUC_CONST;
-GType system_collections_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_iread_only_dictionary_get_type (void) G_GNUC_CONST;
@@ -114,7 +99,7 @@ gboolean system_collections_generic_iread_only_dictionary_ContainsKey (SystemCol
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->ContainsKey (self, key);
-#line 118 "ireadonlydictionary.c"
+#line 103 "ireadonlydictionary.c"
 }
 
 
@@ -123,7 +108,7 @@ gboolean system_collections_generic_iread_only_dictionary_TryGetValue (SystemCol
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->TryGetValue (self, key, value);
-#line 127 "ireadonlydictionary.c"
+#line 112 "ireadonlydictionary.c"
 }
 
 
@@ -132,7 +117,7 @@ SystemCollectionsGenericIEnumerable* system_collections_generic_iread_only_dicti
 	g_return_val_if_fail (self != NULL, NULL);
 #line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->get_Keys (self);
-#line 136 "ireadonlydictionary.c"
+#line 121 "ireadonlydictionary.c"
 }
 
 
@@ -141,7 +126,7 @@ SystemCollectionsGenericIEnumerable* system_collections_generic_iread_only_dicti
 	g_return_val_if_fail (self != NULL, NULL);
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->get_Values (self);
-#line 145 "ireadonlydictionary.c"
+#line 130 "ireadonlydictionary.c"
 }
 
 
@@ -152,7 +137,7 @@ static void system_collections_generic_iread_only_dictionary_base_init (SystemCo
 	if (!initialized) {
 #line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 		initialized = TRUE;
-#line 156 "ireadonlydictionary.c"
+#line 141 "ireadonlydictionary.c"
 	}
 }
 

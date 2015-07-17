@@ -30,9 +30,6 @@ namespace System.Collections.Generic {
    		IList<T>,
 		ICollection<T>,
 		IEnumerable<T>,
-		System.Collections.ICollection,
-		System.Collections.IEnumerable,
-		System.Collections.IList,
 		IReadOnlyCollection<T>,
 		IReadOnlyList<T>
 	{
@@ -59,12 +56,18 @@ namespace System.Collections.Generic {
         */
         public abstract int BinarySearch(int index, int count, T item, IComparer<T> comparer);
 		public abstract void Clear ();
-        public abstract void CopyTo(GLib.Array<T> array, int arrayIndex);
+        public abstract void CopyTo(T[] array, int arrayIndex = 0);
+        public abstract bool Exists(Predicate<T> match);
+        public abstract T? Find(Predicate<T> match);
+        public abstract List<T> FindAll(Predicate<T> match); 
+        public abstract int FindIndex(Predicate<T> match);
+        public abstract T? FindLast(Predicate<T> match);
+        public abstract int FindLastIndex(Predicate<T> match);
         public abstract void ForEach(Action<T> action);
         public abstract IEnumerator<T> GetEnumerator();
-        public abstract IList<T> GetRange(int index, int count);
+        public abstract List<T> GetRange(int index, int count);
         public abstract void InsertRange(int index, IEnumerable<T> collection);
-		public abstract void Insert (int index, T item);
+		public abstract void Insert (int index, T? item);
         public abstract int LastIndexOf(T item);
 		public abstract bool Remove (T item);
 		public abstract void RemoveAt (int index);
@@ -72,8 +75,9 @@ namespace System.Collections.Generic {
         public abstract void RemoveRange(int index, int count);
         public abstract void Reverse();
         public abstract void Sort(IComparer<T>? comparer = null);
+        public abstract T[] ToArray();
         public abstract void TrimExcess();
-
+		public abstract bool TrueForAll(Predicate<T> match);
 	}
 	
     // Implements a variable-size List that uses an array of objects to store the
@@ -85,9 +89,11 @@ namespace System.Collections.Generic {
     public class List<T> : AbstractList<T>
 	{
             
-		private T[] _items = new T[4];
-		private int _size;
-		private GLib.EqualFunc _equal_func;
+		internal T[] _items = new T[4];
+		internal int _size;
+		private EqualityComparer<T> _equal_func;
+		private Comparer<T> _compare_func;
+		
 		// concurrent modification protection
 		private int _stamp = 0;
 
@@ -116,14 +122,10 @@ namespace System.Collections.Generic {
         public override bool IsFixedSize { get { return false; } }
            
         // Is this List read-only?
-        public override bool IsReadOnly {
-            get { return false; }
-        }
+        public override bool IsReadOnly { get { return false; } }
 
         // Is this List synchronized (thread-safe)?
-        public override bool IsSynchronized {
-            get { return false; }
-        }
+        public override bool IsSynchronized { get { return false; } }
     
         // Synchronization root for this object.
         public override GLib.Object SyncRoot {
@@ -134,14 +136,19 @@ namespace System.Collections.Generic {
         // of zero. Upon adding the first element to the list the capacity is
         // increased to 16, and then increased in multiples of two as required.
         public List(IEnumerable<T>? enumerable = null) {
-			_equal_func = GLib.direct_equal;
+			_equal_func = EqualityComparer<T>.Default();
+			_compare_func = Comparer<T>.Default();
+			
+			if (typeof(T).is_a(typeof(IEqualityComparer<T>))) {
+				
+			}
+			
 			if (enumerable != null) {
 				foreach (var item in enumerable) {
 					Add(item);
 				}
 			}
         }
-
 
         public List.WithCapacity(int defaultCapacity = 4) {
 			this();
@@ -166,8 +173,8 @@ namespace System.Collections.Generic {
         // search.
         // 
         public override int IndexOf(T item, int startIndex = 0) {
-			for (int index = 0; index < _size; index++) {
-				if (_equal_func (_items[index], item)) {
+			for (int index = startIndex; index < _size; index++) {
+				if (_equal_func.Equals (_items[index], item)) {
 					return index;
 				}
 			}
@@ -238,22 +245,85 @@ namespace System.Collections.Generic {
 			_stamp++;
 		}
 
-        public override void CopyTo(GLib.Array<T> array, int arrayIndex) {
-			;
+        public override void CopyTo(T[] array, int arrayIndex = 0)
+			requires (array.length >= _size + arrayIndex)
+		{
+			for (int index = 0; index < _size; index++) {
+				array[index + arrayIndex] = _items[index];
+			}
 		}
 
-        public override void ForEach(Action<T> action) {
+        public override bool Exists(Predicate<T> match) {
+			return FindIndex(match) != -1;
+		}
 
+        public override T? Find(Predicate<T> match) {
+            for(int i = 0 ; i < _size; i++) {
+                if(match(_items[i])) {
+                    return _items[i];
+                }
+            }
+			return null;
+		}
+		
+        public override List<T> FindAll(Predicate<T> match) { 
+            List<T> list = new List<T>(); 
+            for(int i = 0 ; i < _size; i++) {
+                if(match(_items[i])) {
+                    list.Add(_items[i]);
+                }
+            }
+            return list;
+        }
+
+		
+        public override int FindIndex(Predicate<T> match) {
+            for( int i = 0; i < _size; i++) {
+                if( match(_items[i])) return i;
+            }
+            return -1;
+		}
+
+        public override T? FindLast(Predicate<T> match) {
+            for(int i = _size - 1 ; i >= 0; i--) {
+                if(match(_items[i])) {
+                    return _items[i];
+                }
+            }
+            return null;
+        }
+
+        public override int FindLastIndex(Predicate<T> match) {
+			int startIndex = _size - 1;
+			int count = _size;
+            int endIndex = startIndex - count;
+            for( int i = startIndex; i > endIndex; i--) {
+                if( match(_items[i])) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+
+        public override void ForEach(Action<T> action) {
+            for(int i = 0 ; i < _size; i++) {
+                action(_items[i]);
+            }
         }
 
         public override IEnumerator<T> GetEnumerator() {
 			return iterator();
 		}
 
-        public override IList<T> GetRange(int index, int count) {
-            List<T> list = new List<T>();
-            return list as IList<T>;
+        public override List<T> GetRange(int index, int count) {
+            List<T> list = new List<T>.WithCapacity(count);
+            for (int i = index; i < index + count; i++) {
+				list.Add(_items[i]);
+			}
+            return list;
         }
+
 
         // Inserts the elements of the given collection at a given index. If
         // required, the capacity of the list is increased to twice the previous
@@ -261,11 +331,13 @@ namespace System.Collections.Generic {
         // to the end of the list by setting index to the List's size.
         //
         public override void InsertRange(int index, IEnumerable<T> collection) {
-
+			foreach (var item in collection) {
+				Insert(index++, item);
+			}
         }
 
 
-		public override void Insert (int index, T item) {
+		public override void Insert (int index, T? item) {
 			GLib.assert (index >= 0 && index <= _size);
 
 			if (_size == _items.length) {
@@ -286,13 +358,13 @@ namespace System.Collections.Generic {
         // 
         public override int LastIndexOf(T item)
         {
-           return -1;
+			return FindLastIndex((x) => _equal_func.Equals(x, item));
         }
 
 
 		public override bool Remove (T item) {
 			for (int index = 0; index < _size; index++) {
-				if (_equal_func (_items[index], item)) {
+				if (_equal_func.Equals (_items[index], item)) {
 					RemoveAt (index);
 					return true;
 				}
@@ -310,17 +382,61 @@ namespace System.Collections.Generic {
         // This method removes all items which matches the predicate.
         // The complexity is O(n).   
         public override int RemoveAll(Predicate<T> match) {
-            int result = size;
+            int freeIndex = 0;   // the first free slot in items array
+
+            // Find the first item which needs to be removed.
+            while( freeIndex < _size && !match(_items[freeIndex])) freeIndex++;            
+            if( freeIndex >= _size) return 0;
+            
+            int current = freeIndex + 1;
+            while( current < _size) {
+                // Find the first item which needs to be kept.
+                while( current < _size && match(_items[current])) current++;            
+
+                if( current < _size) {
+                    // copy item to the free slot.
+                    _items[freeIndex++] = _items[current++];
+                }
+            }                       
+            int result = _size - freeIndex;
+         
+            for (int i = freeIndex; i < _size; i++) {
+				RemoveAt(i);
+			}
+            //Array.Clear(_items, freeIndex, _size - freeIndex);
+            _size = freeIndex;
+            _stamp++;
             return result;
         }
 
         // Removes a range of elements from this list.
         // 
         public override void RemoveRange(int index, int count) {
-        }
+             if (count > 0) {
+                //_size -= count;
+                if (index < _size) {
+					for (int i = index; i < index+count; i++) {
+						RemoveAt(index);
+					}
+                }
+                _stamp++;
+            }
+       }
     
         // Reverses the elements in this list.
         public override void Reverse() {
+            int index = 0;
+            int length = _size;
+            int i = index;
+            int j = index + length - 1;
+
+			while (i < j) {
+				T temp = _items[i];
+				_items[i] = _items[j];
+				_items[j] = temp;
+				i++;
+				j--;
+			}
         }
     
 
@@ -328,6 +444,16 @@ namespace System.Collections.Generic {
         // provided comparer.
         public override void Sort(IComparer<T>? comparer = null)
         {
+			//GLib.CompareDataFunc compare_func = GLib.Functions.get_compare_func_for (typeof (T));
+			TimSort.sort<T> (this,(GLib.CompareDataFunc) GLib.strcmp);
+        }
+
+        // ToArray returns a new Object array containing the contents of the List.
+        // This requires copying the List, which is an O(n) operation.
+        public override T[] ToArray() {
+            T[] array = new T[_size];
+            CopyTo(array);
+            return array;
         }
 
         // Sets the capacity of this list to the size of the list. This method can
@@ -340,7 +466,20 @@ namespace System.Collections.Generic {
         // list.TrimExcess();
         // 
         public override void TrimExcess() {
+			int threshold = (int)(((double)_items.length) * 0.9);
+            if( _size < threshold ) {
+                Capacity = _size;                
+            }
         }    
+
+        public override bool TrueForAll(Predicate<T> match) {
+            for(int i = 0 ; i < _size; i++) {
+                if( !match(_items[i])) {
+                    return false;
+                }
+            }
+            return true;
+        } 
 
 
 		private void shift (int start, int delta) {
@@ -359,11 +498,12 @@ namespace System.Collections.Generic {
 		}
 
 		private void set_capacity (int value) {
-			GLib.assert (value >= _size);
+			if(value < _size)
+				throw new ArgumentOutOfRangeException.VALUE("Value is lower than current List size");
 			_items.resize (value);
 		}
 
-		private class Enumerator<T> : GLib.Object, System.Collections.IEnumerator, IEnumerator<T>  {
+		private class Enumerator<T> : GLib.Object, IEnumerator<T>  {
 			public List<T> list {
 				set {
 					_list = value;
