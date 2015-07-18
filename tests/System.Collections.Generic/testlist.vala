@@ -29,6 +29,7 @@ public class SystemCollectionsGenricListTests : LibDotNet.TestCase {
 		add_test ("List<String> properties get size", string_list_properties_get_size);
 		add_test ("List<String> methods Add", string_list_methods_add);
 		add_test ("List<String> methods AddRange", string_list_methods_add_range);
+		add_test ("List<String> methods AsReadOnly", string_list_methods_as_read_only);
 		add_test ("List<String> methods Clear", string_list_methods_clear);
 		add_test ("List<String> methods Contains", string_list_methods_contains);
 		add_test ("List<String> methods CopyTo", string_list_methods_copy_to);
@@ -194,6 +195,23 @@ public class SystemCollectionsGenricListTests : LibDotNet.TestCase {
 		GLib.assert_true (myL[5] == "Brachiosaurus");
         GLib.assert_true (myL[6] == "Compsognathus");
 		
+	}
+
+	public void string_list_methods_as_read_only () {
+		var myL = new System.Collections.Generic.List<string> ();
+		myL.Add("Tyrannosaurus");
+        myL.Add("Amargasaurus");
+        myL.Add("Mamenchisaurus");
+        myL.Add("Deinonychus");
+
+		var newL = myL.AsReadOnly ();
+		GLib.assert_true (newL.IsReadOnly);
+		GLib.assert_true (newL.size == 4);
+		GLib.assert_true (newL[0] == "Tyrannosaurus");
+        GLib.assert_true (newL[1] == "Amargasaurus");
+        GLib.assert_true (newL[2] == "Mamenchisaurus");
+        GLib.assert_true (newL[3] == "Deinonychus");
+	
 	}
 
 	public void string_list_methods_clear () {

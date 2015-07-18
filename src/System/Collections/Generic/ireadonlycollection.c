@@ -3,15 +3,12 @@
 
 /* ==++==*/
 /* */
-/*   Copyright (c) Microsoft Corporation.  All rights reserved.*/
+/*   API Copyright (c) Microsoft Corporation.  All rights reserved.*/
 /* */
 /* ==--==*/
 /*============================================================
 **
 ** Interface:  IReadOnlyCollection<T>
-** 
-** <OWNER>[....]</OWNER>
-**
 ** Purpose: Base interface for read-only generic lists.
 ** 
 ===========================================================*/
@@ -42,31 +39,31 @@ gint system_collections_generic_iread_only_collection_get_Count (SystemCollectio
 
 
 gint system_collections_generic_iread_only_collection_get_size (SystemCollectionsGenericIReadOnlyCollection* self) {
-#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	g_return_val_if_fail (self != NULL, 0);
-#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE (self)->get_size (self);
-#line 50 "ireadonlycollection.c"
+#line 47 "ireadonlycollection.c"
 }
 
 
 gint system_collections_generic_iread_only_collection_get_Count (SystemCollectionsGenericIReadOnlyCollection* self) {
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	g_return_val_if_fail (self != NULL, 0);
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE (self)->get_Count (self);
-#line 59 "ireadonlycollection.c"
+#line 56 "ireadonlycollection.c"
 }
 
 
 static void system_collections_generic_iread_only_collection_base_init (SystemCollectionsGenericIReadOnlyCollectionIface * iface) {
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	static gboolean initialized = FALSE;
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	if (!initialized) {
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 		initialized = TRUE;
-#line 70 "ireadonlycollection.c"
+#line 67 "ireadonlycollection.c"
 	}
 }
 

@@ -1,19 +1,15 @@
 // ==++==
 // 
-//   Copyright (c) Microsoft Corporation.  All rights reserved.
+//   API Copyright (c) Microsoft Corporation.  All rights reserved.
 // 
 // ==--==
 /*============================================================
 **
 ** Class:  List
-** 
-** <OWNER>[....]</OWNER>
-**
 ** Purpose: Implements a generic, dynamically sized list as an 
 **          array.
-**
-** 
 ===========================================================*/
+
 namespace System.Collections.Generic {
 
     using System;
@@ -21,15 +17,15 @@ namespace System.Collections.Generic {
     //using System.Runtime.Versioning;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    //using System.Collections.ObjectModel;
+    using System.Collections.ObjectModel;
     using System.Security.Permissions;
 
 
 	public abstract class AbstractList<T> :
 		GLib.Object,
+		IEnumerable<T>,
    		IList<T>,
 		ICollection<T>,
-		IEnumerable<T>,
 		IReadOnlyCollection<T>,
 		IReadOnlyList<T>
 	{
@@ -49,11 +45,7 @@ namespace System.Collections.Generic {
 		public new abstract void set (int index, T item);
 		public abstract void Add (T item);
         public abstract void AddRange(IEnumerable<T> collection);
-		/*
-        public abstract ReadOnlyCollection<T> AsReadOnly() {
-            return new ReadOnlyCollection<T>(this);
-        }
-        */
+        public abstract ReadOnlyCollection<T> AsReadOnly();
         public abstract int BinarySearch(int index, int count, T item, IComparer<T> comparer);
 		public abstract void Clear ();
         public abstract void CopyTo(T[] array, int arrayIndex = 0);
@@ -93,6 +85,29 @@ namespace System.Collections.Generic {
 		internal int _size;
 		private EqualityComparer<T> _equal_func;
 		private Comparer<T> _compare_func;
+
+        // Constructs a List. The list is initially empty and has a capacity
+        // of zero. Upon adding the first element to the list the capacity is
+        // increased to 16, and then increased in multiples of two as required.
+        public List(IEnumerable<T>? enumerable = null) {
+			_equal_func = EqualityComparer<T>.Default();
+			_compare_func = Comparer<T>.Default();
+			
+			if (typeof(T).is_a(typeof(IEqualityComparer<T>))) {
+				
+			}
+			
+			if (enumerable != null) {
+				foreach (var item in enumerable) {
+					Add(item);
+				}
+			}
+        }
+
+        public List.WithCapacity(int defaultCapacity = 4) {
+			this();
+			set_capacity (defaultCapacity);
+        }
 		
 		// concurrent modification protection
 		private int _stamp = 0;
@@ -132,29 +147,6 @@ namespace System.Collections.Generic {
             get { return this as GLib.Object; }
         }
 
-        // Constructs a List. The list is initially empty and has a capacity
-        // of zero. Upon adding the first element to the list the capacity is
-        // increased to 16, and then increased in multiples of two as required.
-        public List(IEnumerable<T>? enumerable = null) {
-			_equal_func = EqualityComparer<T>.Default();
-			_compare_func = Comparer<T>.Default();
-			
-			if (typeof(T).is_a(typeof(IEqualityComparer<T>))) {
-				
-			}
-			
-			if (enumerable != null) {
-				foreach (var item in enumerable) {
-					Add(item);
-				}
-			}
-        }
-
-        public List.WithCapacity(int defaultCapacity = 4) {
-			this();
-			set_capacity (defaultCapacity);
-        }
-
 		public override IEnumerator<T> iterator () {
 			return new Enumerator<T> (this);
 		}
@@ -163,15 +155,6 @@ namespace System.Collections.Generic {
 			return (IndexOf (item) != -1);
 		}
  
-        // Returns the index of the first occurrence of a given value in a range of
-        // this list. The list is searched forwards, starting at index
-        // index and ending at count number of elements. The
-        // elements of the list are compared to the given value using the
-        // Object.Equals method.
-        // 
-        // This method uses the Array.IndexOf method to perform the
-        // search.
-        // 
         public override int IndexOf(T item, int startIndex = 0) {
 			for (int index = startIndex; index < _size; index++) {
 				if (_equal_func.Equals (_items[index], item)) {
@@ -207,11 +190,10 @@ namespace System.Collections.Generic {
             InsertRange(size, collection);
         }
 
-		/*
+		
         public override ReadOnlyCollection<T> AsReadOnly() {
             return new ReadOnlyCollection<T>(this);
         }
-        */
 
         // Searches a section of the list for a given element using a binary search
         // algorithm. Elements of the list are compared to the search value using
@@ -504,21 +486,21 @@ namespace System.Collections.Generic {
 		}
 
 		private class Enumerator<T> : GLib.Object, IEnumerator<T>  {
-			public List<T> list {
-				set {
-					_list = value;
-					_stamp = _list._stamp;
-				}
-			}
 
 			private List<T> _list;
 			private int _index = -1;
-
 			// concurrent modification protection
 			public int _stamp = 0;
 
 			public Enumerator (List list) {
 				this.list = list;
+			}
+
+			public List<T> list {
+				set {
+					_list = value;
+					_stamp = _list._stamp;
+				}
 			}
 
 			public bool next () {

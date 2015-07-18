@@ -24,7 +24,8 @@ namespace System.Collections.Generic {
     // property, Items.  
 	//[GenericAccessors]
     public interface IDictionary<TKey, TValue> :
-		ICollection<KeyValuePair<TKey, TValue>>,
+		GLib.Object,
+		//ICollection<KeyValuePair<TKey, TValue>>, 
 		IEnumerable<KeyValuePair<TKey, TValue>>
     {
         // Interfaces are not serializable
@@ -32,7 +33,7 @@ namespace System.Collections.Generic {
         // in the Dictionary.
         public abstract TValue? get (TKey key);
 
-        public abstract void set (TKey key);
+        public abstract void set (TKey key, TValue value);
     
         // Returns a collections of the keys in this dictionary.
         public abstract ICollection<TKey> Keys {
@@ -46,6 +47,9 @@ namespace System.Collections.Generic {
         
          // Adds a key-value pair to the dictionary.
         public abstract void Add(TKey key, TValue value);
+
+        public abstract bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair>? comparer = null);
+
    
         // Returns whether this dictionary contains a particular key.
         public abstract bool ContainsKey(TKey key);
@@ -53,7 +57,7 @@ namespace System.Collections.Generic {
         public abstract bool ContainsValue(TValue value);
     
         // Removes a particular key from the dictionary.
-        public abstract bool Remove(TKey key);
+        public abstract bool Remove(TKey key, TValue? value = null);
 
         public abstract bool TryGetValue(TKey key, out TValue value);
 		

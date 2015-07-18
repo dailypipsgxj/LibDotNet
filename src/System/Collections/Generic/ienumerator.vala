@@ -37,10 +37,11 @@ namespace System.Collections.Generic {
         // element of the enumeration, and the first call to MoveNext 
         // brings the first element of the enumeration into view.
         // 
-		public virtual bool MoveNext() {
-			return next();
+		public abstract bool MoveNext();
+		
+        public virtual bool next(){
+			return MoveNext();
 		}
-        public abstract bool next();
    
         public abstract void Reset();
         

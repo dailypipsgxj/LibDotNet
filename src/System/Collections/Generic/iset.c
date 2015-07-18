@@ -23,22 +23,6 @@
 #include <gee.h>
 
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollectionIface))
-
-typedef struct _SystemCollectionsGenericICollection SystemCollectionsGenericICollection;
-typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGenericICollectionIface;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET (system_collections_generic_iset_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_ISET(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET, SystemCollectionsGenericISet))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_ISET(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET))
-#define SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET, SystemCollectionsGenericISetIface))
-
-typedef struct _SystemCollectionsGenericISet SystemCollectionsGenericISet;
-typedef struct _SystemCollectionsGenericISetIface SystemCollectionsGenericISetIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -55,18 +39,21 @@ typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGeneri
 typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
 typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
 
-struct _SystemCollectionsGenericICollectionIface {
-	GTypeInterface parent_iface;
-	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
-	void (*Clear) (SystemCollectionsGenericICollection* self);
-	gboolean (*contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
-	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
-	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
-	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
-	gint (*get_size) (SystemCollectionsGenericICollection* self);
-	gint (*get_Count) (SystemCollectionsGenericICollection* self);
-	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
-};
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
+#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollectionIface))
+
+typedef struct _SystemCollectionsGenericICollection SystemCollectionsGenericICollection;
+typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGenericICollectionIface;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET (system_collections_generic_iset_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_ISET(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET, SystemCollectionsGenericISet))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_ISET(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET))
+#define SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ISET, SystemCollectionsGenericISetIface))
+
+typedef struct _SystemCollectionsGenericISet SystemCollectionsGenericISet;
+typedef struct _SystemCollectionsGenericISetIface SystemCollectionsGenericISetIface;
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
@@ -82,6 +69,19 @@ struct _SystemCollectionsGenericIEnumerableIface {
 	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
+};
+
+struct _SystemCollectionsGenericICollectionIface {
+	GTypeInterface parent_iface;
+	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	void (*Clear) (SystemCollectionsGenericICollection* self);
+	gboolean (*contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
+	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	gint (*get_size) (SystemCollectionsGenericICollection* self);
+	gint (*get_Count) (SystemCollectionsGenericICollection* self);
+	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
 };
 
 struct _SystemCollectionsGenericISetIface {
@@ -101,9 +101,9 @@ struct _SystemCollectionsGenericISetIface {
 
 
 
-GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_iset_get_type (void) G_GNUC_CONST;
 gboolean system_collections_generic_iset_Add (SystemCollectionsGenericISet* self, gconstpointer value);
 static gboolean system_collections_generic_iset_real_Add (SystemCollectionsGenericISet* self, gconstpointer value);

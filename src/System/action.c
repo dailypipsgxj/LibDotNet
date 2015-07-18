@@ -14,6 +14,7 @@
 
 
 typedef void (*SystemAction) (gconstpointer obj, void* user_data);
+typedef gpointer (*SystemFunc) (gconstpointer arg, void* user_data);
 typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
 typedef gboolean (*SystemPredicate) (gconstpointer obj, void* user_data);
 

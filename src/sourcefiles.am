@@ -43,6 +43,7 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/icollection.vala \
 	System/Collections/Generic/icomparer.vala \
 	System/Collections/Generic/idictionary.vala \
+	System/Collections/Generic/idictionaryenumerator.vala \
 	System/Collections/Generic/ienumerable.vala \
 	System/Collections/Generic/ienumerator.vala \
 	System/Collections/Generic/iequalitycomparer.vala \
@@ -51,15 +52,24 @@ LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Collections/Generic/ireadonlycollection.vala \
 	System/Collections/Generic/ireadonlydictionary.vala \
 	System/Collections/Generic/ireadonlylist.vala \
-	System/Collections/Generic/KeyValuePair.vala
+	System/Collections/Generic/KeyValuePair.vala \
+	System/Collections/Generic/DictionaryEntry.vala
+
 	
 LIBDOTNET_COLLECTIONS_GEN = \
 	System/Collections/Generic/timsort.vala \
 	System/Collections/Generic/Comparer.vala \
 	System/Collections/Generic/EqualityComparer.vala \
+	System/Collections/Generic/Dictionary.vala \
 	System/Collections/Generic/List.vala
 
+
+LIBDOTNET_COLLECTIONS_OBJMODEL = \
+	System/Collections/ObjectModel/ReadOnlyCollection.vala	
+
+
 LIBDOTNET_COLLECTIONS_GENX = \
+	System/Linq/Enumerable.vala \
 	System/Collections/Generic/SortedDictionary.vala \
 	System/Collections/Generic/Comparer.vala \
 	System/Collections/Generic/Dictionary.vala \
@@ -103,6 +113,7 @@ LIBDOTNET_SYSTEM_MISC = \
 LIBDOTNET_SOURCES = \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
+	$(LIBDOTNET_COLLECTIONS_OBJMODEL) \
 	$(LIBDOTNET_SYSTEM_NS) \
 	$(LIBDOTNET_SYSTEM) \
 	$(LIBDOTNET_SYSTEM_IFACE) \

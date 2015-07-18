@@ -837,7 +837,7 @@ namespace System.Linq
 
         private static IEnumerable<TResult> OfTypeIterator<TResult>(IEnumerable source)
         {
-            foreach (Object obj in source)
+            foreach (GLib.Object obj in source)
             {
                 if (obj is TResult) yield return (TResult)obj;
             }
@@ -853,7 +853,7 @@ namespace System.Linq
 
         private static IEnumerable<TResult> CastIterator<TResult>(IEnumerable source)
         {
-            foreach (Object obj in source) yield return (TResult)obj;
+            foreach (GLib.Object obj in source) yield return (TResult)obj;
         }
 
 
@@ -1649,60 +1649,6 @@ namespace System.Linq
         }
     }
 
-    /// <summary>
-    /// This class provides the items view for the Enumerable
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal class SystemCore_EnumerableDebugView<T>
-    {
-        public SystemCore_EnumerableDebugView(IEnumerable<T> enumerable)
-        {
-            if (enumerable == null)
-            {
-                throw ArgumentNullException("enumerable");
-            }
 
-            _enumerable = enumerable;
-        }
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.RootHidden)]
-
-        public T[] Items
-        {
-            get
-            {
-                List<T> tempList = new List<T>();
-                IEnumerator<T> currentEnumerator = _enumerable.GetEnumerator();
-
-                if (currentEnumerator != null)
-                {
-                    for (_count = 0; currentEnumerator.MoveNext(); _count++)
-                    {
-                        tempList.Add(currentEnumerator.Current);
-                    }
-                }
-                if (_count == 0)
-                {
-                    throw SystemCore_EnumerableDebugViewEmptyException();
-                }
-                _cachedCollection = new T[_count];
-                tempList.CopyTo(_cachedCollection, 0);
-                return _cachedCollection;
-            }
-        }
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-
-        private IEnumerable<T> _enumerable;
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-
-        private T[] _cachedCollection;
-// [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-
-        private int _count;
-    }
-    
-    internal errordomain SystemCore_EnumerableDebugViewEmptyException
-    {
-		EmptyEnumerable;
-    }
 
 }

@@ -29,7 +29,7 @@ namespace System.Collections.Generic {
     // The same attribute is on IList<T> and ICollection<T>.
 
 	//[GenericAccessors]
-    public interface IEnumerable<T>
+    public interface IEnumerable<T> : GLib.Object
     {
 		public abstract GLib.Type get_element_type ();
 

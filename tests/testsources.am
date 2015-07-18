@@ -2,4 +2,5 @@ TEST_COLLECTIONS = \
 	System.Collections/testarraylist.vala
 
 TEST_COLLECTIONS_GENERIC = \
-	System.Collections.Generic/testlist.vala
+	System.Collections.Generic/testlist.vala \
+	System.Collections.Generic/testdictionary.vala
