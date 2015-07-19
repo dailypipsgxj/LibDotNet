@@ -19,6 +19,10 @@ typedef enum  {
 } SystemArgumentOutOfRangeException;
 #define SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION system_argument_out_of_range_exception_quark ()
 typedef enum  {
+	SYSTEM_ERROR_NOELEMENTS
+} SystemError;
+#define SYSTEM_ERROR system_error_quark ()
+typedef enum  {
 	SYSTEM_ARGUMENT_EXCEPTION_NULL,
 	SYSTEM_ARGUMENT_EXCEPTION_INVALIDOFFSETLENGTH,
 	SYSTEM_ARGUMENT_EXCEPTION_NOTFOUND,
@@ -33,7 +37,8 @@ typedef enum  {
 #define SYSTEM_ARGUMENT_NULL_EXCEPTION system_argument_null_exception_quark ()
 typedef enum  {
 	SYSTEM_INVALID_OPERATION_EXCEPTION_ENUMNOTSTARTED,
-	SYSTEM_INVALID_OPERATION_EXCEPTION_ENUMENDED
+	SYSTEM_INVALID_OPERATION_EXCEPTION_ENUMENDED,
+	SYSTEM_INVALID_OPERATION_EXCEPTION_NOTIMPLEMENTED
 } SystemInvalidOperationException;
 #define SYSTEM_INVALID_OPERATION_EXCEPTION system_invalid_operation_exception_quark ()
 typedef enum  {
@@ -48,6 +53,7 @@ typedef enum  {
 
 GQuark system_array_type_mismatch_exception_quark (void);
 GQuark system_argument_out_of_range_exception_quark (void);
+GQuark system_error_quark (void);
 GQuark system_argument_exception_quark (void);
 GQuark system_argument_null_exception_quark (void);
 GQuark system_invalid_operation_exception_quark (void);
@@ -61,6 +67,11 @@ GQuark system_array_type_mismatch_exception_quark (void) {
 
 GQuark system_argument_out_of_range_exception_quark (void) {
 	return g_quark_from_static_string ("system_argument_out_of_range_exception-quark");
+}
+
+
+GQuark system_error_quark (void) {
+	return g_quark_from_static_string ("system_error-quark");
 }
 
 

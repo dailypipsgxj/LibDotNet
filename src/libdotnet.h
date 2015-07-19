@@ -175,50 +175,6 @@ typedef struct _SystemCollectionsGenericDictionary SystemCollectionsGenericDicti
 typedef struct _SystemCollectionsGenericDictionaryClass SystemCollectionsGenericDictionaryClass;
 typedef struct _SystemCollectionsGenericDictionaryPrivate SystemCollectionsGenericDictionaryPrivate;
 
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION (system_collections_generic_dictionary_key_collection_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, SystemCollectionsGenericDictionaryKeyCollection))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, SystemCollectionsGenericDictionaryKeyCollectionClass))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_KEY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_KEY_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, SystemCollectionsGenericDictionaryKeyCollectionClass))
-
-typedef struct _SystemCollectionsGenericDictionaryKeyCollection SystemCollectionsGenericDictionaryKeyCollection;
-typedef struct _SystemCollectionsGenericDictionaryKeyCollectionClass SystemCollectionsGenericDictionaryKeyCollectionClass;
-typedef struct _SystemCollectionsGenericDictionaryKeyCollectionPrivate SystemCollectionsGenericDictionaryKeyCollectionPrivate;
-
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR (system_collections_generic_dictionary_key_collection_enumerator_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryKeyCollectionEnumerator))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_IS_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_IS_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass))
-
-typedef struct _SystemCollectionsGenericDictionaryKeyCollectionEnumerator SystemCollectionsGenericDictionaryKeyCollectionEnumerator;
-typedef struct _SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass;
-typedef struct _SystemCollectionsGenericDictionaryKeyCollectionEnumeratorPrivate SystemCollectionsGenericDictionaryKeyCollectionEnumeratorPrivate;
-
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION (system_collections_generic_dictionary_value_collection_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION, SystemCollectionsGenericDictionaryValueCollection))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION, SystemCollectionsGenericDictionaryValueCollectionClass))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_VALUE_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_VALUE_COLLECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION, SystemCollectionsGenericDictionaryValueCollectionClass))
-
-typedef struct _SystemCollectionsGenericDictionaryValueCollection SystemCollectionsGenericDictionaryValueCollection;
-typedef struct _SystemCollectionsGenericDictionaryValueCollectionClass SystemCollectionsGenericDictionaryValueCollectionClass;
-typedef struct _SystemCollectionsGenericDictionaryValueCollectionPrivate SystemCollectionsGenericDictionaryValueCollectionPrivate;
-
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR (system_collections_generic_dictionary_value_collection_enumerator_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryValueCollectionEnumerator))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_IS_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_IS_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass))
-
-typedef struct _SystemCollectionsGenericDictionaryValueCollectionEnumerator SystemCollectionsGenericDictionaryValueCollectionEnumerator;
-typedef struct _SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass;
-typedef struct _SystemCollectionsGenericDictionaryValueCollectionEnumeratorPrivate SystemCollectionsGenericDictionaryValueCollectionEnumeratorPrivate;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_LIST (system_collections_generic_abstract_list_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_LIST, SystemCollectionsGenericAbstractList))
 #define SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_LIST, SystemCollectionsGenericAbstractListClass))
@@ -250,6 +206,50 @@ typedef struct _SystemCollectionsObjectModelReadOnlyCollectionClass SystemCollec
 typedef struct _SystemCollectionsGenericList SystemCollectionsGenericList;
 typedef struct _SystemCollectionsGenericListClass SystemCollectionsGenericListClass;
 typedef struct _SystemCollectionsGenericListPrivate SystemCollectionsGenericListPrivate;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_QUEUE (system_collections_generic_queue_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_QUEUE, SystemCollectionsGenericQueue))
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_QUEUE, SystemCollectionsGenericQueueClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_QUEUE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_QUEUE))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_QUEUE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_QUEUE))
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_QUEUE, SystemCollectionsGenericQueueClass))
+
+typedef struct _SystemCollectionsGenericQueue SystemCollectionsGenericQueue;
+typedef struct _SystemCollectionsGenericQueueClass SystemCollectionsGenericQueueClass;
+typedef struct _SystemCollectionsGenericQueuePrivate SystemCollectionsGenericQueuePrivate;
+
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_TYPE_ENUMERATOR (system_collections_generic_queue_enumerator_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_QUEUE_TYPE_ENUMERATOR, SystemCollectionsGenericQueueEnumerator))
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_QUEUE_TYPE_ENUMERATOR, SystemCollectionsGenericQueueEnumeratorClass))
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_IS_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_QUEUE_TYPE_ENUMERATOR))
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_IS_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_QUEUE_TYPE_ENUMERATOR))
+#define SYSTEM_COLLECTIONS_GENERIC_QUEUE_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_QUEUE_TYPE_ENUMERATOR, SystemCollectionsGenericQueueEnumeratorClass))
+
+typedef struct _SystemCollectionsGenericQueueEnumerator SystemCollectionsGenericQueueEnumerator;
+typedef struct _SystemCollectionsGenericQueueEnumeratorClass SystemCollectionsGenericQueueEnumeratorClass;
+typedef struct _SystemCollectionsGenericQueueEnumeratorPrivate SystemCollectionsGenericQueueEnumeratorPrivate;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK (system_collections_generic_stack_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_STACK(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, SystemCollectionsGenericStack))
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, SystemCollectionsGenericStackClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_STACK(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK))
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, SystemCollectionsGenericStackClass))
+
+typedef struct _SystemCollectionsGenericStack SystemCollectionsGenericStack;
+typedef struct _SystemCollectionsGenericStackClass SystemCollectionsGenericStackClass;
+typedef struct _SystemCollectionsGenericStackPrivate SystemCollectionsGenericStackPrivate;
+
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR (system_collections_generic_stack_enumerator_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, SystemCollectionsGenericStackEnumerator))
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, SystemCollectionsGenericStackEnumeratorClass))
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_IS_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR))
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_IS_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR))
+#define SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, SystemCollectionsGenericStackEnumeratorClass))
+
+typedef struct _SystemCollectionsGenericStackEnumerator SystemCollectionsGenericStackEnumerator;
+typedef struct _SystemCollectionsGenericStackEnumeratorClass SystemCollectionsGenericStackEnumeratorClass;
+typedef struct _SystemCollectionsGenericStackEnumeratorPrivate SystemCollectionsGenericStackEnumeratorPrivate;
 typedef struct _SystemCollectionsObjectModelReadOnlyCollectionPrivate SystemCollectionsObjectModelReadOnlyCollectionPrivate;
 
 #define SYSTEM_TYPE_NULLABLE (system_nullable_get_type ())
@@ -299,6 +299,9 @@ typedef struct _SystemICloneableIface SystemICloneableIface;
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerator* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerator* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
@@ -308,6 +311,9 @@ struct _SystemCollectionsGenericIEnumeratorIface {
 
 struct _SystemCollectionsGenericIEnumerableIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerable* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerable* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerable* self);
 	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
@@ -339,6 +345,12 @@ struct _SystemCollectionsGenericIEqualityComparerIface {
 
 struct _SystemCollectionsGenericIDictionaryIface {
 	GTypeInterface parent_iface;
+	GType (*get_tkey_type) (SystemCollectionsGenericIDictionary* self);
+	GBoxedCopyFunc (*get_tkey_dup_func) (SystemCollectionsGenericIDictionary* self);
+	GDestroyNotify (*get_tkey_destroy_func) (SystemCollectionsGenericIDictionary* self);
+	GType (*get_tvalue_type) (SystemCollectionsGenericIDictionary* self);
+	GBoxedCopyFunc (*get_tvalue_dup_func) (SystemCollectionsGenericIDictionary* self);
+	GDestroyNotify (*get_tvalue_destroy_func) (SystemCollectionsGenericIDictionary* self);
 	gpointer (*get) (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 	void (*set) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gconstpointer value);
 	void (*Add) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gconstpointer value);
@@ -350,7 +362,6 @@ struct _SystemCollectionsGenericIDictionaryIface {
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIDictionary* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Keys) (SystemCollectionsGenericIDictionary* self);
-	void (*set_Keys) (SystemCollectionsGenericIDictionary* self, SystemCollectionsGenericICollection* value);
 	SystemCollectionsGenericICollection* (*get_Values) (SystemCollectionsGenericIDictionary* self);
 };
 
@@ -359,6 +370,7 @@ struct _SystemCollectionsGenericIDictionaryEnumeratorIface {
 	gpointer (*get_Key) (SystemCollectionsGenericIDictionaryEnumerator* self);
 	gpointer (*get_Value) (SystemCollectionsGenericIDictionaryEnumerator* self);
 	SystemCollectionsGenericDictionaryEntry* (*get_Entry) (SystemCollectionsGenericIDictionaryEnumerator* self);
+	SystemCollectionsGenericKeyValuePair* (*get_Current) (SystemCollectionsGenericIDictionaryEnumerator* self);
 };
 
 struct _SystemCollectionsGenericIListIface {
@@ -442,19 +454,17 @@ struct _SystemCollectionsGenericComparerClass {
 };
 
 typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
+typedef guint (*SystemCollectionsGenericHashDataFunc) (gconstpointer v, void* user_data);
+typedef gboolean (*SystemCollectionsGenericEqualDataFunc) (gconstpointer a, gconstpointer b, void* user_data);
 struct _SystemCollectionsGenericEqualityComparer {
-	GTypeInstance parent_instance;
-	volatile int ref_count;
+	GObject parent_instance;
 	SystemCollectionsGenericEqualityComparerPrivate * priv;
 };
 
 struct _SystemCollectionsGenericEqualityComparerClass {
-	GTypeClass parent_class;
-	void (*finalize) (SystemCollectionsGenericEqualityComparer *self);
+	GObjectClass parent_class;
 	gboolean (*Equals) (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y);
 	guint (*GetHashCode) (SystemCollectionsGenericEqualityComparer* self, gconstpointer obj);
-	gint (*IndexOf) (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
-	gint (*LastIndexOf) (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
 };
 
 struct _SystemCollectionsGenericAbstractDictionary {
@@ -479,12 +489,12 @@ struct _SystemCollectionsGenericAbstractDictionaryClass {
 	void (*OnDeserialization) (SystemCollectionsGenericAbstractDictionary* self, GObject* sender);
 	gboolean (*Remove) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value);
 	gboolean (*TryGetValue) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gpointer* value);
+	SystemCollectionsGenericIEqualityComparer* (*get_Comparer) (SystemCollectionsGenericAbstractDictionary* self);
 	gint (*get_Count) (SystemCollectionsGenericAbstractDictionary* self);
 	gboolean (*get_IsFixedSize) (SystemCollectionsGenericAbstractDictionary* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericAbstractDictionary* self);
 	gboolean (*get_IsSynchronized) (SystemCollectionsGenericAbstractDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Keys) (SystemCollectionsGenericAbstractDictionary* self);
-	void (*set_Keys) (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericICollection* value);
 	gint (*get_size) (SystemCollectionsGenericAbstractDictionary* self);
 	GObject* (*get_SyncRoot) (SystemCollectionsGenericAbstractDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Values) (SystemCollectionsGenericAbstractDictionary* self);
@@ -493,56 +503,11 @@ struct _SystemCollectionsGenericAbstractDictionaryClass {
 struct _SystemCollectionsGenericDictionary {
 	SystemCollectionsGenericAbstractDictionary parent_instance;
 	SystemCollectionsGenericDictionaryPrivate * priv;
-	gint* buckets;
-	gint buckets_length1;
-	gint _buckets_size_;
-	gint count;
-	gint version;
-	gint freeList;
-	gint freeCount;
 	GObject* _syncRoot;
 };
 
 struct _SystemCollectionsGenericDictionaryClass {
 	SystemCollectionsGenericAbstractDictionaryClass parent_class;
-};
-
-struct _SystemCollectionsGenericDictionaryKeyCollection {
-	GObject parent_instance;
-	SystemCollectionsGenericDictionaryKeyCollectionPrivate * priv;
-};
-
-struct _SystemCollectionsGenericDictionaryKeyCollectionClass {
-	GObjectClass parent_class;
-};
-
-struct _SystemCollectionsGenericDictionaryKeyCollectionEnumerator {
-	GObject parent_instance;
-	SystemCollectionsGenericDictionaryKeyCollectionEnumeratorPrivate * priv;
-};
-
-struct _SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass {
-	GObjectClass parent_class;
-};
-
-struct _SystemCollectionsGenericDictionaryValueCollection {
-	GObject parent_instance;
-	SystemCollectionsGenericDictionaryValueCollectionPrivate * priv;
-	SystemCollectionsGenericDictionary* dictionary;
-};
-
-struct _SystemCollectionsGenericDictionaryValueCollectionClass {
-	GObjectClass parent_class;
-};
-
-struct _SystemCollectionsGenericDictionaryValueCollectionEnumerator {
-	GObject parent_instance;
-	SystemCollectionsGenericDictionaryValueCollectionEnumeratorPrivate * priv;
-	SystemCollectionsGenericDictionary* dictionary;
-};
-
-struct _SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass {
-	GObjectClass parent_class;
 };
 
 typedef gboolean (*SystemPredicate) (gconstpointer obj, void* user_data);
@@ -610,6 +575,42 @@ struct _SystemCollectionsGenericListClass {
 	SystemCollectionsGenericAbstractListClass parent_class;
 };
 
+struct _SystemCollectionsGenericQueue {
+	GObject parent_instance;
+	SystemCollectionsGenericQueuePrivate * priv;
+};
+
+struct _SystemCollectionsGenericQueueClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemCollectionsGenericQueueEnumerator {
+	GObject parent_instance;
+	SystemCollectionsGenericQueueEnumeratorPrivate * priv;
+};
+
+struct _SystemCollectionsGenericQueueEnumeratorClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemCollectionsGenericStack {
+	GObject parent_instance;
+	SystemCollectionsGenericStackPrivate * priv;
+};
+
+struct _SystemCollectionsGenericStackClass {
+	GObjectClass parent_class;
+};
+
+struct _SystemCollectionsGenericStackEnumerator {
+	GObject parent_instance;
+	SystemCollectionsGenericStackEnumeratorPrivate * priv;
+};
+
+struct _SystemCollectionsGenericStackEnumeratorClass {
+	GObjectClass parent_class;
+};
+
 struct _SystemCollectionsObjectModelReadOnlyCollection {
 	GObject parent_instance;
 	SystemCollectionsObjectModelReadOnlyCollectionPrivate * priv;
@@ -639,6 +640,10 @@ typedef enum  {
 	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_LENGTHNOTNEGATIVE
 } SystemArgumentOutOfRangeException;
 #define SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION system_argument_out_of_range_exception_quark ()
+typedef enum  {
+	SYSTEM_ERROR_NOELEMENTS
+} SystemError;
+#define SYSTEM_ERROR system_error_quark ()
 typedef gpointer (*SystemFunc) (gconstpointer arg, void* user_data);
 struct _SystemIDisposableIface {
 	GTypeInterface parent_iface;
@@ -716,6 +721,7 @@ GType system_collections_generic_idictionary_enumerator_get_type (void) G_GNUC_C
 gpointer system_collections_generic_idictionary_enumerator_get_Key (SystemCollectionsGenericIDictionaryEnumerator* self);
 gpointer system_collections_generic_idictionary_enumerator_get_Value (SystemCollectionsGenericIDictionaryEnumerator* self);
 SystemCollectionsGenericDictionaryEntry* system_collections_generic_idictionary_enumerator_get_Entry (SystemCollectionsGenericIDictionaryEnumerator* self);
+SystemCollectionsGenericKeyValuePair* system_collections_generic_idictionary_enumerator_get_Current (SystemCollectionsGenericIDictionaryEnumerator* self);
 GType system_collections_generic_ienumerable_get_element_type (SystemCollectionsGenericIEnumerable* self);
 SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_iterator (SystemCollectionsGenericIEnumerable* self);
 SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_GetEnumerator (SystemCollectionsGenericIEnumerable* self);
@@ -776,12 +782,6 @@ SystemCollectionsGenericComparer* system_collections_generic_comparer_Default (G
 SystemCollectionsGenericComparer* system_collections_generic_comparer_Create (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemComparison comparison, void* comparison_target);
 gint system_collections_generic_comparer_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
 SystemCollectionsGenericComparer* system_collections_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
-gpointer system_collections_generic_equality_comparer_ref (gpointer instance);
-void system_collections_generic_equality_comparer_unref (gpointer instance);
-GParamSpec* system_collections_generic_param_spec_equality_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
-void system_collections_generic_value_set_equality_comparer (GValue* value, gpointer v_object);
-void system_collections_generic_value_take_equality_comparer (GValue* value, gpointer v_object);
-gpointer system_collections_generic_value_get_equality_comparer (const GValue* value);
 GType system_collections_generic_equality_comparer_get_type (void) G_GNUC_CONST;
 SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_Default (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 gboolean system_collections_generic_equality_comparer_Equals (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y);
@@ -804,6 +804,7 @@ void system_collections_generic_abstract_dictionary_OnDeserialization (SystemCol
 gboolean system_collections_generic_abstract_dictionary_Remove (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value);
 gboolean system_collections_generic_abstract_dictionary_TryGetValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gpointer* value);
 SystemCollectionsGenericAbstractDictionary* system_collections_generic_abstract_dictionary_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func);
+SystemCollectionsGenericIEqualityComparer* system_collections_generic_abstract_dictionary_get_Comparer (SystemCollectionsGenericAbstractDictionary* self);
 gint system_collections_generic_abstract_dictionary_get_Count (SystemCollectionsGenericAbstractDictionary* self);
 gboolean system_collections_generic_abstract_dictionary_get_IsFixedSize (SystemCollectionsGenericAbstractDictionary* self);
 gboolean system_collections_generic_abstract_dictionary_get_IsReadOnly (SystemCollectionsGenericAbstractDictionary* self);
@@ -813,26 +814,10 @@ gint system_collections_generic_abstract_dictionary_get_size (SystemCollectionsG
 GObject* system_collections_generic_abstract_dictionary_get_SyncRoot (SystemCollectionsGenericAbstractDictionary* self);
 SystemCollectionsGenericICollection* system_collections_generic_abstract_dictionary_get_Values (SystemCollectionsGenericAbstractDictionary* self);
 GType system_collections_generic_dictionary_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericDictionary* system_collections_generic_dictionary_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIEqualityComparer* comparer);
-SystemCollectionsGenericDictionary* system_collections_generic_dictionary_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIEqualityComparer* comparer);
+SystemCollectionsGenericDictionary* system_collections_generic_dictionary_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIEqualityComparer* key_equal_func);
+SystemCollectionsGenericDictionary* system_collections_generic_dictionary_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIEqualityComparer* key_equal_func);
 SystemCollectionsGenericDictionary* system_collections_generic_dictionary_new_WithDictionary (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIDictionary* dictionary, SystemCollectionsGenericIEqualityComparer* comparer);
 SystemCollectionsGenericDictionary* system_collections_generic_dictionary_construct_WithDictionary (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIDictionary* dictionary, SystemCollectionsGenericIEqualityComparer* comparer);
-GType system_collections_generic_dictionary_key_collection_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericDictionaryKeyCollection* system_collections_generic_dictionary_key_collection_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-SystemCollectionsGenericDictionaryKeyCollection* system_collections_generic_dictionary_key_collection_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-gboolean system_collections_generic_dictionary_key_collection_get_IsSynchronized (SystemCollectionsGenericDictionaryKeyCollection* self);
-GObject* system_collections_generic_dictionary_key_collection_get_SyncRoot (SystemCollectionsGenericDictionaryKeyCollection* self);
-GType system_collections_generic_dictionary_key_collection_enumerator_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericDictionaryKeyCollectionEnumerator* system_collections_generic_dictionary_key_collection_enumerator_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-SystemCollectionsGenericDictionaryKeyCollectionEnumerator* system_collections_generic_dictionary_key_collection_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-void system_collections_generic_dictionary_key_collection_enumerator_Dispose (SystemCollectionsGenericDictionaryKeyCollectionEnumerator* self);
-GType system_collections_generic_dictionary_value_collection_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericDictionaryValueCollection* system_collections_generic_dictionary_value_collection_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-SystemCollectionsGenericDictionaryValueCollection* system_collections_generic_dictionary_value_collection_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-GType system_collections_generic_dictionary_value_collection_enumerator_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericDictionaryValueCollectionEnumerator* system_collections_generic_dictionary_value_collection_enumerator_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-SystemCollectionsGenericDictionaryValueCollectionEnumerator* system_collections_generic_dictionary_value_collection_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-void system_collections_generic_dictionary_value_collection_enumerator_Dispose (SystemCollectionsGenericDictionaryValueCollectionEnumerator* self);
 GType system_collections_generic_abstract_list_get_type (void) G_GNUC_CONST;
 GType system_collections_object_model_read_only_collection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_list_get_type (void) G_GNUC_CONST;
@@ -882,6 +867,36 @@ SystemCollectionsGenericList* system_collections_generic_list_new (GType t_type,
 SystemCollectionsGenericList* system_collections_generic_list_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* enumerable);
 SystemCollectionsGenericList* system_collections_generic_list_new_WithCapacity (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint defaultCapacity);
 SystemCollectionsGenericList* system_collections_generic_list_construct_WithCapacity (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint defaultCapacity);
+GType system_collections_generic_queue_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericQueue* system_collections_generic_queue_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* collection);
+SystemCollectionsGenericQueue* system_collections_generic_queue_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* collection);
+gpointer system_collections_generic_queue_get (SystemCollectionsGenericQueue* self, gint item);
+void system_collections_generic_queue_Enqueue (SystemCollectionsGenericQueue* self, gconstpointer item);
+gpointer system_collections_generic_queue_Dequeue (SystemCollectionsGenericQueue* self);
+gpointer system_collections_generic_queue_Peek (SystemCollectionsGenericQueue* self);
+gpointer* system_collections_generic_queue_ToArray (SystemCollectionsGenericQueue* self, int* result_length1);
+void system_collections_generic_queue_TrimExcess (SystemCollectionsGenericQueue* self);
+gboolean system_collections_generic_queue_get_IsSynchronized (SystemCollectionsGenericQueue* self);
+GObject* system_collections_generic_queue_get_SyncRoot (SystemCollectionsGenericQueue* self);
+GType system_collections_generic_queue_enumerator_get_type (void) G_GNUC_CONST;
+void system_collections_generic_queue_enumerator_Dispose (SystemCollectionsGenericQueueEnumerator* self);
+GType system_collections_generic_stack_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericStack* system_collections_generic_stack_new_WithCapacity (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint capacity);
+SystemCollectionsGenericStack* system_collections_generic_stack_construct_WithCapacity (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint capacity);
+SystemCollectionsGenericStack* system_collections_generic_stack_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* collection);
+SystemCollectionsGenericStack* system_collections_generic_stack_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* collection);
+gpointer system_collections_generic_stack_get (SystemCollectionsGenericStack* self, gint item);
+void system_collections_generic_stack_TrimExcess (SystemCollectionsGenericStack* self);
+gpointer system_collections_generic_stack_Peek (SystemCollectionsGenericStack* self);
+gpointer system_collections_generic_stack_Pop (SystemCollectionsGenericStack* self);
+void system_collections_generic_stack_Push (SystemCollectionsGenericStack* self, gconstpointer item);
+gpointer* system_collections_generic_stack_ToArray (SystemCollectionsGenericStack* self, int* result_length1);
+gboolean system_collections_generic_stack_get_IsSynchronized (SystemCollectionsGenericStack* self);
+GObject* system_collections_generic_stack_get_SyncRoot (SystemCollectionsGenericStack* self);
+GType system_collections_generic_stack_enumerator_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericStackEnumerator* system_collections_generic_stack_enumerator_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericStack* stack);
+SystemCollectionsGenericStackEnumerator* system_collections_generic_stack_enumerator_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericStack* stack);
+void system_collections_generic_stack_enumerator_Dispose (SystemCollectionsGenericStackEnumerator* self);
 SystemCollectionsObjectModelReadOnlyCollection* system_collections_object_model_read_only_collection_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIList* list);
 SystemCollectionsObjectModelReadOnlyCollection* system_collections_object_model_read_only_collection_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIList* list);
 gboolean system_collections_object_model_read_only_collection_Contains (SystemCollectionsObjectModelReadOnlyCollection* self, gconstpointer value);
@@ -909,6 +924,7 @@ gchar* system_nullable_ToString (SystemNullable* self);
 gboolean system_nullable_get_HasValue (SystemNullable* self);
 gconstpointer system_nullable_get_Value (SystemNullable* self);
 GQuark system_argument_out_of_range_exception_quark (void);
+GQuark system_error_quark (void);
 GType system_idisposable_get_type (void) G_GNUC_CONST;
 void system_idisposable_Dispose (SystemIDisposable* self);
 GType system_icomparable_get_type (void) G_GNUC_CONST;

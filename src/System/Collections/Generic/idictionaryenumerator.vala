@@ -46,7 +46,7 @@ namespace System.Collections.Generic {
     // is somewhat expensive).
     // 
 
-    public interface IDictionaryEnumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>
+    public interface IDictionaryEnumerator<TKey, TValue>
     {
         // Returns the key of the current element of the enumeration. The returned
         // value is undefined before the first call to GetNext and following
@@ -64,11 +64,9 @@ namespace System.Collections.Generic {
         // 
         public abstract TValue Value { owned get; }
         
-        // GetBlock will copy dictionary values into the given Array.  It will either
-        // fill up the array, or if there aren't enough elements, it will
-        // copy as much as possible into the Array.  The number of elements
-        // copied is returned.
-        // 
         public abstract DictionaryEntry<TKey, TValue> Entry { owned get; }
+        
+        public abstract KeyValuePair<TKey,TValue>? Current { owned get; }
+
     }
 }

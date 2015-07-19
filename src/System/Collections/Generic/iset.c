@@ -57,6 +57,9 @@ typedef struct _SystemCollectionsGenericISetIface SystemCollectionsGenericISetIf
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerator* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerator* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
@@ -66,6 +69,9 @@ struct _SystemCollectionsGenericIEnumeratorIface {
 
 struct _SystemCollectionsGenericIEnumerableIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerable* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerable* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerable* self);
 	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
@@ -131,7 +137,7 @@ static gboolean system_collections_generic_iset_real_Add (SystemCollectionsGener
 	result = _tmp1_;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return result;
-#line 135 "iset.c"
+#line 141 "iset.c"
 }
 
 
@@ -140,7 +146,7 @@ gboolean system_collections_generic_iset_Add (SystemCollectionsGenericISet* self
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->Add (self, value);
-#line 144 "iset.c"
+#line 150 "iset.c"
 }
 
 
@@ -149,7 +155,7 @@ void system_collections_generic_iset_ExceptWith (SystemCollectionsGenericISet* s
 	g_return_if_fail (self != NULL);
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->ExceptWith (self, other);
-#line 153 "iset.c"
+#line 159 "iset.c"
 }
 
 
@@ -158,7 +164,7 @@ void system_collections_generic_iset_IntersectWith (SystemCollectionsGenericISet
 	g_return_if_fail (self != NULL);
 #line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IntersectWith (self, other);
-#line 162 "iset.c"
+#line 168 "iset.c"
 }
 
 
@@ -167,7 +173,7 @@ gboolean system_collections_generic_iset_IsProperSupersetOf (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsProperSupersetOf (self, other);
-#line 171 "iset.c"
+#line 177 "iset.c"
 }
 
 
@@ -176,7 +182,7 @@ gboolean system_collections_generic_iset_IsProperSubsetOf (SystemCollectionsGene
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsProperSubsetOf (self, other);
-#line 180 "iset.c"
+#line 186 "iset.c"
 }
 
 
@@ -185,7 +191,7 @@ gboolean system_collections_generic_iset_IsSubsetOf (SystemCollectionsGenericISe
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsSubsetOf (self, other);
-#line 189 "iset.c"
+#line 195 "iset.c"
 }
 
 
@@ -194,7 +200,7 @@ gboolean system_collections_generic_iset_IsSupersetOf (SystemCollectionsGenericI
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->IsSupersetOf (self, other);
-#line 198 "iset.c"
+#line 204 "iset.c"
 }
 
 
@@ -203,7 +209,7 @@ gboolean system_collections_generic_iset_Overlaps (SystemCollectionsGenericISet*
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->Overlaps (self, other);
-#line 207 "iset.c"
+#line 213 "iset.c"
 }
 
 
@@ -212,7 +218,7 @@ gboolean system_collections_generic_iset_SetEquals (SystemCollectionsGenericISet
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->SetEquals (self, other);
-#line 216 "iset.c"
+#line 222 "iset.c"
 }
 
 
@@ -221,7 +227,7 @@ void system_collections_generic_iset_SymmetricExceptWith (SystemCollectionsGener
 	g_return_if_fail (self != NULL);
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->SymmetricExceptWith (self, other);
-#line 225 "iset.c"
+#line 231 "iset.c"
 }
 
 
@@ -230,7 +236,7 @@ void system_collections_generic_iset_UnionWith (SystemCollectionsGenericISet* se
 	g_return_if_fail (self != NULL);
 #line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ISET_GET_INTERFACE (self)->UnionWith (self, other);
-#line 234 "iset.c"
+#line 240 "iset.c"
 }
 
 
@@ -243,7 +249,7 @@ static void system_collections_generic_iset_base_init (SystemCollectionsGenericI
 		initialized = TRUE;
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/iset.vala"
 		iface->Add = system_collections_generic_iset_real_Add;
-#line 247 "iset.c"
+#line 253 "iset.c"
 	}
 }
 

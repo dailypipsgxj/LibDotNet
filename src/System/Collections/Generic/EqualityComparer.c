@@ -13,7 +13,6 @@
 #include <glib-object.h>
 #include <stdlib.h>
 #include <string.h>
-#include <gobject/gvaluecollector.h>
 
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER (system_collections_generic_iequality_comparer_get_type ())
@@ -44,27 +43,24 @@ typedef struct _SystemCollectionsGenericEqualityComparerPrivate SystemCollection
 
 typedef struct _SystemCollectionsGenericStringEqualityComparer SystemCollectionsGenericStringEqualityComparer;
 typedef struct _SystemCollectionsGenericStringEqualityComparerClass SystemCollectionsGenericStringEqualityComparerClass;
-#define _system_collections_generic_equality_comparer_unref0(var) ((var == NULL) ? NULL : (var = (system_collections_generic_equality_comparer_unref (var), NULL)))
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_EQUALITY_COMPARER (system_collections_generic_int_equality_comparer_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_INT_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_EQUALITY_COMPARER, SystemCollectionsGenericIntEqualityComparer))
-#define SYSTEM_COLLECTIONS_GENERIC_INT_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_EQUALITY_COMPARER, SystemCollectionsGenericIntEqualityComparerClass))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_EQUALITY_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_EQUALITY_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_INT_EQUALITY_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_EQUALITY_COMPARER, SystemCollectionsGenericIntEqualityComparerClass))
+#define SYSTEM_TYPE_ICOMPARABLE (system_icomparable_get_type ())
+#define SYSTEM_ICOMPARABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_ICOMPARABLE, SystemIComparable))
+#define SYSTEM_IS_ICOMPARABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_ICOMPARABLE))
+#define SYSTEM_ICOMPARABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_TYPE_ICOMPARABLE, SystemIComparableIface))
 
-typedef struct _SystemCollectionsGenericIntEqualityComparer SystemCollectionsGenericIntEqualityComparer;
-typedef struct _SystemCollectionsGenericIntEqualityComparerClass SystemCollectionsGenericIntEqualityComparerClass;
+typedef struct _SystemIComparable SystemIComparable;
+typedef struct _SystemIComparableIface SystemIComparableIface;
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_EQUALITY_COMPARER (system_collections_generic_int64_equality_comparer_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_INT64_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_EQUALITY_COMPARER, SystemCollectionsGenericInt64EqualityComparer))
-#define SYSTEM_COLLECTIONS_GENERIC_INT64_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_EQUALITY_COMPARER, SystemCollectionsGenericInt64EqualityComparerClass))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT64_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_EQUALITY_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT64_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_EQUALITY_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_INT64_EQUALITY_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_EQUALITY_COMPARER, SystemCollectionsGenericInt64EqualityComparerClass))
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_EQUALITY_COMPARER (system_collections_generic_generic_equality_comparer_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_GENERIC_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_EQUALITY_COMPARER, SystemCollectionsGenericGenericEqualityComparer))
+#define SYSTEM_COLLECTIONS_GENERIC_GENERIC_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_EQUALITY_COMPARER, SystemCollectionsGenericGenericEqualityComparerClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_GENERIC_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_EQUALITY_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_GENERIC_EQUALITY_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_EQUALITY_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_GENERIC_EQUALITY_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_EQUALITY_COMPARER, SystemCollectionsGenericGenericEqualityComparerClass))
 
-typedef struct _SystemCollectionsGenericInt64EqualityComparer SystemCollectionsGenericInt64EqualityComparer;
-typedef struct _SystemCollectionsGenericInt64EqualityComparerClass SystemCollectionsGenericInt64EqualityComparerClass;
+typedef struct _SystemCollectionsGenericGenericEqualityComparer SystemCollectionsGenericGenericEqualityComparer;
+typedef struct _SystemCollectionsGenericGenericEqualityComparerClass SystemCollectionsGenericGenericEqualityComparerClass;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_EQUALITY_COMPARER (system_collections_generic_object_equality_comparer_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_OBJECT_EQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_EQUALITY_COMPARER, SystemCollectionsGenericObjectEqualityComparer))
@@ -75,12 +71,12 @@ typedef struct _SystemCollectionsGenericInt64EqualityComparerClass SystemCollect
 
 typedef struct _SystemCollectionsGenericObjectEqualityComparer SystemCollectionsGenericObjectEqualityComparer;
 typedef struct _SystemCollectionsGenericObjectEqualityComparerClass SystemCollectionsGenericObjectEqualityComparerClass;
-typedef struct _SystemCollectionsGenericParamSpecEqualityComparer SystemCollectionsGenericParamSpecEqualityComparer;
 typedef struct _SystemCollectionsGenericStringEqualityComparerPrivate SystemCollectionsGenericStringEqualityComparerPrivate;
+typedef struct _SystemCollectionsGenericGenericEqualityComparerPrivate SystemCollectionsGenericGenericEqualityComparerPrivate;
 typedef struct _SystemCollectionsGenericObjectEqualityComparerPrivate SystemCollectionsGenericObjectEqualityComparerPrivate;
-typedef struct _SystemCollectionsGenericIntEqualityComparerPrivate SystemCollectionsGenericIntEqualityComparerPrivate;
-typedef struct _SystemCollectionsGenericInt64EqualityComparerPrivate SystemCollectionsGenericInt64EqualityComparerPrivate;
 
+typedef guint (*SystemCollectionsGenericHashDataFunc) (gconstpointer v, void* user_data);
+typedef gboolean (*SystemCollectionsGenericEqualDataFunc) (gconstpointer a, gconstpointer b, void* user_data);
 struct _SystemCollectionsGenericIEqualityComparerIface {
 	GTypeInterface parent_iface;
 	gboolean (*Equals) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y);
@@ -88,18 +84,14 @@ struct _SystemCollectionsGenericIEqualityComparerIface {
 };
 
 struct _SystemCollectionsGenericEqualityComparer {
-	GTypeInstance parent_instance;
-	volatile int ref_count;
+	GObject parent_instance;
 	SystemCollectionsGenericEqualityComparerPrivate * priv;
 };
 
 struct _SystemCollectionsGenericEqualityComparerClass {
-	GTypeClass parent_class;
-	void (*finalize) (SystemCollectionsGenericEqualityComparer *self);
+	GObjectClass parent_class;
 	gboolean (*Equals) (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y);
 	guint (*GetHashCode) (SystemCollectionsGenericEqualityComparer* self, gconstpointer obj);
-	gint (*IndexOf) (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
-	gint (*LastIndexOf) (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
 };
 
 struct _SystemCollectionsGenericEqualityComparerPrivate {
@@ -108,8 +100,9 @@ struct _SystemCollectionsGenericEqualityComparerPrivate {
 	GDestroyNotify t_destroy_func;
 };
 
-struct _SystemCollectionsGenericParamSpecEqualityComparer {
-	GParamSpec parent_instance;
+struct _SystemIComparableIface {
+	GTypeInterface parent_iface;
+	gint (*CompareTo) (SystemIComparable* self, gconstpointer other);
 };
 
 struct _SystemCollectionsGenericStringEqualityComparer {
@@ -118,6 +111,15 @@ struct _SystemCollectionsGenericStringEqualityComparer {
 };
 
 struct _SystemCollectionsGenericStringEqualityComparerClass {
+	SystemCollectionsGenericEqualityComparerClass parent_class;
+};
+
+struct _SystemCollectionsGenericGenericEqualityComparer {
+	SystemCollectionsGenericEqualityComparer parent_instance;
+	SystemCollectionsGenericGenericEqualityComparerPrivate * priv;
+};
+
+struct _SystemCollectionsGenericGenericEqualityComparerClass {
 	SystemCollectionsGenericEqualityComparerClass parent_class;
 };
 
@@ -130,56 +132,32 @@ struct _SystemCollectionsGenericObjectEqualityComparerClass {
 	SystemCollectionsGenericEqualityComparerClass parent_class;
 };
 
-struct _SystemCollectionsGenericIntEqualityComparer {
-	SystemCollectionsGenericEqualityComparer parent_instance;
-	SystemCollectionsGenericIntEqualityComparerPrivate * priv;
-};
-
-struct _SystemCollectionsGenericIntEqualityComparerClass {
-	SystemCollectionsGenericEqualityComparerClass parent_class;
-};
-
-struct _SystemCollectionsGenericInt64EqualityComparer {
-	SystemCollectionsGenericEqualityComparer parent_instance;
-	SystemCollectionsGenericInt64EqualityComparerPrivate * priv;
-};
-
-struct _SystemCollectionsGenericInt64EqualityComparerClass {
-	SystemCollectionsGenericEqualityComparerClass parent_class;
-};
-
 
 static gpointer system_collections_generic_equality_comparer_parent_class = NULL;
 static SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_defaultComparer;
 static SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_defaultComparer = NULL;
 static SystemCollectionsGenericIEqualityComparerIface* system_collections_generic_equality_comparer_system_collections_generic_iequality_comparer_parent_iface = NULL;
 static gpointer system_collections_generic_string_equality_comparer_parent_class = NULL;
+static gpointer system_collections_generic_generic_equality_comparer_parent_class = NULL;
 static gpointer system_collections_generic_object_equality_comparer_parent_class = NULL;
-static gpointer system_collections_generic_int_equality_comparer_parent_class = NULL;
-static gpointer system_collections_generic_int64_equality_comparer_parent_class = NULL;
 
 GType system_collections_generic_iequality_comparer_get_type (void) G_GNUC_CONST;
-gpointer system_collections_generic_equality_comparer_ref (gpointer instance);
-void system_collections_generic_equality_comparer_unref (gpointer instance);
-GParamSpec* system_collections_generic_param_spec_equality_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
-void system_collections_generic_value_set_equality_comparer (GValue* value, gpointer v_object);
-void system_collections_generic_value_take_equality_comparer (GValue* value, gpointer v_object);
-gpointer system_collections_generic_value_get_equality_comparer (const GValue* value);
 GType system_collections_generic_equality_comparer_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_DESTROY_FUNC
 };
 SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_Default (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 SystemCollectionsGenericStringEqualityComparer* system_collections_generic_string_equality_comparer_new (void);
 SystemCollectionsGenericStringEqualityComparer* system_collections_generic_string_equality_comparer_construct (GType object_type);
 GType system_collections_generic_string_equality_comparer_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericIntEqualityComparer* system_collections_generic_int_equality_comparer_new (void);
-SystemCollectionsGenericIntEqualityComparer* system_collections_generic_int_equality_comparer_construct (GType object_type);
-GType system_collections_generic_int_equality_comparer_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericInt64EqualityComparer* system_collections_generic_int64_equality_comparer_new (void);
-SystemCollectionsGenericInt64EqualityComparer* system_collections_generic_int64_equality_comparer_construct (GType object_type);
-GType system_collections_generic_int64_equality_comparer_get_type (void) G_GNUC_CONST;
+GType system_icomparable_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericGenericEqualityComparer* system_collections_generic_generic_equality_comparer_new (void);
+SystemCollectionsGenericGenericEqualityComparer* system_collections_generic_generic_equality_comparer_construct (GType object_type);
+GType system_collections_generic_generic_equality_comparer_get_type (void) G_GNUC_CONST;
 SystemCollectionsGenericObjectEqualityComparer* system_collections_generic_object_equality_comparer_new (void);
 SystemCollectionsGenericObjectEqualityComparer* system_collections_generic_object_equality_comparer_construct (GType object_type);
 GType system_collections_generic_object_equality_comparer_get_type (void) G_GNUC_CONST;
@@ -187,185 +165,82 @@ gboolean system_collections_generic_equality_comparer_Equals (SystemCollectionsG
 static gboolean system_collections_generic_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y);
 guint system_collections_generic_equality_comparer_GetHashCode (SystemCollectionsGenericEqualityComparer* self, gconstpointer obj);
 static guint system_collections_generic_equality_comparer_real_GetHashCode (SystemCollectionsGenericEqualityComparer* self, gconstpointer obj);
-gint system_collections_generic_equality_comparer_IndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
-static gint system_collections_generic_equality_comparer_real_IndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
-gint system_collections_generic_equality_comparer_LastIndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
-static gint system_collections_generic_equality_comparer_real_LastIndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count);
 SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
-static void system_collections_generic_equality_comparer_finalize (SystemCollectionsGenericEqualityComparer* obj);
+static void system_collections_generic_equality_comparer_finalize (GObject* obj);
+static void _vala_system_collections_generic_equality_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_equality_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 enum  {
 	SYSTEM_COLLECTIONS_GENERIC_STRING_EQUALITY_COMPARER_DUMMY_PROPERTY
 };
 static gboolean system_collections_generic_string_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, const gchar* x, const gchar* y);
+static guint system_collections_generic_string_equality_comparer_real_GetHashCode (SystemCollectionsGenericEqualityComparer* base, const gchar* a);
+enum  {
+	SYSTEM_COLLECTIONS_GENERIC_GENERIC_EQUALITY_COMPARER_DUMMY_PROPERTY
+};
+static gboolean system_collections_generic_generic_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, SystemIComparable* x, SystemIComparable* y);
 enum  {
 	SYSTEM_COLLECTIONS_GENERIC_OBJECT_EQUALITY_COMPARER_DUMMY_PROPERTY
 };
 static gboolean system_collections_generic_object_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, GObject* x, GObject* y);
-enum  {
-	SYSTEM_COLLECTIONS_GENERIC_INT_EQUALITY_COMPARER_DUMMY_PROPERTY
-};
-static gboolean system_collections_generic_int_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, gint x, gint y);
-enum  {
-	SYSTEM_COLLECTIONS_GENERIC_INT64_EQUALITY_COMPARER_DUMMY_PROPERTY
-};
-static gboolean system_collections_generic_int64_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, gint64 x, gint64 y);
-
-
-static gpointer _system_collections_generic_equality_comparer_ref0 (gpointer self) {
-#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return self ? system_collections_generic_equality_comparer_ref (self) : NULL;
-#line 218 "EqualityComparer.c"
-}
 
 
 SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_Default (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
 	SystemCollectionsGenericEqualityComparer* result = NULL;
-	SystemCollectionsGenericEqualityComparer* comparer = NULL;
-	SystemCollectionsGenericEqualityComparer* _tmp0_ = NULL;
-	SystemCollectionsGenericEqualityComparer* _tmp1_ = NULL;
-	SystemCollectionsGenericEqualityComparer* _tmp2_ = NULL;
-#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp0_ = system_collections_generic_equality_comparer_defaultComparer;
-#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp1_ = _system_collections_generic_equality_comparer_ref0 (_tmp0_);
-#line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	comparer = _tmp1_;
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp2_ = comparer;
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (_tmp2_ == NULL) {
-#line 238 "EqualityComparer.c"
-		GType comparer_type = 0UL;
-		GType _tmp3_ = 0UL;
-		const gchar* _tmp4_ = NULL;
-		const gchar* _tmp5_ = NULL;
-		GQuark _tmp7_ = 0U;
 #line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		static GQuark _tmp6_label0 = 0;
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		static GQuark _tmp6_label1 = 0;
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		static GQuark _tmp6_label2 = 0;
-#line 250 "EqualityComparer.c"
-		SystemCollectionsGenericEqualityComparer* _tmp12_ = NULL;
-		SystemCollectionsGenericEqualityComparer* _tmp13_ = NULL;
-#line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		comparer_type = t_type;
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp3_ = comparer_type;
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp4_ = g_type_name (_tmp3_);
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp5_ = _tmp4_;
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp7_ = (NULL == _tmp5_) ? 0 : g_quark_from_string (_tmp5_);
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		if (_tmp7_ == ((0 != _tmp6_label0) ? _tmp6_label0 : (_tmp6_label0 = g_quark_from_static_string ("gchararray")))) {
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			switch (0) {
-#line 267 "EqualityComparer.c"
-				default:
-				{
-					SystemCollectionsGenericStringEqualityComparer* _tmp8_ = NULL;
+	if (t_type == G_TYPE_STRING) {
+#line 192 "EqualityComparer.c"
+		SystemCollectionsGenericStringEqualityComparer* _tmp0_ = NULL;
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		_tmp0_ = system_collections_generic_string_equality_comparer_new ();
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		result = (SystemCollectionsGenericEqualityComparer*) _tmp0_;
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		return result;
+#line 200 "EqualityComparer.c"
+	} else {
+		gboolean _tmp1_ = FALSE;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_tmp8_ = system_collections_generic_string_equality_comparer_new ();
+		_tmp1_ = g_type_is_a (t_type, SYSTEM_TYPE_ICOMPARABLE);
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_system_collections_generic_equality_comparer_unref0 (comparer);
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					comparer = (SystemCollectionsGenericEqualityComparer*) _tmp8_;
+		if (_tmp1_) {
+#line 207 "EqualityComparer.c"
+			SystemCollectionsGenericGenericEqualityComparer* _tmp2_ = NULL;
 #line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					break;
-#line 279 "EqualityComparer.c"
-				}
-			}
-		} else if (_tmp7_ == ((0 != _tmp6_label1) ? _tmp6_label1 : (_tmp6_label1 = g_quark_from_static_string ("gint")))) {
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			switch (0) {
-#line 285 "EqualityComparer.c"
-				default:
-				{
-					SystemCollectionsGenericIntEqualityComparer* _tmp9_ = NULL;
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_tmp9_ = system_collections_generic_int_equality_comparer_new ();
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_system_collections_generic_equality_comparer_unref0 (comparer);
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					comparer = (SystemCollectionsGenericEqualityComparer*) _tmp9_;
-#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					break;
-#line 297 "EqualityComparer.c"
-				}
-			}
-		} else if (_tmp7_ == ((0 != _tmp6_label2) ? _tmp6_label2 : (_tmp6_label2 = g_quark_from_static_string ("glong")))) {
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			switch (0) {
-#line 303 "EqualityComparer.c"
-				default:
-				{
-					SystemCollectionsGenericInt64EqualityComparer* _tmp10_ = NULL;
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_tmp10_ = system_collections_generic_int64_equality_comparer_new ();
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_system_collections_generic_equality_comparer_unref0 (comparer);
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					comparer = (SystemCollectionsGenericEqualityComparer*) _tmp10_;
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					break;
-#line 315 "EqualityComparer.c"
-				}
-			}
+			_tmp2_ = system_collections_generic_generic_equality_comparer_new ();
+#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			result = (SystemCollectionsGenericEqualityComparer*) _tmp2_;
+#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			return result;
+#line 215 "EqualityComparer.c"
 		} else {
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			switch (0) {
-#line 321 "EqualityComparer.c"
-				default:
-				{
-					SystemCollectionsGenericObjectEqualityComparer* _tmp11_ = NULL;
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_tmp11_ = system_collections_generic_object_equality_comparer_new ();
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_system_collections_generic_equality_comparer_unref0 (comparer);
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					comparer = (SystemCollectionsGenericEqualityComparer*) _tmp11_;
-#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					break;
-#line 333 "EqualityComparer.c"
-				}
-			}
+			SystemCollectionsGenericObjectEqualityComparer* _tmp3_ = NULL;
+#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp3_ = system_collections_generic_object_equality_comparer_new ();
+#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			result = (SystemCollectionsGenericEqualityComparer*) _tmp3_;
+#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			return result;
+#line 224 "EqualityComparer.c"
 		}
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp12_ = comparer;
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp13_ = _system_collections_generic_equality_comparer_ref0 (_tmp12_);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_system_collections_generic_equality_comparer_unref0 (system_collections_generic_equality_comparer_defaultComparer);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		system_collections_generic_equality_comparer_defaultComparer = _tmp13_;
-#line 345 "EqualityComparer.c"
 	}
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	result = comparer;
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return result;
-#line 351 "EqualityComparer.c"
 }
 
 
 static gboolean system_collections_generic_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y) {
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_equality_comparer_Equals'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return FALSE;
-#line 360 "EqualityComparer.c"
+#line 235 "EqualityComparer.c"
 }
 
 
 gboolean system_collections_generic_equality_comparer_Equals (SystemCollectionsGenericEqualityComparer* self, gconstpointer x, gconstpointer y) {
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_CLASS (self)->Equals (self, x, y);
-#line 369 "EqualityComparer.c"
+#line 244 "EqualityComparer.c"
 }
 
 
@@ -375,487 +250,115 @@ static guint system_collections_generic_equality_comparer_real_GetHashCode (Syst
 	GHashFunc _tmp1_ = NULL;
 	gconstpointer _tmp2_ = NULL;
 	guint _tmp3_ = 0U;
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp0_ = obj;
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	if (_tmp0_ == NULL) {
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 		result = (guint) 0;
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 		return result;
-#line 387 "EqualityComparer.c"
+#line 262 "EqualityComparer.c"
 	}
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp1_ = g_direct_hash;
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp2_ = obj;
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp3_ = _tmp1_ (_tmp2_);
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	result = _tmp3_;
-#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return result;
-#line 399 "EqualityComparer.c"
+#line 274 "EqualityComparer.c"
 }
 
 
 guint system_collections_generic_equality_comparer_GetHashCode (SystemCollectionsGenericEqualityComparer* self, gconstpointer obj) {
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_return_val_if_fail (self != NULL, 0U);
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_CLASS (self)->GetHashCode (self, obj);
-#line 408 "EqualityComparer.c"
-}
-
-
-static gint system_collections_generic_equality_comparer_real_IndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count) {
-	gint result = 0;
-	gint endIndex = 0;
-	gint _tmp0_ = 0;
-	gint _tmp1_ = 0;
-#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp0_ = startIndex;
-#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp1_ = count;
-#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	endIndex = _tmp0_ + _tmp1_;
-#line 423 "EqualityComparer.c"
-	{
-		gint i = 0;
-		gint _tmp2_ = 0;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp2_ = startIndex;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		i = _tmp2_;
-#line 431 "EqualityComparer.c"
-		{
-			gboolean _tmp3_ = FALSE;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			_tmp3_ = TRUE;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			while (TRUE) {
-#line 438 "EqualityComparer.c"
-				gint _tmp5_ = 0;
-				gint _tmp6_ = 0;
-				gpointer* _tmp7_ = NULL;
-				gint _tmp7__length1 = 0;
-				gint _tmp8_ = 0;
-				gconstpointer _tmp9_ = NULL;
-				gconstpointer _tmp10_ = NULL;
-				gboolean _tmp11_ = FALSE;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				if (!_tmp3_) {
-#line 449 "EqualityComparer.c"
-					gint _tmp4_ = 0;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_tmp4_ = i;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					i = _tmp4_ + 1;
-#line 455 "EqualityComparer.c"
-				}
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp3_ = FALSE;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp5_ = i;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp6_ = endIndex;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				if (!(_tmp5_ < _tmp6_)) {
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					break;
-#line 467 "EqualityComparer.c"
-				}
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp7_ = array;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp7__length1 = array_length1;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp8_ = i;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp9_ = _tmp7_[_tmp8_];
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp10_ = value;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp11_ = system_collections_generic_equality_comparer_Equals (self, _tmp9_, _tmp10_);
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				if (_tmp11_) {
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					result = i;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					return result;
-#line 487 "EqualityComparer.c"
-				}
-			}
-		}
-	}
-#line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	result = -1;
-#line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return result;
-#line 496 "EqualityComparer.c"
-}
-
-
-gint system_collections_generic_equality_comparer_IndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count) {
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_return_val_if_fail (self != NULL, 0);
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_CLASS (self)->IndexOf (self, array, array_length1, value, startIndex, count);
-#line 505 "EqualityComparer.c"
-}
-
-
-static gint system_collections_generic_equality_comparer_real_LastIndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count) {
-	gint result = 0;
-	gint endIndex = 0;
-	gint _tmp0_ = 0;
-	gint _tmp1_ = 0;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp0_ = startIndex;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp1_ = count;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	endIndex = (_tmp0_ - _tmp1_) + 1;
-#line 520 "EqualityComparer.c"
-	{
-		gint i = 0;
-		gint _tmp2_ = 0;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		_tmp2_ = startIndex;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		i = _tmp2_;
-#line 528 "EqualityComparer.c"
-		{
-			gboolean _tmp3_ = FALSE;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			_tmp3_ = TRUE;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			while (TRUE) {
-#line 535 "EqualityComparer.c"
-				gint _tmp5_ = 0;
-				gint _tmp6_ = 0;
-				gpointer* _tmp7_ = NULL;
-				gint _tmp7__length1 = 0;
-				gint _tmp8_ = 0;
-				gconstpointer _tmp9_ = NULL;
-				gconstpointer _tmp10_ = NULL;
-				gboolean _tmp11_ = FALSE;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				if (!_tmp3_) {
-#line 546 "EqualityComparer.c"
-					gint _tmp4_ = 0;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					_tmp4_ = i;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					i = _tmp4_ - 1;
-#line 552 "EqualityComparer.c"
-				}
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp3_ = FALSE;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp5_ = i;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp6_ = endIndex;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				if (!(_tmp5_ >= _tmp6_)) {
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					break;
-#line 564 "EqualityComparer.c"
-				}
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp7_ = array;
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp7__length1 = array_length1;
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp8_ = i;
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp9_ = _tmp7_[_tmp8_];
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp10_ = value;
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				_tmp11_ = system_collections_generic_equality_comparer_Equals (self, _tmp9_, _tmp10_);
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-				if (_tmp11_) {
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					result = i;
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-					return result;
-#line 584 "EqualityComparer.c"
-				}
-			}
-		}
-	}
-#line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	result = -1;
-#line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return result;
-#line 593 "EqualityComparer.c"
-}
-
-
-gint system_collections_generic_equality_comparer_LastIndexOf (SystemCollectionsGenericEqualityComparer* self, gpointer* array, int array_length1, gconstpointer value, gint startIndex, gint count) {
-#line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_return_val_if_fail (self != NULL, 0);
-#line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_CLASS (self)->LastIndexOf (self, array, array_length1, value, startIndex, count);
-#line 602 "EqualityComparer.c"
+#line 283 "EqualityComparer.c"
 }
 
 
 SystemCollectionsGenericEqualityComparer* system_collections_generic_equality_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
-	SystemCollectionsGenericEqualityComparer* self = NULL;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	self = (SystemCollectionsGenericEqualityComparer*) g_type_create_instance (object_type);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	SystemCollectionsGenericEqualityComparer * self = NULL;
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	self = (SystemCollectionsGenericEqualityComparer*) g_object_new (object_type, NULL);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self->priv->t_type = t_type;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self->priv->t_dup_func = t_dup_func;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self->priv->t_destroy_func = t_destroy_func;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return self;
-#line 618 "EqualityComparer.c"
-}
-
-
-static void system_collections_generic_value_equality_comparer_init (GValue* value) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	value->data[0].v_pointer = NULL;
-#line 625 "EqualityComparer.c"
-}
-
-
-static void system_collections_generic_value_equality_comparer_free_value (GValue* value) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (value->data[0].v_pointer) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		system_collections_generic_equality_comparer_unref (value->data[0].v_pointer);
-#line 634 "EqualityComparer.c"
-	}
-}
-
-
-static void system_collections_generic_value_equality_comparer_copy_value (const GValue* src_value, GValue* dest_value) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (src_value->data[0].v_pointer) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		dest_value->data[0].v_pointer = system_collections_generic_equality_comparer_ref (src_value->data[0].v_pointer);
-#line 644 "EqualityComparer.c"
-	} else {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		dest_value->data[0].v_pointer = NULL;
-#line 648 "EqualityComparer.c"
-	}
-}
-
-
-static gpointer system_collections_generic_value_equality_comparer_peek_pointer (const GValue* value) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return value->data[0].v_pointer;
-#line 656 "EqualityComparer.c"
-}
-
-
-static gchar* system_collections_generic_value_equality_comparer_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (collect_values[0].v_pointer) {
-#line 663 "EqualityComparer.c"
-		SystemCollectionsGenericEqualityComparer* object;
-		object = collect_values[0].v_pointer;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		if (object->parent_instance.g_class == NULL) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 670 "EqualityComparer.c"
-		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 674 "EqualityComparer.c"
-		}
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		value->data[0].v_pointer = system_collections_generic_equality_comparer_ref (object);
-#line 678 "EqualityComparer.c"
-	} else {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		value->data[0].v_pointer = NULL;
-#line 682 "EqualityComparer.c"
-	}
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return NULL;
-#line 686 "EqualityComparer.c"
-}
-
-
-static gchar* system_collections_generic_value_equality_comparer_lcopy_value (const GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-	SystemCollectionsGenericEqualityComparer** object_p;
-	object_p = collect_values[0].v_pointer;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (!object_p) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 697 "EqualityComparer.c"
-	}
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (!value->data[0].v_pointer) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		*object_p = NULL;
-#line 703 "EqualityComparer.c"
-	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		*object_p = value->data[0].v_pointer;
-#line 707 "EqualityComparer.c"
-	} else {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		*object_p = system_collections_generic_equality_comparer_ref (value->data[0].v_pointer);
-#line 711 "EqualityComparer.c"
-	}
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return NULL;
-#line 715 "EqualityComparer.c"
-}
-
-
-GParamSpec* system_collections_generic_param_spec_equality_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags) {
-	SystemCollectionsGenericParamSpecEqualityComparer* spec;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_return_val_if_fail (g_type_is_a (object_type, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER), NULL);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	spec = g_param_spec_internal (G_TYPE_PARAM_OBJECT, name, nick, blurb, flags);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	G_PARAM_SPEC (spec)->value_type = object_type;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return G_PARAM_SPEC (spec);
-#line 729 "EqualityComparer.c"
-}
-
-
-gpointer system_collections_generic_value_get_equality_comparer (const GValue* value) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER), NULL);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return value->data[0].v_pointer;
-#line 738 "EqualityComparer.c"
-}
-
-
-void system_collections_generic_value_set_equality_comparer (GValue* value, gpointer v_object) {
-	SystemCollectionsGenericEqualityComparer* old;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER));
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	old = value->data[0].v_pointer;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (v_object) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER));
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		value->data[0].v_pointer = v_object;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		system_collections_generic_equality_comparer_ref (value->data[0].v_pointer);
-#line 758 "EqualityComparer.c"
-	} else {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		value->data[0].v_pointer = NULL;
-#line 762 "EqualityComparer.c"
-	}
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (old) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		system_collections_generic_equality_comparer_unref (old);
-#line 768 "EqualityComparer.c"
-	}
-}
-
-
-void system_collections_generic_value_take_equality_comparer (GValue* value, gpointer v_object) {
-	SystemCollectionsGenericEqualityComparer* old;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER));
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	old = value->data[0].v_pointer;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (v_object) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER));
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		value->data[0].v_pointer = v_object;
-#line 787 "EqualityComparer.c"
-	} else {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		value->data[0].v_pointer = NULL;
-#line 791 "EqualityComparer.c"
-	}
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (old) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		system_collections_generic_equality_comparer_unref (old);
-#line 797 "EqualityComparer.c"
-	}
+#line 299 "EqualityComparer.c"
 }
 
 
 static void system_collections_generic_equality_comparer_class_init (SystemCollectionsGenericEqualityComparerClass * klass) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	system_collections_generic_equality_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	((SystemCollectionsGenericEqualityComparerClass *) klass)->finalize = system_collections_generic_equality_comparer_finalize;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericEqualityComparerPrivate));
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	((SystemCollectionsGenericEqualityComparerClass *) klass)->Equals = system_collections_generic_equality_comparer_real_Equals;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	((SystemCollectionsGenericEqualityComparerClass *) klass)->GetHashCode = system_collections_generic_equality_comparer_real_GetHashCode;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	((SystemCollectionsGenericEqualityComparerClass *) klass)->IndexOf = system_collections_generic_equality_comparer_real_IndexOf;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	((SystemCollectionsGenericEqualityComparerClass *) klass)->LastIndexOf = system_collections_generic_equality_comparer_real_LastIndexOf;
-#line 817 "EqualityComparer.c"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_equality_comparer_get_property;
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_equality_comparer_set_property;
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_equality_comparer_finalize;
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 324 "EqualityComparer.c"
 }
 
 
 static void system_collections_generic_equality_comparer_system_collections_generic_iequality_comparer_interface_init (SystemCollectionsGenericIEqualityComparerIface * iface) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	system_collections_generic_equality_comparer_system_collections_generic_iequality_comparer_parent_iface = g_type_interface_peek_parent (iface);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	iface->Equals = (gboolean (*)(SystemCollectionsGenericIEqualityComparer*, gconstpointer, gconstpointer)) system_collections_generic_equality_comparer_Equals;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	iface->GetHashCode = (guint (*)(SystemCollectionsGenericIEqualityComparer*, gconstpointer)) system_collections_generic_equality_comparer_GetHashCode;
-#line 828 "EqualityComparer.c"
+#line 335 "EqualityComparer.c"
 }
 
 
 static void system_collections_generic_equality_comparer_instance_init (SystemCollectionsGenericEqualityComparer * self) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_PRIVATE (self);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	self->ref_count = 1;
-#line 837 "EqualityComparer.c"
+#line 342 "EqualityComparer.c"
 }
 
 
-static void system_collections_generic_equality_comparer_finalize (SystemCollectionsGenericEqualityComparer* obj) {
+static void system_collections_generic_equality_comparer_finalize (GObject* obj) {
 	SystemCollectionsGenericEqualityComparer * self;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparer);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_signal_handlers_destroy (self);
-#line 847 "EqualityComparer.c"
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	G_OBJECT_CLASS (system_collections_generic_equality_comparer_parent_class)->finalize (obj);
+#line 352 "EqualityComparer.c"
 }
 
 
 GType system_collections_generic_equality_comparer_get_type (void) {
 	static volatile gsize system_collections_generic_equality_comparer_type_id__volatile = 0;
 	if (g_once_init_enter (&system_collections_generic_equality_comparer_type_id__volatile)) {
-		static const GTypeValueTable g_define_type_value_table = { system_collections_generic_value_equality_comparer_init, system_collections_generic_value_equality_comparer_free_value, system_collections_generic_value_equality_comparer_copy_value, system_collections_generic_value_equality_comparer_peek_pointer, "p", system_collections_generic_value_equality_comparer_collect_value, "p", system_collections_generic_value_equality_comparer_lcopy_value };
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericEqualityComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_equality_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericEqualityComparer), 0, (GInstanceInitFunc) system_collections_generic_equality_comparer_instance_init, &g_define_type_value_table };
-		static const GTypeFundamentalInfo g_define_type_fundamental_info = { (G_TYPE_FLAG_CLASSED | G_TYPE_FLAG_INSTANTIATABLE | G_TYPE_FLAG_DERIVABLE | G_TYPE_FLAG_DEEP_DERIVABLE) };
+		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericEqualityComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_equality_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericEqualityComparer), 0, (GInstanceInitFunc) system_collections_generic_equality_comparer_instance_init, NULL };
 		static const GInterfaceInfo system_collections_generic_iequality_comparer_info = { (GInterfaceInitFunc) system_collections_generic_equality_comparer_system_collections_generic_iequality_comparer_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_equality_comparer_type_id;
-		system_collections_generic_equality_comparer_type_id = g_type_register_fundamental (g_type_fundamental_next (), "SystemCollectionsGenericEqualityComparer", &g_define_type_info, &g_define_type_fundamental_info, G_TYPE_FLAG_ABSTRACT);
+		system_collections_generic_equality_comparer_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericEqualityComparer", &g_define_type_info, G_TYPE_FLAG_ABSTRACT);
 		g_type_add_interface_static (system_collections_generic_equality_comparer_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER, &system_collections_generic_iequality_comparer_info);
 		g_once_init_leave (&system_collections_generic_equality_comparer_type_id__volatile, system_collections_generic_equality_comparer_type_id);
 	}
@@ -863,27 +366,52 @@ GType system_collections_generic_equality_comparer_get_type (void) {
 }
 
 
-gpointer system_collections_generic_equality_comparer_ref (gpointer instance) {
-	SystemCollectionsGenericEqualityComparer* self;
-	self = instance;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	g_atomic_int_inc (&self->ref_count);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return instance;
-#line 874 "EqualityComparer.c"
+static void _vala_system_collections_generic_equality_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericEqualityComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparer);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	switch (property_id) {
+#line 375 "EqualityComparer.c"
+		default:
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		break;
+#line 381 "EqualityComparer.c"
+	}
 }
 
 
-void system_collections_generic_equality_comparer_unref (gpointer instance) {
-	SystemCollectionsGenericEqualityComparer* self;
-	self = instance;
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	if (g_atomic_int_dec_and_test (&self->ref_count)) {
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_GET_CLASS (self)->finalize (self);
-#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-		g_type_free_instance ((GTypeInstance *) self);
-#line 887 "EqualityComparer.c"
+static void _vala_system_collections_generic_equality_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericEqualityComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparer);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	switch (property_id) {
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_TYPE:
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		self->priv->t_type = g_value_get_gtype (value);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		break;
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_DUP_FUNC:
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		self->priv->t_dup_func = g_value_get_pointer (value);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		break;
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_EQUALITY_COMPARER_T_DESTROY_FUNC:
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		break;
+#line 409 "EqualityComparer.c"
+		default:
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		break;
+#line 415 "EqualityComparer.c"
 	}
 }
 
@@ -891,55 +419,134 @@ void system_collections_generic_equality_comparer_unref (gpointer instance) {
 static gboolean system_collections_generic_string_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, const gchar* x, const gchar* y) {
 	SystemCollectionsGenericStringEqualityComparer * self;
 	gboolean result = FALSE;
-	GEqualFunc _tmp0_ = NULL;
+	const gchar* _tmp0_ = NULL;
 	const gchar* _tmp1_ = NULL;
-	const gchar* _tmp2_ = NULL;
-	gboolean _tmp3_ = FALSE;
-#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self = (SystemCollectionsGenericStringEqualityComparer*) base;
-#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_return_val_if_fail (x != NULL, FALSE);
-#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_return_val_if_fail (y != NULL, FALSE);
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp0_ = g_str_equal;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp1_ = x;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp2_ = y;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp3_ = _tmp0_ (_tmp1_, _tmp2_);
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	result = _tmp3_;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return result;
-#line 917 "EqualityComparer.c"
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	_tmp0_ = x;
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	_tmp1_ = y;
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	if (g_strcmp0 (_tmp0_, _tmp1_) == 0) {
+#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		result = TRUE;
+#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		return result;
+#line 441 "EqualityComparer.c"
+	} else {
+		gboolean _tmp2_ = FALSE;
+		const gchar* _tmp3_ = NULL;
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		_tmp3_ = x;
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		if (_tmp3_ == NULL) {
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp2_ = TRUE;
+#line 451 "EqualityComparer.c"
+		} else {
+			const gchar* _tmp4_ = NULL;
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp4_ = y;
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp2_ = _tmp4_ == NULL;
+#line 458 "EqualityComparer.c"
+		}
+#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		if (_tmp2_) {
+#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			result = FALSE;
+#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			return result;
+#line 466 "EqualityComparer.c"
+		} else {
+			GEqualFunc _tmp5_ = NULL;
+			const gchar* _tmp6_ = NULL;
+			const gchar* _tmp7_ = NULL;
+			gboolean _tmp8_ = FALSE;
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp5_ = g_str_equal;
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp6_ = x;
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp7_ = y;
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp8_ = _tmp5_ ((const gchar*) _tmp6_, (const gchar*) _tmp7_);
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			result = _tmp8_;
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			return result;
+#line 484 "EqualityComparer.c"
+		}
+	}
+}
+
+
+static guint system_collections_generic_string_equality_comparer_real_GetHashCode (SystemCollectionsGenericEqualityComparer* base, const gchar* a) {
+	SystemCollectionsGenericStringEqualityComparer * self;
+	guint result = 0U;
+	const gchar* _tmp0_ = NULL;
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	self = (SystemCollectionsGenericStringEqualityComparer*) base;
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	g_return_val_if_fail (a != NULL, 0U);
+#line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	_tmp0_ = a;
+#line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	if (_tmp0_ == NULL) {
+#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		result = (guint) 0xdeadbeefLL;
+#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		return result;
+#line 506 "EqualityComparer.c"
+	} else {
+		GHashFunc _tmp1_ = NULL;
+		const gchar* _tmp2_ = NULL;
+		guint _tmp3_ = 0U;
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		_tmp1_ = g_str_hash;
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		_tmp2_ = a;
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		_tmp3_ = _tmp1_ ((const gchar*) _tmp2_);
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		result = _tmp3_;
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		return result;
+#line 521 "EqualityComparer.c"
+	}
 }
 
 
 SystemCollectionsGenericStringEqualityComparer* system_collections_generic_string_equality_comparer_construct (GType object_type) {
-	SystemCollectionsGenericStringEqualityComparer* self = NULL;
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	SystemCollectionsGenericStringEqualityComparer * self = NULL;
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self = (SystemCollectionsGenericStringEqualityComparer*) system_collections_generic_equality_comparer_construct (object_type, G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free);
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return self;
-#line 927 "EqualityComparer.c"
+#line 532 "EqualityComparer.c"
 }
 
 
 SystemCollectionsGenericStringEqualityComparer* system_collections_generic_string_equality_comparer_new (void) {
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return system_collections_generic_string_equality_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_STRING_EQUALITY_COMPARER);
-#line 934 "EqualityComparer.c"
+#line 539 "EqualityComparer.c"
 }
 
 
 static void system_collections_generic_string_equality_comparer_class_init (SystemCollectionsGenericStringEqualityComparerClass * klass) {
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	system_collections_generic_string_equality_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	((SystemCollectionsGenericEqualityComparerClass *) klass)->Equals = system_collections_generic_string_equality_comparer_real_Equals;
-#line 943 "EqualityComparer.c"
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	((SystemCollectionsGenericEqualityComparerClass *) klass)->GetHashCode = system_collections_generic_string_equality_comparer_real_GetHashCode;
+#line 550 "EqualityComparer.c"
 }
 
 
@@ -959,6 +566,105 @@ GType system_collections_generic_string_equality_comparer_get_type (void) {
 }
 
 
+static gboolean system_collections_generic_generic_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, SystemIComparable* x, SystemIComparable* y) {
+	SystemCollectionsGenericGenericEqualityComparer * self;
+	gboolean result = FALSE;
+	SystemIComparable* _tmp0_ = NULL;
+	SystemIComparable* _tmp1_ = NULL;
+#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	self = (SystemCollectionsGenericGenericEqualityComparer*) base;
+#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	g_return_val_if_fail (x != NULL, FALSE);
+#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	g_return_val_if_fail (y != NULL, FALSE);
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	_tmp0_ = x;
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	_tmp1_ = y;
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	if (_tmp0_ == _tmp1_) {
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		result = TRUE;
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		return result;
+#line 591 "EqualityComparer.c"
+	} else {
+		gboolean _tmp2_ = FALSE;
+		SystemIComparable* _tmp3_ = NULL;
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		_tmp3_ = x;
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		if (_tmp3_ == NULL) {
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp2_ = TRUE;
+#line 601 "EqualityComparer.c"
+		} else {
+			SystemIComparable* _tmp4_ = NULL;
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp4_ = y;
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			_tmp2_ = _tmp4_ == NULL;
+#line 608 "EqualityComparer.c"
+		}
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+		if (_tmp2_) {
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			result = FALSE;
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+			return result;
+#line 616 "EqualityComparer.c"
+		}
+	}
+#line 83 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	result = FALSE;
+#line 83 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	return result;
+#line 623 "EqualityComparer.c"
+}
+
+
+SystemCollectionsGenericGenericEqualityComparer* system_collections_generic_generic_equality_comparer_construct (GType object_type) {
+	SystemCollectionsGenericGenericEqualityComparer * self = NULL;
+#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	self = (SystemCollectionsGenericGenericEqualityComparer*) system_collections_generic_equality_comparer_construct (object_type, SYSTEM_TYPE_ICOMPARABLE, (GBoxedCopyFunc) g_object_ref, g_object_unref);
+#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	return self;
+#line 633 "EqualityComparer.c"
+}
+
+
+SystemCollectionsGenericGenericEqualityComparer* system_collections_generic_generic_equality_comparer_new (void) {
+#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	return system_collections_generic_generic_equality_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_EQUALITY_COMPARER);
+#line 640 "EqualityComparer.c"
+}
+
+
+static void system_collections_generic_generic_equality_comparer_class_init (SystemCollectionsGenericGenericEqualityComparerClass * klass) {
+#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	system_collections_generic_generic_equality_comparer_parent_class = g_type_class_peek_parent (klass);
+#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	((SystemCollectionsGenericEqualityComparerClass *) klass)->Equals = system_collections_generic_generic_equality_comparer_real_Equals;
+#line 649 "EqualityComparer.c"
+}
+
+
+static void system_collections_generic_generic_equality_comparer_instance_init (SystemCollectionsGenericGenericEqualityComparer * self) {
+}
+
+
+GType system_collections_generic_generic_equality_comparer_get_type (void) {
+	static volatile gsize system_collections_generic_generic_equality_comparer_type_id__volatile = 0;
+	if (g_once_init_enter (&system_collections_generic_generic_equality_comparer_type_id__volatile)) {
+		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericGenericEqualityComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_generic_equality_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericGenericEqualityComparer), 0, (GInstanceInitFunc) system_collections_generic_generic_equality_comparer_instance_init, NULL };
+		GType system_collections_generic_generic_equality_comparer_type_id;
+		system_collections_generic_generic_equality_comparer_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, "SystemCollectionsGenericGenericEqualityComparer", &g_define_type_info, 0);
+		g_once_init_leave (&system_collections_generic_generic_equality_comparer_type_id__volatile, system_collections_generic_generic_equality_comparer_type_id);
+	}
+	return system_collections_generic_generic_equality_comparer_type_id__volatile;
+}
+
+
 static gboolean system_collections_generic_object_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, GObject* x, GObject* y) {
 	SystemCollectionsGenericObjectEqualityComparer * self;
 	gboolean result = FALSE;
@@ -966,51 +672,51 @@ static gboolean system_collections_generic_object_equality_comparer_real_Equals 
 	GObject* _tmp1_ = NULL;
 	GObject* _tmp2_ = NULL;
 	gboolean _tmp3_ = FALSE;
-#line 86 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self = (SystemCollectionsGenericObjectEqualityComparer*) base;
-#line 86 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_return_val_if_fail (x != NULL, FALSE);
-#line 86 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	g_return_val_if_fail (y != NULL, FALSE);
-#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp0_ = g_direct_equal;
-#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp1_ = x;
-#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp2_ = y;
-#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	_tmp3_ = _tmp0_ (_tmp1_, _tmp2_);
-#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	result = _tmp3_;
-#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return result;
-#line 988 "EqualityComparer.c"
+#line 694 "EqualityComparer.c"
 }
 
 
 SystemCollectionsGenericObjectEqualityComparer* system_collections_generic_object_equality_comparer_construct (GType object_type) {
-	SystemCollectionsGenericObjectEqualityComparer* self = NULL;
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+	SystemCollectionsGenericObjectEqualityComparer * self = NULL;
+#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	self = (SystemCollectionsGenericObjectEqualityComparer*) system_collections_generic_equality_comparer_construct (object_type, G_TYPE_OBJECT, (GBoxedCopyFunc) g_object_ref, g_object_unref);
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return self;
-#line 998 "EqualityComparer.c"
+#line 704 "EqualityComparer.c"
 }
 
 
 SystemCollectionsGenericObjectEqualityComparer* system_collections_generic_object_equality_comparer_new (void) {
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	return system_collections_generic_object_equality_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_EQUALITY_COMPARER);
-#line 1005 "EqualityComparer.c"
+#line 711 "EqualityComparer.c"
 }
 
 
 static void system_collections_generic_object_equality_comparer_class_init (SystemCollectionsGenericObjectEqualityComparerClass * klass) {
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	system_collections_generic_object_equality_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
+#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
 	((SystemCollectionsGenericEqualityComparerClass *) klass)->Equals = system_collections_generic_object_equality_comparer_real_Equals;
-#line 1014 "EqualityComparer.c"
+#line 720 "EqualityComparer.c"
 }
 
 
@@ -1027,140 +733,6 @@ GType system_collections_generic_object_equality_comparer_get_type (void) {
 		g_once_init_leave (&system_collections_generic_object_equality_comparer_type_id__volatile, system_collections_generic_object_equality_comparer_type_id);
 	}
 	return system_collections_generic_object_equality_comparer_type_id__volatile;
-}
-
-
-static gboolean system_collections_generic_int_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, gint x, gint y) {
-	SystemCollectionsGenericIntEqualityComparer * self;
-	gboolean result = FALSE;
-	GEqualFunc _tmp0_ = NULL;
-	gint _tmp1_ = 0;
-	gint _tmp2_ = 0;
-	gboolean _tmp3_ = FALSE;
-#line 95 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	self = (SystemCollectionsGenericIntEqualityComparer*) base;
-#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp0_ = g_int_equal;
-#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp1_ = x;
-#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp2_ = y;
-#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp3_ = _tmp0_ (&_tmp1_, &_tmp2_);
-#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	result = _tmp3_;
-#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return result;
-#line 1055 "EqualityComparer.c"
-}
-
-
-SystemCollectionsGenericIntEqualityComparer* system_collections_generic_int_equality_comparer_construct (GType object_type) {
-	SystemCollectionsGenericIntEqualityComparer* self = NULL;
-#line 92 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	self = (SystemCollectionsGenericIntEqualityComparer*) system_collections_generic_equality_comparer_construct (object_type, G_TYPE_INT, NULL, NULL);
-#line 92 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return self;
-#line 1065 "EqualityComparer.c"
-}
-
-
-SystemCollectionsGenericIntEqualityComparer* system_collections_generic_int_equality_comparer_new (void) {
-#line 92 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return system_collections_generic_int_equality_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_EQUALITY_COMPARER);
-#line 1072 "EqualityComparer.c"
-}
-
-
-static void system_collections_generic_int_equality_comparer_class_init (SystemCollectionsGenericIntEqualityComparerClass * klass) {
-#line 92 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	system_collections_generic_int_equality_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 92 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	((SystemCollectionsGenericEqualityComparerClass *) klass)->Equals = system_collections_generic_int_equality_comparer_real_Equals;
-#line 1081 "EqualityComparer.c"
-}
-
-
-static void system_collections_generic_int_equality_comparer_instance_init (SystemCollectionsGenericIntEqualityComparer * self) {
-}
-
-
-GType system_collections_generic_int_equality_comparer_get_type (void) {
-	static volatile gsize system_collections_generic_int_equality_comparer_type_id__volatile = 0;
-	if (g_once_init_enter (&system_collections_generic_int_equality_comparer_type_id__volatile)) {
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericIntEqualityComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_int_equality_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericIntEqualityComparer), 0, (GInstanceInitFunc) system_collections_generic_int_equality_comparer_instance_init, NULL };
-		GType system_collections_generic_int_equality_comparer_type_id;
-		system_collections_generic_int_equality_comparer_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, "SystemCollectionsGenericIntEqualityComparer", &g_define_type_info, 0);
-		g_once_init_leave (&system_collections_generic_int_equality_comparer_type_id__volatile, system_collections_generic_int_equality_comparer_type_id);
-	}
-	return system_collections_generic_int_equality_comparer_type_id__volatile;
-}
-
-
-static gboolean system_collections_generic_int64_equality_comparer_real_Equals (SystemCollectionsGenericEqualityComparer* base, gint64 x, gint64 y) {
-	SystemCollectionsGenericInt64EqualityComparer * self;
-	gboolean result = FALSE;
-	GEqualFunc _tmp0_ = NULL;
-	gint64 _tmp1_ = 0LL;
-	gint64 _tmp2_ = 0LL;
-	gboolean _tmp3_ = FALSE;
-#line 104 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	self = (SystemCollectionsGenericInt64EqualityComparer*) base;
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp0_ = g_int64_equal;
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp1_ = x;
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp2_ = y;
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	_tmp3_ = _tmp0_ (&_tmp1_, &_tmp2_);
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	result = _tmp3_;
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return result;
-#line 1122 "EqualityComparer.c"
-}
-
-
-SystemCollectionsGenericInt64EqualityComparer* system_collections_generic_int64_equality_comparer_construct (GType object_type) {
-	SystemCollectionsGenericInt64EqualityComparer* self = NULL;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	self = (SystemCollectionsGenericInt64EqualityComparer*) system_collections_generic_equality_comparer_construct (object_type, G_TYPE_INT64, NULL, NULL);
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return self;
-#line 1132 "EqualityComparer.c"
-}
-
-
-SystemCollectionsGenericInt64EqualityComparer* system_collections_generic_int64_equality_comparer_new (void) {
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	return system_collections_generic_int64_equality_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_EQUALITY_COMPARER);
-#line 1139 "EqualityComparer.c"
-}
-
-
-static void system_collections_generic_int64_equality_comparer_class_init (SystemCollectionsGenericInt64EqualityComparerClass * klass) {
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	system_collections_generic_int64_equality_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/EqualityComparer.vala"
-	((SystemCollectionsGenericEqualityComparerClass *) klass)->Equals = system_collections_generic_int64_equality_comparer_real_Equals;
-#line 1148 "EqualityComparer.c"
-}
-
-
-static void system_collections_generic_int64_equality_comparer_instance_init (SystemCollectionsGenericInt64EqualityComparer * self) {
-}
-
-
-GType system_collections_generic_int64_equality_comparer_get_type (void) {
-	static volatile gsize system_collections_generic_int64_equality_comparer_type_id__volatile = 0;
-	if (g_once_init_enter (&system_collections_generic_int64_equality_comparer_type_id__volatile)) {
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericInt64EqualityComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_int64_equality_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericInt64EqualityComparer), 0, (GInstanceInitFunc) system_collections_generic_int64_equality_comparer_instance_init, NULL };
-		GType system_collections_generic_int64_equality_comparer_type_id;
-		system_collections_generic_int64_equality_comparer_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, "SystemCollectionsGenericInt64EqualityComparer", &g_define_type_info, 0);
-		g_once_init_leave (&system_collections_generic_int64_equality_comparer_type_id__volatile, system_collections_generic_int64_equality_comparer_type_id);
-	}
-	return system_collections_generic_int64_equality_comparer_type_id__volatile;
 }
 
 

@@ -3,4 +3,6 @@ TEST_COLLECTIONS = \
 
 TEST_COLLECTIONS_GENERIC = \
 	System.Collections.Generic/testlist.vala \
-	System.Collections.Generic/testdictionary.vala
+	System.Collections.Generic/testdictionary.vala \
+	System.Collections.Generic/teststack.vala \
+	System.Collections.Generic/testqueue.vala

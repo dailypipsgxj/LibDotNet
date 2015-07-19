@@ -60,6 +60,9 @@ struct _SystemCollectionsGenericIReadOnlyCollectionIface {
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerator* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerator* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
@@ -69,6 +72,9 @@ struct _SystemCollectionsGenericIEnumeratorIface {
 
 struct _SystemCollectionsGenericIEnumerableIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerable* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerable* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerable* self);
 	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
@@ -99,7 +105,7 @@ gboolean system_collections_generic_iread_only_dictionary_ContainsKey (SystemCol
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->ContainsKey (self, key);
-#line 103 "ireadonlydictionary.c"
+#line 109 "ireadonlydictionary.c"
 }
 
 
@@ -108,7 +114,7 @@ gboolean system_collections_generic_iread_only_dictionary_TryGetValue (SystemCol
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->TryGetValue (self, key, value);
-#line 112 "ireadonlydictionary.c"
+#line 118 "ireadonlydictionary.c"
 }
 
 
@@ -117,7 +123,7 @@ SystemCollectionsGenericIEnumerable* system_collections_generic_iread_only_dicti
 	g_return_val_if_fail (self != NULL, NULL);
 #line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->get_Keys (self);
-#line 121 "ireadonlydictionary.c"
+#line 127 "ireadonlydictionary.c"
 }
 
 
@@ -126,7 +132,7 @@ SystemCollectionsGenericIEnumerable* system_collections_generic_iread_only_dicti
 	g_return_val_if_fail (self != NULL, NULL);
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->get_Values (self);
-#line 130 "ireadonlydictionary.c"
+#line 136 "ireadonlydictionary.c"
 }
 
 
@@ -137,7 +143,7 @@ static void system_collections_generic_iread_only_dictionary_base_init (SystemCo
 	if (!initialized) {
 #line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 		initialized = TRUE;
-#line 141 "ireadonlydictionary.c"
+#line 147 "ireadonlydictionary.c"
 	}
 }
 

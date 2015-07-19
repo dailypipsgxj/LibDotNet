@@ -16,7 +16,7 @@ namespace System {
 
     // Generic version of IComparable.
 
-    public interface IComparable<T>
+    public interface IComparable<T> : GLib.Object
     {
         // Interface does not need to be marked with the serializable attribute
         // Compares this Object to another object, returning an integer that

@@ -19,6 +19,7 @@ public class SystemCollectionsGenricDictionaryTests : LibDotNet.TestCase {
 		add_test ("New Dictionary<string, string> with default constructor", str_str_dict_new_with_default_constructor);
 		add_test ("New Dictionary<string, string> with IEnumerable", str_str_dict_new_with_dictionary);
 		
+		add_test ("Dictionary<string, string> properties get Comparer", str_str_dict_properties_get_comparer);
 		add_test ("Dictionary<string, string> properties get Count", str_str_dict_properties_get_count);
 		add_test ("Dictionary<string, string> properties get IsFixedSize", str_str_dict_properties_get_fixed_size);
 		add_test ("Dictionary<string, string> properties get IsReadOnly", str_str_dict_properties_get_read_only);
@@ -57,10 +58,16 @@ public class SystemCollectionsGenricDictionaryTests : LibDotNet.TestCase {
 		var testDict = new Dictionary<string, string>.WithDictionary (input);
 		GLib.assert_true (testDict is System.Collections.Generic.Dictionary);
 		GLib.assert_true (testDict.Count == 3);
+		
 		GLib.assert_true (testDict["Brachiosaurus"] == "BRACHIOSAURUS");
 		GLib.assert_true (testDict["Amargasaurus"] == "AMARGASAURUS");
 		GLib.assert_true (testDict["Mamenchisaurus"] == "MAMENCHISAURUS");
-		
+	}
+
+	public void str_str_dict_properties_get_comparer () {
+		var testDict = new System.Collections.Generic.Dictionary<string, string> ();
+		var comparer = testDict.Comparer;
+		GLib.assert_true (comparer.Equals("BRACHIOSAURUS", "BRACHIOSAURUS"));
 	}
 
 	public void str_str_dict_properties_get_count () {
@@ -92,8 +99,22 @@ public class SystemCollectionsGenricDictionaryTests : LibDotNet.TestCase {
 
 	public void str_str_dict_properties_get_keys () {
 		var testDict = new System.Collections.Generic.Dictionary<string, string> ();
+		testDict.Add ("Brachiosaurus", "BRACHIOSAURUS"); 
+        testDict.Add ("Amargasaurus", "AMARGASAURUS"); 
+        testDict.Add ("Mamenchisaurus", "MAMENCHISAURUS");
+		testDict.Add ("Tyrannosaurus", "TYRANNOSAURUS");
+        testDict.Add ("Deinonychus", "DEINONYCHUS");
+        testDict.Add ("Compsognathus", "COMPSOGNATHUS");
+
 		var keys = testDict.Keys;
 		GLib.assert_true (keys is ICollection);
+		string keystr = "";
+		foreach (var item in testDict.Keys) {
+			keystr += item;
+		}
+        GLib.assert_true (keystr == "CompsognathusBrachiosaurusTyrannosaurusDeinonychusAmargasaurusMamenchisaurus" );
+
+
 	}
 
 	public void str_str_dict_properties_get_sync_root () {
@@ -113,8 +134,17 @@ public class SystemCollectionsGenricDictionaryTests : LibDotNet.TestCase {
 
 	public void str_str_dict_properties_get_values () {
 		var testDict = new System.Collections.Generic.Dictionary<string, string> ();
-		var values = testDict.Values;
-		GLib.assert_true (values is ICollection);
+		testDict.Add ("Brachiosaurus", "BRACHIOSAURUS"); 
+        testDict.Add ("Amargasaurus", "AMARGASAURUS"); 
+        testDict.Add ("Mamenchisaurus", "MAMENCHISAURUS");
+		testDict.Add ("Tyrannosaurus", "TYRANNOSAURUS");
+        testDict.Add ("Deinonychus", "DEINONYCHUS");
+        testDict.Add ("Compsognathus", "COMPSOGNATHUS");
+        string valstr = "";
+		foreach (var item in testDict.Values) {
+			valstr += item;
+		}
+        GLib.assert_true (valstr == "COMPSOGNATHUSBRACHIOSAURUSTYRANNOSAURUSDEINONYCHUSAMARGASAURUSMAMENCHISAURUS");
 	}
 
 
@@ -226,13 +256,17 @@ public class SystemCollectionsGenricDictionaryTests : LibDotNet.TestCase {
 		testDict.Add ("Tyrannosaurus", "TYRANNOSAURUS");
         testDict.Add ("Deinonychus", "DEINONYCHUS");
         testDict.Add ("Compsognathus", "COMPSOGNATHUS");
-        string newstr = "";
-        /*
-		foreach (var item in testDict) {
-			newstr += item;
+        string valstr = "";
+		foreach (var item in testDict.Values) {
+			valstr += item;
 		}
-        GLib.assert_true (newstr == "BRACHIOSAURUSAMARGASAURUSMAMENCHISAURUSTYRANNOSAURUSDEINONYCHUSCOMPSOGNATHUS");
-        */
+        GLib.assert_true (valstr == "COMPSOGNATHUSBRACHIOSAURUSTYRANNOSAURUSDEINONYCHUSAMARGASAURUSMAMENCHISAURUS");
+       
+		string keystr = "";
+		foreach (var item in testDict.Keys) {
+			keystr += item;
+		}
+        GLib.assert_true (keystr == "CompsognathusBrachiosaurusTyrannosaurusDeinonychusAmargasaurusMamenchisaurus" );
  	}
 
 
@@ -278,7 +312,7 @@ public class SystemCollectionsGenricDictionaryTests : LibDotNet.TestCase {
         testDict.Add ("Compsognathus", "COMPSOGNATHUS");
 
 		string val;
-        testDict.TryGetValue("Amargasaurus", out val);
+        GLib.assert_true(testDict.TryGetValue("Amargasaurus", out val));
 		GLib.assert_true (val == "AMARGASAURUS");
  	}
 

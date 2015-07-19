@@ -12,6 +12,10 @@ namespace System {
 		LENGTHNOTNEGATIVE
 	}
 
+	public errordomain Error {
+		NOELEMENTS
+	}
+
 	errordomain ArgumentException {
 		NULL,
 		INVALIDOFFSETLENGTH,
@@ -27,7 +31,8 @@ namespace System {
 
 	errordomain InvalidOperationException {
 		ENUMNOTSTARTED,
-		ENUMENDED
+		ENUMENDED,
+		NOTIMPLEMENTED
 	}
 	
 	errordomain NotSupportedException {

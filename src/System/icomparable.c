@@ -57,6 +57,7 @@ GType system_icomparable_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemIComparableIface), (GBaseInitFunc) system_icomparable_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_icomparable_type_id;
 		system_icomparable_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemIComparable", &g_define_type_info, 0);
+		g_type_interface_add_prerequisite (system_icomparable_type_id, G_TYPE_OBJECT);
 		g_once_init_leave (&system_icomparable_type_id__volatile, system_icomparable_type_id);
 	}
 	return system_icomparable_type_id__volatile;

@@ -85,6 +85,8 @@ namespace System.Collections.Generic {
 		internal int _size;
 		private EqualityComparer<T> _equal_func;
 		private Comparer<T> _compare_func;
+		// concurrent modification protection
+		private int _stamp = 0;
 
         // Constructs a List. The list is initially empty and has a capacity
         // of zero. Upon adding the first element to the list the capacity is
@@ -109,9 +111,6 @@ namespace System.Collections.Generic {
 			set_capacity (defaultCapacity);
         }
 		
-		// concurrent modification protection
-		private int _stamp = 0;
-
 		public override int size {
 			get { return _size; }
 		}
@@ -485,7 +484,7 @@ namespace System.Collections.Generic {
 			_items.resize (value);
 		}
 
-		private class Enumerator<T> : GLib.Object, IEnumerator<T>  {
+		internal class Enumerator<T> : GLib.Object, IEnumerator<T>  {
 
 			private List<T> _list;
 			private int _index = -1;

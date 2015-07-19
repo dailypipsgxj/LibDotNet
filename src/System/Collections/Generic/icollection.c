@@ -48,6 +48,9 @@ typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGeneri
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerator* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerator* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
@@ -57,6 +60,9 @@ struct _SystemCollectionsGenericIEnumeratorIface {
 
 struct _SystemCollectionsGenericIEnumerableIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerable* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerable* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerable* self);
 	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
@@ -105,7 +111,7 @@ void system_collections_generic_icollection_Add (SystemCollectionsGenericICollec
 	g_return_if_fail (self != NULL);
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Add (self, item);
-#line 109 "icollection.c"
+#line 115 "icollection.c"
 }
 
 
@@ -118,7 +124,7 @@ void system_collections_generic_icollection_Clear (SystemCollectionsGenericIColl
 	g_return_if_fail (self != NULL);
 #line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Clear (self);
-#line 122 "icollection.c"
+#line 128 "icollection.c"
 }
 
 
@@ -134,7 +140,7 @@ gboolean system_collections_generic_icollection_contains (SystemCollectionsGener
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->contains (self, item);
-#line 138 "icollection.c"
+#line 144 "icollection.c"
 }
 
 
@@ -150,7 +156,7 @@ static gboolean system_collections_generic_icollection_real_Contains (SystemColl
 	result = _tmp1_;
 #line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return result;
-#line 154 "icollection.c"
+#line 160 "icollection.c"
 }
 
 
@@ -159,7 +165,7 @@ gboolean system_collections_generic_icollection_Contains (SystemCollectionsGener
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Contains (self, item);
-#line 163 "icollection.c"
+#line 169 "icollection.c"
 }
 
 
@@ -168,7 +174,7 @@ void system_collections_generic_icollection_CopyTo (SystemCollectionsGenericICol
 	g_return_if_fail (self != NULL);
 #line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->CopyTo (self, array, array_length1, arrayIndex);
-#line 172 "icollection.c"
+#line 178 "icollection.c"
 }
 
 
@@ -185,7 +191,7 @@ gboolean system_collections_generic_icollection_Remove (SystemCollectionsGeneric
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 86 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->Remove (self, item);
-#line 189 "icollection.c"
+#line 195 "icollection.c"
 }
 
 
@@ -194,7 +200,7 @@ gint system_collections_generic_icollection_get_size (SystemCollectionsGenericIC
 	g_return_val_if_fail (self != NULL, 0);
 #line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->get_size (self);
-#line 198 "icollection.c"
+#line 204 "icollection.c"
 }
 
 
@@ -203,7 +209,7 @@ gint system_collections_generic_icollection_get_Count (SystemCollectionsGenericI
 	g_return_val_if_fail (self != NULL, 0);
 #line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->get_Count (self);
-#line 207 "icollection.c"
+#line 213 "icollection.c"
 }
 
 
@@ -212,7 +218,7 @@ gboolean system_collections_generic_icollection_get_IsReadOnly (SystemCollection
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE (self)->get_IsReadOnly (self);
-#line 216 "icollection.c"
+#line 222 "icollection.c"
 }
 
 
@@ -223,7 +229,7 @@ static void system_collections_generic_icollection_base_init (SystemCollectionsG
 	if (!initialized) {
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 		initialized = TRUE;
-#line 227 "icollection.c"
+#line 233 "icollection.c"
 		/**
 		 * The number of items in this collection.
 		 */
@@ -235,7 +241,7 @@ static void system_collections_generic_icollection_base_init (SystemCollectionsG
 		g_object_interface_install_property (iface, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/icollection.vala"
 		iface->Contains = system_collections_generic_icollection_real_Contains;
-#line 239 "icollection.c"
+#line 245 "icollection.c"
 	}
 }
 

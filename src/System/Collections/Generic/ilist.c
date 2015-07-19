@@ -48,6 +48,9 @@ typedef struct _SystemCollectionsGenericIListIface SystemCollectionsGenericIList
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerator* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerator* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerator* self);
 	gpointer (*get) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*MoveNext) (SystemCollectionsGenericIEnumerator* self);
 	gboolean (*next) (SystemCollectionsGenericIEnumerator* self);
@@ -57,6 +60,9 @@ struct _SystemCollectionsGenericIEnumeratorIface {
 
 struct _SystemCollectionsGenericIEnumerableIface {
 	GTypeInterface parent_iface;
+	GType (*get_t_type) (SystemCollectionsGenericIEnumerable* self);
+	GBoxedCopyFunc (*get_t_dup_func) (SystemCollectionsGenericIEnumerable* self);
+	GDestroyNotify (*get_t_destroy_func) (SystemCollectionsGenericIEnumerable* self);
 	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
@@ -95,7 +101,7 @@ gpointer system_collections_generic_ilist_get (SystemCollectionsGenericIList* se
 	g_return_val_if_fail (self != NULL, NULL);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->get (self, index);
-#line 99 "ilist.c"
+#line 105 "ilist.c"
 }
 
 
@@ -109,7 +115,7 @@ void system_collections_generic_ilist_set (SystemCollectionsGenericIList* self, 
 	g_return_if_fail (self != NULL);
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->set (self, index, item);
-#line 113 "ilist.c"
+#line 119 "ilist.c"
 }
 
 
@@ -125,7 +131,7 @@ gint system_collections_generic_ilist_IndexOf (SystemCollectionsGenericIList* se
 	g_return_val_if_fail (self != NULL, 0);
 #line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->IndexOf (self, item, index);
-#line 129 "ilist.c"
+#line 135 "ilist.c"
 }
 
 
@@ -140,7 +146,7 @@ void system_collections_generic_ilist_Insert (SystemCollectionsGenericIList* sel
 	g_return_if_fail (self != NULL);
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->Insert (self, index, item);
-#line 144 "ilist.c"
+#line 150 "ilist.c"
 }
 
 
@@ -154,7 +160,7 @@ void system_collections_generic_ilist_RemoveAt (SystemCollectionsGenericIList* s
 	g_return_if_fail (self != NULL);
 #line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->RemoveAt (self, index);
-#line 158 "ilist.c"
+#line 164 "ilist.c"
 }
 
 
@@ -165,7 +171,7 @@ static void system_collections_generic_ilist_base_init (SystemCollectionsGeneric
 	if (!initialized) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 		initialized = TRUE;
-#line 169 "ilist.c"
+#line 175 "ilist.c"
 	}
 }
 

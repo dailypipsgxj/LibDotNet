@@ -28,10 +28,12 @@ namespace System.Collections.Generic {
     // This is a special hack internally though - see VM\compile.cpp.
     // The same attribute is on IList<T> and ICollection<T>.
 
-	//[GenericAccessors]
+	[GenericAccessors]
     public interface IEnumerable<T> : GLib.Object
     {
-		public abstract GLib.Type get_element_type ();
+		public virtual GLib.Type get_element_type () {
+			return typeof (T);
+		}
 
 		/**
 		 * Returns a Iterator that can be used for simple iteration over a

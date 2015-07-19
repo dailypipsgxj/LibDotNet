@@ -61,7 +61,9 @@ LIBDOTNET_COLLECTIONS_GEN = \
 	System/Collections/Generic/Comparer.vala \
 	System/Collections/Generic/EqualityComparer.vala \
 	System/Collections/Generic/Dictionary.vala \
-	System/Collections/Generic/List.vala
+	System/Collections/Generic/List.vala \
+	System/Collections/Generic/Queue.vala \
+	System/Collections/Generic/Stack.vala
 
 
 LIBDOTNET_COLLECTIONS_OBJMODEL = \
@@ -71,16 +73,11 @@ LIBDOTNET_COLLECTIONS_OBJMODEL = \
 LIBDOTNET_COLLECTIONS_GENX = \
 	System/Linq/Enumerable.vala \
 	System/Collections/Generic/SortedDictionary.vala \
-	System/Collections/Generic/Comparer.vala \
-	System/Collections/Generic/Dictionary.vala \
-	System/Collections/Generic/EqualityComparer.vala \
 	System/Collections/Generic/HashSet.vala \
 	System/Collections/Generic/LinkedList.vala \
-	System/Collections/Generic/List.vala \
 	System/Collections/Generic/Queue.vala \
 	System/Collections/Generic/SortedList.vala \
-	System/Collections/Generic/SortedSet.vala \
-	System/Collections/Generic/Stack.vala
+	System/Collections/Generic/SortedSet.vala
 	
 LIBDOTNET_SYSTEM_NS = \
 	System/Text/Text.vala \
@@ -94,7 +91,8 @@ LIBDOTNET_SYSTEM_NS = \
 LIBDOTNET_SYSTEM = \
 	System/Nullable.vala \
 	System/Exceptions.vala \
-	System/action.vala
+	System/action.vala \
+	System/default.vala
 
 LIBDOTNET_SYSTEM_IFACE = \
 	System/idisposable.vala \

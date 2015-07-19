@@ -22,11 +22,11 @@ namespace System.Collections.Generic {
     // Keys can be any non-null object.  Values can be any object.
     // You can look up a value in an IDictionary via the default indexed
     // property, Items.  
-	//[GenericAccessors]
+	[GenericAccessors]
     public interface IDictionary<TKey, TValue> :
 		GLib.Object,
-		//ICollection<KeyValuePair<TKey, TValue>>, 
 		IEnumerable<KeyValuePair<TKey, TValue>>
+		//ICollection<KeyValuePair<TKey, TValue>>, 
     {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
@@ -37,7 +37,7 @@ namespace System.Collections.Generic {
     
         // Returns a collections of the keys in this dictionary.
         public abstract ICollection<TKey> Keys {
-            owned get; private set;
+            owned get;
         }
     
         // Returns a collections of the values in this dictionary.
