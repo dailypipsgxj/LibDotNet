@@ -16,31 +16,20 @@ using System.Runtime.CompilerServices;
 namespace System.Collections.Generic
 {    
  
-    public abstract class Comparer<T> : IComparer<T>
+ 	public delegate bool CompareDataFunc<T> (T a, T b);
+ 
+    public abstract class Comparer<T> : GLib.Object, IComparer<T>
     {
         static Comparer<T> defaultComparer;    
 
         public static Comparer<T> Default<T> () {
-			Comparer<T> comparer = defaultComparer;
-			if (comparer == null) {
-				GLib.Type comparer_type = typeof(T);
-				switch (comparer_type.name()) {
-					case ("gchararray"):
-						comparer = new StringComparer();
-						break;
-					case ("gint"):
-						comparer = new IntComparer();
-						break;
-					case ("glong"):
-						comparer = new Int64Comparer();
-						break;
-					default:
-						comparer = new ObjectComparer();
-						break;
-					}
-				defaultComparer = comparer;
+			if (typeof(T) == typeof (string)) {
+				return new StringComparer();
+			} else if (typeof(T).is_a (typeof (IComparable))) {
+				return new GenericComparer();
+			} else {
+				return new ObjectComparer();
 			}
-			return comparer;
         }
 
         public static Comparer<T> Create<T>(Comparison<T> comparison)
@@ -55,40 +44,39 @@ namespace System.Collections.Generic
     internal class StringComparer: Comparer<string>
     {
 
-        public override int Compare(string x, string y) {
-			return GLib.strcmp(x, y);
+        public override int Compare(string a, string b) {
+			if (a == b)
+				return 0;
+			else if (a == null)
+				return -1;
+			else if (b == null)
+				return 1;
+			else
+				return GLib.strcmp((string) a, (string) b);
         }
     }
+
+    internal class GenericComparer: Comparer<IComparable>
+    {
+
+        public override int Compare (IComparable a, IComparable b) {
+			if (a == b)
+				return 0;
+			else if (a == null)
+				return -1;
+			else if (b == null)
+				return 1;
+			else
+				return ((Comparer<IComparable>) a).Compare ((IComparable) a, (IComparable) b);
+        }
+    }
+
 
     internal class ObjectComparer: Comparer<GLib.Object>
     {
         public override int Compare(GLib.Object x,GLib.Object y) {
 			if (GLib.direct_equal(x, y)) return 0;
 			return -1;
-        }
-
-    }
-
-    internal class IntComparer: Comparer<int>
-    {
-
-        public override int Compare(int x, int y) {
-			if (x < y) return -1;
-			if (x == y) return 0;
-			if (x > y) return 1;
-			return 0;
-        }
-
-    }
-
-    internal class Int64Comparer: Comparer<int64>
-    {
-
-        public override int Compare(int64 x, int64 y) {
-			if (x < y) return -1;
-			if (x == y) return 0;
-			if (x > y) return 1;
-			return 0;
         }
 
     }

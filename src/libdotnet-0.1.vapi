@@ -4,11 +4,11 @@ namespace System {
 	namespace Collections {
 		namespace Generic {
 			[CCode (cheader_filename = "libdotnet.h")]
-			public abstract class AbstractDictionary<TKey,TValue> : GLib.Object, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, System.Collections.Generic.IDictionary<TKey,TValue> {
+			public abstract class AbstractDictionary<TKey,TValue> : GLib.Object, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, System.Collections.Generic.IDictionary<TKey,TValue>, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey,TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey,TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue> {
 				public AbstractDictionary ();
 				public abstract void Add (TKey key, TValue value);
 				public abstract void Clear ();
-				public abstract new bool Contains (System.Collections.Generic.KeyValuePair<TKey,TValue> keyValuePair, System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair>? comparer = null);
+				public abstract new bool Contains (System.Collections.Generic.KeyValuePair<TKey,TValue> keyValuePair);
 				public abstract bool ContainsKey (TKey key);
 				public abstract bool ContainsValue (TValue value);
 				public abstract void CopyTo (System.Collections.Generic.KeyValuePair<TKey,TValue>[] array, int index = 0);
@@ -16,12 +16,11 @@ namespace System {
 				public abstract void OnDeserialization (GLib.Object sender);
 				public abstract new bool Remove (TKey key, TValue value = null);
 				public abstract bool TryGetValue (TKey key, out TValue value);
-				public abstract bool contains (System.Collections.Generic.KeyValuePair<TKey,TValue> item);
+				public abstract bool contains (System.Collections.Generic.KeyValuePair<TKey,TValue> keyValuePair);
 				public abstract new TValue @get (TKey key);
 				public abstract GLib.Type get_element_type ();
 				public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey,TValue>> iterator ();
 				public abstract new void @set (TKey key, TValue item);
-				public abstract System.Collections.Generic.IEqualityComparer<TKey> Comparer { get; }
 				public abstract int Count { get; }
 				public abstract bool IsFixedSize { get; }
 				public abstract bool IsReadOnly { get; }
@@ -32,7 +31,7 @@ namespace System {
 				public abstract int size { get; }
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
-			public abstract class AbstractList<T> : GLib.Object, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.ICollection<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T> {
+			public abstract class AbstractList<T> : GLib.Object, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.ICollection<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T> {
 				public AbstractList ();
 				public abstract void Add (T item);
 				public abstract void AddRange (System.Collections.Generic.IEnumerable<T> collection);
@@ -76,7 +75,7 @@ namespace System {
 				public abstract int size { get; }
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
-			public abstract class Comparer<T> : System.Collections.Generic.IComparer<T> {
+			public abstract class Comparer<T> : GLib.Object, System.Collections.Generic.IComparer<T> {
 				public Comparer ();
 				public abstract int Compare (T x, T y);
 				public static System.Collections.Generic.Comparer<T> Create<T> (System.Comparison<T> comparison);
@@ -87,7 +86,7 @@ namespace System {
 				public Dictionary (System.Collections.Generic.IEqualityComparer<TKey>? key_equal_func = null);
 				public override void Add (TKey key, TValue value);
 				public override void Clear ();
-				public override bool Contains (System.Collections.Generic.KeyValuePair<TKey,TValue> keyValuePair, System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair>? comparer = null);
+				public override bool Contains (System.Collections.Generic.KeyValuePair<TKey,TValue> keyValuePair);
 				public override bool ContainsKey (TKey key);
 				public override bool ContainsValue (TValue value);
 				public override void CopyTo (System.Collections.Generic.KeyValuePair<TKey,TValue>[] array, int index);
@@ -96,12 +95,11 @@ namespace System {
 				public override bool Remove (TKey key, TValue value = null);
 				public override bool TryGetValue (TKey key, out TValue value);
 				public Dictionary.WithDictionary (System.Collections.Generic.IDictionary<TKey,TValue> dictionary, System.Collections.Generic.IEqualityComparer<TKey>? comparer = null);
-				public override bool contains (System.Collections.Generic.KeyValuePair<TKey,TValue> item);
+				public override bool contains (System.Collections.Generic.KeyValuePair<TKey,TValue> keyValuePair);
 				public override TValue @get (TKey key);
 				public override GLib.Type get_element_type ();
 				public override System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey,TValue>> iterator ();
 				public override void @set (TKey key, TValue value);
-				public override System.Collections.Generic.IEqualityComparer<TKey> Comparer { get; }
 				public override int Count { get; }
 				public override bool IsFixedSize { get; }
 				public override bool IsReadOnly { get; }
@@ -192,6 +190,15 @@ namespace System {
 				public GLib.Object SyncRoot { get; }
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
+			public class SortedList<TKey,TValue> : System.Collections.Generic.Dictionary<TKey,TValue> {
+				protected System.Collections.Generic.IComparer<TKey> _value_compare_func;
+				public SortedList (System.Collections.Generic.IComparer<TKey>? comparer = null, int capacity = 4);
+				public int IndexOfKey (TKey key);
+				public SortedList.WithCapacity (int capacity = 4, System.Collections.Generic.IComparer<TKey>? comparer = null);
+				public override void @set (TKey key, TValue value);
+				public int Capacity { get; set; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
 			public class Stack<T> : GLib.Object, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.ICollection<T>, System.Collections.Generic.IReadOnlyCollection<T> {
 				public class Enumerator<T> : GLib.Object, System.Collections.Generic.IEnumerator<T> {
 					public Enumerator (System.Collections.Generic.Stack<T> stack);
@@ -204,7 +211,7 @@ namespace System {
 				public T[] ToArray ();
 				public void TrimExcess ();
 				public Stack.WithCapacity (int capacity);
-				public new T @get (int item);
+				public virtual new T @get (int item);
 				public bool IsSynchronized { get; }
 				public GLib.Object SyncRoot { get; }
 			}
@@ -221,21 +228,17 @@ namespace System {
 				public abstract int size { get; }
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
-			public interface IComparer<T> {
+			public interface IComparer<T> : GLib.Object {
 				public abstract int Compare (T x, T y);
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
 			[GenericAccessors]
 			public interface IDictionary<TKey,TValue> : GLib.Object, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>> {
 				public abstract void Add (TKey key, TValue value);
-				public abstract bool Contains (System.Collections.Generic.KeyValuePair<TKey,TValue> keyValuePair, System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair>? comparer = null);
 				public abstract bool ContainsKey (TKey key);
-				public abstract bool ContainsValue (TValue value);
-				public virtual System.Collections.Generic.IEnumerator GetEnumerator ();
 				public abstract bool Remove (TKey key, TValue value = null);
 				public abstract bool TryGetValue (TKey key, out TValue value);
 				public abstract TValue @get (TKey key);
-				public abstract System.Collections.Generic.IEnumerator iterator ();
 				public abstract void @set (TKey key, TValue value);
 				public abstract System.Collections.Generic.ICollection<TKey> Keys { owned get; }
 				public abstract System.Collections.Generic.ICollection<TValue> Values { owned get; }
@@ -269,7 +272,7 @@ namespace System {
 				public abstract uint GetHashCode (T obj);
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
-			public interface IList<T> : System.Collections.Generic.IEnumerable<T> {
+			public interface IList<T> : System.Collections.Generic.ICollection<T> {
 				public abstract int IndexOf (T item, int index = 0);
 				public abstract void Insert (int index, T item);
 				public abstract void RemoveAt (int index);
@@ -282,7 +285,7 @@ namespace System {
 				public abstract int size { get; }
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
-			public interface IReadOnlyDictionary<TKey,TValue> : System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey,TValue>> {
+			public interface IReadOnlyDictionary<TKey,TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey,TValue>> {
 				public abstract bool ContainsKey (TKey key);
 				public abstract bool TryGetValue (TKey key, out TValue value);
 				public abstract System.Collections.Generic.IEnumerable<TKey> Keys { get; }
@@ -290,8 +293,7 @@ namespace System {
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
 			[GenericAccessors]
-			public interface IReadOnlyList<T> : System.Collections.Generic.IReadOnlyCollection<T> {
-				public abstract T @get (int index);
+			public interface IReadOnlyList<T> : GLib.Object, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IList<T> {
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
 			public interface ISet<T> : Gee.Set<T>, System.Collections.Generic.ICollection<T> {
@@ -308,23 +310,27 @@ namespace System {
 				public abstract void UnionWith (System.Collections.Generic.IEnumerable<T> other);
 			}
 			[CCode (cheader_filename = "libdotnet.h")]
+			public delegate bool CompareDataFunc<T> (T a, T b);
+			[CCode (cheader_filename = "libdotnet.h")]
 			public delegate bool EqualDataFunc<T> (T a, T b);
 			[CCode (cheader_filename = "libdotnet.h")]
 			public delegate uint HashDataFunc<T> (T v);
 		}
 		namespace ObjectModel {
 			[CCode (cheader_filename = "libdotnet.h")]
-			public class ReadOnlyCollection<T> : GLib.Object, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T> {
+			[GenericAccessors]
+			public class ReadOnlyCollection<T> : GLib.Object, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.ICollection<T>, System.Collections.Generic.IReadOnlyCollection<T> {
 				public ReadOnlyCollection (System.Collections.Generic.IList<T> list);
-				public void Add (T value);
-				public void Clear ();
-				public bool Contains (T value);
-				public void CopyTo (T[] array, int index);
-				public bool Remove (T value);
+				public int IndexOf (T value, int index = 0);
+				public void Insert (int index, T value);
+				public void RemoveAt (int index);
+				public new T @get (int index);
+				public new void @set (int index, T value);
 				public bool IsFixedSize { get; }
-				public bool IsReadOnly { get; }
+				public virtual bool IsReadOnly { get; }
 				public bool IsSynchronized { get; }
 				protected System.Collections.Generic.IList<T> Items { get; }
+				public virtual int size { get; }
 			}
 		}
 	}
@@ -396,16 +402,49 @@ namespace System {
 		public abstract bool Equals (T other);
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
+	public errordomain ArgumentException {
+		NULL,
+		INVALID_OFFSET_LENGTH,
+		NOT_FOUND,
+		IMPLEMENT_ICOMPARABLE,
+		INVALID_ARRAY_TYPE,
+		ADDING_DUPLICATE
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public errordomain ArgumentNullException {
+		POINTER,
+		VALUE
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
 	public errordomain ArgumentOutOfRangeException {
 		INDEX,
 		VALUE,
-		NEEDNONNEGNUM,
-		BEGININDEXNOTNEGATIVE,
-		LENGTHNOTNEGATIVE
+		NEED_NON_NEG_NUM,
+		BEGIN_INDEX_NOT_NEGATIVE,
+		LENGTH_NOT_NEGATIVE
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public errordomain ArrayTypeMismatchException {
+		ARRAY_TYPE_MISMATCH
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public errordomain Error {
 		NOELEMENTS
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public errordomain InvalidOperationException {
+		ENUM_NOT_STARTED,
+		ENUM_ENDED,
+		NOT_IMPLEMENTED,
+		COMPARE_FAILED
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public errordomain NotSupportedException {
+		RANGE_COLLECTION,
+		FIXED_SIZE_COLLECTION,
+		READ_ONLY_COLLECTION,
+		SORTED_LIST_NESTED_WRITE,
+		KEY_COLLECTION_SET
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public delegate void Action<T> (T obj);

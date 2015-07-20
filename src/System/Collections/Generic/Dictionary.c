@@ -42,24 +42,6 @@ typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGeneri
 typedef struct _SystemCollectionsGenericIDictionary SystemCollectionsGenericIDictionary;
 typedef struct _SystemCollectionsGenericIDictionaryIface SystemCollectionsGenericIDictionaryIface;
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR (system_collections_generic_key_value_pair_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR, SystemCollectionsGenericKeyValuePair))
-#define SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR, SystemCollectionsGenericKeyValuePairClass))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_KEY_VALUE_PAIR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_KEY_VALUE_PAIR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR))
-#define SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR, SystemCollectionsGenericKeyValuePairClass))
-
-typedef struct _SystemCollectionsGenericKeyValuePair SystemCollectionsGenericKeyValuePair;
-typedef struct _SystemCollectionsGenericKeyValuePairClass SystemCollectionsGenericKeyValuePairClass;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER (system_collections_generic_iequality_comparer_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IEQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER, SystemCollectionsGenericIEqualityComparer))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IEQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_IEQUALITY_COMPARER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER, SystemCollectionsGenericIEqualityComparerIface))
-
-typedef struct _SystemCollectionsGenericIEqualityComparer SystemCollectionsGenericIEqualityComparer;
-typedef struct _SystemCollectionsGenericIEqualityComparerIface SystemCollectionsGenericIEqualityComparerIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
@@ -67,6 +49,22 @@ typedef struct _SystemCollectionsGenericIEqualityComparerIface SystemCollections
 
 typedef struct _SystemCollectionsGenericICollection SystemCollectionsGenericICollection;
 typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGenericICollectionIface;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION (system_collections_generic_iread_only_collection_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollection))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION))
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollectionIface))
+
+typedef struct _SystemCollectionsGenericIReadOnlyCollection SystemCollectionsGenericIReadOnlyCollection;
+typedef struct _SystemCollectionsGenericIReadOnlyCollectionIface SystemCollectionsGenericIReadOnlyCollectionIface;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY (system_collections_generic_iread_only_dictionary_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY, SystemCollectionsGenericIReadOnlyDictionary))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_IREAD_ONLY_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY))
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY, SystemCollectionsGenericIReadOnlyDictionaryIface))
+
+typedef struct _SystemCollectionsGenericIReadOnlyDictionary SystemCollectionsGenericIReadOnlyDictionary;
+typedef struct _SystemCollectionsGenericIReadOnlyDictionaryIface SystemCollectionsGenericIReadOnlyDictionaryIface;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_DICTIONARY (system_collections_generic_abstract_dictionary_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_DICTIONARY, SystemCollectionsGenericAbstractDictionary))
@@ -79,6 +77,16 @@ typedef struct _SystemCollectionsGenericAbstractDictionary SystemCollectionsGene
 typedef struct _SystemCollectionsGenericAbstractDictionaryClass SystemCollectionsGenericAbstractDictionaryClass;
 typedef struct _SystemCollectionsGenericAbstractDictionaryPrivate SystemCollectionsGenericAbstractDictionaryPrivate;
 
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR (system_collections_generic_key_value_pair_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR, SystemCollectionsGenericKeyValuePair))
+#define SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR, SystemCollectionsGenericKeyValuePairClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_KEY_VALUE_PAIR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_KEY_VALUE_PAIR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR))
+#define SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR, SystemCollectionsGenericKeyValuePairClass))
+
+typedef struct _SystemCollectionsGenericKeyValuePair SystemCollectionsGenericKeyValuePair;
+typedef struct _SystemCollectionsGenericKeyValuePairClass SystemCollectionsGenericKeyValuePairClass;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY (system_collections_generic_dictionary_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, SystemCollectionsGenericDictionary))
 #define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, SystemCollectionsGenericDictionaryClass))
@@ -89,7 +97,15 @@ typedef struct _SystemCollectionsGenericAbstractDictionaryPrivate SystemCollecti
 typedef struct _SystemCollectionsGenericDictionary SystemCollectionsGenericDictionary;
 typedef struct _SystemCollectionsGenericDictionaryClass SystemCollectionsGenericDictionaryClass;
 typedef struct _SystemCollectionsGenericDictionaryPrivate SystemCollectionsGenericDictionaryPrivate;
-typedef struct _SystemCollectionsGenericDictionaryNode SystemCollectionsGenericDictionaryNode;
+typedef struct _SystemCollectionsGenericNode SystemCollectionsGenericNode;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER (system_collections_generic_iequality_comparer_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_IEQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER, SystemCollectionsGenericIEqualityComparer))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_IEQUALITY_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_IEQUALITY_COMPARER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER, SystemCollectionsGenericIEqualityComparerIface))
+
+typedef struct _SystemCollectionsGenericIEqualityComparer SystemCollectionsGenericIEqualityComparer;
+typedef struct _SystemCollectionsGenericIEqualityComparerIface SystemCollectionsGenericIEqualityComparerIface;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER (system_collections_generic_equality_comparer_get_type ())
@@ -103,17 +119,17 @@ typedef struct _SystemCollectionsGenericEqualityComparer SystemCollectionsGeneri
 typedef struct _SystemCollectionsGenericEqualityComparerClass SystemCollectionsGenericEqualityComparerClass;
 #define _tvalue_destroy_func0(var) (((var == NULL) || (tvalue_destroy_func == NULL)) ? NULL : (var = (tvalue_destroy_func (var), NULL)))
 #define _tkey_destroy_func0(var) (((var == NULL) || (tkey_destroy_func == NULL)) ? NULL : (var = (tkey_destroy_func (var), NULL)))
-#define _system_collections_generic_dictionary_node_free0(var) ((var == NULL) ? NULL : (var = (system_collections_generic_dictionary_node_free (var), NULL)))
+#define _system_collections_generic_node_free0(var) ((var == NULL) ? NULL : (var = (system_collections_generic_node_free (var), NULL)))
 
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR (system_collections_generic_dictionary_node_enumerator_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericDictionaryNodeEnumerator))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericDictionaryNodeEnumeratorClass))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_NODE_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_NODE_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR))
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericDictionaryNodeEnumeratorClass))
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR (system_collections_generic_node_enumerator_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericNodeEnumerator))
+#define SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericNodeEnumeratorClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_NODE_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_NODE_ENUMERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR))
+#define SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericNodeEnumeratorClass))
 
-typedef struct _SystemCollectionsGenericDictionaryNodeEnumerator SystemCollectionsGenericDictionaryNodeEnumerator;
-typedef struct _SystemCollectionsGenericDictionaryNodeEnumeratorClass SystemCollectionsGenericDictionaryNodeEnumeratorClass;
+typedef struct _SystemCollectionsGenericNodeEnumerator SystemCollectionsGenericNodeEnumerator;
+typedef struct _SystemCollectionsGenericNodeEnumeratorClass SystemCollectionsGenericNodeEnumeratorClass;
 
 #define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_ENUMERATOR (system_collections_generic_dictionary_enumerator_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryEnumerator))
@@ -144,7 +160,7 @@ typedef struct _SystemCollectionsGenericDictionaryKeyCollectionClass SystemColle
 
 typedef struct _SystemCollectionsGenericDictionaryValueCollection SystemCollectionsGenericDictionaryValueCollection;
 typedef struct _SystemCollectionsGenericDictionaryValueCollectionClass SystemCollectionsGenericDictionaryValueCollectionClass;
-typedef struct _SystemCollectionsGenericDictionaryNodeEnumeratorPrivate SystemCollectionsGenericDictionaryNodeEnumeratorPrivate;
+typedef struct _SystemCollectionsGenericNodeEnumeratorPrivate SystemCollectionsGenericNodeEnumeratorPrivate;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IDICTIONARY_ENUMERATOR (system_collections_generic_idictionary_enumerator_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IDICTIONARY_ENUMERATOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IDICTIONARY_ENUMERATOR, SystemCollectionsGenericIDictionaryEnumerator))
@@ -164,14 +180,6 @@ typedef struct _SystemCollectionsGenericIDictionaryEnumeratorIface SystemCollect
 typedef struct _SystemCollectionsGenericDictionaryEntry SystemCollectionsGenericDictionaryEntry;
 typedef struct _SystemCollectionsGenericDictionaryEntryClass SystemCollectionsGenericDictionaryEntryClass;
 typedef struct _SystemCollectionsGenericDictionaryEnumeratorPrivate SystemCollectionsGenericDictionaryEnumeratorPrivate;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION (system_collections_generic_iread_only_collection_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollection))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollectionIface))
-
-typedef struct _SystemCollectionsGenericIReadOnlyCollection SystemCollectionsGenericIReadOnlyCollection;
-typedef struct _SystemCollectionsGenericIReadOnlyCollectionIface SystemCollectionsGenericIReadOnlyCollectionIface;
 typedef struct _SystemCollectionsGenericDictionaryKeyCollectionPrivate SystemCollectionsGenericDictionaryKeyCollectionPrivate;
 
 #define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR (system_collections_generic_dictionary_key_collection_enumerator_get_type ())
@@ -223,12 +231,6 @@ struct _SystemCollectionsGenericIEnumerableIface {
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
 };
 
-struct _SystemCollectionsGenericIEqualityComparerIface {
-	GTypeInterface parent_iface;
-	gboolean (*Equals) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y);
-	guint (*GetHashCode) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
-};
-
 struct _SystemCollectionsGenericICollectionIface {
 	GTypeInterface parent_iface;
 	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
@@ -253,15 +255,25 @@ struct _SystemCollectionsGenericIDictionaryIface {
 	gpointer (*get) (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 	void (*set) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gconstpointer value);
 	void (*Add) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gconstpointer value);
-	gboolean (*Contains) (SystemCollectionsGenericIDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer);
 	gboolean (*ContainsKey) (SystemCollectionsGenericIDictionary* self, gconstpointer key);
-	gboolean (*ContainsValue) (SystemCollectionsGenericIDictionary* self, gconstpointer value);
 	gboolean (*Remove) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gconstpointer value);
 	gboolean (*TryGetValue) (SystemCollectionsGenericIDictionary* self, gconstpointer key, gpointer* value);
-	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIDictionary* self);
-	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Keys) (SystemCollectionsGenericIDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Values) (SystemCollectionsGenericIDictionary* self);
+};
+
+struct _SystemCollectionsGenericIReadOnlyCollectionIface {
+	GTypeInterface parent_iface;
+	gint (*get_size) (SystemCollectionsGenericIReadOnlyCollection* self);
+	gint (*get_Count) (SystemCollectionsGenericIReadOnlyCollection* self);
+};
+
+struct _SystemCollectionsGenericIReadOnlyDictionaryIface {
+	GTypeInterface parent_iface;
+	gboolean (*ContainsKey) (SystemCollectionsGenericIReadOnlyDictionary* self, gconstpointer key);
+	gboolean (*TryGetValue) (SystemCollectionsGenericIReadOnlyDictionary* self, gconstpointer key, gpointer* value);
+	SystemCollectionsGenericIEnumerable* (*get_Keys) (SystemCollectionsGenericIReadOnlyDictionary* self);
+	SystemCollectionsGenericIEnumerable* (*get_Values) (SystemCollectionsGenericIReadOnlyDictionary* self);
 };
 
 struct _SystemCollectionsGenericAbstractDictionary {
@@ -276,8 +288,8 @@ struct _SystemCollectionsGenericAbstractDictionaryClass {
 	GType (*get_element_type) (SystemCollectionsGenericAbstractDictionary* self);
 	void (*Add) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value);
 	void (*Clear) (SystemCollectionsGenericAbstractDictionary* self);
-	gboolean (*Contains) (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer);
-	gboolean (*contains) (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* item);
+	gboolean (*Contains) (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair);
+	gboolean (*contains) (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair);
 	gboolean (*ContainsKey) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key);
 	gboolean (*ContainsValue) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer value);
 	void (*CopyTo) (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair** array, int array_length1, gint index);
@@ -286,13 +298,12 @@ struct _SystemCollectionsGenericAbstractDictionaryClass {
 	void (*OnDeserialization) (SystemCollectionsGenericAbstractDictionary* self, GObject* sender);
 	gboolean (*Remove) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value);
 	gboolean (*TryGetValue) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gpointer* value);
-	SystemCollectionsGenericIEqualityComparer* (*get_Comparer) (SystemCollectionsGenericAbstractDictionary* self);
+	gint (*get_size) (SystemCollectionsGenericAbstractDictionary* self);
 	gint (*get_Count) (SystemCollectionsGenericAbstractDictionary* self);
 	gboolean (*get_IsFixedSize) (SystemCollectionsGenericAbstractDictionary* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsGenericAbstractDictionary* self);
 	gboolean (*get_IsSynchronized) (SystemCollectionsGenericAbstractDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Keys) (SystemCollectionsGenericAbstractDictionary* self);
-	gint (*get_size) (SystemCollectionsGenericAbstractDictionary* self);
 	GObject* (*get_SyncRoot) (SystemCollectionsGenericAbstractDictionary* self);
 	SystemCollectionsGenericICollection* (*get_Values) (SystemCollectionsGenericAbstractDictionary* self);
 };
@@ -309,11 +320,23 @@ struct _SystemCollectionsGenericAbstractDictionaryPrivate {
 struct _SystemCollectionsGenericDictionary {
 	SystemCollectionsGenericAbstractDictionary parent_instance;
 	SystemCollectionsGenericDictionaryPrivate * priv;
+	gint _array_size;
+	gint _nnodes;
+	SystemCollectionsGenericNode** _nodes;
+	gint _nodes_length1;
+	gint __nodes_size_;
+	gint _stamp;
 	GObject* _syncRoot;
 };
 
 struct _SystemCollectionsGenericDictionaryClass {
 	SystemCollectionsGenericAbstractDictionaryClass parent_class;
+};
+
+struct _SystemCollectionsGenericIEqualityComparerIface {
+	GTypeInterface parent_iface;
+	gboolean (*Equals) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer x, gconstpointer y);
+	guint (*GetHashCode) (SystemCollectionsGenericIEqualityComparer* self, gconstpointer obj);
 };
 
 struct _SystemCollectionsGenericDictionaryPrivate {
@@ -323,12 +346,6 @@ struct _SystemCollectionsGenericDictionaryPrivate {
 	GType tvalue_type;
 	GBoxedCopyFunc tvalue_dup_func;
 	GDestroyNotify tvalue_destroy_func;
-	gint _array_size;
-	gint _nnodes;
-	SystemCollectionsGenericDictionaryNode** _nodes;
-	gint _nodes_length1;
-	gint __nodes_size_;
-	gint _stamp;
 	SystemCollectionsGenericICollection* _keys;
 	SystemCollectionsGenericICollection* _values;
 	SystemCollectionsGenericIEqualityComparer* _key_hash_func;
@@ -336,37 +353,28 @@ struct _SystemCollectionsGenericDictionaryPrivate {
 	SystemCollectionsGenericIEqualityComparer* _value_equal_func;
 };
 
-struct _SystemCollectionsGenericDictionaryNode {
+struct _SystemCollectionsGenericNode {
 	gpointer key;
 	gpointer value;
-	SystemCollectionsGenericDictionaryNode* next;
+	SystemCollectionsGenericNode* next;
 	guint key_hash;
 };
 
 typedef guint (*SystemCollectionsGenericHashDataFunc) (gconstpointer v, void* user_data);
 typedef gboolean (*SystemCollectionsGenericEqualDataFunc) (gconstpointer a, gconstpointer b, void* user_data);
-struct _SystemCollectionsGenericDictionaryNodeEnumerator {
+struct _SystemCollectionsGenericNodeEnumerator {
 	GObject parent_instance;
-	SystemCollectionsGenericDictionaryNodeEnumeratorPrivate * priv;
+	SystemCollectionsGenericNodeEnumeratorPrivate * priv;
 	SystemCollectionsGenericDictionary* _dictionary;
 	gint _index;
-	SystemCollectionsGenericDictionaryNode* _node;
-	SystemCollectionsGenericDictionaryNode* _next;
+	SystemCollectionsGenericNode* _node;
+	SystemCollectionsGenericNode* _next;
 	gint _stamp;
 };
 
-struct _SystemCollectionsGenericDictionaryNodeEnumeratorClass {
+struct _SystemCollectionsGenericNodeEnumeratorClass {
 	GObjectClass parent_class;
-	gboolean (*get_read_only) (SystemCollectionsGenericDictionaryNodeEnumerator* self);
-};
-
-struct _SystemCollectionsGenericDictionaryNodeEnumeratorPrivate {
-	GType tkey_type;
-	GBoxedCopyFunc tkey_dup_func;
-	GDestroyNotify tkey_destroy_func;
-	GType tvalue_type;
-	GBoxedCopyFunc tvalue_dup_func;
-	GDestroyNotify tvalue_destroy_func;
+	gboolean (*get_read_only) (SystemCollectionsGenericNodeEnumerator* self);
 };
 
 struct _SystemCollectionsGenericIDictionaryEnumeratorIface {
@@ -378,12 +386,12 @@ struct _SystemCollectionsGenericIDictionaryEnumeratorIface {
 };
 
 struct _SystemCollectionsGenericDictionaryEnumerator {
-	SystemCollectionsGenericDictionaryNodeEnumerator parent_instance;
+	SystemCollectionsGenericNodeEnumerator parent_instance;
 	SystemCollectionsGenericDictionaryEnumeratorPrivate * priv;
 };
 
 struct _SystemCollectionsGenericDictionaryEnumeratorClass {
-	SystemCollectionsGenericDictionaryNodeEnumeratorClass parent_class;
+	SystemCollectionsGenericNodeEnumeratorClass parent_class;
 };
 
 struct _SystemCollectionsGenericDictionaryEnumeratorPrivate {
@@ -393,12 +401,6 @@ struct _SystemCollectionsGenericDictionaryEnumeratorPrivate {
 	GType tvalue_type;
 	GBoxedCopyFunc tvalue_dup_func;
 	GDestroyNotify tvalue_destroy_func;
-};
-
-struct _SystemCollectionsGenericIReadOnlyCollectionIface {
-	GTypeInterface parent_iface;
-	gint (*get_size) (SystemCollectionsGenericIReadOnlyCollection* self);
-	gint (*get_Count) (SystemCollectionsGenericIReadOnlyCollection* self);
 };
 
 struct _SystemCollectionsGenericDictionaryKeyCollection {
@@ -421,12 +423,12 @@ struct _SystemCollectionsGenericDictionaryKeyCollectionPrivate {
 };
 
 struct _SystemCollectionsGenericDictionaryKeyCollectionEnumerator {
-	SystemCollectionsGenericDictionaryNodeEnumerator parent_instance;
+	SystemCollectionsGenericNodeEnumerator parent_instance;
 	SystemCollectionsGenericDictionaryKeyCollectionEnumeratorPrivate * priv;
 };
 
 struct _SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass {
-	SystemCollectionsGenericDictionaryNodeEnumeratorClass parent_class;
+	SystemCollectionsGenericNodeEnumeratorClass parent_class;
 };
 
 struct _SystemCollectionsGenericDictionaryKeyCollectionEnumeratorPrivate {
@@ -458,15 +460,24 @@ struct _SystemCollectionsGenericDictionaryValueCollectionPrivate {
 };
 
 struct _SystemCollectionsGenericDictionaryValueCollectionEnumerator {
-	SystemCollectionsGenericDictionaryNodeEnumerator parent_instance;
+	SystemCollectionsGenericNodeEnumerator parent_instance;
 	SystemCollectionsGenericDictionaryValueCollectionEnumeratorPrivate * priv;
 };
 
 struct _SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass {
-	SystemCollectionsGenericDictionaryNodeEnumeratorClass parent_class;
+	SystemCollectionsGenericNodeEnumeratorClass parent_class;
 };
 
 struct _SystemCollectionsGenericDictionaryValueCollectionEnumeratorPrivate {
+	GType tkey_type;
+	GBoxedCopyFunc tkey_dup_func;
+	GDestroyNotify tkey_destroy_func;
+	GType tvalue_type;
+	GBoxedCopyFunc tvalue_dup_func;
+	GDestroyNotify tvalue_destroy_func;
+};
+
+struct _SystemCollectionsGenericNodeEnumeratorPrivate {
 	GType tkey_type;
 	GBoxedCopyFunc tkey_dup_func;
 	GDestroyNotify tkey_destroy_func;
@@ -479,8 +490,10 @@ struct _SystemCollectionsGenericDictionaryValueCollectionEnumeratorPrivate {
 static gpointer system_collections_generic_abstract_dictionary_parent_class = NULL;
 static SystemCollectionsGenericIEnumerableIface* system_collections_generic_abstract_dictionary_system_collections_generic_ienumerable_parent_iface = NULL;
 static SystemCollectionsGenericIDictionaryIface* system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_parent_iface = NULL;
+static SystemCollectionsGenericICollectionIface* system_collections_generic_abstract_dictionary_system_collections_generic_icollection_parent_iface = NULL;
+static SystemCollectionsGenericIReadOnlyCollectionIface* system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_collection_parent_iface = NULL;
+static SystemCollectionsGenericIReadOnlyDictionaryIface* system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_dictionary_parent_iface = NULL;
 static gpointer system_collections_generic_dictionary_parent_class = NULL;
-static gpointer system_collections_generic_dictionary_node_enumerator_parent_class = NULL;
 static gpointer system_collections_generic_dictionary_enumerator_parent_class = NULL;
 static SystemCollectionsGenericIEnumeratorIface* system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_parent_iface = NULL;
 static SystemCollectionsGenericIDictionaryEnumeratorIface* system_collections_generic_dictionary_enumerator_system_collections_generic_idictionary_enumerator_parent_iface = NULL;
@@ -495,9 +508,15 @@ static gpointer system_collections_generic_dictionary_value_collection_enumerato
 static SystemCollectionsGenericIEnumeratorIface* system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_parent_iface = NULL;
 static SystemCollectionsGenericIEnumerableIface* system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_parent_iface = NULL;
 static SystemCollectionsGenericICollectionIface* system_collections_generic_dictionary_value_collection_system_collections_generic_icollection_parent_iface = NULL;
+static gpointer system_collections_generic_node_enumerator_parent_class = NULL;
 
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_idictionary_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_iread_only_collection_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_iread_only_dictionary_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_abstract_dictionary_get_type (void) G_GNUC_CONST;
 gpointer system_collections_generic_key_value_pair_ref (gpointer instance);
 void system_collections_generic_key_value_pair_unref (gpointer instance);
 GParamSpec* system_collections_generic_param_spec_key_value_pair (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
@@ -505,10 +524,6 @@ void system_collections_generic_value_set_key_value_pair (GValue* value, gpointe
 void system_collections_generic_value_take_key_value_pair (GValue* value, gpointer v_object);
 gpointer system_collections_generic_value_get_key_value_pair (const GValue* value);
 GType system_collections_generic_key_value_pair_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_iequality_comparer_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_idictionary_get_type (void) G_GNUC_CONST;
-GType system_collections_generic_abstract_dictionary_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_DICTIONARY, SystemCollectionsGenericAbstractDictionaryPrivate))
 enum  {
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_DUMMY_PROPERTY,
@@ -518,13 +533,12 @@ enum  {
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_TVALUE_TYPE,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_TVALUE_DUP_FUNC,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_TVALUE_DESTROY_FUNC,
-	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_COMPARER,
+	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_SIZE,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_COUNT,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_IS_FIXED_SIZE,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_IS_READ_ONLY,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_IS_SYNCHRONIZED,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_KEYS,
-	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_SIZE,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_SYNC_ROOT,
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_VALUES
 };
@@ -538,10 +552,10 @@ void system_collections_generic_abstract_dictionary_Add (SystemCollectionsGeneri
 static void system_collections_generic_abstract_dictionary_real_Add (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value);
 void system_collections_generic_abstract_dictionary_Clear (SystemCollectionsGenericAbstractDictionary* self);
 static void system_collections_generic_abstract_dictionary_real_Clear (SystemCollectionsGenericAbstractDictionary* self);
-gboolean system_collections_generic_abstract_dictionary_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer);
-static gboolean system_collections_generic_abstract_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer);
-gboolean system_collections_generic_abstract_dictionary_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* item);
-static gboolean system_collections_generic_abstract_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* item);
+gboolean system_collections_generic_abstract_dictionary_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair);
+static gboolean system_collections_generic_abstract_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair);
+gboolean system_collections_generic_abstract_dictionary_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair);
+static gboolean system_collections_generic_abstract_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair);
 gboolean system_collections_generic_abstract_dictionary_ContainsKey (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key);
 static gboolean system_collections_generic_abstract_dictionary_real_ContainsKey (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key);
 gboolean system_collections_generic_abstract_dictionary_ContainsValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer value);
@@ -559,19 +573,19 @@ static gboolean system_collections_generic_abstract_dictionary_real_Remove (Syst
 gboolean system_collections_generic_abstract_dictionary_TryGetValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gpointer* value);
 static gboolean system_collections_generic_abstract_dictionary_real_TryGetValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gpointer* value);
 SystemCollectionsGenericAbstractDictionary* system_collections_generic_abstract_dictionary_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func);
-SystemCollectionsGenericIEqualityComparer* system_collections_generic_abstract_dictionary_get_Comparer (SystemCollectionsGenericAbstractDictionary* self);
+gint system_collections_generic_abstract_dictionary_get_size (SystemCollectionsGenericAbstractDictionary* self);
 gint system_collections_generic_abstract_dictionary_get_Count (SystemCollectionsGenericAbstractDictionary* self);
 gboolean system_collections_generic_abstract_dictionary_get_IsFixedSize (SystemCollectionsGenericAbstractDictionary* self);
 gboolean system_collections_generic_abstract_dictionary_get_IsReadOnly (SystemCollectionsGenericAbstractDictionary* self);
 gboolean system_collections_generic_abstract_dictionary_get_IsSynchronized (SystemCollectionsGenericAbstractDictionary* self);
 SystemCollectionsGenericICollection* system_collections_generic_abstract_dictionary_get_Keys (SystemCollectionsGenericAbstractDictionary* self);
-gint system_collections_generic_abstract_dictionary_get_size (SystemCollectionsGenericAbstractDictionary* self);
 GObject* system_collections_generic_abstract_dictionary_get_SyncRoot (SystemCollectionsGenericAbstractDictionary* self);
 SystemCollectionsGenericICollection* system_collections_generic_abstract_dictionary_get_Values (SystemCollectionsGenericAbstractDictionary* self);
 static void _vala_system_collections_generic_abstract_dictionary_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
 static void _vala_system_collections_generic_abstract_dictionary_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 GType system_collections_generic_dictionary_get_type (void) G_GNUC_CONST;
-static void system_collections_generic_dictionary_node_free (SystemCollectionsGenericDictionaryNode* self);
+void system_collections_generic_node_free (SystemCollectionsGenericNode* self);
+GType system_collections_generic_iequality_comparer_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, SystemCollectionsGenericDictionaryPrivate))
 enum  {
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_DUMMY_PROPERTY,
@@ -581,7 +595,6 @@ enum  {
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_TYPE,
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_DUP_FUNC,
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_DESTROY_FUNC,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_COMPARER,
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_COUNT,
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_SIZE,
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_FIXED_SIZE,
@@ -605,19 +618,19 @@ gboolean system_collections_generic_ienumerator_next (SystemCollectionsGenericIE
 gpointer system_collections_generic_ienumerator_get (SystemCollectionsGenericIEnumerator* self);
 gpointer system_collections_generic_idictionary_get (SystemCollectionsGenericIDictionary* self, gconstpointer key);
 static gpointer system_collections_generic_dictionary_real_get (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key);
-static SystemCollectionsGenericDictionaryNode** system_collections_generic_dictionary_lookup_node (SystemCollectionsGenericDictionary* self, gconstpointer key);
+static SystemCollectionsGenericNode** system_collections_generic_dictionary_lookup_node (SystemCollectionsGenericDictionary* self, gconstpointer key);
 static void system_collections_generic_dictionary_real_set (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key, gconstpointer value);
 SystemCollectionsGenericHashDataFunc system_collections_generic_dictionary_get_key_hash_func (SystemCollectionsGenericDictionary* self, gpointer* result_target);
-static SystemCollectionsGenericDictionaryNode* system_collections_generic_dictionary_node_new (gpointer k, gpointer v, guint hash);
-static SystemCollectionsGenericDictionaryNode* system_collections_generic_dictionary_node_new (gpointer k, gpointer v, guint hash);
+SystemCollectionsGenericNode* system_collections_generic_node_new (gpointer k, gpointer v, guint hash);
+SystemCollectionsGenericNode* system_collections_generic_node_new (gpointer k, gpointer v, guint hash);
 static void system_collections_generic_dictionary_resize (SystemCollectionsGenericDictionary* self);
 static void system_collections_generic_dictionary_real_Add (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key, gconstpointer value);
 static void system_collections_generic_dictionary_real_Clear (SystemCollectionsGenericAbstractDictionary* base);
-static gboolean system_collections_generic_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* item);
+static gboolean system_collections_generic_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* keyValuePair);
+static gboolean system_collections_generic_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* keyValuePair);
 gconstpointer system_collections_generic_key_value_pair_get_Key (SystemCollectionsGenericKeyValuePair* self);
 SystemCollectionsGenericEqualDataFunc system_collections_generic_dictionary_get_value_equal_func (SystemCollectionsGenericDictionary* self, gpointer* result_target);
 gconstpointer system_collections_generic_key_value_pair_get_Value (SystemCollectionsGenericKeyValuePair* self);
-static gboolean system_collections_generic_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer);
 static gboolean system_collections_generic_dictionary_real_ContainsKey (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key);
 static gboolean system_collections_generic_dictionary_real_ContainsValue (SystemCollectionsGenericAbstractDictionary* base, gconstpointer value);
 static void system_collections_generic_dictionary_real_CopyTo (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair** array, int array_length1, gint index);
@@ -626,7 +639,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionar
 static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionary_real_GetEnumerator (SystemCollectionsGenericAbstractDictionary* base);
 static SystemCollectionsGenericDictionaryEnumerator* system_collections_generic_dictionary_enumerator_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
 static SystemCollectionsGenericDictionaryEnumerator* system_collections_generic_dictionary_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-static GType system_collections_generic_dictionary_node_enumerator_get_type (void) G_GNUC_CONST G_GNUC_UNUSED;
+GType system_collections_generic_node_enumerator_get_type (void) G_GNUC_CONST;
 static GType system_collections_generic_dictionary_enumerator_get_type (void) G_GNUC_CONST G_GNUC_UNUSED;
 static void system_collections_generic_dictionary_real_OnDeserialization (SystemCollectionsGenericAbstractDictionary* base, GObject* sender);
 static gboolean system_collections_generic_dictionary_real_Remove (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key, gconstpointer value);
@@ -646,29 +659,6 @@ static GType system_collections_generic_dictionary_key_collection_get_type (void
 static SystemCollectionsGenericDictionaryValueCollection* system_collections_generic_dictionary_value_collection_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
 static SystemCollectionsGenericDictionaryValueCollection* system_collections_generic_dictionary_value_collection_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
 static GType system_collections_generic_dictionary_value_collection_get_type (void) G_GNUC_CONST G_GNUC_UNUSED;
-static void system_collections_generic_dictionary_node_instance_init (SystemCollectionsGenericDictionaryNode * self);
-#define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericDictionaryNodeEnumeratorPrivate))
-enum  {
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_DUMMY_PROPERTY,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_TYPE,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_DUP_FUNC,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_DESTROY_FUNC,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_TYPE,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_DUP_FUNC,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_DESTROY_FUNC,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_READ_ONLY,
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_VALID
-};
-static SystemCollectionsGenericDictionaryNodeEnumerator* system_collections_generic_dictionary_node_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
-static SystemCollectionsGenericDictionaryNodeEnumerator* system_collections_generic_dictionary_node_enumerator_construct_from_iterator (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionaryNodeEnumerator* iter);
-static gboolean system_collections_generic_dictionary_node_enumerator_MoveNext (SystemCollectionsGenericDictionaryNodeEnumerator* self);
-static gboolean system_collections_generic_dictionary_node_enumerator_next (SystemCollectionsGenericDictionaryNodeEnumerator* self);
-static gboolean system_collections_generic_dictionary_node_enumerator_has_next (SystemCollectionsGenericDictionaryNodeEnumerator* self);
-static gboolean system_collections_generic_dictionary_node_enumerator_get_read_only (SystemCollectionsGenericDictionaryNodeEnumerator* self);
-static gboolean system_collections_generic_dictionary_node_enumerator_get_valid (SystemCollectionsGenericDictionaryNodeEnumerator* self);
-static void system_collections_generic_dictionary_node_enumerator_finalize (GObject* obj);
-static void _vala_system_collections_generic_dictionary_node_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
-static void _vala_system_collections_generic_dictionary_node_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 gpointer system_collections_generic_dictionary_entry_ref (gpointer instance);
 void system_collections_generic_dictionary_entry_unref (gpointer instance);
 GParamSpec* system_collections_generic_param_spec_dictionary_entry (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
@@ -688,15 +678,17 @@ enum  {
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TVALUE_DESTROY_FUNC,
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_CURRENT
 };
+SystemCollectionsGenericNodeEnumerator* system_collections_generic_node_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary);
 static void system_collections_generic_dictionary_enumerator_real_Reset (SystemCollectionsGenericIEnumerator* base);
+gboolean system_collections_generic_node_enumerator_has_next (SystemCollectionsGenericNodeEnumerator* self);
 SystemCollectionsGenericKeyValuePair* system_collections_generic_key_value_pair_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, gconstpointer key, gconstpointer value);
 SystemCollectionsGenericKeyValuePair* system_collections_generic_key_value_pair_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, gconstpointer key, gconstpointer value);
 SystemCollectionsGenericDictionaryEntry* system_collections_generic_dictionary_entry_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, gconstpointer key, gconstpointer value);
 SystemCollectionsGenericDictionaryEntry* system_collections_generic_dictionary_entry_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, gconstpointer key, gconstpointer value);
+gboolean system_collections_generic_node_enumerator_MoveNext (SystemCollectionsGenericNodeEnumerator* self);
 gpointer system_collections_generic_ienumerator_get_Current (SystemCollectionsGenericIEnumerator* self);
 static void _vala_system_collections_generic_dictionary_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
 static void _vala_system_collections_generic_dictionary_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
-GType system_collections_generic_iread_only_collection_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, SystemCollectionsGenericDictionaryKeyCollectionPrivate))
 enum  {
 	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_DUMMY_PROPERTY,
@@ -800,277 +792,297 @@ static void _vala_system_collections_generic_dictionary_value_collection_set_pro
 static void system_collections_generic_dictionary_finalize (GObject* obj);
 static void _vala_system_collections_generic_dictionary_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
 static void _vala_system_collections_generic_dictionary_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
+static void system_collections_generic_node_instance_init (SystemCollectionsGenericNode * self);
+#define SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericNodeEnumeratorPrivate))
+enum  {
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_DESTROY_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_DESTROY_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_READ_ONLY,
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_VALID
+};
+SystemCollectionsGenericNodeEnumerator* system_collections_generic_node_enumerator_construct_from_iterator (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericNodeEnumerator* iter);
+gboolean system_collections_generic_node_enumerator_next (SystemCollectionsGenericNodeEnumerator* self);
+gboolean system_collections_generic_node_enumerator_get_read_only (SystemCollectionsGenericNodeEnumerator* self);
+gboolean system_collections_generic_node_enumerator_get_valid (SystemCollectionsGenericNodeEnumerator* self);
+static void system_collections_generic_node_enumerator_finalize (GObject* obj);
+static void _vala_system_collections_generic_node_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_node_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNotify destroy_func);
 static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func);
 
 
 static gpointer system_collections_generic_abstract_dictionary_real_get (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key) {
-#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_get'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return NULL;
-#line 813 "Dictionary.c"
+#line 825 "Dictionary.c"
 }
 
 
 gpointer system_collections_generic_abstract_dictionary_get (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key) {
-#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get (self, key);
-#line 822 "Dictionary.c"
+#line 834 "Dictionary.c"
 }
 
 
 static void system_collections_generic_abstract_dictionary_real_set (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer item) {
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_set'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return;
-#line 831 "Dictionary.c"
+#line 843 "Dictionary.c"
 }
 
 
 void system_collections_generic_abstract_dictionary_set (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer item) {
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->set (self, key, item);
-#line 840 "Dictionary.c"
+#line 852 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_abstract_dictionary_real_get_element_type (SystemCollectionsGenericAbstractDictionary* self) {
-#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_get_element_type'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return 0UL;
-#line 849 "Dictionary.c"
+#line 861 "Dictionary.c"
 }
 
 
 GType system_collections_generic_abstract_dictionary_get_element_type (SystemCollectionsGenericAbstractDictionary* self) {
-#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, 0UL);
-#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_element_type (self);
-#line 858 "Dictionary.c"
+#line 870 "Dictionary.c"
 }
 
 
 static void system_collections_generic_abstract_dictionary_real_Add (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value) {
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_Add'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return;
-#line 867 "Dictionary.c"
+#line 879 "Dictionary.c"
 }
 
 
 void system_collections_generic_abstract_dictionary_Add (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value) {
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->Add (self, key, value);
-#line 876 "Dictionary.c"
+#line 888 "Dictionary.c"
 }
 
 
 static void system_collections_generic_abstract_dictionary_real_Clear (SystemCollectionsGenericAbstractDictionary* self) {
-#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_Clear'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return;
-#line 885 "Dictionary.c"
+#line 897 "Dictionary.c"
 }
 
 
 void system_collections_generic_abstract_dictionary_Clear (SystemCollectionsGenericAbstractDictionary* self) {
-#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->Clear (self);
-#line 894 "Dictionary.c"
+#line 906 "Dictionary.c"
 }
 
 
-static gboolean system_collections_generic_abstract_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer) {
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+static gboolean system_collections_generic_abstract_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair) {
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_Contains'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return FALSE;
-#line 903 "Dictionary.c"
+#line 915 "Dictionary.c"
 }
 
 
-gboolean system_collections_generic_abstract_dictionary_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer) {
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+gboolean system_collections_generic_abstract_dictionary_Contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair) {
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->Contains (self, keyValuePair, comparer);
-#line 912 "Dictionary.c"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->Contains (self, keyValuePair);
+#line 924 "Dictionary.c"
 }
 
 
-static gboolean system_collections_generic_abstract_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* item) {
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+static gboolean system_collections_generic_abstract_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair) {
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_contains'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return FALSE;
-#line 921 "Dictionary.c"
+#line 933 "Dictionary.c"
 }
 
 
-gboolean system_collections_generic_abstract_dictionary_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* item) {
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+gboolean system_collections_generic_abstract_dictionary_contains (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair* keyValuePair) {
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->contains (self, item);
-#line 930 "Dictionary.c"
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->contains (self, keyValuePair);
+#line 942 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_abstract_dictionary_real_ContainsKey (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key) {
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_ContainsKey'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return FALSE;
-#line 939 "Dictionary.c"
+#line 951 "Dictionary.c"
 }
 
 
 gboolean system_collections_generic_abstract_dictionary_ContainsKey (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key) {
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->ContainsKey (self, key);
-#line 948 "Dictionary.c"
+#line 960 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_abstract_dictionary_real_ContainsValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer value) {
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_ContainsValue'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return FALSE;
-#line 957 "Dictionary.c"
+#line 969 "Dictionary.c"
 }
 
 
 gboolean system_collections_generic_abstract_dictionary_ContainsValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer value) {
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->ContainsValue (self, value);
-#line 966 "Dictionary.c"
+#line 978 "Dictionary.c"
 }
 
 
 static void system_collections_generic_abstract_dictionary_real_CopyTo (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair** array, int array_length1, gint index) {
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_CopyTo'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return;
-#line 975 "Dictionary.c"
+#line 987 "Dictionary.c"
 }
 
 
 void system_collections_generic_abstract_dictionary_CopyTo (SystemCollectionsGenericAbstractDictionary* self, SystemCollectionsGenericKeyValuePair** array, int array_length1, gint index) {
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->CopyTo (self, array, array_length1, index);
-#line 984 "Dictionary.c"
+#line 996 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_dictionary_real_iterator (SystemCollectionsGenericAbstractDictionary* self) {
-#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_iterator'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return NULL;
-#line 993 "Dictionary.c"
+#line 1005 "Dictionary.c"
 }
 
 
 SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_dictionary_iterator (SystemCollectionsGenericAbstractDictionary* self) {
-#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->iterator (self);
-#line 1002 "Dictionary.c"
+#line 1014 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_dictionary_real_GetEnumerator (SystemCollectionsGenericAbstractDictionary* self) {
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_GetEnumerator'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return NULL;
-#line 1011 "Dictionary.c"
+#line 1023 "Dictionary.c"
 }
 
 
 SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_dictionary_GetEnumerator (SystemCollectionsGenericAbstractDictionary* self) {
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->GetEnumerator (self);
-#line 1020 "Dictionary.c"
+#line 1032 "Dictionary.c"
 }
 
 
 static void system_collections_generic_abstract_dictionary_real_OnDeserialization (SystemCollectionsGenericAbstractDictionary* self, GObject* sender) {
-#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_OnDeserialization'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return;
-#line 1029 "Dictionary.c"
+#line 1041 "Dictionary.c"
 }
 
 
 void system_collections_generic_abstract_dictionary_OnDeserialization (SystemCollectionsGenericAbstractDictionary* self, GObject* sender) {
-#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->OnDeserialization (self, sender);
-#line 1038 "Dictionary.c"
+#line 1050 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_abstract_dictionary_real_Remove (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value) {
-#line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_Remove'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return FALSE;
-#line 1047 "Dictionary.c"
+#line 1059 "Dictionary.c"
 }
 
 
 gboolean system_collections_generic_abstract_dictionary_Remove (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer value) {
-#line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->Remove (self, key, value);
-#line 1056 "Dictionary.c"
+#line 1068 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_abstract_dictionary_real_TryGetValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gpointer* value) {
-#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_dictionary_TryGetValue'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return FALSE;
-#line 1065 "Dictionary.c"
+#line 1077 "Dictionary.c"
 }
 
 
 gboolean system_collections_generic_abstract_dictionary_TryGetValue (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gpointer* value) {
-#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->TryGetValue (self, key, value);
-#line 1074 "Dictionary.c"
+#line 1086 "Dictionary.c"
 }
 
 
@@ -1092,88 +1104,79 @@ SystemCollectionsGenericAbstractDictionary* system_collections_generic_abstract_
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 1096 "Dictionary.c"
-}
-
-
-SystemCollectionsGenericIEqualityComparer* system_collections_generic_abstract_dictionary_get_Comparer (SystemCollectionsGenericAbstractDictionary* self) {
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, NULL);
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_Comparer (self);
-#line 1105 "Dictionary.c"
-}
-
-
-gint system_collections_generic_abstract_dictionary_get_Count (SystemCollectionsGenericAbstractDictionary* self) {
-#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, 0);
-#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_Count (self);
-#line 1114 "Dictionary.c"
-}
-
-
-gboolean system_collections_generic_abstract_dictionary_get_IsFixedSize (SystemCollectionsGenericAbstractDictionary* self) {
-#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_IsFixedSize (self);
-#line 1123 "Dictionary.c"
-}
-
-
-gboolean system_collections_generic_abstract_dictionary_get_IsReadOnly (SystemCollectionsGenericAbstractDictionary* self) {
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_IsReadOnly (self);
-#line 1132 "Dictionary.c"
-}
-
-
-gboolean system_collections_generic_abstract_dictionary_get_IsSynchronized (SystemCollectionsGenericAbstractDictionary* self) {
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_IsSynchronized (self);
-#line 1141 "Dictionary.c"
-}
-
-
-SystemCollectionsGenericICollection* system_collections_generic_abstract_dictionary_get_Keys (SystemCollectionsGenericAbstractDictionary* self) {
-#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, NULL);
-#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_Keys (self);
-#line 1150 "Dictionary.c"
+#line 1108 "Dictionary.c"
 }
 
 
 gint system_collections_generic_abstract_dictionary_get_size (SystemCollectionsGenericAbstractDictionary* self) {
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, 0);
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_size (self);
-#line 1159 "Dictionary.c"
+#line 1117 "Dictionary.c"
+}
+
+
+gint system_collections_generic_abstract_dictionary_get_Count (SystemCollectionsGenericAbstractDictionary* self) {
+#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, 0);
+#line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_Count (self);
+#line 1126 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_abstract_dictionary_get_IsFixedSize (SystemCollectionsGenericAbstractDictionary* self) {
+#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_IsFixedSize (self);
+#line 1135 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_abstract_dictionary_get_IsReadOnly (SystemCollectionsGenericAbstractDictionary* self) {
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_IsReadOnly (self);
+#line 1144 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_abstract_dictionary_get_IsSynchronized (SystemCollectionsGenericAbstractDictionary* self) {
+#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_IsSynchronized (self);
+#line 1153 "Dictionary.c"
+}
+
+
+SystemCollectionsGenericICollection* system_collections_generic_abstract_dictionary_get_Keys (SystemCollectionsGenericAbstractDictionary* self) {
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, NULL);
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_Keys (self);
+#line 1162 "Dictionary.c"
 }
 
 
 GObject* system_collections_generic_abstract_dictionary_get_SyncRoot (SystemCollectionsGenericAbstractDictionary* self) {
-#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_SyncRoot (self);
-#line 1168 "Dictionary.c"
+#line 1171 "Dictionary.c"
 }
 
 
 SystemCollectionsGenericICollection* system_collections_generic_abstract_dictionary_get_Values (SystemCollectionsGenericAbstractDictionary* self) {
-#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_CLASS (self)->get_Values (self);
-#line 1177 "Dictionary.c"
+#line 1180 "Dictionary.c"
 }
 
 
@@ -1229,7 +1232,7 @@ static void system_collections_generic_abstract_dictionary_class_init (SystemCol
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_COMPARER, g_param_spec_object ("Comparer", "Comparer", "Comparer", SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_SIZE, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_COUNT, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
@@ -1241,33 +1244,31 @@ static void system_collections_generic_abstract_dictionary_class_init (SystemCol
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_KEYS, g_param_spec_object ("Keys", "Keys", "Keys", SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_SIZE, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_SYNC_ROOT, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_VALUES, g_param_spec_object ("Values", "Values", "Values", SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 1250 "Dictionary.c"
+#line 1251 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_abstract_dictionary_system_collections_generic_ienumerable_get_t_type (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR;
-#line 1257 "Dictionary.c"
+#line 1258 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_abstract_dictionary_system_collections_generic_ienumerable_get_t_dup_func (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_key_value_pair_ref;
-#line 1264 "Dictionary.c"
+#line 1265 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_abstract_dictionary_system_collections_generic_ienumerable_get_t_destroy_func (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_key_value_pair_unref;
-#line 1271 "Dictionary.c"
+#line 1272 "Dictionary.c"
 }
 
 
@@ -1286,49 +1287,49 @@ static void system_collections_generic_abstract_dictionary_system_collections_ge
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_abstract_dictionary_system_collections_generic_ienumerable_get_t_dup_func;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_abstract_dictionary_system_collections_generic_ienumerable_get_t_destroy_func;
-#line 1290 "Dictionary.c"
+#line 1291 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_get_tkey_type (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_type;
-#line 1297 "Dictionary.c"
+#line 1298 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_get_tkey_dup_func (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_dup_func;
-#line 1304 "Dictionary.c"
+#line 1305 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_get_tkey_destroy_func (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_destroy_func;
-#line 1311 "Dictionary.c"
+#line 1312 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_get_tvalue_type (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_type;
-#line 1318 "Dictionary.c"
+#line 1319 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_get_tvalue_dup_func (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_dup_func;
-#line 1325 "Dictionary.c"
+#line 1326 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_get_tvalue_destroy_func (SystemCollectionsGenericAbstractDictionary* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_destroy_func;
-#line 1332 "Dictionary.c"
+#line 1333 "Dictionary.c"
 }
 
 
@@ -1342,11 +1343,7 @@ static void system_collections_generic_abstract_dictionary_system_collections_ge
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Add = (void (*)(SystemCollectionsGenericIDictionary*, gconstpointer, gconstpointer)) system_collections_generic_abstract_dictionary_Add;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	iface->Contains = (gboolean (*)(SystemCollectionsGenericIDictionary*, SystemCollectionsGenericKeyValuePair*, SystemCollectionsGenericIEqualityComparer*)) system_collections_generic_abstract_dictionary_Contains;
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->ContainsKey = (gboolean (*)(SystemCollectionsGenericIDictionary*, gconstpointer)) system_collections_generic_abstract_dictionary_ContainsKey;
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	iface->ContainsValue = (gboolean (*)(SystemCollectionsGenericIDictionary*, gconstpointer)) system_collections_generic_abstract_dictionary_ContainsValue;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Remove = (gboolean (*)(SystemCollectionsGenericIDictionary*, gconstpointer, gconstpointer)) system_collections_generic_abstract_dictionary_Remove;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
@@ -1367,14 +1364,49 @@ static void system_collections_generic_abstract_dictionary_system_collections_ge
 	iface->get_Keys = (SystemCollectionsGenericICollection* (*) (SystemCollectionsGenericIDictionary *)) system_collections_generic_abstract_dictionary_get_Keys;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Values = (SystemCollectionsGenericICollection* (*) (SystemCollectionsGenericIDictionary *)) system_collections_generic_abstract_dictionary_get_Values;
-#line 1371 "Dictionary.c"
+#line 1368 "Dictionary.c"
+}
+
+
+static void system_collections_generic_abstract_dictionary_system_collections_generic_icollection_interface_init (SystemCollectionsGenericICollectionIface * iface) {
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	system_collections_generic_abstract_dictionary_system_collections_generic_icollection_parent_iface = g_type_interface_peek_parent (iface);
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->Clear = (void (*)(SystemCollectionsGenericICollection*)) system_collections_generic_abstract_dictionary_Clear;
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->Contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_abstract_dictionary_Contains;
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_abstract_dictionary_contains;
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->CopyTo = (void (*)(SystemCollectionsGenericICollection*, gpointer*, int, gint)) system_collections_generic_abstract_dictionary_CopyTo;
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->get_size = (gint (*) (SystemCollectionsGenericICollection *)) system_collections_generic_abstract_dictionary_get_size;
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->get_Count = (gint (*) (SystemCollectionsGenericICollection *)) system_collections_generic_abstract_dictionary_get_Count;
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->get_IsReadOnly = (gboolean (*) (SystemCollectionsGenericICollection *)) system_collections_generic_abstract_dictionary_get_IsReadOnly;
+#line 1389 "Dictionary.c"
+}
+
+
+static void system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_collection_interface_init (SystemCollectionsGenericIReadOnlyCollectionIface * iface) {
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_collection_parent_iface = g_type_interface_peek_parent (iface);
+#line 1396 "Dictionary.c"
+}
+
+
+static void system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_dictionary_interface_init (SystemCollectionsGenericIReadOnlyDictionaryIface * iface) {
+#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_dictionary_parent_iface = g_type_interface_peek_parent (iface);
+#line 1403 "Dictionary.c"
 }
 
 
 static void system_collections_generic_abstract_dictionary_instance_init (SystemCollectionsGenericAbstractDictionary * self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_GET_PRIVATE (self);
-#line 1378 "Dictionary.c"
+#line 1410 "Dictionary.c"
 }
 
 
@@ -1384,10 +1416,16 @@ GType system_collections_generic_abstract_dictionary_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericAbstractDictionaryClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_abstract_dictionary_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericAbstractDictionary), 0, (GInstanceInitFunc) system_collections_generic_abstract_dictionary_instance_init, NULL };
 		static const GInterfaceInfo system_collections_generic_ienumerable_info = { (GInterfaceInitFunc) system_collections_generic_abstract_dictionary_system_collections_generic_ienumerable_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		static const GInterfaceInfo system_collections_generic_idictionary_info = { (GInterfaceInitFunc) system_collections_generic_abstract_dictionary_system_collections_generic_idictionary_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
+		static const GInterfaceInfo system_collections_generic_icollection_info = { (GInterfaceInitFunc) system_collections_generic_abstract_dictionary_system_collections_generic_icollection_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
+		static const GInterfaceInfo system_collections_generic_iread_only_collection_info = { (GInterfaceInitFunc) system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_collection_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
+		static const GInterfaceInfo system_collections_generic_iread_only_dictionary_info = { (GInterfaceInitFunc) system_collections_generic_abstract_dictionary_system_collections_generic_iread_only_dictionary_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_abstract_dictionary_type_id;
 		system_collections_generic_abstract_dictionary_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericAbstractDictionary", &g_define_type_info, G_TYPE_FLAG_ABSTRACT);
 		g_type_add_interface_static (system_collections_generic_abstract_dictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, &system_collections_generic_ienumerable_info);
 		g_type_add_interface_static (system_collections_generic_abstract_dictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IDICTIONARY, &system_collections_generic_idictionary_info);
+		g_type_add_interface_static (system_collections_generic_abstract_dictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, &system_collections_generic_icollection_info);
+		g_type_add_interface_static (system_collections_generic_abstract_dictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, &system_collections_generic_iread_only_collection_info);
+		g_type_add_interface_static (system_collections_generic_abstract_dictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY, &system_collections_generic_iread_only_dictionary_info);
 		g_once_init_leave (&system_collections_generic_abstract_dictionary_type_id__volatile, system_collections_generic_abstract_dictionary_type_id);
 	}
 	return system_collections_generic_abstract_dictionary_type_id__volatile;
@@ -1399,13 +1437,13 @@ static void _vala_system_collections_generic_abstract_dictionary_get_property (G
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_DICTIONARY, SystemCollectionsGenericAbstractDictionary);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 1403 "Dictionary.c"
+#line 1441 "Dictionary.c"
 		default:
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 1409 "Dictionary.c"
+#line 1447 "Dictionary.c"
 	}
 }
 
@@ -1451,21 +1489,21 @@ static void _vala_system_collections_generic_abstract_dictionary_set_property (G
 		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 1455 "Dictionary.c"
+#line 1493 "Dictionary.c"
 		default:
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 1461 "Dictionary.c"
+#line 1499 "Dictionary.c"
 	}
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 1469 "Dictionary.c"
+#line 1507 "Dictionary.c"
 }
 
 
@@ -1478,110 +1516,110 @@ SystemCollectionsGenericDictionary* system_collections_generic_dictionary_constr
 	SystemCollectionsGenericEqualityComparer* _tmp5_ = NULL;
 	SystemCollectionsGenericEqualityComparer* _tmp6_ = NULL;
 	gint _tmp7_ = 0;
-	SystemCollectionsGenericDictionaryNode** _tmp8_ = NULL;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SystemCollectionsGenericNode** _tmp8_ = NULL;
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) system_collections_generic_abstract_dictionary_construct (object_type, tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func, tvalue_type, (GBoxedCopyFunc) tvalue_dup_func, tvalue_destroy_func);
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_type = tkey_type;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_dup_func = tkey_dup_func;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_type = tvalue_type;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = system_collections_generic_equality_comparer_Default (tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func);
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->_key_hash_func);
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->_key_hash_func = (SystemCollectionsGenericIEqualityComparer*) _tmp0_;
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = key_equal_func;
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp3_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_CAST (_tmp2_, SYSTEM_COLLECTIONS_GENERIC_TYPE_EQUALITY_COMPARER, SystemCollectionsGenericEqualityComparer));
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _tmp3_;
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp1_ == NULL) {
-#line 1511 "Dictionary.c"
+#line 1549 "Dictionary.c"
 		SystemCollectionsGenericEqualityComparer* _tmp4_ = NULL;
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = system_collections_generic_equality_comparer_Default (tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func);
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_g_object_unref0 (_tmp1_);
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp1_ = _tmp4_;
-#line 1519 "Dictionary.c"
+#line 1557 "Dictionary.c"
 	}
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp1_;
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = NULL;
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->_key_equal_func);
-#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->_key_equal_func = (SystemCollectionsGenericIEqualityComparer*) _tmp5_;
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = system_collections_generic_equality_comparer_Default (tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func);
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->_value_equal_func);
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->_value_equal_func = (SystemCollectionsGenericIEqualityComparer*) _tmp6_;
+#line 176 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_array_size = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_MIN_SIZE;
 #line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_array_size = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_MIN_SIZE;
-#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp7_ = self->priv->_array_size;
-#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp8_ = g_new0 (SystemCollectionsGenericDictionaryNode*, _tmp7_ + 1);
-#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_nodes = (_vala_array_free (self->priv->_nodes, self->priv->_nodes_length1, (GDestroyNotify) system_collections_generic_dictionary_node_free), NULL);
-#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_nodes = _tmp8_;
-#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_nodes_length1 = _tmp7_;
-#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->__nodes_size_ = self->priv->_nodes_length1;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp7_ = self->_array_size;
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp8_ = g_new0 (SystemCollectionsGenericNode*, _tmp7_ + 1);
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_nodes = (_vala_array_free (self->_nodes, self->_nodes_length1, (GDestroyNotify) system_collections_generic_node_free), NULL);
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_nodes = _tmp8_;
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_nodes_length1 = _tmp7_;
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->__nodes_size_ = self->_nodes_length1;
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (_tmp1_);
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 1553 "Dictionary.c"
+#line 1591 "Dictionary.c"
 }
 
 
 SystemCollectionsGenericDictionary* system_collections_generic_dictionary_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIEqualityComparer* key_equal_func) {
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 171 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_dictionary_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, key_equal_func);
-#line 1560 "Dictionary.c"
+#line 1598 "Dictionary.c"
 }
 
 
 SystemCollectionsGenericDictionary* system_collections_generic_dictionary_construct_WithDictionary (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIDictionary* dictionary, SystemCollectionsGenericIEqualityComparer* comparer) {
 	SystemCollectionsGenericDictionary * self = NULL;
 	SystemCollectionsGenericIEqualityComparer* _tmp0_ = NULL;
-#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (dictionary != NULL, NULL);
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = comparer;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) system_collections_generic_dictionary_construct (object_type, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, _tmp0_);
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_type = tkey_type;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_dup_func = tkey_dup_func;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_type = tvalue_type;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 1585 "Dictionary.c"
+#line 1623 "Dictionary.c"
 	{
 		SystemCollectionsGenericIEnumerator* _key_it = NULL;
 		SystemCollectionsGenericIDictionary* _tmp1_ = NULL;
@@ -1590,25 +1628,25 @@ SystemCollectionsGenericDictionary* system_collections_generic_dictionary_constr
 		SystemCollectionsGenericICollection* _tmp4_ = NULL;
 		SystemCollectionsGenericIEnumerator* _tmp5_ = NULL;
 		SystemCollectionsGenericIEnumerator* _tmp6_ = NULL;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp1_ = dictionary;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp2_ = system_collections_generic_idictionary_get_Keys (_tmp1_);
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = _tmp2_;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = _tmp3_;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = system_collections_generic_ienumerable_iterator ((SystemCollectionsGenericIEnumerable*) _tmp4_);
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp6_ = _tmp5_;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_g_object_unref0 (_tmp4_);
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_key_it = _tmp6_;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		while (TRUE) {
-#line 1612 "Dictionary.c"
+#line 1650 "Dictionary.c"
 			SystemCollectionsGenericIEnumerator* _tmp7_ = NULL;
 			gboolean _tmp8_ = FALSE;
 			gpointer key = NULL;
@@ -1619,135 +1657,135 @@ SystemCollectionsGenericDictionary* system_collections_generic_dictionary_constr
 			gconstpointer _tmp13_ = NULL;
 			gpointer _tmp14_ = NULL;
 			gpointer _tmp15_ = NULL;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp7_ = _key_it;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp8_ = system_collections_generic_ienumerator_next (_tmp7_);
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			if (!_tmp8_) {
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				break;
-#line 1631 "Dictionary.c"
+#line 1669 "Dictionary.c"
 			}
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp9_ = _key_it;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp10_ = system_collections_generic_ienumerator_get (_tmp9_);
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			key = _tmp10_;
-#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp11_ = key;
-#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp12_ = dictionary;
-#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp13_ = key;
-#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp14_ = system_collections_generic_idictionary_get (_tmp12_, _tmp13_);
-#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp15_ = _tmp14_;
-#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			system_collections_generic_abstract_dictionary_Add ((SystemCollectionsGenericAbstractDictionary*) self, _tmp11_, _tmp15_);
-#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tvalue_destroy_func0 (_tmp15_);
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tkey_destroy_func0 (key);
-#line 1655 "Dictionary.c"
+#line 1693 "Dictionary.c"
 		}
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_g_object_unref0 (_key_it);
-#line 1659 "Dictionary.c"
+#line 1697 "Dictionary.c"
 	}
-#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 1663 "Dictionary.c"
+#line 1701 "Dictionary.c"
 }
 
 
 SystemCollectionsGenericDictionary* system_collections_generic_dictionary_new_WithDictionary (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIDictionary* dictionary, SystemCollectionsGenericIEqualityComparer* comparer) {
-#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_dictionary_construct_WithDictionary (SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, dictionary, comparer);
-#line 1670 "Dictionary.c"
+#line 1708 "Dictionary.c"
 }
 
 
 static gpointer system_collections_generic_dictionary_real_get (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key) {
 	SystemCollectionsGenericDictionary * self;
 	gpointer result = NULL;
-	SystemCollectionsGenericDictionaryNode* node = NULL;
+	SystemCollectionsGenericNode* node = NULL;
 	gconstpointer _tmp0_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp1_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp2_ = NULL;
-#line 190 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SystemCollectionsGenericNode** _tmp1_ = NULL;
+	SystemCollectionsGenericNode* _tmp2_ = NULL;
+#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 190 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 190 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_dictionary_lookup_node (self, _tmp0_);
-#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 190 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = *_tmp1_;
-#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = node;
-#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp2_ != NULL) {
-#line 1693 "Dictionary.c"
-		SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
+#line 1731 "Dictionary.c"
+		SystemCollectionsGenericNode* _tmp3_ = NULL;
 		gconstpointer _tmp4_ = NULL;
 		gpointer _tmp5_ = NULL;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = node;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = _tmp3_->value;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = ((_tmp4_ != NULL) && (self->priv->tvalue_dup_func != NULL)) ? self->priv->tvalue_dup_func ((gpointer) _tmp4_) : ((gpointer) _tmp4_);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		result = _tmp5_;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		return result;
-#line 1707 "Dictionary.c"
+#line 1745 "Dictionary.c"
 	} else {
-#line 195 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		result = NULL;
-#line 195 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		return result;
-#line 1713 "Dictionary.c"
+#line 1751 "Dictionary.c"
 	}
 }
 
 
 static void system_collections_generic_dictionary_real_set (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key, gconstpointer value) {
 	SystemCollectionsGenericDictionary * self;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
+	SystemCollectionsGenericNode** node = NULL;
 	gconstpointer _tmp0_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp1_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp2_ = NULL;
+	SystemCollectionsGenericNode** _tmp1_ = NULL;
+	SystemCollectionsGenericNode** _tmp2_ = NULL;
 	gint _tmp19_ = 0;
-#line 199 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 199 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 199 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_dictionary_lookup_node (self, _tmp0_);
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 199 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = _tmp1_;
-#line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = node;
-#line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if ((*_tmp2_) != NULL) {
-#line 1737 "Dictionary.c"
-		SystemCollectionsGenericDictionaryNode** _tmp3_ = NULL;
+#line 1775 "Dictionary.c"
+		SystemCollectionsGenericNode** _tmp3_ = NULL;
 		gconstpointer _tmp4_ = NULL;
 		gpointer _tmp5_ = NULL;
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = node;
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = value;
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = ((_tmp4_ != NULL) && (self->priv->tvalue_dup_func != NULL)) ? self->priv->tvalue_dup_func ((gpointer) _tmp4_) : ((gpointer) _tmp4_);
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(((*_tmp3_)->value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : ((*_tmp3_)->value = (self->priv->tvalue_destroy_func ((*_tmp3_)->value), NULL));
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp3_)->value = _tmp5_;
-#line 1751 "Dictionary.c"
+#line 1789 "Dictionary.c"
 	} else {
 		guint hash_value = 0U;
 		SystemCollectionsGenericHashDataFunc _tmp6_ = NULL;
@@ -1756,58 +1794,58 @@ static void system_collections_generic_dictionary_real_set (SystemCollectionsGen
 		void* _tmp7__target = NULL;
 		gconstpointer _tmp8_ = NULL;
 		guint _tmp9_ = 0U;
-		SystemCollectionsGenericDictionaryNode** _tmp10_ = NULL;
+		SystemCollectionsGenericNode** _tmp10_ = NULL;
 		gconstpointer _tmp11_ = NULL;
 		gpointer _tmp12_ = NULL;
 		gconstpointer _tmp13_ = NULL;
 		gpointer _tmp14_ = NULL;
 		guint _tmp15_ = 0U;
-		SystemCollectionsGenericDictionaryNode* _tmp16_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp17_ = NULL;
+		SystemCollectionsGenericNode* _tmp16_ = NULL;
+		SystemCollectionsGenericNode* _tmp17_ = NULL;
 		gint _tmp18_ = 0;
-#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp6_ = system_collections_generic_dictionary_get_key_hash_func (self, &_tmp6__target);
-#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp7_ = _tmp6_;
-#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp7__target = _tmp6__target;
-#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp8_ = key;
-#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp9_ = _tmp7_ (_tmp8_, _tmp7__target);
-#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		hash_value = _tmp9_;
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp10_ = node;
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp11_ = key;
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp12_ = ((_tmp11_ != NULL) && (self->priv->tkey_dup_func != NULL)) ? self->priv->tkey_dup_func ((gpointer) _tmp11_) : ((gpointer) _tmp11_);
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp13_ = value;
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp14_ = ((_tmp13_ != NULL) && (self->priv->tvalue_dup_func != NULL)) ? self->priv->tvalue_dup_func ((gpointer) _tmp13_) : ((gpointer) _tmp13_);
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp15_ = hash_value;
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp16_ = system_collections_generic_dictionary_node_new (_tmp12_, _tmp14_, _tmp15_);
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp16_ = system_collections_generic_node_new (_tmp12_, _tmp14_, _tmp15_);
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		*_tmp10_ = _tmp16_;
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp17_ = *_tmp10_;
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp18_ = self->_nnodes;
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_nnodes = _tmp18_ + 1;
 #line 206 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp18_ = self->priv->_nnodes;
-#line 206 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_nnodes = _tmp18_ + 1;
-#line 207 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		system_collections_generic_dictionary_resize (self);
-#line 1805 "Dictionary.c"
+#line 1843 "Dictionary.c"
 	}
-#line 209 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp19_ = self->priv->_stamp;
-#line 209 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_stamp = _tmp19_ + 1;
-#line 1811 "Dictionary.c"
+#line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp19_ = self->_stamp;
+#line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_stamp = _tmp19_ + 1;
+#line 1849 "Dictionary.c"
 }
 
 
@@ -1815,407 +1853,355 @@ static void system_collections_generic_dictionary_real_Add (SystemCollectionsGen
 	SystemCollectionsGenericDictionary * self;
 	gconstpointer _tmp0_ = NULL;
 	gconstpointer _tmp1_ = NULL;
-#line 213 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 212 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 213 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 213 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = value;
-#line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 213 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_abstract_dictionary_set ((SystemCollectionsGenericAbstractDictionary*) self, _tmp0_, _tmp1_);
-#line 1827 "Dictionary.c"
+#line 1865 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_real_Clear (SystemCollectionsGenericAbstractDictionary* base) {
 	SystemCollectionsGenericDictionary * self;
-#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 216 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 1835 "Dictionary.c"
+#line 1873 "Dictionary.c"
 	{
 		gint i = 0;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		i = 0;
-#line 1840 "Dictionary.c"
+#line 1878 "Dictionary.c"
 		{
 			gboolean _tmp0_ = FALSE;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp0_ = TRUE;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			while (TRUE) {
-#line 1847 "Dictionary.c"
+#line 1885 "Dictionary.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
-				SystemCollectionsGenericDictionaryNode* node = NULL;
-				SystemCollectionsGenericDictionaryNode** _tmp4_ = NULL;
+				SystemCollectionsGenericNode* node = NULL;
+				SystemCollectionsGenericNode** _tmp4_ = NULL;
 				gint _tmp4__length1 = 0;
 				gint _tmp5_ = 0;
-				SystemCollectionsGenericDictionaryNode* _tmp6_ = NULL;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				SystemCollectionsGenericNode* _tmp6_ = NULL;
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				if (!_tmp0_) {
-#line 1857 "Dictionary.c"
+#line 1895 "Dictionary.c"
 					gint _tmp1_ = 0;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					_tmp1_ = i;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					i = _tmp1_ + 1;
-#line 1863 "Dictionary.c"
+#line 1901 "Dictionary.c"
 				}
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp0_ = FALSE;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp2_ = i;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp3_ = self->priv->_array_size;
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp3_ = self->_array_size;
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				if (!(_tmp2_ < _tmp3_)) {
-#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					break;
-#line 1875 "Dictionary.c"
-				}
-#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp4_ = self->priv->_nodes;
-#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp4__length1 = self->priv->_nodes_length1;
-#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp5_ = i;
-#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp6_ = _tmp4_[_tmp5_];
-#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp4_[_tmp5_] = NULL;
-#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				node = _tmp6_;
-#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				while (TRUE) {
-#line 1891 "Dictionary.c"
-					SystemCollectionsGenericDictionaryNode* _tmp7_ = NULL;
-					SystemCollectionsGenericDictionaryNode* next = NULL;
-					SystemCollectionsGenericDictionaryNode* _tmp8_ = NULL;
-					SystemCollectionsGenericDictionaryNode* _tmp9_ = NULL;
-					SystemCollectionsGenericDictionaryNode* _tmp10_ = NULL;
-					SystemCollectionsGenericDictionaryNode* _tmp11_ = NULL;
-					SystemCollectionsGenericDictionaryNode* _tmp12_ = NULL;
-#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp7_ = node;
-#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					if (!(_tmp7_ != NULL)) {
-#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-						break;
-#line 1905 "Dictionary.c"
-					}
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp8_ = node;
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp9_ = _tmp8_->next;
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp8_->next = NULL;
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					next = _tmp9_;
-#line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp10_ = node;
-#line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					((_tmp10_->key == NULL) || (self->priv->tkey_destroy_func == NULL)) ? NULL : (_tmp10_->key = (self->priv->tkey_destroy_func (_tmp10_->key), NULL));
-#line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp10_->key = NULL;
-#line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp11_ = node;
-#line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					((_tmp11_->value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_tmp11_->value = (self->priv->tvalue_destroy_func (_tmp11_->value), NULL));
-#line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp11_->value = NULL;
-#line 224 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp12_ = next;
-#line 224 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					next = NULL;
-#line 224 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_system_collections_generic_dictionary_node_free0 (node);
-#line 224 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					node = _tmp12_;
-#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_system_collections_generic_dictionary_node_free0 (next);
-#line 1937 "Dictionary.c"
+#line 1913 "Dictionary.c"
 				}
 #line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_system_collections_generic_dictionary_node_free0 (node);
-#line 1941 "Dictionary.c"
+				_tmp4_ = self->_nodes;
+#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp4__length1 = self->_nodes_length1;
+#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp5_ = i;
+#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp6_ = _tmp4_[_tmp5_];
+#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp4_[_tmp5_] = NULL;
+#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				node = _tmp6_;
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				while (TRUE) {
+#line 1929 "Dictionary.c"
+					SystemCollectionsGenericNode* _tmp7_ = NULL;
+					SystemCollectionsGenericNode* next = NULL;
+					SystemCollectionsGenericNode* _tmp8_ = NULL;
+					SystemCollectionsGenericNode* _tmp9_ = NULL;
+					SystemCollectionsGenericNode* _tmp10_ = NULL;
+					SystemCollectionsGenericNode* _tmp11_ = NULL;
+					SystemCollectionsGenericNode* _tmp12_ = NULL;
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp7_ = node;
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					if (!(_tmp7_ != NULL)) {
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+						break;
+#line 1943 "Dictionary.c"
+					}
+#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp8_ = node;
+#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp9_ = _tmp8_->next;
+#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp8_->next = NULL;
+#line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					next = _tmp9_;
+#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp10_ = node;
+#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					((_tmp10_->key == NULL) || (self->priv->tkey_destroy_func == NULL)) ? NULL : (_tmp10_->key = (self->priv->tkey_destroy_func (_tmp10_->key), NULL));
+#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp10_->key = NULL;
+#line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp11_ = node;
+#line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					((_tmp11_->value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_tmp11_->value = (self->priv->tvalue_destroy_func (_tmp11_->value), NULL));
+#line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp11_->value = NULL;
+#line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp12_ = next;
+#line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					next = NULL;
+#line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_system_collections_generic_node_free0 (node);
+#line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					node = _tmp12_;
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_system_collections_generic_node_free0 (next);
+#line 1975 "Dictionary.c"
+				}
+#line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_system_collections_generic_node_free0 (node);
+#line 1979 "Dictionary.c"
 			}
 		}
 	}
+#line 226 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_nnodes = 0;
 #line 227 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_nnodes = 0;
-#line 228 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_resize (self);
-#line 1949 "Dictionary.c"
+#line 1987 "Dictionary.c"
 }
 
 
-static gboolean system_collections_generic_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* item) {
+static gboolean system_collections_generic_dictionary_real_contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* keyValuePair) {
 	SystemCollectionsGenericDictionary * self;
 	gboolean result = FALSE;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
 	SystemCollectionsGenericKeyValuePair* _tmp0_ = NULL;
-	gconstpointer _tmp1_ = NULL;
-	gconstpointer _tmp2_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp3_ = NULL;
-	gboolean _tmp4_ = FALSE;
-	SystemCollectionsGenericDictionaryNode** _tmp5_ = NULL;
-#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	gboolean _tmp1_ = FALSE;
+#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (item != NULL, FALSE);
-#line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = item;
-#line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = system_collections_generic_key_value_pair_get_Key (_tmp0_);
-#line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_;
-#line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = system_collections_generic_dictionary_lookup_node (self, _tmp2_);
-#line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	node = _tmp3_;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp5_ = node;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	if ((*_tmp5_) != NULL) {
-#line 1981 "Dictionary.c"
-		SystemCollectionsGenericEqualDataFunc _tmp6_ = NULL;
-		void* _tmp6__target = NULL;
-		SystemCollectionsGenericEqualDataFunc _tmp7_ = NULL;
-		void* _tmp7__target = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp8_ = NULL;
-		gconstpointer _tmp9_ = NULL;
-		SystemCollectionsGenericKeyValuePair* _tmp10_ = NULL;
-		gconstpointer _tmp11_ = NULL;
-		gconstpointer _tmp12_ = NULL;
-		gboolean _tmp13_ = FALSE;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp6_ = system_collections_generic_dictionary_get_value_equal_func (self, &_tmp6__target);
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp7_ = _tmp6_;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp7__target = _tmp6__target;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp8_ = node;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp9_ = (*_tmp8_)->value;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp10_ = item;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp11_ = system_collections_generic_key_value_pair_get_Value (_tmp10_);
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp12_ = _tmp11_;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp13_ = _tmp7_ (_tmp9_, _tmp12_, _tmp7__target);
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp4_ = (gboolean) _tmp13_;
-#line 2012 "Dictionary.c"
-	} else {
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp4_ = FALSE;
-#line 2016 "Dictionary.c"
-	}
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = _tmp4_;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return result;
-#line 2022 "Dictionary.c"
-}
-
-
-static gboolean system_collections_generic_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* keyValuePair, SystemCollectionsGenericIEqualityComparer* comparer) {
-	SystemCollectionsGenericDictionary * self;
-	gboolean result = FALSE;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
-	SystemCollectionsGenericKeyValuePair* _tmp0_ = NULL;
-	gconstpointer _tmp1_ = NULL;
-	gconstpointer _tmp2_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp3_ = NULL;
-	gboolean _tmp4_ = FALSE;
-	SystemCollectionsGenericDictionaryNode** _tmp5_ = NULL;
-#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = (SystemCollectionsGenericDictionary*) base;
-#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (keyValuePair != NULL, FALSE);
-#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = keyValuePair;
-#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = system_collections_generic_abstract_dictionary_Contains ((SystemCollectionsGenericAbstractDictionary*) self, _tmp0_);
+#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	result = _tmp1_;
+#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return result;
+#line 2008 "Dictionary.c"
+}
+
+
+static gboolean system_collections_generic_dictionary_real_Contains (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair* keyValuePair) {
+	SystemCollectionsGenericDictionary * self;
+	gboolean result = FALSE;
+	SystemCollectionsGenericNode** node = NULL;
+	SystemCollectionsGenericKeyValuePair* _tmp0_ = NULL;
+	gconstpointer _tmp1_ = NULL;
+	gconstpointer _tmp2_ = NULL;
+	SystemCollectionsGenericNode** _tmp3_ = NULL;
+	gboolean _tmp4_ = FALSE;
+	SystemCollectionsGenericNode** _tmp5_ = NULL;
+#line 234 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = (SystemCollectionsGenericDictionary*) base;
+#line 234 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (keyValuePair != NULL, FALSE);
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = keyValuePair;
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_key_value_pair_get_Key (_tmp0_);
-#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = _tmp1_;
-#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp3_ = system_collections_generic_dictionary_lookup_node (self, _tmp2_);
-#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = _tmp3_;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = node;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if ((*_tmp5_) != NULL) {
-#line 2054 "Dictionary.c"
+#line 2040 "Dictionary.c"
 		SystemCollectionsGenericEqualDataFunc _tmp6_ = NULL;
 		void* _tmp6__target = NULL;
 		SystemCollectionsGenericEqualDataFunc _tmp7_ = NULL;
 		void* _tmp7__target = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp8_ = NULL;
+		SystemCollectionsGenericNode** _tmp8_ = NULL;
 		gconstpointer _tmp9_ = NULL;
 		SystemCollectionsGenericKeyValuePair* _tmp10_ = NULL;
 		gconstpointer _tmp11_ = NULL;
 		gconstpointer _tmp12_ = NULL;
 		gboolean _tmp13_ = FALSE;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp6_ = system_collections_generic_dictionary_get_value_equal_func (self, &_tmp6__target);
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp7_ = _tmp6_;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp7__target = _tmp6__target;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp8_ = node;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp9_ = (*_tmp8_)->value;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp10_ = keyValuePair;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp11_ = system_collections_generic_key_value_pair_get_Value (_tmp10_);
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp12_ = _tmp11_;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp13_ = _tmp7_ (_tmp9_, _tmp12_, _tmp7__target);
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = (gboolean) _tmp13_;
-#line 2085 "Dictionary.c"
+#line 2071 "Dictionary.c"
 	} else {
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = FALSE;
-#line 2089 "Dictionary.c"
+#line 2075 "Dictionary.c"
 	}
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp4_;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2095 "Dictionary.c"
+#line 2081 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_real_ContainsKey (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key) {
 	SystemCollectionsGenericDictionary * self;
 	gboolean result = FALSE;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
+	SystemCollectionsGenericNode** node = NULL;
 	gconstpointer _tmp0_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp1_ = NULL;
-#line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SystemCollectionsGenericNode** _tmp1_ = NULL;
+#line 239 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 240 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 240 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_dictionary_lookup_node (self, _tmp0_);
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 240 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = _tmp1_;
-#line 243 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = (*node) != NULL;
-#line 243 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2117 "Dictionary.c"
+#line 2103 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_real_ContainsValue (SystemCollectionsGenericAbstractDictionary* base, gconstpointer value) {
 	SystemCollectionsGenericDictionary * self;
 	gboolean result = FALSE;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp0_ = NULL;
+	SystemCollectionsGenericNode** node = NULL;
+	SystemCollectionsGenericNode** _tmp0_ = NULL;
 	gint _tmp0__length1 = 0;
 	gint _tmp1_ = 0;
-	SystemCollectionsGenericDictionaryNode** _tmp11_ = NULL;
-#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SystemCollectionsGenericNode** _tmp11_ = NULL;
+#line 244 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = self->priv->_nodes;
-#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0__length1 = self->priv->_nodes_length1;
-#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = self->priv->_nnodes;
-#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = self->_nodes;
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0__length1 = self->_nodes_length1;
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = self->_nnodes;
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = &_tmp0_[_tmp1_ - 1];
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	while (TRUE) {
-#line 2141 "Dictionary.c"
+#line 2127 "Dictionary.c"
 		gboolean _tmp2_ = FALSE;
-		SystemCollectionsGenericDictionaryNode** _tmp3_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp10_ = NULL;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		SystemCollectionsGenericNode** _tmp3_ = NULL;
+		SystemCollectionsGenericNode** _tmp10_ = NULL;
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = node;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if ((*_tmp3_) != NULL) {
-#line 2149 "Dictionary.c"
+#line 2135 "Dictionary.c"
 			SystemCollectionsGenericEqualDataFunc _tmp4_ = NULL;
 			void* _tmp4__target = NULL;
 			SystemCollectionsGenericEqualDataFunc _tmp5_ = NULL;
 			void* _tmp5__target = NULL;
-			SystemCollectionsGenericDictionaryNode** _tmp6_ = NULL;
+			SystemCollectionsGenericNode** _tmp6_ = NULL;
 			gconstpointer _tmp7_ = NULL;
 			gconstpointer _tmp8_ = NULL;
 			gboolean _tmp9_ = FALSE;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp4_ = system_collections_generic_dictionary_get_value_equal_func (self, &_tmp4__target);
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp5_ = _tmp4_;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp5__target = _tmp4__target;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp6_ = node;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp7_ = (*_tmp6_)->value;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp8_ = value;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp9_ = _tmp5_ (_tmp7_, _tmp8_, _tmp5__target);
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp2_ = !_tmp9_;
-#line 2174 "Dictionary.c"
+#line 2160 "Dictionary.c"
 		} else {
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp2_ = FALSE;
-#line 2178 "Dictionary.c"
+#line 2164 "Dictionary.c"
 		}
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if (!_tmp2_) {
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			break;
-#line 2184 "Dictionary.c"
+#line 2170 "Dictionary.c"
 		}
-#line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp10_ = node;
-#line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		node = &(*_tmp10_)->next;
-#line 2190 "Dictionary.c"
+#line 2176 "Dictionary.c"
 	}
-#line 251 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp11_ = node;
-#line 251 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = (*_tmp11_) != NULL;
-#line 251 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2198 "Dictionary.c"
+#line 2184 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_real_CopyTo (SystemCollectionsGenericAbstractDictionary* base, SystemCollectionsGenericKeyValuePair** array, int array_length1, gint index) {
 	SystemCollectionsGenericDictionary * self;
-#line 255 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 253 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 2206 "Dictionary.c"
+#line 2192 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_real_get_element_type (SystemCollectionsGenericAbstractDictionary* base) {
 	SystemCollectionsGenericDictionary * self;
 	GType result = 0UL;
-#line 259 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 257 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 260 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 258 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = self->priv->tvalue_type;
-#line 260 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 258 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2219 "Dictionary.c"
+#line 2205 "Dictionary.c"
 }
 
 
@@ -2223,15 +2209,15 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionar
 	SystemCollectionsGenericDictionary * self;
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
-#line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 261 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = system_collections_generic_abstract_dictionary_GetEnumerator ((SystemCollectionsGenericAbstractDictionary*) self);
-#line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp0_;
-#line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2235 "Dictionary.c"
+#line 2221 "Dictionary.c"
 }
 
 
@@ -2239,116 +2225,116 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionar
 	SystemCollectionsGenericDictionary * self;
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericDictionaryEnumerator* _tmp0_ = NULL;
-#line 267 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 265 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 268 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 266 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = system_collections_generic_dictionary_enumerator_new (self->priv->tkey_type, (GBoxedCopyFunc) self->priv->tkey_dup_func, self->priv->tkey_destroy_func, self->priv->tvalue_type, (GBoxedCopyFunc) self->priv->tvalue_dup_func, self->priv->tvalue_destroy_func, self);
-#line 268 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 266 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = (SystemCollectionsGenericIEnumerator*) _tmp0_;
-#line 268 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 266 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2251 "Dictionary.c"
+#line 2237 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_real_OnDeserialization (SystemCollectionsGenericAbstractDictionary* base, GObject* sender) {
 	SystemCollectionsGenericDictionary * self;
-#line 272 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 270 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 272 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 270 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (sender != NULL);
-#line 2261 "Dictionary.c"
+#line 2247 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_real_Remove (SystemCollectionsGenericAbstractDictionary* base, gconstpointer key, gconstpointer value) {
 	SystemCollectionsGenericDictionary * self;
 	gboolean result = FALSE;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
+	SystemCollectionsGenericNode** node = NULL;
 	gconstpointer _tmp0_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp1_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp2_ = NULL;
-#line 276 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SystemCollectionsGenericNode** _tmp1_ = NULL;
+	SystemCollectionsGenericNode** _tmp2_ = NULL;
+#line 274 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 277 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 275 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 277 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 275 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_dictionary_lookup_node (self, _tmp0_);
-#line 277 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 275 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = _tmp1_;
-#line 278 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 276 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = node;
-#line 278 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 276 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if ((*_tmp2_) != NULL) {
-#line 2284 "Dictionary.c"
-		SystemCollectionsGenericDictionaryNode* next = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp3_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp5_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp6_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp7_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp8_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp9_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp10_ = NULL;
+#line 2270 "Dictionary.c"
+		SystemCollectionsGenericNode* next = NULL;
+		SystemCollectionsGenericNode** _tmp3_ = NULL;
+		SystemCollectionsGenericNode* _tmp4_ = NULL;
+		SystemCollectionsGenericNode** _tmp5_ = NULL;
+		SystemCollectionsGenericNode** _tmp6_ = NULL;
+		SystemCollectionsGenericNode** _tmp7_ = NULL;
+		SystemCollectionsGenericNode** _tmp8_ = NULL;
+		SystemCollectionsGenericNode* _tmp9_ = NULL;
+		SystemCollectionsGenericNode* _tmp10_ = NULL;
 		gint _tmp11_ = 0;
 		gint _tmp12_ = 0;
-#line 279 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 277 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = node;
-#line 279 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 277 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = (*_tmp3_)->next;
-#line 279 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 277 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp3_)->next = NULL;
-#line 279 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 277 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		next = _tmp4_;
-#line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 279 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = node;
-#line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 279 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(((*_tmp5_)->key == NULL) || (self->priv->tkey_destroy_func == NULL)) ? NULL : ((*_tmp5_)->key = (self->priv->tkey_destroy_func ((*_tmp5_)->key), NULL));
-#line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 279 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp5_)->key = NULL;
-#line 282 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 280 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp6_ = node;
-#line 282 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 280 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(((*_tmp6_)->value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : ((*_tmp6_)->value = (self->priv->tvalue_destroy_func ((*_tmp6_)->value), NULL));
-#line 282 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 280 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp6_)->value = NULL;
-#line 283 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp7_ = node;
+#line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		system_collections_generic_node_free (*_tmp7_);
 #line 283 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		system_collections_generic_dictionary_node_free (*_tmp7_);
-#line 285 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp8_ = node;
-#line 285 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 283 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp9_ = next;
-#line 285 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 283 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		next = NULL;
-#line 285 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 283 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		*_tmp8_ = _tmp9_;
-#line 285 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 283 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp10_ = *_tmp8_;
-#line 287 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp11_ = self->priv->_nnodes;
-#line 287 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_nnodes = _tmp11_ - 1;
-#line 288 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 285 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp11_ = self->_nnodes;
+#line 285 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_nnodes = _tmp11_ - 1;
+#line 286 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		system_collections_generic_dictionary_resize (self);
-#line 289 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp12_ = self->priv->_stamp;
-#line 289 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_stamp = _tmp12_ + 1;
-#line 290 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 287 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp12_ = self->_stamp;
+#line 287 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_stamp = _tmp12_ + 1;
+#line 288 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		result = TRUE;
-#line 290 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_system_collections_generic_dictionary_node_free0 (next);
-#line 290 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 288 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_system_collections_generic_node_free0 (next);
+#line 288 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		return result;
-#line 2346 "Dictionary.c"
+#line 2332 "Dictionary.c"
 	}
-#line 292 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 290 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = FALSE;
-#line 292 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 290 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2352 "Dictionary.c"
+#line 2338 "Dictionary.c"
 }
 
 
@@ -2360,48 +2346,48 @@ static gboolean system_collections_generic_dictionary_real_TryGetValue (SystemCo
 	gpointer _tmp1_ = NULL;
 	gboolean _tmp2_ = FALSE;
 	gconstpointer _tmp3_ = NULL;
-#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 293 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 296 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 294 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 296 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 294 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_abstract_dictionary_get ((SystemCollectionsGenericAbstractDictionary*) self, _tmp0_);
-#line 296 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 294 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((_vala_value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_vala_value = (self->priv->tvalue_destroy_func (_vala_value), NULL));
-#line 296 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 294 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_value = _tmp1_;
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp3_ = _vala_value;
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp3_ == NULL) {
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp2_ = FALSE;
-#line 2380 "Dictionary.c"
+#line 2366 "Dictionary.c"
 	} else {
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp2_ = TRUE;
-#line 2384 "Dictionary.c"
+#line 2370 "Dictionary.c"
 	}
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (value) {
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		*value = _vala_value;
-#line 2392 "Dictionary.c"
+#line 2378 "Dictionary.c"
 	} else {
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		((_vala_value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_vala_value = (self->priv->tvalue_destroy_func (_vala_value), NULL));
-#line 2396 "Dictionary.c"
+#line 2382 "Dictionary.c"
 	}
-#line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 295 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2400 "Dictionary.c"
+#line 2386 "Dictionary.c"
 }
 
 
-static SystemCollectionsGenericDictionaryNode** system_collections_generic_dictionary_lookup_node (SystemCollectionsGenericDictionary* self, gconstpointer key) {
-	SystemCollectionsGenericDictionaryNode** result = NULL;
+static SystemCollectionsGenericNode** system_collections_generic_dictionary_lookup_node (SystemCollectionsGenericDictionary* self, gconstpointer key) {
+	SystemCollectionsGenericNode** result = NULL;
 	guint hash_value = 0U;
 	SystemCollectionsGenericHashDataFunc _tmp0_ = NULL;
 	void* _tmp0__target = NULL;
@@ -2409,116 +2395,116 @@ static SystemCollectionsGenericDictionaryNode** system_collections_generic_dicti
 	void* _tmp1__target = NULL;
 	gconstpointer _tmp2_ = NULL;
 	guint _tmp3_ = 0U;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp4_ = NULL;
+	SystemCollectionsGenericNode** node = NULL;
+	SystemCollectionsGenericNode** _tmp4_ = NULL;
 	gint _tmp4__length1 = 0;
 	guint _tmp5_ = 0U;
 	gint _tmp6_ = 0;
-	SystemCollectionsGenericDictionaryNode** _tmp20_ = NULL;
-#line 301 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SystemCollectionsGenericNode** _tmp20_ = NULL;
+#line 299 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 300 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = system_collections_generic_dictionary_get_key_hash_func (self, &_tmp0__target);
-#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 300 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _tmp0_;
-#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 300 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1__target = _tmp0__target;
-#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 300 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = key;
-#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 300 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp3_ = _tmp1_ (_tmp2_, _tmp1__target);
-#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 300 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	hash_value = _tmp3_;
-#line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = self->priv->_nodes;
-#line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4__length1 = self->priv->_nodes_length1;
-#line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 301 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = self->_nodes;
+#line 301 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4__length1 = self->_nodes_length1;
+#line 301 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = hash_value;
-#line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp6_ = self->priv->_array_size;
-#line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 301 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp6_ = self->_array_size;
+#line 301 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = &_tmp4_[_tmp5_ % _tmp6_];
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	while (TRUE) {
-#line 2445 "Dictionary.c"
+#line 2431 "Dictionary.c"
 		gboolean _tmp7_ = FALSE;
-		SystemCollectionsGenericDictionaryNode** _tmp8_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp19_ = NULL;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		SystemCollectionsGenericNode** _tmp8_ = NULL;
+		SystemCollectionsGenericNode** _tmp19_ = NULL;
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp8_ = node;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if ((*_tmp8_) != NULL) {
-#line 2453 "Dictionary.c"
+#line 2439 "Dictionary.c"
 			gboolean _tmp9_ = FALSE;
 			guint _tmp10_ = 0U;
-			SystemCollectionsGenericDictionaryNode** _tmp11_ = NULL;
+			SystemCollectionsGenericNode** _tmp11_ = NULL;
 			guint _tmp12_ = 0U;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp10_ = hash_value;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp11_ = node;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp12_ = (*_tmp11_)->key_hash;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			if (_tmp10_ != _tmp12_) {
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp9_ = TRUE;
-#line 2468 "Dictionary.c"
+#line 2454 "Dictionary.c"
 			} else {
 				SystemCollectionsGenericEqualDataFunc _tmp13_ = NULL;
 				void* _tmp13__target = NULL;
 				SystemCollectionsGenericEqualDataFunc _tmp14_ = NULL;
 				void* _tmp14__target = NULL;
-				SystemCollectionsGenericDictionaryNode** _tmp15_ = NULL;
+				SystemCollectionsGenericNode** _tmp15_ = NULL;
 				gconstpointer _tmp16_ = NULL;
 				gconstpointer _tmp17_ = NULL;
 				gboolean _tmp18_ = FALSE;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp13_ = system_collections_generic_dictionary_get_key_equal_func (self, &_tmp13__target);
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp14_ = _tmp13_;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp14__target = _tmp13__target;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp15_ = node;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp16_ = (*_tmp15_)->key;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp17_ = key;
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp18_ = _tmp14_ (_tmp16_, _tmp17_, _tmp14__target);
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp9_ = !((gboolean) _tmp18_);
-#line 2494 "Dictionary.c"
+#line 2480 "Dictionary.c"
 			}
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp7_ = _tmp9_;
-#line 2498 "Dictionary.c"
+#line 2484 "Dictionary.c"
 		} else {
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp7_ = FALSE;
-#line 2502 "Dictionary.c"
+#line 2488 "Dictionary.c"
 		}
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if (!_tmp7_) {
-#line 304 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			break;
-#line 2508 "Dictionary.c"
+#line 2494 "Dictionary.c"
 		}
-#line 305 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp19_ = node;
-#line 305 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		node = &(*_tmp19_)->next;
-#line 2514 "Dictionary.c"
+#line 2500 "Dictionary.c"
 	}
-#line 307 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 305 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp20_ = node;
-#line 307 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 305 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp20_;
-#line 307 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 305 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2522 "Dictionary.c"
+#line 2508 "Dictionary.c"
 }
 
 
@@ -2527,287 +2513,287 @@ static void system_collections_generic_dictionary_resize (SystemCollectionsGener
 	gboolean _tmp1_ = FALSE;
 	gint _tmp2_ = 0;
 	gint _tmp3_ = 0;
-#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 309 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = self->priv->_array_size;
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = self->priv->_nnodes;
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = self->_array_size;
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = self->_nnodes;
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp2_ >= (3 * _tmp3_)) {
-#line 2539 "Dictionary.c"
+#line 2525 "Dictionary.c"
 		gint _tmp4_ = 0;
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp4_ = self->priv->_array_size;
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp4_ = self->_array_size;
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp1_ = _tmp4_ >= SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_MIN_SIZE;
-#line 2545 "Dictionary.c"
+#line 2531 "Dictionary.c"
 	} else {
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp1_ = FALSE;
-#line 2549 "Dictionary.c"
+#line 2535 "Dictionary.c"
 	}
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp1_) {
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp0_ = TRUE;
-#line 2555 "Dictionary.c"
+#line 2541 "Dictionary.c"
 	} else {
 		gboolean _tmp5_ = FALSE;
 		gint _tmp6_ = 0;
 		gint _tmp7_ = 0;
-#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp6_ = self->priv->_array_size;
-#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp7_ = self->priv->_nnodes;
-#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp6_ = self->_array_size;
+#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp7_ = self->_nnodes;
+#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if ((3 * _tmp6_) <= _tmp7_) {
-#line 2566 "Dictionary.c"
+#line 2552 "Dictionary.c"
 			gint _tmp8_ = 0;
-#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp8_ = self->priv->_array_size;
-#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp8_ = self->_array_size;
+#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp5_ = _tmp8_ < SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_MAX_SIZE;
-#line 2572 "Dictionary.c"
+#line 2558 "Dictionary.c"
 		} else {
-#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_tmp5_ = FALSE;
-#line 2576 "Dictionary.c"
+#line 2562 "Dictionary.c"
 		}
-#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 311 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp0_ = _tmp5_;
-#line 2580 "Dictionary.c"
+#line 2566 "Dictionary.c"
 	}
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp0_) {
-#line 2584 "Dictionary.c"
+#line 2570 "Dictionary.c"
 		gint new_array_size = 0;
 		gint _tmp9_ = 0;
 		guint _tmp10_ = 0U;
 		gint _tmp11_ = 0;
 		gint _tmp12_ = 0;
-		SystemCollectionsGenericDictionaryNode** new_nodes = NULL;
+		SystemCollectionsGenericNode** new_nodes = NULL;
 		gint _tmp13_ = 0;
-		SystemCollectionsGenericDictionaryNode** _tmp14_ = NULL;
+		SystemCollectionsGenericNode** _tmp14_ = NULL;
 		gint new_nodes_length1 = 0;
 		gint _new_nodes_size_ = 0;
-		SystemCollectionsGenericDictionaryNode** _tmp38_ = NULL;
+		SystemCollectionsGenericNode** _tmp38_ = NULL;
 		gint _tmp38__length1 = 0;
 		gint _tmp39_ = 0;
-#line 314 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp9_ = self->priv->_nnodes;
-#line 314 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp9_ = self->_nnodes;
+#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp10_ = g_spaced_primes_closest ((guint) _tmp9_);
-#line 314 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		new_array_size = (gint) _tmp10_;
-#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp11_ = new_array_size;
-#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp12_ = CLAMP (_tmp11_, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_MIN_SIZE, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_MAX_SIZE);
-#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		new_array_size = _tmp12_;
-#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp13_ = new_array_size;
-#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp14_ = g_new0 (SystemCollectionsGenericDictionaryNode*, _tmp13_ + 1);
-#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp14_ = g_new0 (SystemCollectionsGenericNode*, _tmp13_ + 1);
+#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		new_nodes = _tmp14_;
-#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		new_nodes_length1 = _tmp13_;
-#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_new_nodes_size_ = new_nodes_length1;
-#line 2620 "Dictionary.c"
+#line 2606 "Dictionary.c"
 		{
 			gint i = 0;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			i = 0;
-#line 2625 "Dictionary.c"
+#line 2611 "Dictionary.c"
 			{
 				gboolean _tmp15_ = FALSE;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				_tmp15_ = TRUE;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 				while (TRUE) {
-#line 2632 "Dictionary.c"
+#line 2618 "Dictionary.c"
 					gint _tmp17_ = 0;
 					gint _tmp18_ = 0;
-					SystemCollectionsGenericDictionaryNode* node = NULL;
-					SystemCollectionsGenericDictionaryNode* next = NULL;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					SystemCollectionsGenericNode* node = NULL;
+					SystemCollectionsGenericNode* next = NULL;
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					if (!_tmp15_) {
-#line 2639 "Dictionary.c"
+#line 2625 "Dictionary.c"
 						gint _tmp16_ = 0;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						_tmp16_ = i;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						i = _tmp16_ + 1;
-#line 2645 "Dictionary.c"
+#line 2631 "Dictionary.c"
 					}
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					_tmp15_ = FALSE;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					_tmp17_ = i;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_tmp18_ = self->priv->_array_size;
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_tmp18_ = self->_array_size;
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					if (!(_tmp17_ < _tmp18_)) {
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						break;
-#line 2657 "Dictionary.c"
+#line 2643 "Dictionary.c"
 					}
-#line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 					next = NULL;
-#line 2661 "Dictionary.c"
+#line 2647 "Dictionary.c"
 					{
-						SystemCollectionsGenericDictionaryNode** _tmp19_ = NULL;
+						SystemCollectionsGenericNode** _tmp19_ = NULL;
 						gint _tmp19__length1 = 0;
 						gint _tmp20_ = 0;
-						SystemCollectionsGenericDictionaryNode* _tmp21_ = NULL;
+						SystemCollectionsGenericNode* _tmp21_ = NULL;
 						gboolean _tmp22_ = FALSE;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-						_tmp19_ = self->priv->_nodes;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-						_tmp19__length1 = self->priv->_nodes_length1;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+						_tmp19_ = self->_nodes;
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+						_tmp19__length1 = self->_nodes_length1;
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						_tmp20_ = i;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						_tmp21_ = _tmp19_[_tmp20_];
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						_tmp19_[_tmp20_] = NULL;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-						_system_collections_generic_dictionary_node_free0 (node);
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+						_system_collections_generic_node_free0 (node);
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						node = _tmp21_;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						_tmp22_ = TRUE;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 						while (TRUE) {
-#line 2686 "Dictionary.c"
-							SystemCollectionsGenericDictionaryNode* _tmp24_ = NULL;
-							SystemCollectionsGenericDictionaryNode* _tmp25_ = NULL;
-							SystemCollectionsGenericDictionaryNode* _tmp26_ = NULL;
+#line 2672 "Dictionary.c"
+							SystemCollectionsGenericNode* _tmp24_ = NULL;
+							SystemCollectionsGenericNode* _tmp25_ = NULL;
+							SystemCollectionsGenericNode* _tmp26_ = NULL;
 							guint hash_val = 0U;
-							SystemCollectionsGenericDictionaryNode* _tmp27_ = NULL;
+							SystemCollectionsGenericNode* _tmp27_ = NULL;
 							guint _tmp28_ = 0U;
 							gint _tmp29_ = 0;
-							SystemCollectionsGenericDictionaryNode* _tmp30_ = NULL;
-							SystemCollectionsGenericDictionaryNode** _tmp31_ = NULL;
+							SystemCollectionsGenericNode* _tmp30_ = NULL;
+							SystemCollectionsGenericNode** _tmp31_ = NULL;
 							gint _tmp31__length1 = 0;
 							guint _tmp32_ = 0U;
-							SystemCollectionsGenericDictionaryNode* _tmp33_ = NULL;
-							SystemCollectionsGenericDictionaryNode** _tmp34_ = NULL;
+							SystemCollectionsGenericNode* _tmp33_ = NULL;
+							SystemCollectionsGenericNode** _tmp34_ = NULL;
 							gint _tmp34__length1 = 0;
 							guint _tmp35_ = 0U;
-							SystemCollectionsGenericDictionaryNode* _tmp36_ = NULL;
-							SystemCollectionsGenericDictionaryNode* _tmp37_ = NULL;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+							SystemCollectionsGenericNode* _tmp36_ = NULL;
+							SystemCollectionsGenericNode* _tmp37_ = NULL;
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							if (!_tmp22_) {
-#line 2706 "Dictionary.c"
-								SystemCollectionsGenericDictionaryNode* _tmp23_ = NULL;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 2692 "Dictionary.c"
+								SystemCollectionsGenericNode* _tmp23_ = NULL;
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 								_tmp23_ = next;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 								next = NULL;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-								_system_collections_generic_dictionary_node_free0 (node);
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+								_system_collections_generic_node_free0 (node);
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 								node = _tmp23_;
-#line 2716 "Dictionary.c"
+#line 2702 "Dictionary.c"
 							}
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp22_ = FALSE;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp24_ = node;
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							if (!(_tmp24_ != NULL)) {
-#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 320 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 								break;
-#line 2726 "Dictionary.c"
+#line 2712 "Dictionary.c"
 							}
-#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp25_ = node;
-#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp26_ = _tmp25_->next;
-#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp25_->next = NULL;
-#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-							_system_collections_generic_dictionary_node_free0 (next);
-#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+							_system_collections_generic_node_free0 (next);
+#line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							next = _tmp26_;
-#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp27_ = node;
-#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp28_ = _tmp27_->key_hash;
-#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp29_ = new_array_size;
-#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							hash_val = _tmp28_ % _tmp29_;
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp30_ = node;
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp31_ = new_nodes;
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp31__length1 = new_nodes_length1;
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp32_ = hash_val;
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp33_ = _tmp31_[_tmp32_];
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp31_[_tmp32_] = NULL;
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-							_system_collections_generic_dictionary_node_free0 (_tmp30_->next);
-#line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+							_system_collections_generic_node_free0 (_tmp30_->next);
+#line 323 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp30_->next = _tmp33_;
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp34_ = new_nodes;
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp34__length1 = new_nodes_length1;
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp35_ = hash_val;
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp36_ = node;
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							node = NULL;
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-							_system_collections_generic_dictionary_node_free0 (_tmp34_[_tmp35_]);
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+							_system_collections_generic_node_free0 (_tmp34_[_tmp35_]);
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp34_[_tmp35_] = _tmp36_;
-#line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 							_tmp37_ = _tmp34_[_tmp35_];
-#line 2778 "Dictionary.c"
+#line 2764 "Dictionary.c"
 						}
 					}
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_system_collections_generic_dictionary_node_free0 (next);
-#line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-					_system_collections_generic_dictionary_node_free0 (node);
-#line 2785 "Dictionary.c"
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_system_collections_generic_node_free0 (next);
+#line 317 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+					_system_collections_generic_node_free0 (node);
+#line 2771 "Dictionary.c"
 				}
 			}
 		}
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp38_ = new_nodes;
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp38__length1 = new_nodes_length1;
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		new_nodes = NULL;
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		new_nodes_length1 = 0;
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_nodes = (_vala_array_free (self->priv->_nodes, self->priv->_nodes_length1, (GDestroyNotify) system_collections_generic_dictionary_node_free), NULL);
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_nodes = _tmp38_;
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_nodes_length1 = _tmp38__length1;
-#line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->__nodes_size_ = self->priv->_nodes_length1;
-#line 330 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_nodes = (_vala_array_free (self->_nodes, self->_nodes_length1, (GDestroyNotify) system_collections_generic_node_free), NULL);
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_nodes = _tmp38_;
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_nodes_length1 = _tmp38__length1;
+#line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->__nodes_size_ = self->_nodes_length1;
+#line 328 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp39_ = new_array_size;
-#line 330 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_array_size = _tmp39_;
-#line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		new_nodes = (_vala_array_free (new_nodes, new_nodes_length1, (GDestroyNotify) system_collections_generic_dictionary_node_free), NULL);
-#line 2811 "Dictionary.c"
+#line 328 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_array_size = _tmp39_;
+#line 310 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		new_nodes = (_vala_array_free (new_nodes, new_nodes_length1, (GDestroyNotify) system_collections_generic_node_free), NULL);
+#line 2797 "Dictionary.c"
 	}
 }
 
@@ -2815,152 +2801,136 @@ static void system_collections_generic_dictionary_resize (SystemCollectionsGener
 static inline gboolean system_collections_generic_dictionary_unset_helper (SystemCollectionsGenericDictionary* self, gconstpointer key, gpointer* value) {
 	gpointer _vala_value = NULL;
 	gboolean result = FALSE;
-	SystemCollectionsGenericDictionaryNode** node = NULL;
+	SystemCollectionsGenericNode** node = NULL;
 	gconstpointer _tmp0_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp1_ = NULL;
-	SystemCollectionsGenericDictionaryNode** _tmp2_ = NULL;
-#line 334 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SystemCollectionsGenericNode** _tmp1_ = NULL;
+	SystemCollectionsGenericNode** _tmp2_ = NULL;
+#line 332 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 333 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 333 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_dictionary_lookup_node (self, _tmp0_);
-#line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 333 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	node = _tmp1_;
-#line 336 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 334 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = node;
-#line 336 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 334 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if ((*_tmp2_) != NULL) {
-#line 2835 "Dictionary.c"
-		SystemCollectionsGenericDictionaryNode* next = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp3_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp5_ = NULL;
+#line 2821 "Dictionary.c"
+		SystemCollectionsGenericNode* next = NULL;
+		SystemCollectionsGenericNode** _tmp3_ = NULL;
+		SystemCollectionsGenericNode* _tmp4_ = NULL;
+		SystemCollectionsGenericNode** _tmp5_ = NULL;
 		gpointer _tmp6_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp7_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp8_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp9_ = NULL;
-		SystemCollectionsGenericDictionaryNode** _tmp10_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp11_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp12_ = NULL;
+		SystemCollectionsGenericNode** _tmp7_ = NULL;
+		SystemCollectionsGenericNode** _tmp8_ = NULL;
+		SystemCollectionsGenericNode** _tmp9_ = NULL;
+		SystemCollectionsGenericNode** _tmp10_ = NULL;
+		SystemCollectionsGenericNode* _tmp11_ = NULL;
+		SystemCollectionsGenericNode* _tmp12_ = NULL;
 		gint _tmp13_ = 0;
 		gint _tmp14_ = 0;
-#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = node;
-#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = (*_tmp3_)->next;
-#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp3_)->next = NULL;
-#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		next = _tmp4_;
-#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = node;
-#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp6_ = (*_tmp5_)->value;
-#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp5_)->value = NULL;
-#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		((_vala_value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_vala_value = (self->priv->tvalue_destroy_func (_vala_value), NULL));
-#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 337 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_vala_value = _tmp6_;
-#line 341 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp7_ = node;
-#line 341 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(((*_tmp7_)->key == NULL) || (self->priv->tkey_destroy_func == NULL)) ? NULL : ((*_tmp7_)->key = (self->priv->tkey_destroy_func ((*_tmp7_)->key), NULL));
-#line 341 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp7_)->key = NULL;
-#line 342 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp8_ = node;
-#line 342 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(((*_tmp8_)->value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : ((*_tmp8_)->value = (self->priv->tvalue_destroy_func ((*_tmp8_)->value), NULL));
-#line 342 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		(*_tmp8_)->value = NULL;
-#line 343 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 341 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp9_ = node;
+#line 341 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		system_collections_generic_node_free (*_tmp9_);
 #line 343 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		system_collections_generic_dictionary_node_free (*_tmp9_);
-#line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp10_ = node;
-#line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 343 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp11_ = next;
-#line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 343 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		next = NULL;
-#line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 343 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		*_tmp10_ = _tmp11_;
-#line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 343 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp12_ = *_tmp10_;
+#line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp13_ = self->_nnodes;
+#line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_nnodes = _tmp13_ - 1;
+#line 346 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp14_ = self->_stamp;
+#line 346 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_stamp = _tmp14_ + 1;
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp13_ = self->priv->_nnodes;
-#line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_nnodes = _tmp13_ - 1;
-#line 348 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp14_ = self->priv->_stamp;
-#line 348 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->_stamp = _tmp14_ + 1;
-#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		result = TRUE;
-#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_system_collections_generic_dictionary_node_free0 (next);
-#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_system_collections_generic_node_free0 (next);
+#line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if (value) {
-#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			*value = _vala_value;
-#line 2909 "Dictionary.c"
+#line 2895 "Dictionary.c"
 		} else {
-#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			((_vala_value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_vala_value = (self->priv->tvalue_destroy_func (_vala_value), NULL));
-#line 2913 "Dictionary.c"
+#line 2899 "Dictionary.c"
 		}
-#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		return result;
+#line 2903 "Dictionary.c"
+	} else {
+#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		((_vala_value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_vala_value = (self->priv->tvalue_destroy_func (_vala_value), NULL));
+#line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_vala_value = NULL;
+#line 2909 "Dictionary.c"
+	}
+#line 351 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	result = FALSE;
+#line 351 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	if (value) {
+#line 351 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		*value = _vala_value;
 #line 2917 "Dictionary.c"
 	} else {
 #line 351 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		((_vala_value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_vala_value = (self->priv->tvalue_destroy_func (_vala_value), NULL));
+#line 2921 "Dictionary.c"
+	}
 #line 351 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_vala_value = NULL;
-#line 2923 "Dictionary.c"
-	}
-#line 353 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = FALSE;
-#line 353 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	if (value) {
-#line 353 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		*value = _vala_value;
-#line 2931 "Dictionary.c"
-	} else {
-#line 353 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		((_vala_value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_vala_value = (self->priv->tvalue_destroy_func (_vala_value), NULL));
-#line 2935 "Dictionary.c"
-	}
-#line 353 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2939 "Dictionary.c"
-}
-
-
-static SystemCollectionsGenericIEqualityComparer* system_collections_generic_dictionary_real_get_Comparer (SystemCollectionsGenericAbstractDictionary* base) {
-	SystemCollectionsGenericIEqualityComparer* result;
-	SystemCollectionsGenericDictionary* self;
-	SystemCollectionsGenericIEqualityComparer* _tmp0_ = NULL;
-#line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = (SystemCollectionsGenericDictionary*) base;
-#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = self->priv->_key_equal_func;
-#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = _tmp0_;
-#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return result;
-#line 2955 "Dictionary.c"
+#line 2925 "Dictionary.c"
 }
 
 
 static guint _system_collections_generic_iequality_comparer_GetHashCode_system_collections_generic_hash_data_func (gconstpointer v, gpointer self) {
 	guint result;
 	result = system_collections_generic_iequality_comparer_GetHashCode ((SystemCollectionsGenericIEqualityComparer*) self, v);
-#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2964 "Dictionary.c"
+#line 2934 "Dictionary.c"
 }
 
 
@@ -2969,37 +2939,37 @@ SystemCollectionsGenericHashDataFunc system_collections_generic_dictionary_get_k
 	SystemCollectionsGenericIEqualityComparer* _tmp0_ = NULL;
 	SystemCollectionsGenericHashDataFunc _tmp1_ = NULL;
 	void* _tmp1__target = NULL;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->_key_hash_func;
-#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _system_collections_generic_iequality_comparer_GetHashCode_system_collections_generic_hash_data_func;
-#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1__target = _tmp0_;
-#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	*result_target = _tmp1__target;
-#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp1_;
-#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 2987 "Dictionary.c"
+#line 2957 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_set_key_hash_func (SystemCollectionsGenericDictionary* self, SystemCollectionsGenericHashDataFunc value, gpointer value_target) {
-#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 2994 "Dictionary.c"
+#line 2964 "Dictionary.c"
 }
 
 
 static gboolean _system_collections_generic_iequality_comparer_Equals_system_collections_generic_equal_data_func (gconstpointer a, gconstpointer b, gpointer self) {
 	gboolean result;
 	result = system_collections_generic_iequality_comparer_Equals ((SystemCollectionsGenericIEqualityComparer*) self, a, b);
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3003 "Dictionary.c"
+#line 2973 "Dictionary.c"
 }
 
 
@@ -3008,28 +2978,28 @@ SystemCollectionsGenericEqualDataFunc system_collections_generic_dictionary_get_
 	SystemCollectionsGenericIEqualityComparer* _tmp0_ = NULL;
 	SystemCollectionsGenericEqualDataFunc _tmp1_ = NULL;
 	void* _tmp1__target = NULL;
-#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->_key_equal_func;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _system_collections_generic_iequality_comparer_Equals_system_collections_generic_equal_data_func;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1__target = _tmp0_;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	*result_target = _tmp1__target;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp1_;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3026 "Dictionary.c"
+#line 2996 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_set_key_equal_func (SystemCollectionsGenericDictionary* self, SystemCollectionsGenericEqualDataFunc value, gpointer value_target) {
-#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 88 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 3033 "Dictionary.c"
+#line 3003 "Dictionary.c"
 }
 
 
@@ -3038,28 +3008,28 @@ SystemCollectionsGenericEqualDataFunc system_collections_generic_dictionary_get_
 	SystemCollectionsGenericIEqualityComparer* _tmp0_ = NULL;
 	SystemCollectionsGenericEqualDataFunc _tmp1_ = NULL;
 	void* _tmp1__target = NULL;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 99 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->_value_equal_func;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _system_collections_generic_iequality_comparer_Equals_system_collections_generic_equal_data_func;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1__target = _tmp0_;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	*result_target = _tmp1__target;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp1_;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3056 "Dictionary.c"
+#line 3026 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_set_value_equal_func (SystemCollectionsGenericDictionary* self, SystemCollectionsGenericEqualDataFunc value, gpointer value_target) {
-#line 99 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_if_fail (self != NULL);
-#line 3063 "Dictionary.c"
+#line 3033 "Dictionary.c"
 }
 
 
@@ -3067,15 +3037,15 @@ static gint system_collections_generic_dictionary_real_get_Count (SystemCollecti
 	gint result;
 	SystemCollectionsGenericDictionary* self;
 	gint _tmp0_ = 0;
-#line 107 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 107 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = self->priv->_nnodes;
-#line 107 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = self->_nnodes;
+#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp0_;
-#line 107 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3079 "Dictionary.c"
+#line 3049 "Dictionary.c"
 }
 
 
@@ -3083,54 +3053,54 @@ static gint system_collections_generic_dictionary_real_get_size (SystemCollectio
 	gint result;
 	SystemCollectionsGenericDictionary* self;
 	gint _tmp0_ = 0;
-#line 111 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 111 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = self->priv->_nnodes;
-#line 111 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = self->_nnodes;
+#line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp0_;
-#line 111 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3095 "Dictionary.c"
+#line 3065 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_real_get_IsFixedSize (SystemCollectionsGenericAbstractDictionary* base) {
 	gboolean result;
 	SystemCollectionsGenericDictionary* self;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = FALSE;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3108 "Dictionary.c"
+#line 3078 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_real_get_IsReadOnly (SystemCollectionsGenericAbstractDictionary* base) {
 	gboolean result;
 	SystemCollectionsGenericDictionary* self;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = FALSE;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3121 "Dictionary.c"
+#line 3091 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_real_get_IsSynchronized (SystemCollectionsGenericAbstractDictionary* base) {
 	gboolean result;
 	SystemCollectionsGenericDictionary* self;
-#line 123 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 122 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 123 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 122 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = FALSE;
-#line 123 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 122 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3134 "Dictionary.c"
+#line 3104 "Dictionary.c"
 }
 
 
@@ -3141,56 +3111,56 @@ static SystemCollectionsGenericICollection* system_collections_generic_dictionar
 	SystemCollectionsGenericICollection* _tmp0_ = NULL;
 	SystemCollectionsGenericICollection* _tmp1_ = NULL;
 	SystemCollectionsGenericICollection* _tmp2_ = NULL;
-#line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 128 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->_keys;
-#line 128 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _g_object_ref0 (_tmp0_);
-#line 128 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	keys = _tmp1_;
-#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 128 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = self->priv->_keys;
-#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 128 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp2_ == NULL) {
-#line 3157 "Dictionary.c"
+#line 3127 "Dictionary.c"
 		SystemCollectionsGenericDictionaryKeyCollection* _tmp3_ = NULL;
 		SystemCollectionsGenericICollection* _tmp4_ = NULL;
 		SystemCollectionsGenericICollection* _tmp5_ = NULL;
-#line 130 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = system_collections_generic_dictionary_key_collection_new (self->priv->tkey_type, (GBoxedCopyFunc) self->priv->tkey_dup_func, self->priv->tkey_destroy_func, self->priv->tvalue_type, (GBoxedCopyFunc) self->priv->tvalue_dup_func, self->priv->tvalue_destroy_func, self);
-#line 130 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_g_object_unref0 (keys);
-#line 130 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		keys = (SystemCollectionsGenericICollection*) _tmp3_;
-#line 131 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 130 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = keys;
-#line 131 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 130 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->_keys = _tmp4_;
-#line 132 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 131 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = keys;
-#line 132 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 131 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_object_add_weak_pointer ((GObject*) _tmp5_, (void**) (&self->priv->_keys));
-#line 3175 "Dictionary.c"
+#line 3145 "Dictionary.c"
 	}
-#line 134 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 133 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = keys;
-#line 134 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 133 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3181 "Dictionary.c"
+#line 3151 "Dictionary.c"
 }
 
 
 static GObject* system_collections_generic_dictionary_real_get_SyncRoot (SystemCollectionsGenericAbstractDictionary* base) {
 	GObject* result;
 	SystemCollectionsGenericDictionary* self;
-#line 139 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 138 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 140 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 139 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = G_TYPE_CHECK_INSTANCE_TYPE (self, G_TYPE_OBJECT) ? ((GObject*) self) : NULL;
-#line 140 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 139 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3194 "Dictionary.c"
+#line 3164 "Dictionary.c"
 }
 
 
@@ -3201,585 +3171,77 @@ static SystemCollectionsGenericICollection* system_collections_generic_dictionar
 	SystemCollectionsGenericICollection* _tmp0_ = NULL;
 	SystemCollectionsGenericICollection* _tmp1_ = NULL;
 	SystemCollectionsGenericICollection* _tmp2_ = NULL;
-#line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 144 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionary*) base;
-#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->_values;
-#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _g_object_ref0 (_tmp0_);
-#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	values = _tmp1_;
-#line 147 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = self->priv->_values;
-#line 147 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	if (_tmp2_ == NULL) {
-#line 3217 "Dictionary.c"
+#line 3187 "Dictionary.c"
 		SystemCollectionsGenericDictionaryValueCollection* _tmp3_ = NULL;
 		SystemCollectionsGenericICollection* _tmp4_ = NULL;
 		SystemCollectionsGenericICollection* _tmp5_ = NULL;
-#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 147 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = system_collections_generic_dictionary_value_collection_new (self->priv->tkey_type, (GBoxedCopyFunc) self->priv->tkey_dup_func, self->priv->tkey_destroy_func, self->priv->tvalue_type, (GBoxedCopyFunc) self->priv->tvalue_dup_func, self->priv->tvalue_destroy_func, self);
-#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 147 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_g_object_unref0 (values);
-#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 147 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		values = (SystemCollectionsGenericICollection*) _tmp3_;
-#line 149 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = values;
-#line 149 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->_values = _tmp4_;
-#line 150 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 149 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = values;
-#line 150 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 149 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_object_add_weak_pointer ((GObject*) _tmp5_, (void**) (&self->priv->_values));
-#line 3235 "Dictionary.c"
+#line 3205 "Dictionary.c"
 	}
-#line 152 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 151 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = values;
-#line 152 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 151 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3241 "Dictionary.c"
-}
-
-
-static SystemCollectionsGenericDictionaryNode* system_collections_generic_dictionary_node_new (gpointer k, gpointer v, guint hash) {
-	SystemCollectionsGenericDictionaryNode* self;
-	gpointer _tmp0_ = NULL;
-	gpointer _tmp1_ = NULL;
-	guint _tmp2_ = 0U;
-#line 367 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = g_slice_new0 (SystemCollectionsGenericDictionaryNode);
-#line 367 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	system_collections_generic_dictionary_node_instance_init (self);
-#line 368 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = k;
-#line 368 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	k = NULL;
-#line 368 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->key = _tmp0_;
-#line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = v;
-#line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	v = NULL;
-#line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->value = _tmp1_;
-#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = hash;
-#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->key_hash = _tmp2_;
-#line 367 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return self;
-#line 3272 "Dictionary.c"
-}
-
-
-static void system_collections_generic_dictionary_node_instance_init (SystemCollectionsGenericDictionaryNode * self) {
-}
-
-
-static void system_collections_generic_dictionary_node_free (SystemCollectionsGenericDictionaryNode* self) {
-#line 364 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_system_collections_generic_dictionary_node_free0 (self->next);
-#line 361 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_slice_free (SystemCollectionsGenericDictionaryNode, self);
-#line 3285 "Dictionary.c"
-}
-
-
-static SystemCollectionsGenericDictionaryNodeEnumerator* system_collections_generic_dictionary_node_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
-	SystemCollectionsGenericDictionaryNodeEnumerator * self = NULL;
-	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
-	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
-	SystemCollectionsGenericDictionary* _tmp2_ = NULL;
-	gint _tmp3_ = 0;
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (dictionary != NULL, NULL);
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = (SystemCollectionsGenericDictionaryNodeEnumerator*) g_object_new (object_type, NULL);
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tkey_type = tkey_type;
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tkey_dup_func = tkey_dup_func;
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tvalue_type = tvalue_type;
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = dictionary;
-#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = _g_object_ref0 (_tmp0_);
-#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_g_object_unref0 (self->_dictionary);
-#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_dictionary = _tmp1_;
-#line 377 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = self->_dictionary;
-#line 377 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = _tmp2_->priv->_stamp;
-#line 377 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_stamp = _tmp3_;
-#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return self;
-#line 3327 "Dictionary.c"
-}
-
-
-static SystemCollectionsGenericDictionaryNodeEnumerator* system_collections_generic_dictionary_node_enumerator_construct_from_iterator (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionaryNodeEnumerator* iter) {
-	SystemCollectionsGenericDictionaryNodeEnumerator * self = NULL;
-	SystemCollectionsGenericDictionaryNodeEnumerator* _tmp0_ = NULL;
-	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
-	SystemCollectionsGenericDictionary* _tmp2_ = NULL;
-	SystemCollectionsGenericDictionaryNodeEnumerator* _tmp3_ = NULL;
-	gint _tmp4_ = 0;
-	SystemCollectionsGenericDictionaryNodeEnumerator* _tmp5_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp6_ = NULL;
-	SystemCollectionsGenericDictionaryNodeEnumerator* _tmp7_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp8_ = NULL;
-	SystemCollectionsGenericDictionaryNodeEnumerator* _tmp9_ = NULL;
-	gint _tmp10_ = 0;
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (iter != NULL, NULL);
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = (SystemCollectionsGenericDictionaryNodeEnumerator*) g_object_new (object_type, NULL);
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tkey_type = tkey_type;
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tkey_dup_func = tkey_dup_func;
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tvalue_type = tvalue_type;
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = iter;
-#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = _tmp0_->_dictionary;
-#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _g_object_ref0 (_tmp1_);
-#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_g_object_unref0 (self->_dictionary);
-#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_dictionary = _tmp2_;
-#line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = iter;
-#line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = _tmp3_->_index;
-#line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_index = _tmp4_;
-#line 383 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp5_ = iter;
-#line 383 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp6_ = _tmp5_->_node;
-#line 383 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_node = _tmp6_;
-#line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp7_ = iter;
-#line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp8_ = _tmp7_->_next;
-#line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_next = _tmp8_;
-#line 385 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp9_ = iter;
-#line 385 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp10_ = _tmp9_->_stamp;
-#line 385 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_stamp = _tmp10_;
-#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return self;
-#line 3396 "Dictionary.c"
-}
-
-
-static gboolean system_collections_generic_dictionary_node_enumerator_MoveNext (SystemCollectionsGenericDictionaryNodeEnumerator* self) {
-	gboolean result = FALSE;
-	gboolean _tmp0_ = FALSE;
-#line 388 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 389 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = system_collections_generic_dictionary_node_enumerator_next (self);
-#line 389 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = _tmp0_;
-#line 389 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return result;
-#line 3411 "Dictionary.c"
-}
-
-
-static gboolean system_collections_generic_dictionary_node_enumerator_next (SystemCollectionsGenericDictionaryNodeEnumerator* self) {
-	gboolean result = FALSE;
-	gint _tmp0_ = 0;
-	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
-	gint _tmp2_ = 0;
-	gboolean _tmp3_ = FALSE;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp5_ = NULL;
-#line 393 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = self->_stamp;
-#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = self->_dictionary;
-#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 395 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = system_collections_generic_dictionary_node_enumerator_has_next (self);
-#line 395 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	if (!_tmp3_) {
-#line 396 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		result = FALSE;
-#line 396 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		return result;
-#line 3441 "Dictionary.c"
-	}
-#line 398 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = self->_next;
-#line 398 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_node = _tmp4_;
-#line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_next = NULL;
-#line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp5_ = self->_node;
-#line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = _tmp5_ != NULL;
-#line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return result;
-#line 3455 "Dictionary.c"
-}
-
-
-static gboolean system_collections_generic_dictionary_node_enumerator_has_next (SystemCollectionsGenericDictionaryNodeEnumerator* self) {
-	gboolean result = FALSE;
-	gint _tmp0_ = 0;
-	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
-	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp18_ = NULL;
-#line 403 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 404 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = self->_stamp;
-#line 404 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = self->_dictionary;
-#line 404 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 404 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 405 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = self->_next;
-#line 405 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	if (_tmp3_ == NULL) {
-#line 3480 "Dictionary.c"
-		SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
-		SystemCollectionsGenericDictionaryNode* _tmp5_ = NULL;
-#line 406 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp4_ = self->_node;
-#line 406 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->_next = _tmp4_;
-#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		_tmp5_ = self->_next;
-#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		if (_tmp5_ != NULL) {
-#line 3491 "Dictionary.c"
-			SystemCollectionsGenericDictionaryNode* _tmp6_ = NULL;
-			SystemCollectionsGenericDictionaryNode* _tmp7_ = NULL;
-#line 408 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp6_ = self->_next;
-#line 408 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp7_ = _tmp6_->next;
-#line 408 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			self->_next = _tmp7_;
-#line 3500 "Dictionary.c"
-		}
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		while (TRUE) {
-#line 3504 "Dictionary.c"
-			gboolean _tmp8_ = FALSE;
-			SystemCollectionsGenericDictionaryNode* _tmp9_ = NULL;
-			gint _tmp13_ = 0;
-			SystemCollectionsGenericDictionary* _tmp14_ = NULL;
-			SystemCollectionsGenericDictionaryNode** _tmp15_ = NULL;
-			gint _tmp15__length1 = 0;
-			gint _tmp16_ = 0;
-			SystemCollectionsGenericDictionaryNode* _tmp17_ = NULL;
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp9_ = self->_next;
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			if (_tmp9_ == NULL) {
-#line 3517 "Dictionary.c"
-				gint _tmp10_ = 0;
-				SystemCollectionsGenericDictionary* _tmp11_ = NULL;
-				gint _tmp12_ = 0;
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp10_ = self->_index;
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp11_ = self->_dictionary;
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp12_ = _tmp11_->priv->_array_size;
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp8_ = (_tmp10_ + 1) < _tmp12_;
-#line 3529 "Dictionary.c"
-			} else {
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				_tmp8_ = FALSE;
-#line 3533 "Dictionary.c"
-			}
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			if (!_tmp8_) {
-#line 410 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-				break;
-#line 3539 "Dictionary.c"
-			}
-#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp13_ = self->_index;
-#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			self->_index = _tmp13_ + 1;
-#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp14_ = self->_dictionary;
-#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp15_ = _tmp14_->priv->_nodes;
-#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp15__length1 = _tmp14_->priv->_nodes_length1;
-#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp16_ = self->_index;
-#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			_tmp17_ = _tmp15_[_tmp16_];
-#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-			self->_next = _tmp17_;
-#line 3557 "Dictionary.c"
-		}
-	}
-#line 415 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp18_ = self->_next;
-#line 415 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = _tmp18_ != NULL;
-#line 415 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return result;
-#line 3566 "Dictionary.c"
-}
-
-
-static gboolean system_collections_generic_dictionary_node_enumerator_get_read_only (SystemCollectionsGenericDictionaryNodeEnumerator* self) {
-#line 419 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 419 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_GET_CLASS (self)->get_read_only (self);
-#line 3575 "Dictionary.c"
-}
-
-
-static gboolean system_collections_generic_dictionary_node_enumerator_real_get_read_only (SystemCollectionsGenericDictionaryNodeEnumerator* base) {
-	gboolean result;
-	SystemCollectionsGenericDictionaryNodeEnumerator* self;
-#line 419 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = base;
-#line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = TRUE;
-#line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return result;
-#line 3588 "Dictionary.c"
-}
-
-
-static gboolean system_collections_generic_dictionary_node_enumerator_get_valid (SystemCollectionsGenericDictionaryNodeEnumerator* self) {
-	gboolean result;
-	SystemCollectionsGenericDictionaryNode* _tmp0_ = NULL;
-#line 425 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_return_val_if_fail (self != NULL, FALSE);
-#line 426 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = self->_node;
-#line 426 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	result = _tmp0_ != NULL;
-#line 426 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	return result;
-#line 3603 "Dictionary.c"
-}
-
-
-static void system_collections_generic_dictionary_node_enumerator_class_init (SystemCollectionsGenericDictionaryNodeEnumeratorClass * klass) {
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	system_collections_generic_dictionary_node_enumerator_parent_class = g_type_class_peek_parent (klass);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericDictionaryNodeEnumeratorPrivate));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_CLASS (klass)->get_read_only = system_collections_generic_dictionary_node_enumerator_real_get_read_only;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_dictionary_node_enumerator_get_property;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_dictionary_node_enumerator_set_property;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_dictionary_node_enumerator_finalize;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_READ_ONLY, g_param_spec_boolean ("read-only", "read-only", "read-only", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_VALID, g_param_spec_boolean ("valid", "valid", "valid", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 3636 "Dictionary.c"
-}
-
-
-static void system_collections_generic_dictionary_node_enumerator_instance_init (SystemCollectionsGenericDictionaryNodeEnumerator * self) {
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_GET_PRIVATE (self);
-#line 431 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->_index = -1;
-#line 3645 "Dictionary.c"
-}
-
-
-static void system_collections_generic_dictionary_node_enumerator_finalize (GObject* obj) {
-	SystemCollectionsGenericDictionaryNodeEnumerator * self;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericDictionaryNodeEnumerator);
-#line 430 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_g_object_unref0 (self->_dictionary);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	G_OBJECT_CLASS (system_collections_generic_dictionary_node_enumerator_parent_class)->finalize (obj);
-#line 3657 "Dictionary.c"
-}
-
-
-static GType system_collections_generic_dictionary_node_enumerator_get_type (void) {
-	static volatile gsize system_collections_generic_dictionary_node_enumerator_type_id__volatile = 0;
-	if (g_once_init_enter (&system_collections_generic_dictionary_node_enumerator_type_id__volatile)) {
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericDictionaryNodeEnumeratorClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_dictionary_node_enumerator_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericDictionaryNodeEnumerator), 0, (GInstanceInitFunc) system_collections_generic_dictionary_node_enumerator_instance_init, NULL };
-		GType system_collections_generic_dictionary_node_enumerator_type_id;
-		system_collections_generic_dictionary_node_enumerator_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericDictionaryNodeEnumerator", &g_define_type_info, G_TYPE_FLAG_ABSTRACT);
-		g_once_init_leave (&system_collections_generic_dictionary_node_enumerator_type_id__volatile, system_collections_generic_dictionary_node_enumerator_type_id);
-	}
-	return system_collections_generic_dictionary_node_enumerator_type_id__volatile;
-}
-
-
-static void _vala_system_collections_generic_dictionary_node_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
-	SystemCollectionsGenericDictionaryNodeEnumerator * self;
-	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericDictionaryNodeEnumerator);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	switch (property_id) {
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_READ_ONLY:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		g_value_set_boolean (value, system_collections_generic_dictionary_node_enumerator_get_read_only (self));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_VALID:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		g_value_set_boolean (value, system_collections_generic_dictionary_node_enumerator_get_valid (self));
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 3690 "Dictionary.c"
-		default:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 3696 "Dictionary.c"
-	}
-}
-
-
-static void _vala_system_collections_generic_dictionary_node_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
-	SystemCollectionsGenericDictionaryNodeEnumerator * self;
-	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericDictionaryNodeEnumerator);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	switch (property_id) {
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_TYPE:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->tkey_type = g_value_get_gtype (value);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_DUP_FUNC:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->tkey_dup_func = g_value_get_pointer (value);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TKEY_DESTROY_FUNC:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->tkey_destroy_func = g_value_get_pointer (value);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_TYPE:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->tvalue_type = g_value_get_gtype (value);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_DUP_FUNC:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->tvalue_dup_func = g_value_get_pointer (value);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_NODE_ENUMERATOR_TVALUE_DESTROY_FUNC:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 3742 "Dictionary.c"
-		default:
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 3748 "Dictionary.c"
-	}
+#line 3211 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryEnumerator* system_collections_generic_dictionary_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
 	SystemCollectionsGenericDictionaryEnumerator * self = NULL;
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
-#line 440 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 362 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (dictionary != NULL, NULL);
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = dictionary;
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = (SystemCollectionsGenericDictionaryEnumerator*) system_collections_generic_dictionary_node_enumerator_construct (object_type, tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func, tvalue_type, (GBoxedCopyFunc) tvalue_dup_func, tvalue_destroy_func, _tmp0_);
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = (SystemCollectionsGenericDictionaryEnumerator*) system_collections_generic_node_enumerator_construct (object_type, tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func, tvalue_type, (GBoxedCopyFunc) tvalue_dup_func, tvalue_destroy_func, _tmp0_);
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_type = tkey_type;
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_dup_func = tkey_dup_func;
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_type = tvalue_type;
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 363 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 440 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 362 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 3776 "Dictionary.c"
+#line 3238 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryEnumerator* system_collections_generic_dictionary_enumerator_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
-#line 440 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 362 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_dictionary_enumerator_construct (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_ENUMERATOR, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, dictionary);
-#line 3783 "Dictionary.c"
+#line 3245 "Dictionary.c"
 }
 
 
@@ -3788,45 +3250,45 @@ static void system_collections_generic_dictionary_enumerator_real_Reset (SystemC
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
 	SystemCollectionsGenericDictionary* _tmp4_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp5_ = NULL;
+	SystemCollectionsGenericNode* _tmp5_ = NULL;
 	gconstpointer _tmp6_ = NULL;
 	SystemCollectionsGenericDictionary* _tmp7_ = NULL;
 	gint _tmp8_ = 0;
-#line 453 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryEnumerator*) base;
-#line 454 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 454 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 454 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 454 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 376 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 455 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 455 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 377 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 377 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 456 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	system_collections_generic_dictionary_node_enumerator_has_next ((SystemCollectionsGenericDictionaryNodeEnumerator*) self);
-#line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp5_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 378 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	system_collections_generic_node_enumerator_has_next ((SystemCollectionsGenericNodeEnumerator*) self);
+#line 379 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 379 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp5_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 379 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = _tmp5_->key;
-#line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 379 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_unset_helper (_tmp4_, _tmp6_, NULL);
-#line 458 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node = NULL;
-#line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp7_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp8_ = _tmp7_->priv->_stamp;
-#line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp = _tmp8_;
-#line 3830 "Dictionary.c"
+#line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	((SystemCollectionsGenericNodeEnumerator*) self)->_node = NULL;
+#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp7_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp8_ = _tmp7_->_stamp;
+#line 381 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	((SystemCollectionsGenericNodeEnumerator*) self)->_stamp = _tmp8_;
+#line 3292 "Dictionary.c"
 }
 
 
@@ -3836,69 +3298,69 @@ static SystemCollectionsGenericKeyValuePair* system_collections_generic_dictiona
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
 	gconstpointer _tmp5_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp6_ = NULL;
+	SystemCollectionsGenericNode* _tmp6_ = NULL;
 	gconstpointer _tmp7_ = NULL;
 	SystemCollectionsGenericKeyValuePair* _tmp8_ = NULL;
-#line 445 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 367 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryEnumerator*) base;
-#line 446 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 446 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 446 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 446 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 368 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 368 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 368 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 368 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 447 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 447 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 448 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 448 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp4_->key;
-#line 448 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp6_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 448 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp6_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp7_ = _tmp6_->value;
-#line 448 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp8_ = system_collections_generic_key_value_pair_new (self->priv->tkey_type, (GBoxedCopyFunc) self->priv->tkey_dup_func, self->priv->tkey_destroy_func, self->priv->tvalue_type, (GBoxedCopyFunc) self->priv->tvalue_dup_func, self->priv->tvalue_destroy_func, _tmp5_, _tmp7_);
-#line 448 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp8_;
-#line 448 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3874 "Dictionary.c"
+#line 3336 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryEntry* system_collections_generic_dictionary_enumerator_real_get_Entry (SystemCollectionsGenericIDictionaryEnumerator* base) {
 	SystemCollectionsGenericDictionaryEntry* result;
 	SystemCollectionsGenericDictionaryEnumerator* self;
-	SystemCollectionsGenericDictionaryNode* _tmp0_ = NULL;
+	SystemCollectionsGenericNode* _tmp0_ = NULL;
 	gconstpointer _tmp1_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp2_ = NULL;
+	SystemCollectionsGenericNode* _tmp2_ = NULL;
 	gconstpointer _tmp3_ = NULL;
 	SystemCollectionsGenericDictionaryEntry* _tmp4_ = NULL;
-#line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 385 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryEnumerator*) base;
-#line 464 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 464 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 386 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 386 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _tmp0_->key;
-#line 464 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 464 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 386 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 386 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp3_ = _tmp2_->value;
-#line 464 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 386 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp4_ = system_collections_generic_dictionary_entry_new (self->priv->tkey_type, (GBoxedCopyFunc) self->priv->tkey_dup_func, self->priv->tkey_destroy_func, self->priv->tvalue_type, (GBoxedCopyFunc) self->priv->tvalue_dup_func, self->priv->tvalue_destroy_func, _tmp1_, _tmp3_);
-#line 464 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 386 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp4_;
-#line 464 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 386 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3902 "Dictionary.c"
+#line 3364 "Dictionary.c"
 }
 
 
@@ -3908,35 +3370,35 @@ static gpointer system_collections_generic_dictionary_enumerator_real_get_Key (S
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
 	gconstpointer _tmp5_ = NULL;
 	gpointer _tmp6_ = NULL;
-#line 469 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 391 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryEnumerator*) base;
-#line 470 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 470 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 470 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 470 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 392 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 392 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 392 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 392 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 393 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 393 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 472 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 472 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp4_->key;
-#line 472 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = ((_tmp5_ != NULL) && (self->priv->tkey_dup_func != NULL)) ? self->priv->tkey_dup_func ((gpointer) _tmp5_) : ((gpointer) _tmp5_);
-#line 472 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp6_;
-#line 472 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 394 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3940 "Dictionary.c"
+#line 3402 "Dictionary.c"
 }
 
 
@@ -3946,122 +3408,122 @@ static gpointer system_collections_generic_dictionary_enumerator_real_get_Value 
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
 	gconstpointer _tmp5_ = NULL;
 	gpointer _tmp6_ = NULL;
-#line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryEnumerator*) base;
-#line 478 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 478 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 478 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 478 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 479 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 479 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 401 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 401 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 480 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 480 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 402 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 402 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp4_->value;
-#line 480 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 402 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = ((_tmp5_ != NULL) && (self->priv->tvalue_dup_func != NULL)) ? self->priv->tvalue_dup_func ((gpointer) _tmp5_) : ((gpointer) _tmp5_);
-#line 480 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 402 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp6_;
-#line 480 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 402 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 3978 "Dictionary.c"
+#line 3440 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_enumerator_class_init (SystemCollectionsGenericDictionaryEnumeratorClass * klass) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_enumerator_parent_class = g_type_class_peek_parent (klass);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericDictionaryEnumeratorPrivate));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_dictionary_enumerator_get_property;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_dictionary_enumerator_set_property;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_CURRENT, g_param_spec_pointer ("Current", "Current", "Current", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 4005 "Dictionary.c"
+#line 3467 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_get_t_type (SystemCollectionsGenericDictionaryEnumerator* self) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return G_TYPE_POINTER;
-#line 4012 "Dictionary.c"
+#line 3474 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_get_t_dup_func (SystemCollectionsGenericDictionaryEnumerator* self) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_key_value_pair_ref;
-#line 4019 "Dictionary.c"
+#line 3481 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_get_t_destroy_func (SystemCollectionsGenericDictionaryEnumerator* self) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return g_free;
-#line 4026 "Dictionary.c"
+#line 3488 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_interface_init (SystemCollectionsGenericIEnumeratorIface * iface) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_parent_iface = g_type_interface_peek_parent (iface);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Reset = (void (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_enumerator_real_Reset;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_get_t_type;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_get_t_dup_func;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_get_t_destroy_func;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_node_enumerator_MoveNext;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_node_enumerator_MoveNext;
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Current = system_collections_generic_dictionary_enumerator_real_get_Current;
-#line 4045 "Dictionary.c"
+#line 3507 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_enumerator_system_collections_generic_idictionary_enumerator_interface_init (SystemCollectionsGenericIDictionaryEnumeratorIface * iface) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_enumerator_system_collections_generic_idictionary_enumerator_parent_iface = g_type_interface_peek_parent (iface);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Entry = system_collections_generic_dictionary_enumerator_real_get_Entry;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Key = system_collections_generic_dictionary_enumerator_real_get_Key;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Value = system_collections_generic_dictionary_enumerator_real_get_Value;
-#line 4058 "Dictionary.c"
+#line 3520 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_enumerator_instance_init (SystemCollectionsGenericDictionaryEnumerator * self) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_GET_PRIVATE (self);
-#line 4065 "Dictionary.c"
+#line 3527 "Dictionary.c"
 }
 
 
@@ -4072,7 +3534,7 @@ static GType system_collections_generic_dictionary_enumerator_get_type (void) {
 		static const GInterfaceInfo system_collections_generic_ienumerator_info = { (GInterfaceInitFunc) system_collections_generic_dictionary_enumerator_system_collections_generic_ienumerator_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		static const GInterfaceInfo system_collections_generic_idictionary_enumerator_info = { (GInterfaceInitFunc) system_collections_generic_dictionary_enumerator_system_collections_generic_idictionary_enumerator_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_dictionary_enumerator_type_id;
-		system_collections_generic_dictionary_enumerator_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, "SystemCollectionsGenericDictionaryEnumerator", &g_define_type_info, 0);
+		system_collections_generic_dictionary_enumerator_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, "SystemCollectionsGenericDictionaryEnumerator", &g_define_type_info, 0);
 		g_type_add_interface_static (system_collections_generic_dictionary_enumerator_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, &system_collections_generic_ienumerator_info);
 		g_type_add_interface_static (system_collections_generic_dictionary_enumerator_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IDICTIONARY_ENUMERATOR, &system_collections_generic_idictionary_enumerator_info);
 		g_once_init_leave (&system_collections_generic_dictionary_enumerator_type_id__volatile, system_collections_generic_dictionary_enumerator_type_id);
@@ -4084,21 +3546,21 @@ static GType system_collections_generic_dictionary_enumerator_get_type (void) {
 static void _vala_system_collections_generic_dictionary_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryEnumerator);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_CURRENT:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_pointer (value, system_collections_generic_ienumerator_get_Current ((SystemCollectionsGenericIEnumerator*) self));
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4096 "Dictionary.c"
+#line 3558 "Dictionary.c"
 		default:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4102 "Dictionary.c"
+#line 3564 "Dictionary.c"
 	}
 }
 
@@ -4106,51 +3568,51 @@ static void _vala_system_collections_generic_dictionary_enumerator_get_property 
 static void _vala_system_collections_generic_dictionary_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryEnumerator);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TKEY_TYPE:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_type = g_value_get_gtype (value);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TKEY_DUP_FUNC:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_dup_func = g_value_get_pointer (value);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TKEY_DESTROY_FUNC:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_destroy_func = g_value_get_pointer (value);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TVALUE_TYPE:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_type = g_value_get_gtype (value);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TVALUE_DUP_FUNC:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_dup_func = g_value_get_pointer (value);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_ENUMERATOR_TVALUE_DESTROY_FUNC:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4148 "Dictionary.c"
+#line 3610 "Dictionary.c"
 		default:
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4154 "Dictionary.c"
+#line 3616 "Dictionary.c"
 	}
 }
 
@@ -4159,40 +3621,40 @@ static SystemCollectionsGenericDictionaryKeyCollection* system_collections_gener
 	SystemCollectionsGenericDictionaryKeyCollection * self = NULL;
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (dictionary != NULL, NULL);
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) g_object_new (object_type, NULL);
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_type = tkey_type;
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_dup_func = tkey_dup_func;
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_type = tvalue_type;
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = dictionary;
-#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _g_object_ref0 (_tmp0_);
-#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->dictionary);
-#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->dictionary = _tmp1_;
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 4189 "Dictionary.c"
+#line 3651 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryKeyCollection* system_collections_generic_dictionary_key_collection_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
-#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_dictionary_key_collection_construct (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, dictionary);
-#line 4196 "Dictionary.c"
+#line 3658 "Dictionary.c"
 }
 
 
@@ -4201,17 +3663,17 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionar
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	SystemCollectionsGenericDictionaryKeyCollectionEnumerator* _tmp1_ = NULL;
-#line 493 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 415 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 416 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 416 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_dictionary_key_collection_enumerator_new (self->priv->tkey_type, (GBoxedCopyFunc) self->priv->tkey_dup_func, self->priv->tkey_destroy_func, self->priv->tvalue_type, (GBoxedCopyFunc) self->priv->tvalue_dup_func, self->priv->tvalue_destroy_func, _tmp0_);
-#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 416 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = (SystemCollectionsGenericIEnumerator*) _tmp1_;
-#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 416 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4215 "Dictionary.c"
+#line 3677 "Dictionary.c"
 }
 
 
@@ -4219,43 +3681,43 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionar
 	SystemCollectionsGenericDictionaryKeyCollection * self;
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
-#line 497 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 419 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 498 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = system_collections_generic_ienumerable_GetEnumerator ((SystemCollectionsGenericIEnumerable*) self);
-#line 498 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp0_;
-#line 498 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4231 "Dictionary.c"
+#line 3693 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_real_CopyTo (SystemCollectionsGenericICollection* base, gpointer* array, int array_length1, gint index) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
-#line 501 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 423 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 4239 "Dictionary.c"
+#line 3701 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_real_Add (SystemCollectionsGenericICollection* base, gconstpointer item) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
-#line 516 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 438 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 517 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 439 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_assert_not_reached ();
-#line 4249 "Dictionary.c"
+#line 3711 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_real_Clear (SystemCollectionsGenericICollection* base) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
-#line 520 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 442 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 521 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 443 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_assert_not_reached ();
-#line 4259 "Dictionary.c"
+#line 3721 "Dictionary.c"
 }
 
 
@@ -4265,19 +3727,19 @@ static gboolean system_collections_generic_dictionary_key_collection_real_Contai
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	gconstpointer _tmp1_ = NULL;
 	gboolean _tmp2_ = FALSE;
-#line 524 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 446 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 447 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 447 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = key;
-#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 447 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = system_collections_generic_abstract_dictionary_ContainsKey ((SystemCollectionsGenericAbstractDictionary*) _tmp0_, _tmp1_);
-#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 447 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 447 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4281 "Dictionary.c"
+#line 3743 "Dictionary.c"
 }
 
 
@@ -4286,43 +3748,43 @@ static gboolean system_collections_generic_dictionary_key_collection_real_contai
 	gboolean result = FALSE;
 	gconstpointer _tmp0_ = NULL;
 	gboolean _tmp1_ = FALSE;
-#line 528 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 450 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 451 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = key;
-#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 451 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_icollection_Contains ((SystemCollectionsGenericICollection*) self, _tmp0_);
-#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 451 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp1_;
-#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 451 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4300 "Dictionary.c"
+#line 3762 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_key_collection_real_Remove (SystemCollectionsGenericICollection* base, gconstpointer item) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
 	gboolean result = FALSE;
-#line 532 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 454 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 533 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 455 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_assert_not_reached ();
-#line 532 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 454 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4313 "Dictionary.c"
+#line 3775 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_key_collection_real_get_element_type (SystemCollectionsGenericIEnumerable* base) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
 	GType result = 0UL;
-#line 544 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 466 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 545 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = self->priv->tkey_type;
-#line 545 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4326 "Dictionary.c"
+#line 3788 "Dictionary.c"
 }
 
 
@@ -4332,19 +3794,19 @@ static gint system_collections_generic_dictionary_key_collection_real_get_Count 
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	gint _tmp1_ = 0;
 	gint _tmp2_ = 0;
-#line 505 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 505 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 505 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = system_collections_generic_abstract_dictionary_get_Count ((SystemCollectionsGenericAbstractDictionary*) _tmp0_);
-#line 505 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = system_collections_generic_abstract_dictionary_get_Count ((SystemCollectionsGenericICollection*) _tmp0_);
+#line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = _tmp1_;
-#line 505 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 505 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4348 "Dictionary.c"
+#line 3810 "Dictionary.c"
 }
 
 
@@ -4354,44 +3816,44 @@ static gint system_collections_generic_dictionary_key_collection_real_get_size (
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	gint _tmp1_ = 0;
 	gint _tmp2_ = 0;
-#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 431 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 431 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = system_collections_generic_abstract_dictionary_get_size ((SystemCollectionsGenericAbstractDictionary*) _tmp0_);
-#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 431 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = system_collections_generic_abstract_dictionary_get_size ((SystemCollectionsGenericICollection*) _tmp0_);
+#line 431 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = _tmp1_;
-#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 431 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 431 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4370 "Dictionary.c"
+#line 3832 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_key_collection_real_get_IsReadOnly (SystemCollectionsGenericICollection* base) {
 	gboolean result;
 	SystemCollectionsGenericDictionaryKeyCollection* self;
-#line 513 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 435 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollection*) base;
-#line 513 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 435 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = TRUE;
-#line 513 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 435 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4383 "Dictionary.c"
+#line 3845 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_key_collection_get_IsSynchronized (SystemCollectionsGenericDictionaryKeyCollection* self) {
 	gboolean result;
-#line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = FALSE;
-#line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4395 "Dictionary.c"
+#line 3857 "Dictionary.c"
 }
 
 
@@ -4400,53 +3862,53 @@ static GObject* system_collections_generic_dictionary_key_collection_get_SyncRoo
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	GObject* _tmp1_ = NULL;
 	GObject* _tmp2_ = NULL;
-#line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_abstract_dictionary_get_SyncRoot ((SystemCollectionsGenericAbstractDictionary*) _tmp0_);
-#line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = _tmp1_;
-#line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4416 "Dictionary.c"
+#line 3878 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryKeyCollectionEnumerator* system_collections_generic_dictionary_key_collection_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
 	SystemCollectionsGenericDictionaryKeyCollectionEnumerator * self = NULL;
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
-#line 552 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 474 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (dictionary != NULL, NULL);
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = dictionary;
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = (SystemCollectionsGenericDictionaryKeyCollectionEnumerator*) system_collections_generic_dictionary_node_enumerator_construct (object_type, tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func, tvalue_type, (GBoxedCopyFunc) tvalue_dup_func, tvalue_destroy_func, _tmp0_);
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = (SystemCollectionsGenericDictionaryKeyCollectionEnumerator*) system_collections_generic_node_enumerator_construct (object_type, tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func, tvalue_type, (GBoxedCopyFunc) tvalue_dup_func, tvalue_destroy_func, _tmp0_);
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_type = tkey_type;
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_dup_func = tkey_dup_func;
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_type = tvalue_type;
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 552 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 474 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 4443 "Dictionary.c"
+#line 3905 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryKeyCollectionEnumerator* system_collections_generic_dictionary_key_collection_enumerator_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
-#line 552 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 474 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_dictionary_key_collection_enumerator_construct (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, dictionary);
-#line 4450 "Dictionary.c"
+#line 3912 "Dictionary.c"
 }
 
 
@@ -4456,35 +3918,35 @@ static gpointer system_collections_generic_dictionary_key_collection_enumerator_
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
 	gconstpointer _tmp5_ = NULL;
 	gpointer _tmp6_ = NULL;
-#line 565 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollectionEnumerator*) base;
-#line 566 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 566 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 566 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 566 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 488 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 488 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 488 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 488 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 567 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 567 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 489 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp4_->key;
-#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = ((_tmp5_ != NULL) && (self->priv->tkey_dup_func != NULL)) ? self->priv->tkey_dup_func ((gpointer) _tmp5_) : ((gpointer) _tmp5_);
-#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp6_;
-#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 490 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4488 "Dictionary.c"
+#line 3950 "Dictionary.c"
 }
 
 
@@ -4493,45 +3955,45 @@ static void system_collections_generic_dictionary_key_collection_enumerator_real
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
 	SystemCollectionsGenericDictionary* _tmp4_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp5_ = NULL;
+	SystemCollectionsGenericNode* _tmp5_ = NULL;
 	gconstpointer _tmp6_ = NULL;
 	SystemCollectionsGenericDictionary* _tmp7_ = NULL;
 	gint _tmp8_ = 0;
-#line 571 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 493 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollectionEnumerator*) base;
-#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 573 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 573 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 495 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 495 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 574 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	system_collections_generic_dictionary_node_enumerator_has_next ((SystemCollectionsGenericDictionaryNodeEnumerator*) self);
-#line 575 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 575 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp5_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 575 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 496 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	system_collections_generic_node_enumerator_has_next ((SystemCollectionsGenericNodeEnumerator*) self);
+#line 497 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 497 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp5_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 497 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = _tmp5_->key;
-#line 575 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 497 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_unset_helper (_tmp4_, _tmp6_, NULL);
-#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node = NULL;
-#line 577 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp7_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 577 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp8_ = _tmp7_->priv->_stamp;
-#line 577 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp = _tmp8_;
-#line 4535 "Dictionary.c"
+#line 498 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	((SystemCollectionsGenericNodeEnumerator*) self)->_node = NULL;
+#line 499 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp7_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 499 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp8_ = _tmp7_->_stamp;
+#line 499 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	((SystemCollectionsGenericNodeEnumerator*) self)->_stamp = _tmp8_;
+#line 3997 "Dictionary.c"
 }
 
 
@@ -4541,111 +4003,111 @@ static gpointer system_collections_generic_dictionary_key_collection_enumerator_
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
 	gconstpointer _tmp5_ = NULL;
 	gpointer _tmp6_ = NULL;
-#line 558 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 480 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryKeyCollectionEnumerator*) base;
-#line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 481 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 481 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 481 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 481 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 560 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 560 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 482 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 482 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 561 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 561 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp4_->key;
-#line 561 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = ((_tmp5_ != NULL) && (self->priv->tkey_dup_func != NULL)) ? self->priv->tkey_dup_func ((gpointer) _tmp5_) : ((gpointer) _tmp5_);
-#line 561 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp6_;
-#line 561 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 4573 "Dictionary.c"
+#line 4035 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_enumerator_class_init (SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass * klass) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_key_collection_enumerator_parent_class = g_type_class_peek_parent (klass);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericDictionaryKeyCollectionEnumeratorPrivate));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_dictionary_key_collection_enumerator_get_property;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_dictionary_key_collection_enumerator_set_property;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_CURRENT, g_param_spec_pointer ("Current", "Current", "Current", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 4600 "Dictionary.c"
+#line 4062 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_get_t_type (SystemCollectionsGenericDictionaryKeyCollectionEnumerator* self) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_type;
-#line 4607 "Dictionary.c"
+#line 4069 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_get_t_dup_func (SystemCollectionsGenericDictionaryKeyCollectionEnumerator* self) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_dup_func;
-#line 4614 "Dictionary.c"
+#line 4076 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_get_t_destroy_func (SystemCollectionsGenericDictionaryKeyCollectionEnumerator* self) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_destroy_func;
-#line 4621 "Dictionary.c"
+#line 4083 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_interface_init (SystemCollectionsGenericIEnumeratorIface * iface) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_parent_iface = g_type_interface_peek_parent (iface);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get = (gpointer (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_key_collection_enumerator_real_get;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Reset = (void (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_key_collection_enumerator_real_Reset;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_get_t_type;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_get_t_dup_func;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_get_t_destroy_func;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_node_enumerator_MoveNext;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_node_enumerator_MoveNext;
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Current = system_collections_generic_dictionary_key_collection_enumerator_real_get_Current;
-#line 4642 "Dictionary.c"
+#line 4104 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_enumerator_instance_init (SystemCollectionsGenericDictionaryKeyCollectionEnumerator * self) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_GET_PRIVATE (self);
-#line 4649 "Dictionary.c"
+#line 4111 "Dictionary.c"
 }
 
 
@@ -4655,7 +4117,7 @@ static GType system_collections_generic_dictionary_key_collection_enumerator_get
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericDictionaryKeyCollectionEnumeratorClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_dictionary_key_collection_enumerator_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericDictionaryKeyCollectionEnumerator), 0, (GInstanceInitFunc) system_collections_generic_dictionary_key_collection_enumerator_instance_init, NULL };
 		static const GInterfaceInfo system_collections_generic_ienumerator_info = { (GInterfaceInitFunc) system_collections_generic_dictionary_key_collection_enumerator_system_collections_generic_ienumerator_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_dictionary_key_collection_enumerator_type_id;
-		system_collections_generic_dictionary_key_collection_enumerator_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, "SystemCollectionsGenericDictionaryKeyCollectionEnumerator", &g_define_type_info, 0);
+		system_collections_generic_dictionary_key_collection_enumerator_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, "SystemCollectionsGenericDictionaryKeyCollectionEnumerator", &g_define_type_info, 0);
 		g_type_add_interface_static (system_collections_generic_dictionary_key_collection_enumerator_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, &system_collections_generic_ienumerator_info);
 		g_once_init_leave (&system_collections_generic_dictionary_key_collection_enumerator_type_id__volatile, system_collections_generic_dictionary_key_collection_enumerator_type_id);
 	}
@@ -4666,21 +4128,21 @@ static GType system_collections_generic_dictionary_key_collection_enumerator_get
 static void _vala_system_collections_generic_dictionary_key_collection_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryKeyCollectionEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryKeyCollectionEnumerator);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_CURRENT:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_pointer (value, system_collections_generic_ienumerator_get_Current ((SystemCollectionsGenericIEnumerator*) self));
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4678 "Dictionary.c"
+#line 4140 "Dictionary.c"
 		default:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4684 "Dictionary.c"
+#line 4146 "Dictionary.c"
 	}
 }
 
@@ -4688,180 +4150,180 @@ static void _vala_system_collections_generic_dictionary_key_collection_enumerato
 static void _vala_system_collections_generic_dictionary_key_collection_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryKeyCollectionEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryKeyCollectionEnumerator);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TKEY_TYPE:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_type = g_value_get_gtype (value);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TKEY_DUP_FUNC:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_dup_func = g_value_get_pointer (value);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TKEY_DESTROY_FUNC:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_destroy_func = g_value_get_pointer (value);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TVALUE_TYPE:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_type = g_value_get_gtype (value);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TVALUE_DUP_FUNC:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_dup_func = g_value_get_pointer (value);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_ENUMERATOR_TVALUE_DESTROY_FUNC:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4730 "Dictionary.c"
+#line 4192 "Dictionary.c"
 		default:
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4736 "Dictionary.c"
+#line 4198 "Dictionary.c"
 	}
 }
 
 
 static void system_collections_generic_dictionary_key_collection_class_init (SystemCollectionsGenericDictionaryKeyCollectionClass * klass) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_key_collection_parent_class = g_type_class_peek_parent (klass);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericDictionaryKeyCollectionPrivate));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_dictionary_key_collection_get_property;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_dictionary_key_collection_set_property;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_dictionary_key_collection_finalize;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_COUNT, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_SIZE, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_IS_READ_ONLY, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_IS_SYNCHRONIZED, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_SYNC_ROOT, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 4774 "Dictionary.c"
+#line 4236 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_get_t_type (SystemCollectionsGenericDictionaryKeyCollection* self) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_type;
-#line 4781 "Dictionary.c"
+#line 4243 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_get_t_dup_func (SystemCollectionsGenericDictionaryKeyCollection* self) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_dup_func;
-#line 4788 "Dictionary.c"
+#line 4250 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_get_t_destroy_func (SystemCollectionsGenericDictionaryKeyCollection* self) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tkey_destroy_func;
-#line 4795 "Dictionary.c"
+#line 4257 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_interface_init (SystemCollectionsGenericIEnumerableIface * iface) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_parent_iface = g_type_interface_peek_parent (iface);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->GetEnumerator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_key_collection_real_GetEnumerator;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->iterator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_key_collection_real_iterator;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_element_type = (GType (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_key_collection_real_get_element_type;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_get_t_type;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_get_t_dup_func;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_key_collection_system_collections_generic_ienumerable_get_t_destroy_func;
-#line 4814 "Dictionary.c"
+#line 4276 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_system_collections_generic_icollection_interface_init (SystemCollectionsGenericICollectionIface * iface) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_key_collection_system_collections_generic_icollection_parent_iface = g_type_interface_peek_parent (iface);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->CopyTo = (void (*)(SystemCollectionsGenericICollection*, gpointer*, int, gint)) system_collections_generic_dictionary_key_collection_real_CopyTo;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Add = (void (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_key_collection_real_Add;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Clear = (void (*)(SystemCollectionsGenericICollection*)) system_collections_generic_dictionary_key_collection_real_Clear;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_key_collection_real_Contains;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_key_collection_real_contains;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Remove = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_key_collection_real_Remove;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Count = system_collections_generic_dictionary_key_collection_real_get_Count;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_size = system_collections_generic_dictionary_key_collection_real_get_size;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_IsReadOnly = system_collections_generic_dictionary_key_collection_real_get_IsReadOnly;
-#line 4839 "Dictionary.c"
+#line 4301 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_system_collections_generic_iread_only_collection_interface_init (SystemCollectionsGenericIReadOnlyCollectionIface * iface) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_key_collection_system_collections_generic_iread_only_collection_parent_iface = g_type_interface_peek_parent (iface);
-#line 4846 "Dictionary.c"
+#line 4308 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_instance_init (SystemCollectionsGenericDictionaryKeyCollection * self) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_GET_PRIVATE (self);
-#line 4853 "Dictionary.c"
+#line 4315 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_key_collection_finalize (GObject* obj) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, SystemCollectionsGenericDictionaryKeyCollection);
-#line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 409 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->dictionary);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (system_collections_generic_dictionary_key_collection_parent_class)->finalize (obj);
-#line 4865 "Dictionary.c"
+#line 4327 "Dictionary.c"
 }
 
 
@@ -4886,45 +4348,45 @@ static GType system_collections_generic_dictionary_key_collection_get_type (void
 static void _vala_system_collections_generic_dictionary_key_collection_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, SystemCollectionsGenericDictionaryKeyCollection);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_COUNT:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_int (value, system_collections_generic_icollection_get_Count ((SystemCollectionsGenericICollection*) self));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_SIZE:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_int (value, system_collections_generic_icollection_get_size ((SystemCollectionsGenericICollection*) self));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_IS_READ_ONLY:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_boolean (value, system_collections_generic_icollection_get_IsReadOnly ((SystemCollectionsGenericICollection*) self));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_IS_SYNCHRONIZED:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_boolean (value, system_collections_generic_dictionary_key_collection_get_IsSynchronized (self));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_SYNC_ROOT:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_object (value, system_collections_generic_dictionary_key_collection_get_SyncRoot (self));
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4922 "Dictionary.c"
+#line 4384 "Dictionary.c"
 		default:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4928 "Dictionary.c"
+#line 4390 "Dictionary.c"
 	}
 }
 
@@ -4932,51 +4394,51 @@ static void _vala_system_collections_generic_dictionary_key_collection_get_prope
 static void _vala_system_collections_generic_dictionary_key_collection_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryKeyCollection * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_KEY_COLLECTION, SystemCollectionsGenericDictionaryKeyCollection);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TKEY_TYPE:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_type = g_value_get_gtype (value);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TKEY_DUP_FUNC:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_dup_func = g_value_get_pointer (value);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TKEY_DESTROY_FUNC:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_destroy_func = g_value_get_pointer (value);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TVALUE_TYPE:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_type = g_value_get_gtype (value);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TVALUE_DUP_FUNC:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_dup_func = g_value_get_pointer (value);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEY_COLLECTION_TVALUE_DESTROY_FUNC:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4974 "Dictionary.c"
+#line 4436 "Dictionary.c"
 		default:
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 4980 "Dictionary.c"
+#line 4442 "Dictionary.c"
 	}
 }
 
@@ -4985,40 +4447,40 @@ static SystemCollectionsGenericDictionaryValueCollection* system_collections_gen
 	SystemCollectionsGenericDictionaryValueCollection * self = NULL;
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (dictionary != NULL, NULL);
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) g_object_new (object_type, NULL);
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_type = tkey_type;
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_dup_func = tkey_dup_func;
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_type = tvalue_type;
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 587 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = dictionary;
-#line 587 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = _g_object_ref0 (_tmp0_);
-#line 587 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->dictionary);
-#line 587 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->dictionary = _tmp1_;
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 5015 "Dictionary.c"
+#line 4477 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryValueCollection* system_collections_generic_dictionary_value_collection_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
-#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_dictionary_value_collection_construct (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, dictionary);
-#line 5022 "Dictionary.c"
+#line 4484 "Dictionary.c"
 }
 
 
@@ -5027,17 +4489,17 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionar
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	SystemCollectionsGenericDictionaryValueCollectionEnumerator* _tmp1_ = NULL;
-#line 590 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 512 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 513 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 513 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_dictionary_value_collection_enumerator_new (self->priv->tkey_type, (GBoxedCopyFunc) self->priv->tkey_dup_func, self->priv->tkey_destroy_func, self->priv->tvalue_type, (GBoxedCopyFunc) self->priv->tvalue_dup_func, self->priv->tvalue_destroy_func, _tmp0_);
-#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 513 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = (SystemCollectionsGenericIEnumerator*) _tmp1_;
-#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 513 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5041 "Dictionary.c"
+#line 4503 "Dictionary.c"
 }
 
 
@@ -5045,58 +4507,58 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_dictionar
 	SystemCollectionsGenericDictionaryValueCollection * self;
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
-#line 594 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 516 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 595 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 517 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = system_collections_generic_ienumerable_GetEnumerator ((SystemCollectionsGenericIEnumerable*) self);
-#line 595 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 517 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp0_;
-#line 595 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 517 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5057 "Dictionary.c"
+#line 4519 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_real_CopyTo (SystemCollectionsGenericICollection* base, gpointer* array, int array_length1, gint index) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
-#line 598 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 520 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 599 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 521 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_assert_not_reached ();
-#line 5067 "Dictionary.c"
+#line 4529 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_real_Add (SystemCollectionsGenericICollection* base, gconstpointer item) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
-#line 614 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 536 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 615 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_assert_not_reached ();
-#line 5077 "Dictionary.c"
+#line 4539 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_value_collection_real_Remove (SystemCollectionsGenericICollection* base, gconstpointer item) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
 	gboolean result = FALSE;
-#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 540 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_assert_not_reached ();
-#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 540 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5090 "Dictionary.c"
+#line 4552 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_real_Clear (SystemCollectionsGenericICollection* base) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
-#line 622 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 544 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 623 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 545 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_assert_not_reached ();
-#line 5100 "Dictionary.c"
+#line 4562 "Dictionary.c"
 }
 
 
@@ -5105,17 +4567,17 @@ static gboolean system_collections_generic_dictionary_value_collection_real_Cont
 	gboolean result = FALSE;
 	gconstpointer _tmp0_ = NULL;
 	gboolean _tmp1_ = FALSE;
-#line 626 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 548 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 627 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = item;
-#line 627 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_icollection_contains ((SystemCollectionsGenericICollection*) self, _tmp0_);
-#line 627 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp1_;
-#line 627 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5119 "Dictionary.c"
+#line 4581 "Dictionary.c"
 }
 
 
@@ -5124,15 +4586,15 @@ static gboolean system_collections_generic_dictionary_value_collection_real_cont
 	gboolean result = FALSE;
 	SystemCollectionsGenericIEnumerator* it = NULL;
 	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
-#line 630 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 552 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 631 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = system_collections_generic_ienumerable_iterator ((SystemCollectionsGenericIEnumerable*) self);
-#line 631 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	it = _tmp0_;
-#line 632 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 554 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	while (TRUE) {
-#line 5136 "Dictionary.c"
+#line 4598 "Dictionary.c"
 		SystemCollectionsGenericIEnumerator* _tmp1_ = NULL;
 		gboolean _tmp2_ = FALSE;
 		SystemCollectionsGenericDictionary* _tmp3_ = NULL;
@@ -5146,69 +4608,69 @@ static gboolean system_collections_generic_dictionary_value_collection_real_cont
 		gconstpointer _tmp9_ = NULL;
 		gboolean _tmp10_ = FALSE;
 		gboolean _tmp11_ = FALSE;
-#line 632 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 554 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp1_ = it;
-#line 632 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 554 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp2_ = system_collections_generic_ienumerator_next (_tmp1_);
-#line 632 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 554 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if (!_tmp2_) {
-#line 632 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 554 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			break;
-#line 5158 "Dictionary.c"
+#line 4620 "Dictionary.c"
 		}
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp3_ = self->priv->dictionary;
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp4_ = system_collections_generic_dictionary_get_value_equal_func (_tmp3_, &_tmp4__target);
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5_ = _tmp4_;
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp5__target = _tmp4__target;
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp6_ = it;
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp7_ = system_collections_generic_ienumerator_get (_tmp6_);
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp8_ = _tmp7_;
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp9_ = item;
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp10_ = _tmp5_ (_tmp8_, _tmp9_, _tmp5__target);
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		_tmp11_ = (gboolean) _tmp10_;
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		((_tmp8_ == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (_tmp8_ = (self->priv->tvalue_destroy_func (_tmp8_), NULL));
-#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		if (_tmp11_) {
-#line 634 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			result = TRUE;
-#line 634 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			_g_object_unref0 (it);
-#line 634 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 			return result;
-#line 5190 "Dictionary.c"
+#line 4652 "Dictionary.c"
 		}
 	}
-#line 637 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = FALSE;
-#line 637 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (it);
-#line 637 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5199 "Dictionary.c"
+#line 4661 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_value_collection_real_get_element_type (SystemCollectionsGenericIEnumerable* base) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
 	GType result = 0UL;
-#line 640 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 562 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 641 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 563 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = self->priv->tvalue_type;
-#line 641 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 563 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5212 "Dictionary.c"
+#line 4674 "Dictionary.c"
 }
 
 
@@ -5218,19 +4680,19 @@ static gint system_collections_generic_dictionary_value_collection_real_get_Coun
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	gint _tmp1_ = 0;
 	gint _tmp2_ = 0;
-#line 603 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 603 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 603 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = system_collections_generic_abstract_dictionary_get_Count ((SystemCollectionsGenericAbstractDictionary*) _tmp0_);
-#line 603 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = system_collections_generic_abstract_dictionary_get_Count ((SystemCollectionsGenericICollection*) _tmp0_);
+#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = _tmp1_;
-#line 603 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 603 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5234 "Dictionary.c"
+#line 4696 "Dictionary.c"
 }
 
 
@@ -5240,44 +4702,44 @@ static gint system_collections_generic_dictionary_value_collection_real_get_size
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	gint _tmp1_ = 0;
 	gint _tmp2_ = 0;
-#line 607 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 607 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 607 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = system_collections_generic_abstract_dictionary_get_size ((SystemCollectionsGenericAbstractDictionary*) _tmp0_);
-#line 607 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = system_collections_generic_abstract_dictionary_get_size ((SystemCollectionsGenericICollection*) _tmp0_);
+#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = _tmp1_;
-#line 607 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 607 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5256 "Dictionary.c"
+#line 4718 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_value_collection_real_get_IsReadOnly (SystemCollectionsGenericICollection* base) {
 	gboolean result;
 	SystemCollectionsGenericDictionaryValueCollection* self;
-#line 611 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 533 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollection*) base;
-#line 611 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 533 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = TRUE;
-#line 611 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 533 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5269 "Dictionary.c"
+#line 4731 "Dictionary.c"
 }
 
 
 static gboolean system_collections_generic_dictionary_value_collection_get_IsSynchronized (SystemCollectionsGenericDictionaryValueCollection* self) {
 	gboolean result;
-#line 646 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 646 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = FALSE;
-#line 646 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 568 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5281 "Dictionary.c"
+#line 4743 "Dictionary.c"
 }
 
 
@@ -5286,53 +4748,53 @@ static GObject* system_collections_generic_dictionary_value_collection_get_SyncR
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
 	GObject* _tmp1_ = NULL;
 	GObject* _tmp2_ = NULL;
-#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = self->priv->dictionary;
-#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp1_ = system_collections_generic_abstract_dictionary_get_SyncRoot ((SystemCollectionsGenericAbstractDictionary*) _tmp0_);
-#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp2_ = _tmp1_;
-#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp2_;
-#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5302 "Dictionary.c"
+#line 4764 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryValueCollectionEnumerator* system_collections_generic_dictionary_value_collection_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
 	SystemCollectionsGenericDictionaryValueCollectionEnumerator * self = NULL;
 	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
-#line 657 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 579 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_return_val_if_fail (dictionary != NULL, NULL);
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp0_ = dictionary;
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self = (SystemCollectionsGenericDictionaryValueCollectionEnumerator*) system_collections_generic_dictionary_node_enumerator_construct (object_type, tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func, tvalue_type, (GBoxedCopyFunc) tvalue_dup_func, tvalue_destroy_func, _tmp0_);
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = (SystemCollectionsGenericDictionaryValueCollectionEnumerator*) system_collections_generic_node_enumerator_construct (object_type, tkey_type, (GBoxedCopyFunc) tkey_dup_func, tkey_destroy_func, tvalue_type, (GBoxedCopyFunc) tvalue_dup_func, tvalue_destroy_func, _tmp0_);
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_type = tkey_type;
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_dup_func = tkey_dup_func;
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tkey_destroy_func = tkey_destroy_func;
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_type = tvalue_type;
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_dup_func = tvalue_dup_func;
-#line 658 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 580 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv->tvalue_destroy_func = tvalue_destroy_func;
-#line 657 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 579 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self;
-#line 5329 "Dictionary.c"
+#line 4791 "Dictionary.c"
 }
 
 
 static SystemCollectionsGenericDictionaryValueCollectionEnumerator* system_collections_generic_dictionary_value_collection_enumerator_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
-#line 657 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 579 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return system_collections_generic_dictionary_value_collection_enumerator_construct (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR, tkey_type, tkey_dup_func, tkey_destroy_func, tvalue_type, tvalue_dup_func, tvalue_destroy_func, dictionary);
-#line 5336 "Dictionary.c"
+#line 4798 "Dictionary.c"
 }
 
 
@@ -5342,43 +4804,43 @@ static gpointer system_collections_generic_dictionary_value_collection_enumerato
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
 	gconstpointer _tmp5_ = NULL;
 	gpointer _tmp6_ = NULL;
-#line 661 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 583 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollectionEnumerator*) base;
-#line 662 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 662 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 662 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 662 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 584 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 584 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 584 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 584 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 663 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 663 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 585 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 585 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 664 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 664 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp4_->value;
-#line 664 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = ((_tmp5_ != NULL) && (self->priv->tvalue_dup_func != NULL)) ? self->priv->tvalue_dup_func ((gpointer) _tmp5_) : ((gpointer) _tmp5_);
-#line 664 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp6_;
-#line 664 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 586 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5374 "Dictionary.c"
+#line 4836 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_enumerator_real_Reset (SystemCollectionsGenericIEnumerator* base) {
 	SystemCollectionsGenericDictionaryValueCollectionEnumerator * self;
-#line 675 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 597 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollectionEnumerator*) base;
-#line 5382 "Dictionary.c"
+#line 4844 "Dictionary.c"
 }
 
 
@@ -5388,111 +4850,111 @@ static gpointer system_collections_generic_dictionary_value_collection_enumerato
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
 	gint _tmp2_ = 0;
-	SystemCollectionsGenericDictionaryNode* _tmp3_ = NULL;
-	SystemCollectionsGenericDictionaryNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
 	gconstpointer _tmp5_ = NULL;
 	gpointer _tmp6_ = NULL;
-#line 668 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 590 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = (SystemCollectionsGenericDictionaryValueCollectionEnumerator*) base;
-#line 669 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp0_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_stamp;
-#line 669 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp1_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_dictionary;
-#line 669 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp2_ = _tmp1_->priv->_stamp;
-#line 669 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_stamp;
+#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_dictionary;
+#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
-#line 670 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp3_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 670 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 592 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 592 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_vala_assert (_tmp3_ != NULL, "_node != null");
-#line 671 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	_tmp4_ = ((SystemCollectionsGenericDictionaryNodeEnumerator*) self)->_node;
-#line 671 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 593 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = ((SystemCollectionsGenericNodeEnumerator*) self)->_node;
+#line 593 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp5_ = _tmp4_->value;
-#line 671 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 593 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_tmp6_ = ((_tmp5_ != NULL) && (self->priv->tvalue_dup_func != NULL)) ? self->priv->tvalue_dup_func ((gpointer) _tmp5_) : ((gpointer) _tmp5_);
-#line 671 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 593 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	result = _tmp6_;
-#line 671 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 593 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return result;
-#line 5420 "Dictionary.c"
+#line 4882 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_enumerator_class_init (SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass * klass) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_value_collection_enumerator_parent_class = g_type_class_peek_parent (klass);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericDictionaryValueCollectionEnumeratorPrivate));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_dictionary_value_collection_enumerator_get_property;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_dictionary_value_collection_enumerator_set_property;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_CURRENT, g_param_spec_pointer ("Current", "Current", "Current", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 5447 "Dictionary.c"
+#line 4909 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_get_t_type (SystemCollectionsGenericDictionaryValueCollectionEnumerator* self) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_type;
-#line 5454 "Dictionary.c"
+#line 4916 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_get_t_dup_func (SystemCollectionsGenericDictionaryValueCollectionEnumerator* self) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_dup_func;
-#line 5461 "Dictionary.c"
+#line 4923 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_get_t_destroy_func (SystemCollectionsGenericDictionaryValueCollectionEnumerator* self) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_destroy_func;
-#line 5468 "Dictionary.c"
+#line 4930 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_interface_init (SystemCollectionsGenericIEnumeratorIface * iface) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_parent_iface = g_type_interface_peek_parent (iface);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get = (gpointer (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_value_collection_enumerator_real_get;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Reset = (void (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_value_collection_enumerator_real_Reset;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_get_t_type;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_get_t_dup_func;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_get_t_destroy_func;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_dictionary_node_enumerator_MoveNext;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_node_enumerator_MoveNext;
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Current = system_collections_generic_dictionary_value_collection_enumerator_real_get_Current;
-#line 5489 "Dictionary.c"
+#line 4951 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_enumerator_instance_init (SystemCollectionsGenericDictionaryValueCollectionEnumerator * self) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_GET_PRIVATE (self);
-#line 5496 "Dictionary.c"
+#line 4958 "Dictionary.c"
 }
 
 
@@ -5502,7 +4964,7 @@ static GType system_collections_generic_dictionary_value_collection_enumerator_g
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericDictionaryValueCollectionEnumeratorClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_dictionary_value_collection_enumerator_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericDictionaryValueCollectionEnumerator), 0, (GInstanceInitFunc) system_collections_generic_dictionary_value_collection_enumerator_instance_init, NULL };
 		static const GInterfaceInfo system_collections_generic_ienumerator_info = { (GInterfaceInitFunc) system_collections_generic_dictionary_value_collection_enumerator_system_collections_generic_ienumerator_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_dictionary_value_collection_enumerator_type_id;
-		system_collections_generic_dictionary_value_collection_enumerator_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_NODE_ENUMERATOR, "SystemCollectionsGenericDictionaryValueCollectionEnumerator", &g_define_type_info, 0);
+		system_collections_generic_dictionary_value_collection_enumerator_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, "SystemCollectionsGenericDictionaryValueCollectionEnumerator", &g_define_type_info, 0);
 		g_type_add_interface_static (system_collections_generic_dictionary_value_collection_enumerator_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, &system_collections_generic_ienumerator_info);
 		g_once_init_leave (&system_collections_generic_dictionary_value_collection_enumerator_type_id__volatile, system_collections_generic_dictionary_value_collection_enumerator_type_id);
 	}
@@ -5513,21 +4975,21 @@ static GType system_collections_generic_dictionary_value_collection_enumerator_g
 static void _vala_system_collections_generic_dictionary_value_collection_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryValueCollectionEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryValueCollectionEnumerator);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_CURRENT:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_pointer (value, system_collections_generic_ienumerator_get_Current ((SystemCollectionsGenericIEnumerator*) self));
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5525 "Dictionary.c"
+#line 4987 "Dictionary.c"
 		default:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5531 "Dictionary.c"
+#line 4993 "Dictionary.c"
 	}
 }
 
@@ -5535,173 +4997,173 @@ static void _vala_system_collections_generic_dictionary_value_collection_enumera
 static void _vala_system_collections_generic_dictionary_value_collection_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryValueCollectionEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TYPE_ENUMERATOR, SystemCollectionsGenericDictionaryValueCollectionEnumerator);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TKEY_TYPE:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_type = g_value_get_gtype (value);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TKEY_DUP_FUNC:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_dup_func = g_value_get_pointer (value);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TKEY_DESTROY_FUNC:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_destroy_func = g_value_get_pointer (value);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TVALUE_TYPE:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_type = g_value_get_gtype (value);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TVALUE_DUP_FUNC:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_dup_func = g_value_get_pointer (value);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_ENUMERATOR_TVALUE_DESTROY_FUNC:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5577 "Dictionary.c"
+#line 5039 "Dictionary.c"
 		default:
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5583 "Dictionary.c"
+#line 5045 "Dictionary.c"
 	}
 }
 
 
 static void system_collections_generic_dictionary_value_collection_class_init (SystemCollectionsGenericDictionaryValueCollectionClass * klass) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_value_collection_parent_class = g_type_class_peek_parent (klass);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericDictionaryValueCollectionPrivate));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_dictionary_value_collection_get_property;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_dictionary_value_collection_set_property;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_dictionary_value_collection_finalize;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_COUNT, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_SIZE, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_IS_READ_ONLY, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_IS_SYNCHRONIZED, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_SYNC_ROOT, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 5621 "Dictionary.c"
+#line 5083 "Dictionary.c"
 }
 
 
 static GType system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_get_t_type (SystemCollectionsGenericDictionaryValueCollection* self) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_type;
-#line 5628 "Dictionary.c"
+#line 5090 "Dictionary.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_get_t_dup_func (SystemCollectionsGenericDictionaryValueCollection* self) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_dup_func;
-#line 5635 "Dictionary.c"
+#line 5097 "Dictionary.c"
 }
 
 
 static GDestroyNotify system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_get_t_destroy_func (SystemCollectionsGenericDictionaryValueCollection* self) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	return self->priv->tvalue_destroy_func;
-#line 5642 "Dictionary.c"
+#line 5104 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_interface_init (SystemCollectionsGenericIEnumerableIface * iface) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_parent_iface = g_type_interface_peek_parent (iface);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->GetEnumerator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_value_collection_real_GetEnumerator;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->iterator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_value_collection_real_iterator;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_element_type = (GType (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_value_collection_real_get_element_type;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_get_t_type;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_get_t_dup_func;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_dictionary_value_collection_system_collections_generic_ienumerable_get_t_destroy_func;
-#line 5661 "Dictionary.c"
+#line 5123 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_system_collections_generic_icollection_interface_init (SystemCollectionsGenericICollectionIface * iface) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_value_collection_system_collections_generic_icollection_parent_iface = g_type_interface_peek_parent (iface);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->CopyTo = (void (*)(SystemCollectionsGenericICollection*, gpointer*, int, gint)) system_collections_generic_dictionary_value_collection_real_CopyTo;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Add = (void (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_value_collection_real_Add;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Remove = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_value_collection_real_Remove;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Clear = (void (*)(SystemCollectionsGenericICollection*)) system_collections_generic_dictionary_value_collection_real_Clear;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->Contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_value_collection_real_Contains;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_dictionary_value_collection_real_contains;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_Count = system_collections_generic_dictionary_value_collection_real_get_Count;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_size = system_collections_generic_dictionary_value_collection_real_get_size;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	iface->get_IsReadOnly = system_collections_generic_dictionary_value_collection_real_get_IsReadOnly;
-#line 5686 "Dictionary.c"
+#line 5148 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_instance_init (SystemCollectionsGenericDictionaryValueCollection * self) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_GET_PRIVATE (self);
-#line 5693 "Dictionary.c"
+#line 5155 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_value_collection_finalize (GObject* obj) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION, SystemCollectionsGenericDictionaryValueCollection);
-#line 584 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 506 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->dictionary);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (system_collections_generic_dictionary_value_collection_parent_class)->finalize (obj);
-#line 5705 "Dictionary.c"
+#line 5167 "Dictionary.c"
 }
 
 
@@ -5724,45 +5186,45 @@ static GType system_collections_generic_dictionary_value_collection_get_type (vo
 static void _vala_system_collections_generic_dictionary_value_collection_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION, SystemCollectionsGenericDictionaryValueCollection);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_COUNT:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_int (value, system_collections_generic_icollection_get_Count ((SystemCollectionsGenericICollection*) self));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_SIZE:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_int (value, system_collections_generic_icollection_get_size ((SystemCollectionsGenericICollection*) self));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_IS_READ_ONLY:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_boolean (value, system_collections_generic_icollection_get_IsReadOnly ((SystemCollectionsGenericICollection*) self));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_IS_SYNCHRONIZED:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_boolean (value, system_collections_generic_dictionary_value_collection_get_IsSynchronized (self));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_SYNC_ROOT:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_object (value, system_collections_generic_dictionary_value_collection_get_SyncRoot (self));
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5760 "Dictionary.c"
+#line 5222 "Dictionary.c"
 		default:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5766 "Dictionary.c"
+#line 5228 "Dictionary.c"
 	}
 }
 
@@ -5770,176 +5232,172 @@ static void _vala_system_collections_generic_dictionary_value_collection_get_pro
 static void _vala_system_collections_generic_dictionary_value_collection_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionaryValueCollection * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TYPE_VALUE_COLLECTION, SystemCollectionsGenericDictionaryValueCollection);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TKEY_TYPE:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_type = g_value_get_gtype (value);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TKEY_DUP_FUNC:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_dup_func = g_value_get_pointer (value);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TKEY_DESTROY_FUNC:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_destroy_func = g_value_get_pointer (value);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TVALUE_TYPE:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_type = g_value_get_gtype (value);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TVALUE_DUP_FUNC:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_dup_func = g_value_get_pointer (value);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUE_COLLECTION_TVALUE_DESTROY_FUNC:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5812 "Dictionary.c"
+#line 5274 "Dictionary.c"
 		default:
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 582 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 5818 "Dictionary.c"
+#line 5280 "Dictionary.c"
 	}
 }
 
 
 static void system_collections_generic_dictionary_class_init (SystemCollectionsGenericDictionaryClass * klass) {
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_dictionary_parent_class = g_type_class_peek_parent (klass);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericDictionaryPrivate));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->get = system_collections_generic_dictionary_real_get;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->set = system_collections_generic_dictionary_real_set;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->Add = system_collections_generic_dictionary_real_Add;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->Clear = system_collections_generic_dictionary_real_Clear;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->contains = system_collections_generic_dictionary_real_contains;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->Contains = system_collections_generic_dictionary_real_Contains;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->ContainsKey = system_collections_generic_dictionary_real_ContainsKey;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->ContainsValue = system_collections_generic_dictionary_real_ContainsValue;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->CopyTo = system_collections_generic_dictionary_real_CopyTo;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->get_element_type = system_collections_generic_dictionary_real_get_element_type;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->iterator = system_collections_generic_dictionary_real_iterator;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->GetEnumerator = system_collections_generic_dictionary_real_GetEnumerator;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->OnDeserialization = system_collections_generic_dictionary_real_OnDeserialization;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->Remove = system_collections_generic_dictionary_real_Remove;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	((SystemCollectionsGenericAbstractDictionaryClass *) klass)->TryGetValue = system_collections_generic_dictionary_real_TryGetValue;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_Comparer = system_collections_generic_dictionary_real_get_Comparer;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_Count = system_collections_generic_dictionary_real_get_Count;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_size = system_collections_generic_dictionary_real_get_size;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_IsFixedSize = system_collections_generic_dictionary_real_get_IsFixedSize;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_IsReadOnly = system_collections_generic_dictionary_real_get_IsReadOnly;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_IsSynchronized = system_collections_generic_dictionary_real_get_IsSynchronized;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_Keys = system_collections_generic_dictionary_real_get_Keys;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_SyncRoot = system_collections_generic_dictionary_real_get_SyncRoot;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_DICTIONARY_CLASS (klass)->get_Values = system_collections_generic_dictionary_real_get_Values;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_dictionary_get_property;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_dictionary_set_property;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_dictionary_finalize;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_COMPARER, g_param_spec_object ("Comparer", "Comparer", "Comparer", SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_COUNT, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_SIZE, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_FIXED_SIZE, g_param_spec_boolean ("IsFixedSize", "IsFixedSize", "IsFixedSize", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_READ_ONLY, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_SYNCHRONIZED, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEYS, g_param_spec_object ("Keys", "Keys", "Keys", SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_SYNC_ROOT, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUES, g_param_spec_object ("Values", "Values", "Values", SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 5912 "Dictionary.c"
+#line 5370 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_instance_init (SystemCollectionsGenericDictionary * self) {
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_GET_PRIVATE (self);
-#line 161 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_stamp = 0;
-#line 5921 "Dictionary.c"
+#line 160 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_stamp = 0;
+#line 5379 "Dictionary.c"
 }
 
 
 static void system_collections_generic_dictionary_finalize (GObject* obj) {
 	SystemCollectionsGenericDictionary * self;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, SystemCollectionsGenericDictionary);
-#line 357 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	system_collections_generic_abstract_dictionary_Clear ((SystemCollectionsGenericAbstractDictionary*) self);
-#line 160 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-	self->priv->_nodes = (_vala_array_free (self->priv->_nodes, self->priv->_nodes_length1, (GDestroyNotify) system_collections_generic_dictionary_node_free), NULL);
-#line 165 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_nodes = (_vala_array_free (self->_nodes, self->_nodes_length1, (GDestroyNotify) system_collections_generic_node_free), NULL);
+#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->_key_hash_func);
-#line 166 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 165 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->_key_equal_func);
-#line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 166 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->priv->_value_equal_func);
-#line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	_g_object_unref0 (self->_syncRoot);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	G_OBJECT_CLASS (system_collections_generic_dictionary_parent_class)->finalize (obj);
-#line 5943 "Dictionary.c"
+#line 5401 "Dictionary.c"
 }
 
 
@@ -5958,69 +5416,63 @@ GType system_collections_generic_dictionary_get_type (void) {
 static void _vala_system_collections_generic_dictionary_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionary * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, SystemCollectionsGenericDictionary);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_COMPARER:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		g_value_set_object (value, system_collections_generic_abstract_dictionary_get_Comparer ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
-		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_COUNT:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_int (value, system_collections_generic_abstract_dictionary_get_Count ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_SIZE:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_int (value, system_collections_generic_abstract_dictionary_get_size ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_FIXED_SIZE:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_boolean (value, system_collections_generic_abstract_dictionary_get_IsFixedSize ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_READ_ONLY:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_boolean (value, system_collections_generic_abstract_dictionary_get_IsReadOnly ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_IS_SYNCHRONIZED:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_boolean (value, system_collections_generic_abstract_dictionary_get_IsSynchronized ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_KEYS:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_take_object (value, system_collections_generic_abstract_dictionary_get_Keys ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_SYNC_ROOT:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_set_object (value, system_collections_generic_abstract_dictionary_get_SyncRoot ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_VALUES:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		g_value_take_object (value, system_collections_generic_abstract_dictionary_get_Values ((SystemCollectionsGenericAbstractDictionary*) self));
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 6018 "Dictionary.c"
+#line 5470 "Dictionary.c"
 		default:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 6024 "Dictionary.c"
+#line 5476 "Dictionary.c"
 	}
 }
 
@@ -6028,51 +5480,559 @@ static void _vala_system_collections_generic_dictionary_get_property (GObject * 
 static void _vala_system_collections_generic_dictionary_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericDictionary * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_DICTIONARY, SystemCollectionsGenericDictionary);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 	switch (property_id) {
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TKEY_TYPE:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_type = g_value_get_gtype (value);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TKEY_DUP_FUNC:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_dup_func = g_value_get_pointer (value);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TKEY_DESTROY_FUNC:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tkey_destroy_func = g_value_get_pointer (value);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_TYPE:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_type = g_value_get_gtype (value);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_DUP_FUNC:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_dup_func = g_value_get_pointer (value);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_DICTIONARY_TVALUE_DESTROY_FUNC:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 6070 "Dictionary.c"
+#line 5522 "Dictionary.c"
 		default:
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
 		break;
-#line 6076 "Dictionary.c"
+#line 5528 "Dictionary.c"
+	}
+}
+
+
+SystemCollectionsGenericNode* system_collections_generic_node_new (gpointer k, gpointer v, guint hash) {
+	SystemCollectionsGenericNode* self;
+	gpointer _tmp0_ = NULL;
+	gpointer _tmp1_ = NULL;
+	guint _tmp2_ = 0U;
+#line 611 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = g_slice_new0 (SystemCollectionsGenericNode);
+#line 611 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	system_collections_generic_node_instance_init (self);
+#line 612 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = k;
+#line 612 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	k = NULL;
+#line 612 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->key = _tmp0_;
+#line 613 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = v;
+#line 613 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	v = NULL;
+#line 613 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->value = _tmp1_;
+#line 614 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = hash;
+#line 614 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->key_hash = _tmp2_;
+#line 611 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return self;
+#line 5560 "Dictionary.c"
+}
+
+
+static void system_collections_generic_node_instance_init (SystemCollectionsGenericNode * self) {
+}
+
+
+void system_collections_generic_node_free (SystemCollectionsGenericNode* self) {
+#line 608 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_system_collections_generic_node_free0 (self->next);
+#line 605 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_slice_free (SystemCollectionsGenericNode, self);
+#line 5573 "Dictionary.c"
+}
+
+
+SystemCollectionsGenericNodeEnumerator* system_collections_generic_node_enumerator_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericDictionary* dictionary) {
+	SystemCollectionsGenericNodeEnumerator * self = NULL;
+	SystemCollectionsGenericDictionary* _tmp0_ = NULL;
+	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
+	SystemCollectionsGenericDictionary* _tmp2_ = NULL;
+	gint _tmp3_ = 0;
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (dictionary != NULL, NULL);
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = (SystemCollectionsGenericNodeEnumerator*) g_object_new (object_type, NULL);
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tkey_type = tkey_type;
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tkey_dup_func = tkey_dup_func;
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tkey_destroy_func = tkey_destroy_func;
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tvalue_type = tvalue_type;
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tvalue_dup_func = tvalue_dup_func;
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tvalue_destroy_func = tvalue_destroy_func;
+#line 620 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = dictionary;
+#line 620 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = _g_object_ref0 (_tmp0_);
+#line 620 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_g_object_unref0 (self->_dictionary);
+#line 620 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_dictionary = _tmp1_;
+#line 621 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = self->_dictionary;
+#line 621 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = _tmp2_->_stamp;
+#line 621 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_stamp = _tmp3_;
+#line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return self;
+#line 5615 "Dictionary.c"
+}
+
+
+SystemCollectionsGenericNodeEnumerator* system_collections_generic_node_enumerator_construct_from_iterator (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericNodeEnumerator* iter) {
+	SystemCollectionsGenericNodeEnumerator * self = NULL;
+	SystemCollectionsGenericNodeEnumerator* _tmp0_ = NULL;
+	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
+	SystemCollectionsGenericDictionary* _tmp2_ = NULL;
+	SystemCollectionsGenericNodeEnumerator* _tmp3_ = NULL;
+	gint _tmp4_ = 0;
+	SystemCollectionsGenericNodeEnumerator* _tmp5_ = NULL;
+	SystemCollectionsGenericNode* _tmp6_ = NULL;
+	SystemCollectionsGenericNodeEnumerator* _tmp7_ = NULL;
+	SystemCollectionsGenericNode* _tmp8_ = NULL;
+	SystemCollectionsGenericNodeEnumerator* _tmp9_ = NULL;
+	gint _tmp10_ = 0;
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (iter != NULL, NULL);
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = (SystemCollectionsGenericNodeEnumerator*) g_object_new (object_type, NULL);
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tkey_type = tkey_type;
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tkey_dup_func = tkey_dup_func;
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tkey_destroy_func = tkey_destroy_func;
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tvalue_type = tvalue_type;
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tvalue_dup_func = tvalue_dup_func;
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv->tvalue_destroy_func = tvalue_destroy_func;
+#line 625 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = iter;
+#line 625 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = _tmp0_->_dictionary;
+#line 625 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _g_object_ref0 (_tmp1_);
+#line 625 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_g_object_unref0 (self->_dictionary);
+#line 625 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_dictionary = _tmp2_;
+#line 626 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = iter;
+#line 626 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = _tmp3_->_index;
+#line 626 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_index = _tmp4_;
+#line 627 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp5_ = iter;
+#line 627 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp6_ = _tmp5_->_node;
+#line 627 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_node = _tmp6_;
+#line 628 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp7_ = iter;
+#line 628 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp8_ = _tmp7_->_next;
+#line 628 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_next = _tmp8_;
+#line 629 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp9_ = iter;
+#line 629 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp10_ = _tmp9_->_stamp;
+#line 629 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_stamp = _tmp10_;
+#line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return self;
+#line 5684 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_node_enumerator_MoveNext (SystemCollectionsGenericNodeEnumerator* self) {
+	gboolean result = FALSE;
+	gboolean _tmp0_ = FALSE;
+#line 632 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = system_collections_generic_node_enumerator_next (self);
+#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	result = _tmp0_;
+#line 633 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return result;
+#line 5699 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_node_enumerator_next (SystemCollectionsGenericNodeEnumerator* self) {
+	gboolean result = FALSE;
+	gint _tmp0_ = 0;
+	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
+	gint _tmp2_ = 0;
+	gboolean _tmp3_ = FALSE;
+	SystemCollectionsGenericNode* _tmp4_ = NULL;
+	SystemCollectionsGenericNode* _tmp5_ = NULL;
+#line 637 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 638 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = self->_stamp;
+#line 638 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = self->_dictionary;
+#line 638 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 638 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
+#line 639 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = system_collections_generic_node_enumerator_has_next (self);
+#line 639 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	if (!_tmp3_) {
+#line 640 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		result = FALSE;
+#line 640 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		return result;
+#line 5729 "Dictionary.c"
+	}
+#line 642 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp4_ = self->_next;
+#line 642 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_node = _tmp4_;
+#line 643 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_next = NULL;
+#line 644 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp5_ = self->_node;
+#line 644 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	result = _tmp5_ != NULL;
+#line 644 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return result;
+#line 5743 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_node_enumerator_has_next (SystemCollectionsGenericNodeEnumerator* self) {
+	gboolean result = FALSE;
+	gint _tmp0_ = 0;
+	SystemCollectionsGenericDictionary* _tmp1_ = NULL;
+	gint _tmp2_ = 0;
+	SystemCollectionsGenericNode* _tmp3_ = NULL;
+	SystemCollectionsGenericNode* _tmp18_ = NULL;
+#line 647 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 648 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = self->_stamp;
+#line 648 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp1_ = self->_dictionary;
+#line 648 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp2_ = _tmp1_->_stamp;
+#line 648 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_vala_assert (_tmp0_ == _tmp2_, "_stamp == _dictionary._stamp");
+#line 649 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp3_ = self->_next;
+#line 649 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	if (_tmp3_ == NULL) {
+#line 5768 "Dictionary.c"
+		SystemCollectionsGenericNode* _tmp4_ = NULL;
+		SystemCollectionsGenericNode* _tmp5_ = NULL;
+#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp4_ = self->_node;
+#line 650 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->_next = _tmp4_;
+#line 651 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		_tmp5_ = self->_next;
+#line 651 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		if (_tmp5_ != NULL) {
+#line 5779 "Dictionary.c"
+			SystemCollectionsGenericNode* _tmp6_ = NULL;
+			SystemCollectionsGenericNode* _tmp7_ = NULL;
+#line 652 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp6_ = self->_next;
+#line 652 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp7_ = _tmp6_->next;
+#line 652 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			self->_next = _tmp7_;
+#line 5788 "Dictionary.c"
+		}
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		while (TRUE) {
+#line 5792 "Dictionary.c"
+			gboolean _tmp8_ = FALSE;
+			SystemCollectionsGenericNode* _tmp9_ = NULL;
+			gint _tmp13_ = 0;
+			SystemCollectionsGenericDictionary* _tmp14_ = NULL;
+			SystemCollectionsGenericNode** _tmp15_ = NULL;
+			gint _tmp15__length1 = 0;
+			gint _tmp16_ = 0;
+			SystemCollectionsGenericNode* _tmp17_ = NULL;
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp9_ = self->_next;
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			if (_tmp9_ == NULL) {
+#line 5805 "Dictionary.c"
+				gint _tmp10_ = 0;
+				SystemCollectionsGenericDictionary* _tmp11_ = NULL;
+				gint _tmp12_ = 0;
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp10_ = self->_index;
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp11_ = self->_dictionary;
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp12_ = _tmp11_->_array_size;
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp8_ = (_tmp10_ + 1) < _tmp12_;
+#line 5817 "Dictionary.c"
+			} else {
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				_tmp8_ = FALSE;
+#line 5821 "Dictionary.c"
+			}
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			if (!_tmp8_) {
+#line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+				break;
+#line 5827 "Dictionary.c"
+			}
+#line 655 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp13_ = self->_index;
+#line 655 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			self->_index = _tmp13_ + 1;
+#line 656 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp14_ = self->_dictionary;
+#line 656 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp15_ = _tmp14_->_nodes;
+#line 656 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp15__length1 = _tmp14_->_nodes_length1;
+#line 656 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp16_ = self->_index;
+#line 656 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			_tmp17_ = _tmp15_[_tmp16_];
+#line 656 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+			self->_next = _tmp17_;
+#line 5845 "Dictionary.c"
+		}
+	}
+#line 659 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp18_ = self->_next;
+#line 659 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	result = _tmp18_ != NULL;
+#line 659 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return result;
+#line 5854 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_node_enumerator_get_read_only (SystemCollectionsGenericNodeEnumerator* self) {
+#line 663 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 663 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_GET_CLASS (self)->get_read_only (self);
+#line 5863 "Dictionary.c"
+}
+
+
+static gboolean system_collections_generic_node_enumerator_real_get_read_only (SystemCollectionsGenericNodeEnumerator* base) {
+	gboolean result;
+	SystemCollectionsGenericNodeEnumerator* self;
+#line 663 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = base;
+#line 664 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	result = TRUE;
+#line 664 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return result;
+#line 5876 "Dictionary.c"
+}
+
+
+gboolean system_collections_generic_node_enumerator_get_valid (SystemCollectionsGenericNodeEnumerator* self) {
+	gboolean result;
+	SystemCollectionsGenericNode* _tmp0_ = NULL;
+#line 669 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_return_val_if_fail (self != NULL, FALSE);
+#line 670 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_tmp0_ = self->_node;
+#line 670 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	result = _tmp0_ != NULL;
+#line 670 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	return result;
+#line 5891 "Dictionary.c"
+}
+
+
+static void system_collections_generic_node_enumerator_class_init (SystemCollectionsGenericNodeEnumeratorClass * klass) {
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	system_collections_generic_node_enumerator_parent_class = g_type_class_peek_parent (klass);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericNodeEnumeratorPrivate));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_CLASS (klass)->get_read_only = system_collections_generic_node_enumerator_real_get_read_only;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_node_enumerator_get_property;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_node_enumerator_set_property;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_node_enumerator_finalize;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_TYPE, g_param_spec_gtype ("tkey-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_DUP_FUNC, g_param_spec_pointer ("tkey-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_DESTROY_FUNC, g_param_spec_pointer ("tkey-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_TYPE, g_param_spec_gtype ("tvalue-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_DUP_FUNC, g_param_spec_pointer ("tvalue-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_DESTROY_FUNC, g_param_spec_pointer ("tvalue-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_READ_ONLY, g_param_spec_boolean ("read-only", "read-only", "read-only", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_VALID, g_param_spec_boolean ("valid", "valid", "valid", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 5924 "Dictionary.c"
+}
+
+
+static void system_collections_generic_node_enumerator_instance_init (SystemCollectionsGenericNodeEnumerator * self) {
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->priv = SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_GET_PRIVATE (self);
+#line 675 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self->_index = -1;
+#line 5933 "Dictionary.c"
+}
+
+
+static void system_collections_generic_node_enumerator_finalize (GObject* obj) {
+	SystemCollectionsGenericNodeEnumerator * self;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericNodeEnumerator);
+#line 674 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	_g_object_unref0 (self->_dictionary);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	G_OBJECT_CLASS (system_collections_generic_node_enumerator_parent_class)->finalize (obj);
+#line 5945 "Dictionary.c"
+}
+
+
+GType system_collections_generic_node_enumerator_get_type (void) {
+	static volatile gsize system_collections_generic_node_enumerator_type_id__volatile = 0;
+	if (g_once_init_enter (&system_collections_generic_node_enumerator_type_id__volatile)) {
+		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericNodeEnumeratorClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_node_enumerator_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericNodeEnumerator), 0, (GInstanceInitFunc) system_collections_generic_node_enumerator_instance_init, NULL };
+		GType system_collections_generic_node_enumerator_type_id;
+		system_collections_generic_node_enumerator_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericNodeEnumerator", &g_define_type_info, G_TYPE_FLAG_ABSTRACT);
+		g_once_init_leave (&system_collections_generic_node_enumerator_type_id__volatile, system_collections_generic_node_enumerator_type_id);
+	}
+	return system_collections_generic_node_enumerator_type_id__volatile;
+}
+
+
+static void _vala_system_collections_generic_node_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericNodeEnumerator * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericNodeEnumerator);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	switch (property_id) {
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_READ_ONLY:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		g_value_set_boolean (value, system_collections_generic_node_enumerator_get_read_only (self));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_VALID:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		g_value_set_boolean (value, system_collections_generic_node_enumerator_get_valid (self));
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 5978 "Dictionary.c"
+		default:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 5984 "Dictionary.c"
+	}
+}
+
+
+static void _vala_system_collections_generic_node_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericNodeEnumerator * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_NODE_ENUMERATOR, SystemCollectionsGenericNodeEnumerator);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+	switch (property_id) {
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_TYPE:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->priv->tkey_type = g_value_get_gtype (value);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_DUP_FUNC:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->priv->tkey_dup_func = g_value_get_pointer (value);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TKEY_DESTROY_FUNC:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->priv->tkey_destroy_func = g_value_get_pointer (value);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_TYPE:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->priv->tvalue_type = g_value_get_gtype (value);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_DUP_FUNC:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->priv->tvalue_dup_func = g_value_get_pointer (value);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_NODE_ENUMERATOR_TVALUE_DESTROY_FUNC:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		self->priv->tvalue_destroy_func = g_value_get_pointer (value);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 6030 "Dictionary.c"
+		default:
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Dictionary.vala"
+		break;
+#line 6036 "Dictionary.c"
 	}
 }
 

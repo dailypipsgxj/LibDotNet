@@ -17,6 +17,7 @@ void main (string[] args) {
 	TestSuite.get_root ().add_suite (new SystemCollectionsGenricDictionaryTests ().get_suite ());
 	TestSuite.get_root ().add_suite (new SystemCollectionsGenricStackTests ().get_suite ());
 	TestSuite.get_root ().add_suite (new SystemCollectionsGenricQueueTests ().get_suite ());
+	//TestSuite.get_root ().add_suite (new SystemCollectionsGenricSortedListTests ().get_suite ());
 	
 	Test.run ();
 }

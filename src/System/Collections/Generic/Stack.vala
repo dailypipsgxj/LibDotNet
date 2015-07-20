@@ -115,7 +115,7 @@ namespace System.Collections.Generic
 				array[--dstIndex] = _array[srcIndex++];
 		}
         
-        public new T? get (int item) {
+        public new virtual T? get (int item) {
 			return _array[item];
 		}
         

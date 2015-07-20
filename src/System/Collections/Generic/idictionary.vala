@@ -26,7 +26,7 @@ namespace System.Collections.Generic {
     public interface IDictionary<TKey, TValue> :
 		GLib.Object,
 		IEnumerable<KeyValuePair<TKey, TValue>>
-		//ICollection<KeyValuePair<TKey, TValue>>, 
+		//ICollection<KeyValuePair<TKey, TValue>> 
     {
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 
@@ -48,13 +48,13 @@ namespace System.Collections.Generic {
          // Adds a key-value pair to the dictionary.
         public abstract void Add(TKey key, TValue value);
 
-        public abstract bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair>? comparer = null);
+        //public abstract bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair>? comparer = null);
 
    
         // Returns whether this dictionary contains a particular key.
         public abstract bool ContainsKey(TKey key);
 
-        public abstract bool ContainsValue(TValue value);
+        //public abstract bool ContainsValue(TValue value);
     
         // Removes a particular key from the dictionary.
         public abstract bool Remove(TKey key, TValue? value = null);
@@ -63,11 +63,11 @@ namespace System.Collections.Generic {
 		
         // Returns an IEnumerator for this enumerable Object.  The enumerator provides
         // a simple way to access all the contents of a collection.
-		public abstract IEnumerator iterator ();
+		//public abstract IEnumerator iterator ();
 
-        public virtual IEnumerator GetEnumerator() {
-			return iterator();
-		}
+        //public virtual IEnumerator GetEnumerator() {
+		//	return iterator();
+		//}
 		
     }
 

@@ -24,8 +24,8 @@ namespace System.Collections.Generic {
 	public abstract class AbstractList<T> :
 		GLib.Object,
 		IEnumerable<T>,
-   		IList<T>,
 		ICollection<T>,
+   		IList<T>,
 		IReadOnlyCollection<T>,
 		IReadOnlyList<T>
 	{

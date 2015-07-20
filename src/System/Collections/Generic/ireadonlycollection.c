@@ -39,18 +39,18 @@ gint system_collections_generic_iread_only_collection_get_Count (SystemCollectio
 
 
 gint system_collections_generic_iread_only_collection_get_size (SystemCollectionsGenericIReadOnlyCollection* self) {
-#line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	g_return_val_if_fail (self != NULL, 0);
-#line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE (self)->get_size (self);
 #line 47 "ireadonlycollection.c"
 }
 
 
 gint system_collections_generic_iread_only_collection_get_Count (SystemCollectionsGenericIReadOnlyCollection* self) {
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	g_return_val_if_fail (self != NULL, 0);
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
+#line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlycollection.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE (self)->get_Count (self);
 #line 56 "ireadonlycollection.c"
 }

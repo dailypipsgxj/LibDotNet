@@ -29,9 +29,9 @@ namespace System.Collections.Generic
 
     // If we ever implement more interfaces on IReadOnlyList, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
 	[GenericAccessors]
-    public interface IReadOnlyList<T> : IReadOnlyCollection<T>
+    public interface IReadOnlyList<T> : GLib.Object, IReadOnlyCollection<T>, IList<T>
     {
-        public abstract T? get (int index); 
+        //public abstract T? get (int index); 
 		
     }
 

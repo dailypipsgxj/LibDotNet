@@ -1,45 +1,47 @@
 namespace System {
 
-	errordomain ArrayTypeMismatchException {
-		ARRAYTYPEMISMATCH
+	public errordomain ArrayTypeMismatchException {
+		ARRAY_TYPE_MISMATCH
 	}
 
 	public errordomain ArgumentOutOfRangeException {
 		INDEX,
 		VALUE,
-		NEEDNONNEGNUM,
-		BEGININDEXNOTNEGATIVE,
-		LENGTHNOTNEGATIVE
+		NEED_NON_NEG_NUM,
+		BEGIN_INDEX_NOT_NEGATIVE,
+		LENGTH_NOT_NEGATIVE
 	}
 
 	public errordomain Error {
 		NOELEMENTS
 	}
 
-	errordomain ArgumentException {
+	public errordomain ArgumentException {
 		NULL,
-		INVALIDOFFSETLENGTH,
-		NOTFOUND,
-		IMPLEMENTICOMPARABLE,
-		INVALID_ARRAY_TYPE
+		INVALID_OFFSET_LENGTH,
+		NOT_FOUND,
+		IMPLEMENT_ICOMPARABLE,
+		INVALID_ARRAY_TYPE,
+		ADDING_DUPLICATE
 	}
 
-	errordomain ArgumentNullException {
+	public errordomain ArgumentNullException {
 		POINTER,
 		VALUE
 	}
 
-	errordomain InvalidOperationException {
-		ENUMNOTSTARTED,
-		ENUMENDED,
-		NOTIMPLEMENTED
+	public errordomain InvalidOperationException {
+		ENUM_NOT_STARTED,
+		ENUM_ENDED,
+		NOT_IMPLEMENTED,
+		COMPARE_FAILED
 	}
 	
-	errordomain NotSupportedException {
-		RANGECOLLECTION,
-		FIXEDSIZECOLLECTION,
-		READONLYCOLLECTION,
-		SORTEDLISTNESTEDWRITE,
-		KEYCOLLECTIONSET
+	public errordomain NotSupportedException {
+		RANGE_COLLECTION,
+		FIXED_SIZE_COLLECTION,
+		READ_ONLY_COLLECTION,
+		SORTED_LIST_NESTED_WRITE,
+		KEY_COLLECTION_SET
 	}
 }

@@ -38,6 +38,14 @@ typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGeneri
 typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
 typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
 
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION (system_collections_generic_icollection_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION))
+#define SYSTEM_COLLECTIONS_GENERIC_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollectionIface))
+
+typedef struct _SystemCollectionsGenericICollection SystemCollectionsGenericICollection;
+typedef struct _SystemCollectionsGenericICollectionIface SystemCollectionsGenericICollectionIface;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ILIST (system_collections_generic_ilist_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ILIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ILIST, SystemCollectionsGenericIList))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_ILIST(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ILIST))
@@ -68,6 +76,19 @@ struct _SystemCollectionsGenericIEnumerableIface {
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
 };
 
+struct _SystemCollectionsGenericICollectionIface {
+	GTypeInterface parent_iface;
+	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	void (*Clear) (SystemCollectionsGenericICollection* self);
+	gboolean (*contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	gboolean (*Contains) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	void (*CopyTo) (SystemCollectionsGenericICollection* self, gpointer* array, int array_length1, gint arrayIndex);
+	gboolean (*Remove) (SystemCollectionsGenericICollection* self, gconstpointer item);
+	gint (*get_size) (SystemCollectionsGenericICollection* self);
+	gint (*get_Count) (SystemCollectionsGenericICollection* self);
+	gboolean (*get_IsReadOnly) (SystemCollectionsGenericICollection* self);
+};
+
 struct _SystemCollectionsGenericIListIface {
 	GTypeInterface parent_iface;
 	gpointer (*get) (SystemCollectionsGenericIList* self, gint index);
@@ -81,6 +102,7 @@ struct _SystemCollectionsGenericIListIface {
 
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ilist_get_type (void) G_GNUC_CONST;
 gpointer system_collections_generic_ilist_get (SystemCollectionsGenericIList* self, gint index);
 void system_collections_generic_ilist_set (SystemCollectionsGenericIList* self, gint index, gconstpointer item);
@@ -101,7 +123,7 @@ gpointer system_collections_generic_ilist_get (SystemCollectionsGenericIList* se
 	g_return_val_if_fail (self != NULL, NULL);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->get (self, index);
-#line 105 "ilist.c"
+#line 127 "ilist.c"
 }
 
 
@@ -115,7 +137,7 @@ void system_collections_generic_ilist_set (SystemCollectionsGenericIList* self, 
 	g_return_if_fail (self != NULL);
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->set (self, index, item);
-#line 119 "ilist.c"
+#line 141 "ilist.c"
 }
 
 
@@ -131,7 +153,7 @@ gint system_collections_generic_ilist_IndexOf (SystemCollectionsGenericIList* se
 	g_return_val_if_fail (self != NULL, 0);
 #line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->IndexOf (self, item, index);
-#line 135 "ilist.c"
+#line 157 "ilist.c"
 }
 
 
@@ -146,7 +168,7 @@ void system_collections_generic_ilist_Insert (SystemCollectionsGenericIList* sel
 	g_return_if_fail (self != NULL);
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->Insert (self, index, item);
-#line 150 "ilist.c"
+#line 172 "ilist.c"
 }
 
 
@@ -160,7 +182,7 @@ void system_collections_generic_ilist_RemoveAt (SystemCollectionsGenericIList* s
 	g_return_if_fail (self != NULL);
 #line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->RemoveAt (self, index);
-#line 164 "ilist.c"
+#line 186 "ilist.c"
 }
 
 
@@ -171,7 +193,7 @@ static void system_collections_generic_ilist_base_init (SystemCollectionsGeneric
 	if (!initialized) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 		initialized = TRUE;
-#line 175 "ilist.c"
+#line 197 "ilist.c"
 	}
 }
 
@@ -182,7 +204,7 @@ GType system_collections_generic_ilist_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericIListIface), (GBaseInitFunc) system_collections_generic_ilist_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_generic_ilist_type_id;
 		system_collections_generic_ilist_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsGenericIList", &g_define_type_info, 0);
-		g_type_interface_add_prerequisite (system_collections_generic_ilist_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE);
+		g_type_interface_add_prerequisite (system_collections_generic_ilist_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION);
 		g_once_init_leave (&system_collections_generic_ilist_type_id__volatile, system_collections_generic_ilist_type_id);
 	}
 	return system_collections_generic_ilist_type_id__volatile;

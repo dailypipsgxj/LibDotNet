@@ -72,10 +72,10 @@ LIBDOTNET_COLLECTIONS_OBJMODEL = \
 
 LIBDOTNET_COLLECTIONS_GENX = \
 	System/Linq/Enumerable.vala \
+	System/Array.vala \
 	System/Collections/Generic/SortedDictionary.vala \
 	System/Collections/Generic/HashSet.vala \
 	System/Collections/Generic/LinkedList.vala \
-	System/Collections/Generic/Queue.vala \
 	System/Collections/Generic/SortedList.vala \
 	System/Collections/Generic/SortedSet.vala
 	

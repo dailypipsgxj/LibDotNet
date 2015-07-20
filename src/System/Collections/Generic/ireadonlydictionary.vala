@@ -18,7 +18,7 @@ using System.Diagnostics.Contracts;
 namespace System.Collections.Generic
 {
     // Provides a read-only view of a generic dictionary.
-    public interface IReadOnlyDictionary<TKey, TValue> : IReadOnlyCollection<KeyValuePair<TKey, TValue>>
+    public interface IReadOnlyDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IReadOnlyCollection<KeyValuePair<TKey, TValue>>
     {
         public abstract bool ContainsKey(TKey key);
         public abstract bool TryGetValue(TKey key, out TValue value);

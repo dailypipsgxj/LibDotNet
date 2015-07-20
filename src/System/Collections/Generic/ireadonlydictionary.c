@@ -20,22 +20,6 @@
 #include <glib-object.h>
 
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION (system_collections_generic_iread_only_collection_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollection))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION))
-#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollectionIface))
-
-typedef struct _SystemCollectionsGenericIReadOnlyCollection SystemCollectionsGenericIReadOnlyCollection;
-typedef struct _SystemCollectionsGenericIReadOnlyCollectionIface SystemCollectionsGenericIReadOnlyCollectionIface;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY (system_collections_generic_iread_only_dictionary_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY, SystemCollectionsGenericIReadOnlyDictionary))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_IREAD_ONLY_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY))
-#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY, SystemCollectionsGenericIReadOnlyDictionaryIface))
-
-typedef struct _SystemCollectionsGenericIReadOnlyDictionary SystemCollectionsGenericIReadOnlyDictionary;
-typedef struct _SystemCollectionsGenericIReadOnlyDictionaryIface SystemCollectionsGenericIReadOnlyDictionaryIface;
-
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -52,11 +36,21 @@ typedef struct _SystemCollectionsGenericIEnumerableIface SystemCollectionsGeneri
 typedef struct _SystemCollectionsGenericIEnumerator SystemCollectionsGenericIEnumerator;
 typedef struct _SystemCollectionsGenericIEnumeratorIface SystemCollectionsGenericIEnumeratorIface;
 
-struct _SystemCollectionsGenericIReadOnlyCollectionIface {
-	GTypeInterface parent_iface;
-	gint (*get_size) (SystemCollectionsGenericIReadOnlyCollection* self);
-	gint (*get_Count) (SystemCollectionsGenericIReadOnlyCollection* self);
-};
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION (system_collections_generic_iread_only_collection_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollection))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_IREAD_ONLY_COLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION))
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_COLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, SystemCollectionsGenericIReadOnlyCollectionIface))
+
+typedef struct _SystemCollectionsGenericIReadOnlyCollection SystemCollectionsGenericIReadOnlyCollection;
+typedef struct _SystemCollectionsGenericIReadOnlyCollectionIface SystemCollectionsGenericIReadOnlyCollectionIface;
+
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY (system_collections_generic_iread_only_dictionary_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY, SystemCollectionsGenericIReadOnlyDictionary))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_IREAD_ONLY_DICTIONARY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY))
+#define SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_DICTIONARY, SystemCollectionsGenericIReadOnlyDictionaryIface))
+
+typedef struct _SystemCollectionsGenericIReadOnlyDictionary SystemCollectionsGenericIReadOnlyDictionary;
+typedef struct _SystemCollectionsGenericIReadOnlyDictionaryIface SystemCollectionsGenericIReadOnlyDictionaryIface;
 
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
@@ -80,6 +74,12 @@ struct _SystemCollectionsGenericIEnumerableIface {
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
 };
 
+struct _SystemCollectionsGenericIReadOnlyCollectionIface {
+	GTypeInterface parent_iface;
+	gint (*get_size) (SystemCollectionsGenericIReadOnlyCollection* self);
+	gint (*get_Count) (SystemCollectionsGenericIReadOnlyCollection* self);
+};
+
 struct _SystemCollectionsGenericIReadOnlyDictionaryIface {
 	GTypeInterface parent_iface;
 	gboolean (*ContainsKey) (SystemCollectionsGenericIReadOnlyDictionary* self, gconstpointer key);
@@ -90,9 +90,9 @@ struct _SystemCollectionsGenericIReadOnlyDictionaryIface {
 
 
 
-GType system_collections_generic_iread_only_collection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
+GType system_collections_generic_iread_only_collection_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_iread_only_dictionary_get_type (void) G_GNUC_CONST;
 gboolean system_collections_generic_iread_only_dictionary_ContainsKey (SystemCollectionsGenericIReadOnlyDictionary* self, gconstpointer key);
 gboolean system_collections_generic_iread_only_dictionary_TryGetValue (SystemCollectionsGenericIReadOnlyDictionary* self, gconstpointer key, gpointer* value);
@@ -143,7 +143,11 @@ static void system_collections_generic_iread_only_dictionary_base_init (SystemCo
 	if (!initialized) {
 #line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 		initialized = TRUE;
-#line 147 "ireadonlydictionary.c"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Keys", "Keys", "Keys", SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
+		g_object_interface_install_property (iface, g_param_spec_object ("Values", "Values", "Values", SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+#line 151 "ireadonlydictionary.c"
 	}
 }
 
@@ -154,6 +158,7 @@ GType system_collections_generic_iread_only_dictionary_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericIReadOnlyDictionaryIface), (GBaseInitFunc) system_collections_generic_iread_only_dictionary_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_generic_iread_only_dictionary_type_id;
 		system_collections_generic_iread_only_dictionary_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsGenericIReadOnlyDictionary", &g_define_type_info, 0);
+		g_type_interface_add_prerequisite (system_collections_generic_iread_only_dictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE);
 		g_type_interface_add_prerequisite (system_collections_generic_iread_only_dictionary_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION);
 		g_once_init_leave (&system_collections_generic_iread_only_dictionary_type_id__volatile, system_collections_generic_iread_only_dictionary_type_id);
 	}

@@ -26,8 +26,8 @@ namespace System.Collections {
     public interface IDictionary : ICollection, IEnumerable
     {
 
-        public abstract bool IsFixedSize { get; }
-        public abstract bool IsReadOnly { get; }
+        //public abstract bool IsFixedSize { get; }
+        //public abstract bool IsReadOnly { get; }
 
         // Interfaces are not serializable
         // The Item property provides methods to read and edit entries 

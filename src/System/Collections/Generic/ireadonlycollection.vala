@@ -20,8 +20,13 @@ namespace System.Collections.Generic
    	//[GenericAccessors]
     public interface IReadOnlyCollection<T>
     {
-        public abstract int size { get; }
+
+		/**
+		 * The number of items in this collection.
+		 */
+		public abstract int size { get; }
         public abstract int Count { get; }
+
     }
 
 }

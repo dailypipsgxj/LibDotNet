@@ -13,7 +13,6 @@
 #include <glib-object.h>
 #include <stdlib.h>
 #include <string.h>
-#include <gobject/gvaluecollector.h>
 
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOMPARER (system_collections_generic_icomparer_get_type ())
@@ -44,27 +43,24 @@ typedef struct _SystemCollectionsGenericComparerPrivate SystemCollectionsGeneric
 
 typedef struct _SystemCollectionsGenericStringComparer SystemCollectionsGenericStringComparer;
 typedef struct _SystemCollectionsGenericStringComparerClass SystemCollectionsGenericStringComparerClass;
-#define _system_collections_generic_comparer_unref0(var) ((var == NULL) ? NULL : (var = (system_collections_generic_comparer_unref (var), NULL)))
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_COMPARER (system_collections_generic_int_comparer_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_INT_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_COMPARER, SystemCollectionsGenericIntComparer))
-#define SYSTEM_COLLECTIONS_GENERIC_INT_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_COMPARER, SystemCollectionsGenericIntComparerClass))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_INT_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_COMPARER, SystemCollectionsGenericIntComparerClass))
+#define SYSTEM_TYPE_ICOMPARABLE (system_icomparable_get_type ())
+#define SYSTEM_ICOMPARABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_ICOMPARABLE, SystemIComparable))
+#define SYSTEM_IS_ICOMPARABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_ICOMPARABLE))
+#define SYSTEM_ICOMPARABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_TYPE_ICOMPARABLE, SystemIComparableIface))
 
-typedef struct _SystemCollectionsGenericIntComparer SystemCollectionsGenericIntComparer;
-typedef struct _SystemCollectionsGenericIntComparerClass SystemCollectionsGenericIntComparerClass;
+typedef struct _SystemIComparable SystemIComparable;
+typedef struct _SystemIComparableIface SystemIComparableIface;
 
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_COMPARER (system_collections_generic_int64_comparer_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_INT64_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_COMPARER, SystemCollectionsGenericInt64Comparer))
-#define SYSTEM_COLLECTIONS_GENERIC_INT64_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_COMPARER, SystemCollectionsGenericInt64ComparerClass))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT64_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_INT64_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_COMPARER))
-#define SYSTEM_COLLECTIONS_GENERIC_INT64_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_COMPARER, SystemCollectionsGenericInt64ComparerClass))
+#define SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER (system_collections_generic_generic_comparer_get_type ())
+#define SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER, SystemCollectionsGenericGenericComparer))
+#define SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER, SystemCollectionsGenericGenericComparerClass))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_GENERIC_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_IS_GENERIC_COMPARER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER))
+#define SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER, SystemCollectionsGenericGenericComparerClass))
 
-typedef struct _SystemCollectionsGenericInt64Comparer SystemCollectionsGenericInt64Comparer;
-typedef struct _SystemCollectionsGenericInt64ComparerClass SystemCollectionsGenericInt64ComparerClass;
+typedef struct _SystemCollectionsGenericGenericComparer SystemCollectionsGenericGenericComparer;
+typedef struct _SystemCollectionsGenericGenericComparerClass SystemCollectionsGenericGenericComparerClass;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER (system_collections_generic_object_comparer_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER, SystemCollectionsGenericObjectComparer))
@@ -85,27 +81,24 @@ typedef struct _SystemCollectionsGenericObjectComparerClass SystemCollectionsGen
 
 typedef struct _SystemCollectionsGenericComparisonComparer SystemCollectionsGenericComparisonComparer;
 typedef struct _SystemCollectionsGenericComparisonComparerClass SystemCollectionsGenericComparisonComparerClass;
-typedef struct _SystemCollectionsGenericParamSpecComparer SystemCollectionsGenericParamSpecComparer;
 typedef struct _SystemCollectionsGenericStringComparerPrivate SystemCollectionsGenericStringComparerPrivate;
+typedef struct _SystemCollectionsGenericGenericComparerPrivate SystemCollectionsGenericGenericComparerPrivate;
 typedef struct _SystemCollectionsGenericObjectComparerPrivate SystemCollectionsGenericObjectComparerPrivate;
-typedef struct _SystemCollectionsGenericIntComparerPrivate SystemCollectionsGenericIntComparerPrivate;
-typedef struct _SystemCollectionsGenericInt64ComparerPrivate SystemCollectionsGenericInt64ComparerPrivate;
 typedef struct _SystemCollectionsGenericComparisonComparerPrivate SystemCollectionsGenericComparisonComparerPrivate;
 
+typedef gboolean (*SystemCollectionsGenericCompareDataFunc) (gconstpointer a, gconstpointer b, void* user_data);
 struct _SystemCollectionsGenericIComparerIface {
 	GTypeInterface parent_iface;
 	gint (*Compare) (SystemCollectionsGenericIComparer* self, gconstpointer x, gconstpointer y);
 };
 
 struct _SystemCollectionsGenericComparer {
-	GTypeInstance parent_instance;
-	volatile int ref_count;
+	GObject parent_instance;
 	SystemCollectionsGenericComparerPrivate * priv;
 };
 
 struct _SystemCollectionsGenericComparerClass {
-	GTypeClass parent_class;
-	void (*finalize) (SystemCollectionsGenericComparer *self);
+	GObjectClass parent_class;
 	gint (*Compare) (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
 };
 
@@ -115,11 +108,12 @@ struct _SystemCollectionsGenericComparerPrivate {
 	GDestroyNotify t_destroy_func;
 };
 
-typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
-struct _SystemCollectionsGenericParamSpecComparer {
-	GParamSpec parent_instance;
+struct _SystemIComparableIface {
+	GTypeInterface parent_iface;
+	gint (*CompareTo) (SystemIComparable* self, gconstpointer other);
 };
 
+typedef gint (*SystemComparison) (gconstpointer x, gconstpointer y, void* user_data);
 struct _SystemCollectionsGenericStringComparer {
 	SystemCollectionsGenericComparer parent_instance;
 	SystemCollectionsGenericStringComparerPrivate * priv;
@@ -129,30 +123,21 @@ struct _SystemCollectionsGenericStringComparerClass {
 	SystemCollectionsGenericComparerClass parent_class;
 };
 
+struct _SystemCollectionsGenericGenericComparer {
+	SystemCollectionsGenericComparer parent_instance;
+	SystemCollectionsGenericGenericComparerPrivate * priv;
+};
+
+struct _SystemCollectionsGenericGenericComparerClass {
+	SystemCollectionsGenericComparerClass parent_class;
+};
+
 struct _SystemCollectionsGenericObjectComparer {
 	SystemCollectionsGenericComparer parent_instance;
 	SystemCollectionsGenericObjectComparerPrivate * priv;
 };
 
 struct _SystemCollectionsGenericObjectComparerClass {
-	SystemCollectionsGenericComparerClass parent_class;
-};
-
-struct _SystemCollectionsGenericIntComparer {
-	SystemCollectionsGenericComparer parent_instance;
-	SystemCollectionsGenericIntComparerPrivate * priv;
-};
-
-struct _SystemCollectionsGenericIntComparerClass {
-	SystemCollectionsGenericComparerClass parent_class;
-};
-
-struct _SystemCollectionsGenericInt64Comparer {
-	SystemCollectionsGenericComparer parent_instance;
-	SystemCollectionsGenericInt64ComparerPrivate * priv;
-};
-
-struct _SystemCollectionsGenericInt64ComparerClass {
 	SystemCollectionsGenericComparerClass parent_class;
 };
 
@@ -179,33 +164,27 @@ static SystemCollectionsGenericComparer* system_collections_generic_comparer_def
 static SystemCollectionsGenericComparer* system_collections_generic_comparer_defaultComparer = NULL;
 static SystemCollectionsGenericIComparerIface* system_collections_generic_comparer_system_collections_generic_icomparer_parent_iface = NULL;
 static gpointer system_collections_generic_string_comparer_parent_class = NULL;
+static gpointer system_collections_generic_generic_comparer_parent_class = NULL;
 static gpointer system_collections_generic_object_comparer_parent_class = NULL;
-static gpointer system_collections_generic_int_comparer_parent_class = NULL;
-static gpointer system_collections_generic_int64_comparer_parent_class = NULL;
 static gpointer system_collections_generic_comparison_comparer_parent_class = NULL;
 
 GType system_collections_generic_icomparer_get_type (void) G_GNUC_CONST;
-gpointer system_collections_generic_comparer_ref (gpointer instance);
-void system_collections_generic_comparer_unref (gpointer instance);
-GParamSpec* system_collections_generic_param_spec_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
-void system_collections_generic_value_set_comparer (GValue* value, gpointer v_object);
-void system_collections_generic_value_take_comparer (GValue* value, gpointer v_object);
-gpointer system_collections_generic_value_get_comparer (const GValue* value);
 GType system_collections_generic_comparer_get_type (void) G_GNUC_CONST;
 #define SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DESTROY_FUNC
 };
 SystemCollectionsGenericComparer* system_collections_generic_comparer_Default (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
 SystemCollectionsGenericStringComparer* system_collections_generic_string_comparer_new (void);
 SystemCollectionsGenericStringComparer* system_collections_generic_string_comparer_construct (GType object_type);
 GType system_collections_generic_string_comparer_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericIntComparer* system_collections_generic_int_comparer_new (void);
-SystemCollectionsGenericIntComparer* system_collections_generic_int_comparer_construct (GType object_type);
-GType system_collections_generic_int_comparer_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericInt64Comparer* system_collections_generic_int64_comparer_new (void);
-SystemCollectionsGenericInt64Comparer* system_collections_generic_int64_comparer_construct (GType object_type);
-GType system_collections_generic_int64_comparer_get_type (void) G_GNUC_CONST;
+GType system_icomparable_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericGenericComparer* system_collections_generic_generic_comparer_new (void);
+SystemCollectionsGenericGenericComparer* system_collections_generic_generic_comparer_construct (GType object_type);
+GType system_collections_generic_generic_comparer_get_type (void) G_GNUC_CONST;
 SystemCollectionsGenericObjectComparer* system_collections_generic_object_comparer_new (void);
 SystemCollectionsGenericObjectComparer* system_collections_generic_object_comparer_construct (GType object_type);
 GType system_collections_generic_object_comparer_get_type (void) G_GNUC_CONST;
@@ -216,168 +195,73 @@ GType system_collections_generic_comparison_comparer_get_type (void) G_GNUC_CONS
 gint system_collections_generic_comparer_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
 static gint system_collections_generic_comparer_real_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y);
 SystemCollectionsGenericComparer* system_collections_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func);
-static void system_collections_generic_comparer_finalize (SystemCollectionsGenericComparer* obj);
+static void system_collections_generic_comparer_finalize (GObject* obj);
+static void _vala_system_collections_generic_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 enum  {
 	SYSTEM_COLLECTIONS_GENERIC_STRING_COMPARER_DUMMY_PROPERTY
 };
-static gint system_collections_generic_string_comparer_real_Compare (SystemCollectionsGenericComparer* base, const gchar* x, const gchar* y);
+static gint system_collections_generic_string_comparer_real_Compare (SystemCollectionsGenericComparer* base, const gchar* a, const gchar* b);
+enum  {
+	SYSTEM_COLLECTIONS_GENERIC_GENERIC_COMPARER_DUMMY_PROPERTY
+};
+static gint system_collections_generic_generic_comparer_real_Compare (SystemCollectionsGenericComparer* base, SystemIComparable* a, SystemIComparable* b);
 enum  {
 	SYSTEM_COLLECTIONS_GENERIC_OBJECT_COMPARER_DUMMY_PROPERTY
 };
 static gint system_collections_generic_object_comparer_real_Compare (SystemCollectionsGenericComparer* base, GObject* x, GObject* y);
-enum  {
-	SYSTEM_COLLECTIONS_GENERIC_INT_COMPARER_DUMMY_PROPERTY
-};
-static gint system_collections_generic_int_comparer_real_Compare (SystemCollectionsGenericComparer* base, gint x, gint y);
-enum  {
-	SYSTEM_COLLECTIONS_GENERIC_INT64_COMPARER_DUMMY_PROPERTY
-};
-static gint system_collections_generic_int64_comparer_real_Compare (SystemCollectionsGenericComparer* base, gint64 x, gint64 y);
 #define SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparerPrivate))
 enum  {
-	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_DUMMY_PROPERTY
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_DUMMY_PROPERTY,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_TYPE,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DUP_FUNC,
+	SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DESTROY_FUNC
 };
 static gint system_collections_generic_comparison_comparer_real_Compare (SystemCollectionsGenericComparer* base, gconstpointer x, gconstpointer y);
-static void system_collections_generic_comparison_comparer_finalize (SystemCollectionsGenericComparer* obj);
-
-
-static gpointer _system_collections_generic_comparer_ref0 (gpointer self) {
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return self ? system_collections_generic_comparer_ref (self) : NULL;
-#line 248 "Comparer.c"
-}
+static void system_collections_generic_comparison_comparer_finalize (GObject* obj);
+static void _vala_system_collections_generic_comparison_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void _vala_system_collections_generic_comparison_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 
 
 SystemCollectionsGenericComparer* system_collections_generic_comparer_Default (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
 	SystemCollectionsGenericComparer* result = NULL;
-	SystemCollectionsGenericComparer* comparer = NULL;
-	SystemCollectionsGenericComparer* _tmp0_ = NULL;
-	SystemCollectionsGenericComparer* _tmp1_ = NULL;
-	SystemCollectionsGenericComparer* _tmp2_ = NULL;
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp0_ = system_collections_generic_comparer_defaultComparer;
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp1_ = _system_collections_generic_comparer_ref0 (_tmp0_);
-#line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	comparer = _tmp1_;
-#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp2_ = comparer;
-#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (_tmp2_ == NULL) {
-#line 268 "Comparer.c"
-		GType comparer_type = 0UL;
-		GType _tmp3_ = 0UL;
-		const gchar* _tmp4_ = NULL;
-		const gchar* _tmp5_ = NULL;
-		GQuark _tmp7_ = 0U;
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		static GQuark _tmp6_label0 = 0;
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		static GQuark _tmp6_label1 = 0;
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		static GQuark _tmp6_label2 = 0;
-#line 280 "Comparer.c"
-		SystemCollectionsGenericComparer* _tmp12_ = NULL;
-		SystemCollectionsGenericComparer* _tmp13_ = NULL;
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		comparer_type = t_type;
+	if (t_type == G_TYPE_STRING) {
+#line 231 "Comparer.c"
+		SystemCollectionsGenericStringComparer* _tmp0_ = NULL;
 #line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		_tmp3_ = comparer_type;
+		_tmp0_ = system_collections_generic_string_comparer_new ();
 #line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		_tmp4_ = g_type_name (_tmp3_);
+		result = (SystemCollectionsGenericComparer*) _tmp0_;
 #line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		_tmp5_ = _tmp4_;
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		_tmp7_ = (NULL == _tmp5_) ? 0 : g_quark_from_string (_tmp5_);
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		if (_tmp7_ == ((0 != _tmp6_label0) ? _tmp6_label0 : (_tmp6_label0 = g_quark_from_static_string ("gchararray")))) {
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-			switch (0) {
-#line 297 "Comparer.c"
-				default:
-				{
-					SystemCollectionsGenericStringComparer* _tmp8_ = NULL;
+		return result;
+#line 239 "Comparer.c"
+	} else {
+		gboolean _tmp1_ = FALSE;
+#line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		_tmp1_ = g_type_is_a (t_type, SYSTEM_TYPE_ICOMPARABLE);
+#line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		if (_tmp1_) {
+#line 246 "Comparer.c"
+			SystemCollectionsGenericGenericComparer* _tmp2_ = NULL;
 #line 29 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_tmp8_ = system_collections_generic_string_comparer_new ();
+			_tmp2_ = system_collections_generic_generic_comparer_new ();
 #line 29 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_system_collections_generic_comparer_unref0 (comparer);
+			result = (SystemCollectionsGenericComparer*) _tmp2_;
 #line 29 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					comparer = (SystemCollectionsGenericComparer*) _tmp8_;
-#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					break;
-#line 309 "Comparer.c"
-				}
-			}
-		} else if (_tmp7_ == ((0 != _tmp6_label1) ? _tmp6_label1 : (_tmp6_label1 = g_quark_from_static_string ("gint")))) {
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-			switch (0) {
-#line 315 "Comparer.c"
-				default:
-				{
-					SystemCollectionsGenericIntComparer* _tmp9_ = NULL;
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_tmp9_ = system_collections_generic_int_comparer_new ();
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_system_collections_generic_comparer_unref0 (comparer);
-#line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					comparer = (SystemCollectionsGenericComparer*) _tmp9_;
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					break;
-#line 327 "Comparer.c"
-				}
-			}
-		} else if (_tmp7_ == ((0 != _tmp6_label2) ? _tmp6_label2 : (_tmp6_label2 = g_quark_from_static_string ("glong")))) {
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-			switch (0) {
-#line 333 "Comparer.c"
-				default:
-				{
-					SystemCollectionsGenericInt64Comparer* _tmp10_ = NULL;
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_tmp10_ = system_collections_generic_int64_comparer_new ();
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_system_collections_generic_comparer_unref0 (comparer);
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					comparer = (SystemCollectionsGenericComparer*) _tmp10_;
-#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					break;
-#line 345 "Comparer.c"
-				}
-			}
+			return result;
+#line 254 "Comparer.c"
 		} else {
-#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-			switch (0) {
-#line 351 "Comparer.c"
-				default:
-				{
-					SystemCollectionsGenericObjectComparer* _tmp11_ = NULL;
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_tmp11_ = system_collections_generic_object_comparer_new ();
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					_system_collections_generic_comparer_unref0 (comparer);
-#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					comparer = (SystemCollectionsGenericComparer*) _tmp11_;
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-					break;
-#line 363 "Comparer.c"
-				}
-			}
+			SystemCollectionsGenericObjectComparer* _tmp3_ = NULL;
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			_tmp3_ = system_collections_generic_object_comparer_new ();
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			result = (SystemCollectionsGenericComparer*) _tmp3_;
+#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			return result;
+#line 263 "Comparer.c"
 		}
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		_tmp12_ = comparer;
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		_tmp13_ = _system_collections_generic_comparer_ref0 (_tmp12_);
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		_system_collections_generic_comparer_unref0 (system_collections_generic_comparer_defaultComparer);
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		system_collections_generic_comparer_defaultComparer = _tmp13_;
-#line 375 "Comparer.c"
 	}
-#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	result = comparer;
-#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return result;
-#line 381 "Comparer.c"
 }
 
 
@@ -386,284 +270,110 @@ SystemCollectionsGenericComparer* system_collections_generic_comparer_Create (GT
 	SystemComparison _tmp0_ = NULL;
 	void* _tmp0__target = NULL;
 	SystemCollectionsGenericComparisonComparer* _tmp1_ = NULL;
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp0_ = comparison;
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp0__target = comparison_target;
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp1_ = system_collections_generic_comparison_comparer_new (t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func, _tmp0_, _tmp0__target);
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	result = (SystemCollectionsGenericComparer*) _tmp1_;
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return result;
-#line 400 "Comparer.c"
+#line 284 "Comparer.c"
 }
 
 
 static gint system_collections_generic_comparer_real_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y) {
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_comparer_Compare'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return 0;
-#line 409 "Comparer.c"
+#line 293 "Comparer.c"
 }
 
 
 gint system_collections_generic_comparer_Compare (SystemCollectionsGenericComparer* self, gconstpointer x, gconstpointer y) {
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	g_return_val_if_fail (self != NULL, 0);
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_CLASS (self)->Compare (self, x, y);
-#line 418 "Comparer.c"
+#line 302 "Comparer.c"
 }
 
 
 SystemCollectionsGenericComparer* system_collections_generic_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func) {
-	SystemCollectionsGenericComparer* self = NULL;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	self = (SystemCollectionsGenericComparer*) g_type_create_instance (object_type);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	SystemCollectionsGenericComparer * self = NULL;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	self = (SystemCollectionsGenericComparer*) g_object_new (object_type, NULL);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv->t_type = t_type;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv->t_dup_func = t_dup_func;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv->t_destroy_func = t_destroy_func;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return self;
-#line 434 "Comparer.c"
-}
-
-
-static void system_collections_generic_value_comparer_init (GValue* value) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	value->data[0].v_pointer = NULL;
-#line 441 "Comparer.c"
-}
-
-
-static void system_collections_generic_value_comparer_free_value (GValue* value) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (value->data[0].v_pointer) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		system_collections_generic_comparer_unref (value->data[0].v_pointer);
-#line 450 "Comparer.c"
-	}
-}
-
-
-static void system_collections_generic_value_comparer_copy_value (const GValue* src_value, GValue* dest_value) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (src_value->data[0].v_pointer) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		dest_value->data[0].v_pointer = system_collections_generic_comparer_ref (src_value->data[0].v_pointer);
-#line 460 "Comparer.c"
-	} else {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		dest_value->data[0].v_pointer = NULL;
-#line 464 "Comparer.c"
-	}
-}
-
-
-static gpointer system_collections_generic_value_comparer_peek_pointer (const GValue* value) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return value->data[0].v_pointer;
-#line 472 "Comparer.c"
-}
-
-
-static gchar* system_collections_generic_value_comparer_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (collect_values[0].v_pointer) {
-#line 479 "Comparer.c"
-		SystemCollectionsGenericComparer* object;
-		object = collect_values[0].v_pointer;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		if (object->parent_instance.g_class == NULL) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 486 "Comparer.c"
-		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 490 "Comparer.c"
-		}
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		value->data[0].v_pointer = system_collections_generic_comparer_ref (object);
-#line 494 "Comparer.c"
-	} else {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		value->data[0].v_pointer = NULL;
-#line 498 "Comparer.c"
-	}
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return NULL;
-#line 502 "Comparer.c"
-}
-
-
-static gchar* system_collections_generic_value_comparer_lcopy_value (const GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-	SystemCollectionsGenericComparer** object_p;
-	object_p = collect_values[0].v_pointer;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (!object_p) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 513 "Comparer.c"
-	}
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (!value->data[0].v_pointer) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		*object_p = NULL;
-#line 519 "Comparer.c"
-	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		*object_p = value->data[0].v_pointer;
-#line 523 "Comparer.c"
-	} else {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		*object_p = system_collections_generic_comparer_ref (value->data[0].v_pointer);
-#line 527 "Comparer.c"
-	}
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return NULL;
-#line 531 "Comparer.c"
-}
-
-
-GParamSpec* system_collections_generic_param_spec_comparer (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags) {
-	SystemCollectionsGenericParamSpecComparer* spec;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_return_val_if_fail (g_type_is_a (object_type, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER), NULL);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	spec = g_param_spec_internal (G_TYPE_PARAM_OBJECT, name, nick, blurb, flags);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	G_PARAM_SPEC (spec)->value_type = object_type;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return G_PARAM_SPEC (spec);
-#line 545 "Comparer.c"
-}
-
-
-gpointer system_collections_generic_value_get_comparer (const GValue* value) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER), NULL);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return value->data[0].v_pointer;
-#line 554 "Comparer.c"
-}
-
-
-void system_collections_generic_value_set_comparer (GValue* value, gpointer v_object) {
-	SystemCollectionsGenericComparer* old;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	old = value->data[0].v_pointer;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (v_object) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		value->data[0].v_pointer = v_object;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		system_collections_generic_comparer_ref (value->data[0].v_pointer);
-#line 574 "Comparer.c"
-	} else {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		value->data[0].v_pointer = NULL;
-#line 578 "Comparer.c"
-	}
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (old) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		system_collections_generic_comparer_unref (old);
-#line 584 "Comparer.c"
-	}
-}
-
-
-void system_collections_generic_value_take_comparer (GValue* value, gpointer v_object) {
-	SystemCollectionsGenericComparer* old;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	old = value->data[0].v_pointer;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (v_object) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER));
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		value->data[0].v_pointer = v_object;
-#line 603 "Comparer.c"
-	} else {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		value->data[0].v_pointer = NULL;
-#line 607 "Comparer.c"
-	}
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (old) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		system_collections_generic_comparer_unref (old);
-#line 613 "Comparer.c"
-	}
+#line 318 "Comparer.c"
 }
 
 
 static void system_collections_generic_comparer_class_init (SystemCollectionsGenericComparerClass * klass) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	system_collections_generic_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	((SystemCollectionsGenericComparerClass *) klass)->finalize = system_collections_generic_comparer_finalize;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericComparerPrivate));
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_comparer_real_Compare;
-#line 627 "Comparer.c"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_comparer_get_property;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_comparer_set_property;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_comparer_finalize;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 341 "Comparer.c"
 }
 
 
 static void system_collections_generic_comparer_system_collections_generic_icomparer_interface_init (SystemCollectionsGenericIComparerIface * iface) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	system_collections_generic_comparer_system_collections_generic_icomparer_parent_iface = g_type_interface_peek_parent (iface);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	iface->Compare = (gint (*)(SystemCollectionsGenericIComparer*, gconstpointer, gconstpointer)) system_collections_generic_comparer_Compare;
-#line 636 "Comparer.c"
+#line 350 "Comparer.c"
 }
 
 
 static void system_collections_generic_comparer_instance_init (SystemCollectionsGenericComparer * self) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_PRIVATE (self);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	self->ref_count = 1;
-#line 645 "Comparer.c"
+#line 357 "Comparer.c"
 }
 
 
-static void system_collections_generic_comparer_finalize (SystemCollectionsGenericComparer* obj) {
+static void system_collections_generic_comparer_finalize (GObject* obj) {
 	SystemCollectionsGenericComparer * self;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_signal_handlers_destroy (self);
-#line 655 "Comparer.c"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (system_collections_generic_comparer_parent_class)->finalize (obj);
+#line 367 "Comparer.c"
 }
 
 
 GType system_collections_generic_comparer_get_type (void) {
 	static volatile gsize system_collections_generic_comparer_type_id__volatile = 0;
 	if (g_once_init_enter (&system_collections_generic_comparer_type_id__volatile)) {
-		static const GTypeValueTable g_define_type_value_table = { system_collections_generic_value_comparer_init, system_collections_generic_value_comparer_free_value, system_collections_generic_value_comparer_copy_value, system_collections_generic_value_comparer_peek_pointer, "p", system_collections_generic_value_comparer_collect_value, "p", system_collections_generic_value_comparer_lcopy_value };
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericComparer), 0, (GInstanceInitFunc) system_collections_generic_comparer_instance_init, &g_define_type_value_table };
-		static const GTypeFundamentalInfo g_define_type_fundamental_info = { (G_TYPE_FLAG_CLASSED | G_TYPE_FLAG_INSTANTIATABLE | G_TYPE_FLAG_DERIVABLE | G_TYPE_FLAG_DEEP_DERIVABLE) };
+		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericComparer), 0, (GInstanceInitFunc) system_collections_generic_comparer_instance_init, NULL };
 		static const GInterfaceInfo system_collections_generic_icomparer_info = { (GInterfaceInitFunc) system_collections_generic_comparer_system_collections_generic_icomparer_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_comparer_type_id;
-		system_collections_generic_comparer_type_id = g_type_register_fundamental (g_type_fundamental_next (), "SystemCollectionsGenericComparer", &g_define_type_info, &g_define_type_fundamental_info, G_TYPE_FLAG_ABSTRACT);
+		system_collections_generic_comparer_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericComparer", &g_define_type_info, G_TYPE_FLAG_ABSTRACT);
 		g_type_add_interface_static (system_collections_generic_comparer_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOMPARER, &system_collections_generic_icomparer_info);
 		g_once_init_leave (&system_collections_generic_comparer_type_id__volatile, system_collections_generic_comparer_type_id);
 	}
@@ -671,83 +381,147 @@ GType system_collections_generic_comparer_get_type (void) {
 }
 
 
-gpointer system_collections_generic_comparer_ref (gpointer instance) {
-	SystemCollectionsGenericComparer* self;
-	self = instance;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_atomic_int_inc (&self->ref_count);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return instance;
-#line 682 "Comparer.c"
-}
-
-
-void system_collections_generic_comparer_unref (gpointer instance) {
-	SystemCollectionsGenericComparer* self;
-	self = instance;
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (g_atomic_int_dec_and_test (&self->ref_count)) {
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		SYSTEM_COLLECTIONS_GENERIC_COMPARER_GET_CLASS (self)->finalize (self);
-#line 19 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		g_type_free_instance ((GTypeInstance *) self);
-#line 695 "Comparer.c"
+static void _vala_system_collections_generic_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	switch (property_id) {
+#line 390 "Comparer.c"
+		default:
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 396 "Comparer.c"
 	}
 }
 
 
-static gint system_collections_generic_string_comparer_real_Compare (SystemCollectionsGenericComparer* base, const gchar* x, const gchar* y) {
+static void _vala_system_collections_generic_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	switch (property_id) {
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_TYPE:
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		self->priv->t_type = g_value_get_gtype (value);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DUP_FUNC:
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		self->priv->t_dup_func = g_value_get_pointer (value);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARER_T_DESTROY_FUNC:
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 424 "Comparer.c"
+		default:
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 430 "Comparer.c"
+	}
+}
+
+
+static gint system_collections_generic_string_comparer_real_Compare (SystemCollectionsGenericComparer* base, const gchar* a, const gchar* b) {
 	SystemCollectionsGenericStringComparer * self;
 	gint result = 0;
-	GCompareFunc _tmp0_ = NULL;
+	const gchar* _tmp0_ = NULL;
 	const gchar* _tmp1_ = NULL;
-	const gchar* _tmp2_ = NULL;
-	gint _tmp3_ = 0;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = (SystemCollectionsGenericStringComparer*) base;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_return_val_if_fail (x != NULL, 0);
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	g_return_val_if_fail (y != NULL, 0);
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp0_ = g_strcmp0;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp1_ = x;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp2_ = y;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp3_ = _tmp0_ (_tmp1_, _tmp2_);
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	result = _tmp3_;
-#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return result;
-#line 725 "Comparer.c"
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_return_val_if_fail (a != NULL, 0);
+#line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_return_val_if_fail (b != NULL, 0);
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	_tmp0_ = a;
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	_tmp1_ = b;
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	if (g_strcmp0 (_tmp0_, _tmp1_) == 0) {
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		result = 0;
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		return result;
+#line 456 "Comparer.c"
+	} else {
+		const gchar* _tmp2_ = NULL;
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		_tmp2_ = a;
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		if (_tmp2_ == NULL) {
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			result = -1;
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			return result;
+#line 467 "Comparer.c"
+		} else {
+			const gchar* _tmp3_ = NULL;
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			_tmp3_ = b;
+#line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			if (_tmp3_ == NULL) {
+#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				result = 1;
+#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				return result;
+#line 478 "Comparer.c"
+			} else {
+				GCompareFunc _tmp4_ = NULL;
+				const gchar* _tmp5_ = NULL;
+				const gchar* _tmp6_ = NULL;
+				gint _tmp7_ = 0;
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp4_ = g_strcmp0;
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp5_ = a;
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp6_ = b;
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp7_ = _tmp4_ ((const gchar*) _tmp5_, (const gchar*) _tmp6_);
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				result = _tmp7_;
+#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				return result;
+#line 496 "Comparer.c"
+			}
+		}
+	}
 }
 
 
 SystemCollectionsGenericStringComparer* system_collections_generic_string_comparer_construct (GType object_type) {
-	SystemCollectionsGenericStringComparer* self = NULL;
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	SystemCollectionsGenericStringComparer * self = NULL;
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = (SystemCollectionsGenericStringComparer*) system_collections_generic_comparer_construct (object_type, G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free);
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return self;
-#line 735 "Comparer.c"
+#line 509 "Comparer.c"
 }
 
 
 SystemCollectionsGenericStringComparer* system_collections_generic_string_comparer_new (void) {
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return system_collections_generic_string_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_STRING_COMPARER);
-#line 742 "Comparer.c"
+#line 516 "Comparer.c"
 }
 
 
 static void system_collections_generic_string_comparer_class_init (SystemCollectionsGenericStringComparerClass * klass) {
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	system_collections_generic_string_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_string_comparer_real_Compare;
-#line 751 "Comparer.c"
+#line 525 "Comparer.c"
 }
 
 
@@ -767,6 +541,116 @@ GType system_collections_generic_string_comparer_get_type (void) {
 }
 
 
+static gint system_collections_generic_generic_comparer_real_Compare (SystemCollectionsGenericComparer* base, SystemIComparable* a, SystemIComparable* b) {
+	SystemCollectionsGenericGenericComparer * self;
+	gint result = 0;
+	SystemIComparable* _tmp0_ = NULL;
+	SystemIComparable* _tmp1_ = NULL;
+#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	self = (SystemCollectionsGenericGenericComparer*) base;
+#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_return_val_if_fail (a != NULL, 0);
+#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_return_val_if_fail (b != NULL, 0);
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	_tmp0_ = a;
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	_tmp1_ = b;
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	if (_tmp0_ == _tmp1_) {
+#line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		result = 0;
+#line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		return result;
+#line 566 "Comparer.c"
+	} else {
+		SystemIComparable* _tmp2_ = NULL;
+#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		_tmp2_ = a;
+#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		if (_tmp2_ == NULL) {
+#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			result = -1;
+#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			return result;
+#line 577 "Comparer.c"
+		} else {
+			SystemIComparable* _tmp3_ = NULL;
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			_tmp3_ = b;
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+			if (_tmp3_ == NULL) {
+#line 68 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				result = 1;
+#line 68 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				return result;
+#line 588 "Comparer.c"
+			} else {
+				SystemIComparable* _tmp4_ = NULL;
+				SystemIComparable* _tmp5_ = NULL;
+				SystemIComparable* _tmp6_ = NULL;
+				gint _tmp7_ = 0;
+#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp4_ = a;
+#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp5_ = a;
+#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp6_ = b;
+#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				_tmp7_ = system_collections_generic_comparer_Compare (G_TYPE_CHECK_INSTANCE_CAST (_tmp4_, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, SystemCollectionsGenericComparer), G_TYPE_CHECK_INSTANCE_CAST (_tmp5_, SYSTEM_TYPE_ICOMPARABLE, SystemIComparable), G_TYPE_CHECK_INSTANCE_CAST (_tmp6_, SYSTEM_TYPE_ICOMPARABLE, SystemIComparable));
+#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				result = _tmp7_;
+#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+				return result;
+#line 606 "Comparer.c"
+			}
+		}
+	}
+}
+
+
+SystemCollectionsGenericGenericComparer* system_collections_generic_generic_comparer_construct (GType object_type) {
+	SystemCollectionsGenericGenericComparer * self = NULL;
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	self = (SystemCollectionsGenericGenericComparer*) system_collections_generic_comparer_construct (object_type, SYSTEM_TYPE_ICOMPARABLE, (GBoxedCopyFunc) g_object_ref, g_object_unref);
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	return self;
+#line 619 "Comparer.c"
+}
+
+
+SystemCollectionsGenericGenericComparer* system_collections_generic_generic_comparer_new (void) {
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	return system_collections_generic_generic_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_GENERIC_COMPARER);
+#line 626 "Comparer.c"
+}
+
+
+static void system_collections_generic_generic_comparer_class_init (SystemCollectionsGenericGenericComparerClass * klass) {
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	system_collections_generic_generic_comparer_parent_class = g_type_class_peek_parent (klass);
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_generic_comparer_real_Compare;
+#line 635 "Comparer.c"
+}
+
+
+static void system_collections_generic_generic_comparer_instance_init (SystemCollectionsGenericGenericComparer * self) {
+}
+
+
+GType system_collections_generic_generic_comparer_get_type (void) {
+	static volatile gsize system_collections_generic_generic_comparer_type_id__volatile = 0;
+	if (g_once_init_enter (&system_collections_generic_generic_comparer_type_id__volatile)) {
+		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericGenericComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_generic_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericGenericComparer), 0, (GInstanceInitFunc) system_collections_generic_generic_comparer_instance_init, NULL };
+		GType system_collections_generic_generic_comparer_type_id;
+		system_collections_generic_generic_comparer_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, "SystemCollectionsGenericGenericComparer", &g_define_type_info, 0);
+		g_once_init_leave (&system_collections_generic_generic_comparer_type_id__volatile, system_collections_generic_generic_comparer_type_id);
+	}
+	return system_collections_generic_generic_comparer_type_id__volatile;
+}
+
+
 static gint system_collections_generic_object_comparer_real_Compare (SystemCollectionsGenericComparer* base, GObject* x, GObject* y) {
 	SystemCollectionsGenericObjectComparer * self;
 	gint result = 0;
@@ -774,59 +658,59 @@ static gint system_collections_generic_object_comparer_real_Compare (SystemColle
 	GObject* _tmp1_ = NULL;
 	GObject* _tmp2_ = NULL;
 	gboolean _tmp3_ = FALSE;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = (SystemCollectionsGenericObjectComparer*) base;
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	g_return_val_if_fail (x != NULL, 0);
-#line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	g_return_val_if_fail (y != NULL, 0);
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp0_ = g_direct_equal;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp1_ = x;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp2_ = y;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp3_ = _tmp0_ (_tmp1_, _tmp2_);
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	if (_tmp3_) {
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 		result = 0;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 		return result;
-#line 798 "Comparer.c"
+#line 682 "Comparer.c"
 	}
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	result = -1;
-#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return result;
-#line 804 "Comparer.c"
+#line 688 "Comparer.c"
 }
 
 
 SystemCollectionsGenericObjectComparer* system_collections_generic_object_comparer_construct (GType object_type) {
-	SystemCollectionsGenericObjectComparer* self = NULL;
-#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	SystemCollectionsGenericObjectComparer * self = NULL;
+#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = (SystemCollectionsGenericObjectComparer*) system_collections_generic_comparer_construct (object_type, G_TYPE_OBJECT, (GBoxedCopyFunc) g_object_ref, g_object_unref);
-#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return self;
-#line 814 "Comparer.c"
+#line 698 "Comparer.c"
 }
 
 
 SystemCollectionsGenericObjectComparer* system_collections_generic_object_comparer_new (void) {
-#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return system_collections_generic_object_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_OBJECT_COMPARER);
-#line 821 "Comparer.c"
+#line 705 "Comparer.c"
 }
 
 
 static void system_collections_generic_object_comparer_class_init (SystemCollectionsGenericObjectComparerClass * klass) {
-#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	system_collections_generic_object_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_object_comparer_real_Compare;
-#line 830 "Comparer.c"
+#line 714 "Comparer.c"
 }
 
 
@@ -846,230 +730,36 @@ GType system_collections_generic_object_comparer_get_type (void) {
 }
 
 
-static gint system_collections_generic_int_comparer_real_Compare (SystemCollectionsGenericComparer* base, gint x, gint y) {
-	SystemCollectionsGenericIntComparer * self;
-	gint result = 0;
-	gint _tmp0_ = 0;
-	gint _tmp1_ = 0;
-	gint _tmp2_ = 0;
-	gint _tmp3_ = 0;
-	gint _tmp4_ = 0;
-	gint _tmp5_ = 0;
-#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	self = (SystemCollectionsGenericIntComparer*) base;
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp0_ = x;
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp1_ = y;
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (_tmp0_ < _tmp1_) {
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		result = -1;
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		return result;
-#line 871 "Comparer.c"
-	}
-#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp2_ = x;
-#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp3_ = y;
-#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (_tmp2_ == _tmp3_) {
-#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		result = 0;
-#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		return result;
-#line 883 "Comparer.c"
-	}
-#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp4_ = x;
-#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp5_ = y;
-#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (_tmp4_ > _tmp5_) {
-#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		result = 1;
-#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		return result;
-#line 895 "Comparer.c"
-	}
-#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	result = 0;
-#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return result;
-#line 901 "Comparer.c"
-}
-
-
-SystemCollectionsGenericIntComparer* system_collections_generic_int_comparer_construct (GType object_type) {
-	SystemCollectionsGenericIntComparer* self = NULL;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	self = (SystemCollectionsGenericIntComparer*) system_collections_generic_comparer_construct (object_type, G_TYPE_INT, NULL, NULL);
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return self;
-#line 911 "Comparer.c"
-}
-
-
-SystemCollectionsGenericIntComparer* system_collections_generic_int_comparer_new (void) {
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return system_collections_generic_int_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_INT_COMPARER);
-#line 918 "Comparer.c"
-}
-
-
-static void system_collections_generic_int_comparer_class_init (SystemCollectionsGenericIntComparerClass * klass) {
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	system_collections_generic_int_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_int_comparer_real_Compare;
-#line 927 "Comparer.c"
-}
-
-
-static void system_collections_generic_int_comparer_instance_init (SystemCollectionsGenericIntComparer * self) {
-}
-
-
-GType system_collections_generic_int_comparer_get_type (void) {
-	static volatile gsize system_collections_generic_int_comparer_type_id__volatile = 0;
-	if (g_once_init_enter (&system_collections_generic_int_comparer_type_id__volatile)) {
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericIntComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_int_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericIntComparer), 0, (GInstanceInitFunc) system_collections_generic_int_comparer_instance_init, NULL };
-		GType system_collections_generic_int_comparer_type_id;
-		system_collections_generic_int_comparer_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, "SystemCollectionsGenericIntComparer", &g_define_type_info, 0);
-		g_once_init_leave (&system_collections_generic_int_comparer_type_id__volatile, system_collections_generic_int_comparer_type_id);
-	}
-	return system_collections_generic_int_comparer_type_id__volatile;
-}
-
-
-static gint system_collections_generic_int64_comparer_real_Compare (SystemCollectionsGenericComparer* base, gint64 x, gint64 y) {
-	SystemCollectionsGenericInt64Comparer * self;
-	gint result = 0;
-	gint64 _tmp0_ = 0LL;
-	gint64 _tmp1_ = 0LL;
-	gint64 _tmp2_ = 0LL;
-	gint64 _tmp3_ = 0LL;
-	gint64 _tmp4_ = 0LL;
-	gint64 _tmp5_ = 0LL;
-#line 87 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	self = (SystemCollectionsGenericInt64Comparer*) base;
-#line 88 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp0_ = x;
-#line 88 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp1_ = y;
-#line 88 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (_tmp0_ < _tmp1_) {
-#line 88 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		result = -1;
-#line 88 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		return result;
-#line 968 "Comparer.c"
-	}
-#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp2_ = x;
-#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp3_ = y;
-#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (_tmp2_ == _tmp3_) {
-#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		result = 0;
-#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		return result;
-#line 980 "Comparer.c"
-	}
-#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp4_ = x;
-#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	_tmp5_ = y;
-#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	if (_tmp4_ > _tmp5_) {
-#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		result = 1;
-#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-		return result;
-#line 992 "Comparer.c"
-	}
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	result = 0;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return result;
-#line 998 "Comparer.c"
-}
-
-
-SystemCollectionsGenericInt64Comparer* system_collections_generic_int64_comparer_construct (GType object_type) {
-	SystemCollectionsGenericInt64Comparer* self = NULL;
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	self = (SystemCollectionsGenericInt64Comparer*) system_collections_generic_comparer_construct (object_type, G_TYPE_INT64, NULL, NULL);
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return self;
-#line 1008 "Comparer.c"
-}
-
-
-SystemCollectionsGenericInt64Comparer* system_collections_generic_int64_comparer_new (void) {
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	return system_collections_generic_int64_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_INT64_COMPARER);
-#line 1015 "Comparer.c"
-}
-
-
-static void system_collections_generic_int64_comparer_class_init (SystemCollectionsGenericInt64ComparerClass * klass) {
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	system_collections_generic_int64_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_int64_comparer_real_Compare;
-#line 1024 "Comparer.c"
-}
-
-
-static void system_collections_generic_int64_comparer_instance_init (SystemCollectionsGenericInt64Comparer * self) {
-}
-
-
-GType system_collections_generic_int64_comparer_get_type (void) {
-	static volatile gsize system_collections_generic_int64_comparer_type_id__volatile = 0;
-	if (g_once_init_enter (&system_collections_generic_int64_comparer_type_id__volatile)) {
-		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericInt64ComparerClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_int64_comparer_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericInt64Comparer), 0, (GInstanceInitFunc) system_collections_generic_int64_comparer_instance_init, NULL };
-		GType system_collections_generic_int64_comparer_type_id;
-		system_collections_generic_int64_comparer_type_id = g_type_register_static (SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARER, "SystemCollectionsGenericInt64Comparer", &g_define_type_info, 0);
-		g_once_init_leave (&system_collections_generic_int64_comparer_type_id__volatile, system_collections_generic_int64_comparer_type_id);
-	}
-	return system_collections_generic_int64_comparer_type_id__volatile;
-}
-
-
 SystemCollectionsGenericComparisonComparer* system_collections_generic_comparison_comparer_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemComparison comparison, void* comparison_target) {
-	SystemCollectionsGenericComparisonComparer* self = NULL;
+	SystemCollectionsGenericComparisonComparer * self = NULL;
 	SystemComparison _tmp0_ = NULL;
 	void* _tmp0__target = NULL;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = (SystemCollectionsGenericComparisonComparer*) system_collections_generic_comparer_construct (object_type, t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func);
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv->t_type = t_type;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv->t_dup_func = t_dup_func;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv->t_destroy_func = t_destroy_func;
-#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp0_ = comparison;
-#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp0__target = comparison_target;
-#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->_comparison = _tmp0_;
-#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->_comparison_target = _tmp0__target;
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return self;
-#line 1066 "Comparer.c"
+#line 756 "Comparer.c"
 }
 
 
 SystemCollectionsGenericComparisonComparer* system_collections_generic_comparison_comparer_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemComparison comparison, void* comparison_target) {
-#line 101 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return system_collections_generic_comparison_comparer_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, t_type, t_dup_func, t_destroy_func, comparison, comparison_target);
-#line 1073 "Comparer.c"
+#line 763 "Comparer.c"
 }
 
 
@@ -1081,53 +771,63 @@ static gint system_collections_generic_comparison_comparer_real_Compare (SystemC
 	gconstpointer _tmp1_ = NULL;
 	gconstpointer _tmp2_ = NULL;
 	gint _tmp3_ = 0;
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = (SystemCollectionsGenericComparisonComparer*) base;
-#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp0_ = self->_comparison;
-#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp0__target = self->_comparison_target;
-#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp1_ = x;
-#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp2_ = y;
-#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	_tmp3_ = _tmp0_ (_tmp1_, _tmp2_, _tmp0__target);
-#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	result = _tmp3_;
-#line 106 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	return result;
-#line 1101 "Comparer.c"
+#line 791 "Comparer.c"
 }
 
 
 static void system_collections_generic_comparison_comparer_class_init (SystemCollectionsGenericComparisonComparerClass * klass) {
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	system_collections_generic_comparison_comparer_parent_class = g_type_class_peek_parent (klass);
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	((SystemCollectionsGenericComparerClass *) klass)->finalize = system_collections_generic_comparison_comparer_finalize;
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericComparisonComparerPrivate));
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	((SystemCollectionsGenericComparerClass *) klass)->Compare = system_collections_generic_comparison_comparer_real_Compare;
-#line 1114 "Comparer.c"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_comparison_comparer_get_property;
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_comparison_comparer_set_property;
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_comparison_comparer_finalize;
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+#line 814 "Comparer.c"
 }
 
 
 static void system_collections_generic_comparison_comparer_instance_init (SystemCollectionsGenericComparisonComparer * self) {
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_GET_PRIVATE (self);
-#line 1121 "Comparer.c"
+#line 821 "Comparer.c"
 }
 
 
-static void system_collections_generic_comparison_comparer_finalize (SystemCollectionsGenericComparer* obj) {
+static void system_collections_generic_comparison_comparer_finalize (GObject* obj) {
 	SystemCollectionsGenericComparisonComparer * self;
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparer);
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
-	SYSTEM_COLLECTIONS_GENERIC_COMPARER_CLASS (system_collections_generic_comparison_comparer_parent_class)->finalize (obj);
-#line 1131 "Comparer.c"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	G_OBJECT_CLASS (system_collections_generic_comparison_comparer_parent_class)->finalize (obj);
+#line 831 "Comparer.c"
 }
 
 
@@ -1140,6 +840,56 @@ GType system_collections_generic_comparison_comparer_get_type (void) {
 		g_once_init_leave (&system_collections_generic_comparison_comparer_type_id__volatile, system_collections_generic_comparison_comparer_type_id);
 	}
 	return system_collections_generic_comparison_comparer_type_id__volatile;
+}
+
+
+static void _vala_system_collections_generic_comparison_comparer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparisonComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparer);
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	switch (property_id) {
+#line 852 "Comparer.c"
+		default:
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 858 "Comparer.c"
+	}
+}
+
+
+static void _vala_system_collections_generic_comparison_comparer_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
+	SystemCollectionsGenericComparisonComparer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_COMPARISON_COMPARER, SystemCollectionsGenericComparisonComparer);
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+	switch (property_id) {
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_TYPE:
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		self->priv->t_type = g_value_get_gtype (value);
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DUP_FUNC:
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		self->priv->t_dup_func = g_value_get_pointer (value);
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		case SYSTEM_COLLECTIONS_GENERIC_COMPARISON_COMPARER_T_DESTROY_FUNC:
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		self->priv->t_destroy_func = g_value_get_pointer (value);
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 886 "Comparer.c"
+		default:
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Comparer.vala"
+		break;
+#line 892 "Comparer.c"
+	}
 }
 
 

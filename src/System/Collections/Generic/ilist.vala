@@ -32,7 +32,7 @@ namespace System.Collections.Generic {
     // The same attribute is on IEnumerable<T> and ICollection<T>.
 
 	//[GenericAccessors]
-    public interface IList<T> : IEnumerable<T>
+    public interface IList<T> : ICollection<T>
     {
 		
 		/**

@@ -13,7 +13,8 @@ namespace System.Collections.ObjectModel
     using System.Diagnostics;
     using System.Runtime;
     
-    public class ReadOnlyCollection<T>: GLib.Object, IEnumerable<T>, IList<T>, IReadOnlyCollection<T>, IReadOnlyList<T>
+    [GenericAccessors]
+    public class ReadOnlyCollection<T>: GLib.Object, IEnumerable<T>, ICollection<T>, IReadOnlyCollection<T>
     {
         IList<T> list;
         private GLib.Object _syncRoot;
@@ -26,7 +27,7 @@ namespace System.Collections.ObjectModel
             get { return ((ICollection)list).Count; }
         }
 
-        public int size {
+        public virtual int size {
             get { return ((ICollection)list).size; }
         }
 
@@ -35,7 +36,11 @@ namespace System.Collections.ObjectModel
         }
 
         public new void set (int index, T value) { 
-			throw new NotSupportedException.READONLYCOLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
+			throw new NotSupportedException.READ_ONLY_COLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
+        }
+
+        public bool contains(T value) {
+            return ((ICollection<T>)list).Contains(value);
         }
 
         public bool Contains(T value) {
@@ -64,7 +69,7 @@ namespace System.Collections.ObjectModel
             }
         }
 
-        public bool IsReadOnly {
+        public virtual bool IsReadOnly {
             get { return true; }
         }
         
@@ -73,24 +78,24 @@ namespace System.Collections.ObjectModel
 		}
 
         public void Add(T value) {
-            throw new NotSupportedException.READONLYCOLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
+            throw new NotSupportedException.READ_ONLY_COLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
         }
         
         public void Clear() {
-            throw new NotSupportedException.READONLYCOLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
+            throw new NotSupportedException.READ_ONLY_COLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
         }
 
         public void Insert(int index, T value) {
-            throw new NotSupportedException.READONLYCOLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
+            throw new NotSupportedException.READ_ONLY_COLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
         }
 
         public bool Remove(T value) {
-            throw new NotSupportedException.READONLYCOLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
+            throw new NotSupportedException.READ_ONLY_COLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
             return false;
         }
 
         public void RemoveAt(int index) {
-            throw new NotSupportedException.READONLYCOLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
+            throw new NotSupportedException.READ_ONLY_COLLECTION("ExceptionResource.NotSupported_ReadOnlyCollection");
         }
 
         public bool IsSynchronized {

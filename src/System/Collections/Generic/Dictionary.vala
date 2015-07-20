@@ -24,21 +24,18 @@ namespace System.Collections.Generic {
 	public abstract class AbstractDictionary<TKey,TValue> : 
 		GLib.Object,
 		IEnumerable<KeyValuePair<TKey, TValue>>,
-		IDictionary<TKey,TValue>
-		/*
+		IDictionary<TKey,TValue>,
+		ICollection<KeyValuePair<TKey, TValue>>,
 		IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
 		IReadOnlyDictionary<TKey, TValue>
-		ICollection<KeyValuePair<TKey, TValue>>,
-		*/
 	{
-
-        public abstract IEqualityComparer<TKey> Comparer { get; }
+        public abstract int size { get; }
+        //public abstract IEqualityComparer<TKey> Comparer { get; }
         public abstract int Count { get; }
         public abstract bool IsFixedSize { get; }
         public abstract bool IsReadOnly { get; }
         public abstract bool IsSynchronized { get; }
         public abstract ICollection<TKey> Keys { owned get;}
-        public abstract int size { get; }
 		public abstract GLib.Object SyncRoot { get; }
         public abstract ICollection<TValue> Values { owned get; }
 
@@ -48,8 +45,9 @@ namespace System.Collections.Generic {
 
         public abstract void Add(TKey key, TValue value);
 		public abstract void Clear();
-        public new abstract bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair>? comparer = null);
-        public abstract bool contains (KeyValuePair<TKey, TValue> item);
+        //public new abstract bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair>? comparer = null);
+        public new abstract bool Contains(KeyValuePair<TKey, TValue> keyValuePair);
+        public abstract bool contains (KeyValuePair<TKey, TValue>keyValuePair);
 
 		public abstract bool ContainsKey(TKey key);
         public abstract bool ContainsValue(TValue value);
@@ -64,12 +62,13 @@ namespace System.Collections.Generic {
 
     public class Dictionary<TKey,TValue>: AbstractDictionary<TKey,TValue>
 	{
-		
+		/*
         public override IEqualityComparer<TKey> Comparer {
             get {
                 return _key_equal_func;
             }               
         }
+        * */
 		/**
 		 * The keys' hash function.
 		 */
@@ -155,10 +154,10 @@ namespace System.Collections.Generic {
 
 		private const int MIN_SIZE = 11;
 		private const int MAX_SIZE = 13845163;
-		private int _array_size;
-		private int _nnodes;
-		private Node<TKey,TValue>[] _nodes;
-		private int _stamp = 0;
+		internal int _array_size;
+		internal int _nnodes;
+		internal Node<TKey,TValue>[] _nodes;
+		internal int _stamp = 0;
         private weak ICollection<TKey>  _keys;
         private weak ICollection<TValue>  _values;
 
@@ -228,12 +227,11 @@ namespace System.Collections.Generic {
 			resize ();
 		}
 
-        public override bool contains (KeyValuePair<TKey, TValue> item) {
-			Node<TKey,TValue>** node = lookup_node (item.Key);
-			return (*node != null && (bool)value_equal_func ((*node)->value, item.Value));
+        public override bool contains (KeyValuePair<TKey, TValue> keyValuePair) {
+			return Contains(keyValuePair);
 		}
 
-        public override bool Contains(KeyValuePair<TKey, TValue> keyValuePair, IEqualityComparer<KeyValuePair>? comparer = null) {
+        public override bool Contains(KeyValuePair<TKey, TValue> keyValuePair) {
 			Node<TKey,TValue>** node = lookup_node (keyValuePair.Key);
 			return (*node != null && (bool)value_equal_func ((*node)->value, keyValuePair.Value));
         }
@@ -357,82 +355,6 @@ namespace System.Collections.Generic {
 			Clear ();
 		}
 
-		[Compact]
-		private class Node<TKey,TValue> {
-			public TKey key;
-			public TValue value;
-			public Node<TKey,TValue> next;
-			public uint key_hash;
-
-			public Node (owned TKey k, owned TValue v, uint hash) {
-				key = (owned) k;
-				value = (owned) v;
-				key_hash = hash;
-			}
-		}
-
-		private abstract class NodeEnumerator<TKey,TValue> : GLib.Object {
-			public NodeEnumerator (Dictionary dictionary) {
-				_dictionary = dictionary;
-				_stamp = _dictionary._stamp;
-			}
-
-			public NodeEnumerator.from_iterator (NodeEnumerator<TKey,TValue> iter) {
-				_dictionary = iter._dictionary;
-				_index = iter._index;
-				_node = iter._node;
-				_next = iter._next;
-				_stamp = iter._stamp;
-			}
-
-			public bool MoveNext() {
-				return next();
-			}
-
-
-			public bool next () {
-				GLib.assert (_stamp == _dictionary._stamp);
-				if (!has_next ()) {
-					return false;
-				}
-				_node = _next;
-				_next = null;
-				return (_node != null);
-			}
-
-			public bool has_next () {
-				GLib.assert (_stamp == _dictionary._stamp);
-				if (_next == null) {
-					_next = _node;
-					if (_next != null) {
-						_next = _next.next;
-					}
-					while (_next == null && _index + 1 < _dictionary._array_size) {
-						_index++;
-						_next = _dictionary._nodes[_index];
-					}
-				}
-				return (_next != null);
-			}
-			
-			public virtual bool read_only {
-				get {
-					return true;
-				}
-			}
-			
-			public bool valid {
-				get {
-					return _node != null;
-				}
-			}
-
-			protected Dictionary<TKey,TValue> _dictionary;
-			protected int _index = -1;
-			protected weak Node<TKey,TValue> _node;
-			protected weak Node<TKey,TValue> _next;
-			protected int _stamp;
-		}
    
 		//[Compact]
         private class Enumerator<TKey,TValue>: NodeEnumerator<TKey,TValue>, IEnumerator<KeyValuePair<TKey,TValue>*>, IDictionaryEnumerator<TKey, TValue>
@@ -678,4 +600,81 @@ namespace System.Collections.Generic {
             }
         }
     }
+
+	[Compact]
+	internal class Node<TKey,TValue> {
+		public TKey key;
+		public TValue value;
+		public Node<TKey,TValue> next;
+		public uint key_hash;
+
+		public Node (owned TKey k, owned TValue v, uint hash) {
+			key = (owned) k;
+			value = (owned) v;
+			key_hash = hash;
+		}
+	}
+
+	internal abstract class NodeEnumerator<TKey,TValue> : GLib.Object {
+		public NodeEnumerator (Dictionary dictionary) {
+			_dictionary = dictionary;
+			_stamp = _dictionary._stamp;
+		}
+
+		public NodeEnumerator.from_iterator (NodeEnumerator<TKey,TValue> iter) {
+			_dictionary = iter._dictionary;
+			_index = iter._index;
+			_node = iter._node;
+			_next = iter._next;
+			_stamp = iter._stamp;
+		}
+
+		public bool MoveNext() {
+			return next();
+		}
+
+
+		public bool next () {
+			GLib.assert (_stamp == _dictionary._stamp);
+			if (!has_next ()) {
+				return false;
+			}
+			_node = _next;
+			_next = null;
+			return (_node != null);
+		}
+
+		public bool has_next () {
+			GLib.assert (_stamp == _dictionary._stamp);
+			if (_next == null) {
+				_next = _node;
+				if (_next != null) {
+					_next = _next.next;
+				}
+				while (_next == null && _index + 1 < _dictionary._array_size) {
+					_index++;
+					_next = _dictionary._nodes[_index];
+				}
+			}
+			return (_next != null);
+		}
+		
+		public virtual bool read_only {
+			get {
+				return true;
+			}
+		}
+		
+		public bool valid {
+			get {
+				return _node != null;
+			}
+		}
+
+		protected Dictionary<TKey,TValue> _dictionary;
+		protected int _index = -1;
+		protected weak Node<TKey,TValue> _node;
+		protected weak Node<TKey,TValue> _next;
+		protected int _stamp;
+	}
 }
