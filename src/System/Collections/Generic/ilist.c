@@ -22,6 +22,16 @@
 #include <glib-object.h>
 
 
+#define SYSTEM_LINQ_TYPE_ENUMERABLE (system_linq_enumerable_get_type ())
+#define SYSTEM_LINQ_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerable))
+#define SYSTEM_LINQ_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+#define SYSTEM_LINQ_IS_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_IS_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_ENUMERABLE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+
+typedef struct _SystemLinqEnumerable SystemLinqEnumerable;
+typedef struct _SystemLinqEnumerableClass SystemLinqEnumerableClass;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -100,6 +110,7 @@ struct _SystemCollectionsGenericIListIface {
 
 
 
+GType system_linq_enumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
@@ -123,7 +134,7 @@ gpointer system_collections_generic_ilist_get (SystemCollectionsGenericIList* se
 	g_return_val_if_fail (self != NULL, NULL);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->get (self, index);
-#line 127 "ilist.c"
+#line 138 "ilist.c"
 }
 
 
@@ -137,7 +148,7 @@ void system_collections_generic_ilist_set (SystemCollectionsGenericIList* self, 
 	g_return_if_fail (self != NULL);
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->set (self, index, item);
-#line 141 "ilist.c"
+#line 152 "ilist.c"
 }
 
 
@@ -153,7 +164,7 @@ gint system_collections_generic_ilist_IndexOf (SystemCollectionsGenericIList* se
 	g_return_val_if_fail (self != NULL, 0);
 #line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->IndexOf (self, item, index);
-#line 157 "ilist.c"
+#line 168 "ilist.c"
 }
 
 
@@ -168,7 +179,7 @@ void system_collections_generic_ilist_Insert (SystemCollectionsGenericIList* sel
 	g_return_if_fail (self != NULL);
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->Insert (self, index, item);
-#line 172 "ilist.c"
+#line 183 "ilist.c"
 }
 
 
@@ -182,7 +193,7 @@ void system_collections_generic_ilist_RemoveAt (SystemCollectionsGenericIList* s
 	g_return_if_fail (self != NULL);
 #line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ILIST_GET_INTERFACE (self)->RemoveAt (self, index);
-#line 186 "ilist.c"
+#line 197 "ilist.c"
 }
 
 
@@ -193,7 +204,7 @@ static void system_collections_generic_ilist_base_init (SystemCollectionsGeneric
 	if (!initialized) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ilist.vala"
 		initialized = TRUE;
-#line 197 "ilist.c"
+#line 208 "ilist.c"
 	}
 }
 

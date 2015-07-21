@@ -18,6 +18,17 @@
 #include <string.h>
 
 
+#define SYSTEM_LINQ_TYPE_ENUMERABLE (system_linq_enumerable_get_type ())
+#define SYSTEM_LINQ_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerable))
+#define SYSTEM_LINQ_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+#define SYSTEM_LINQ_IS_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_IS_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_ENUMERABLE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+
+typedef struct _SystemLinqEnumerable SystemLinqEnumerable;
+typedef struct _SystemLinqEnumerableClass SystemLinqEnumerableClass;
+typedef struct _SystemLinqEnumerablePrivate SystemLinqEnumerablePrivate;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -88,6 +99,7 @@ typedef struct _SystemCollectionsGenericStackEnumeratorPrivate SystemCollections
 #define _vala_return_val_if_fail(expr, msg, val) if G_LIKELY (expr) ; else { g_return_if_fail_warning (G_LOG_DOMAIN, G_STRFUNC, msg); return val; }
 #define _vala_warn_if_fail(expr, msg) if G_LIKELY (expr) ; else g_warn_message (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, msg);
 
+typedef gpointer (*SystemFunc) (gconstpointer arg, void* user_data);
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
 	GType (*get_t_type) (SystemCollectionsGenericIEnumerator* self);
@@ -110,6 +122,16 @@ struct _SystemCollectionsGenericIEnumerableIface {
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
 };
 
+struct _SystemLinqEnumerable {
+	GObject parent_instance;
+	SystemLinqEnumerablePrivate * priv;
+};
+
+struct _SystemLinqEnumerableClass {
+	GObjectClass parent_class;
+	SystemCollectionsGenericIEnumerable* (*Where) (SystemLinqEnumerable* self, SystemFunc predicate, void* predicate_target);
+};
+
 struct _SystemCollectionsGenericICollectionIface {
 	GTypeInterface parent_iface;
 	void (*Add) (SystemCollectionsGenericICollection* self, gconstpointer item);
@@ -130,12 +152,12 @@ struct _SystemCollectionsGenericIReadOnlyCollectionIface {
 };
 
 struct _SystemCollectionsGenericStack {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericStackPrivate * priv;
 };
 
 struct _SystemCollectionsGenericStackClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 	gpointer (*get) (SystemCollectionsGenericStack* self, gint item);
 };
 
@@ -152,12 +174,12 @@ struct _SystemCollectionsGenericStackPrivate {
 };
 
 struct _SystemCollectionsGenericStackEnumerator {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericStackEnumeratorPrivate * priv;
 };
 
 struct _SystemCollectionsGenericStackEnumeratorClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 };
 
 struct _SystemCollectionsGenericStackEnumeratorPrivate {
@@ -178,6 +200,7 @@ static SystemCollectionsGenericIEnumerableIface* system_collections_generic_stac
 static SystemCollectionsGenericICollectionIface* system_collections_generic_stack_system_collections_generic_icollection_parent_iface = NULL;
 static SystemCollectionsGenericIReadOnlyCollectionIface* system_collections_generic_stack_system_collections_generic_iread_only_collection_parent_iface = NULL;
 
+GType system_linq_enumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
@@ -198,6 +221,7 @@ enum  {
 #define SYSTEM_COLLECTIONS_GENERIC_STACK_DefaultCapacity 4
 SystemCollectionsGenericStack* system_collections_generic_stack_new_WithCapacity (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint capacity);
 SystemCollectionsGenericStack* system_collections_generic_stack_construct_WithCapacity (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint capacity);
+SystemLinqEnumerable* system_linq_enumerable_construct (GType object_type, GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func);
 SystemCollectionsGenericStack* system_collections_generic_stack_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* collection);
 SystemCollectionsGenericStack* system_collections_generic_stack_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* collection);
 SystemCollectionsGenericIEnumerator* system_collections_generic_ienumerable_iterator (SystemCollectionsGenericIEnumerable* self);
@@ -258,36 +282,36 @@ SystemCollectionsGenericStack* system_collections_generic_stack_construct_WithCa
 	SystemCollectionsGenericStack * self = NULL;
 	gint _tmp0_ = 0;
 	gpointer* _tmp1_ = NULL;
-#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	self = (SystemCollectionsGenericStack*) g_object_new (object_type, NULL);
-#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	self = (SystemCollectionsGenericStack*) system_linq_enumerable_construct (object_type, t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func);
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_type = t_type;
-#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_dup_func = t_dup_func;
-#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_destroy_func = t_destroy_func;
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = capacity;
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = g_new0 (gpointer, _tmp0_);
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_array = (_vala_array_free (self->priv->_array, self->priv->_array_length1, (GDestroyNotify) t_destroy_func), NULL);
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_array = _tmp1_;
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_array_length1 = _tmp0_;
-#line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->__array_size_ = self->priv->_array_length1;
-#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self;
-#line 284 "Stack.c"
+#line 308 "Stack.c"
 }
 
 
 SystemCollectionsGenericStack* system_collections_generic_stack_new_WithCapacity (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint capacity) {
-#line 31 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return system_collections_generic_stack_construct_WithCapacity (SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, t_type, t_dup_func, t_destroy_func, capacity);
-#line 291 "Stack.c"
+#line 315 "Stack.c"
 }
 
 
@@ -295,172 +319,172 @@ SystemCollectionsGenericStack* system_collections_generic_stack_construct (GType
 	SystemCollectionsGenericStack * self = NULL;
 	gpointer* _tmp0_ = NULL;
 	SystemCollectionsGenericIEnumerable* _tmp1_ = NULL;
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	self = (SystemCollectionsGenericStack*) g_object_new (object_type, NULL);
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	self = (SystemCollectionsGenericStack*) system_linq_enumerable_construct (object_type, t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func);
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_type = t_type;
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_dup_func = t_dup_func;
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_destroy_func = t_destroy_func;
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = g_new0 (gpointer, SYSTEM_COLLECTIONS_GENERIC_STACK_DefaultCapacity);
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_array = (_vala_array_free (self->priv->_array, self->priv->_array_length1, (GDestroyNotify) t_destroy_func), NULL);
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_array = _tmp0_;
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_array_length1 = SYSTEM_COLLECTIONS_GENERIC_STACK_DefaultCapacity;
-#line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->__array_size_ = self->priv->_array_length1;
-#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = collection;
-#line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	if (_tmp1_ != NULL) {
-#line 321 "Stack.c"
+#line 345 "Stack.c"
 		{
 			SystemCollectionsGenericIEnumerator* _item_it = NULL;
 			SystemCollectionsGenericIEnumerable* _tmp2_ = NULL;
 			SystemCollectionsGenericIEnumerator* _tmp3_ = NULL;
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp2_ = collection;
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp3_ = system_collections_generic_ienumerable_iterator (_tmp2_);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_item_it = _tmp3_;
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			while (TRUE) {
-#line 334 "Stack.c"
+#line 358 "Stack.c"
 				SystemCollectionsGenericIEnumerator* _tmp4_ = NULL;
 				gboolean _tmp5_ = FALSE;
 				gpointer item = NULL;
 				SystemCollectionsGenericIEnumerator* _tmp6_ = NULL;
 				gpointer _tmp7_ = NULL;
 				gconstpointer _tmp8_ = NULL;
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp4_ = _item_it;
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp5_ = system_collections_generic_ienumerator_next (_tmp4_);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				if (!_tmp5_) {
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 					break;
-#line 349 "Stack.c"
+#line 373 "Stack.c"
 				}
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp6_ = _item_it;
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp7_ = system_collections_generic_ienumerator_get (_tmp6_);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				item = _tmp7_;
-#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp8_ = item;
-#line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				system_collections_generic_stack_Push (self, _tmp8_);
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_t_destroy_func0 (item);
-#line 363 "Stack.c"
+#line 387 "Stack.c"
 			}
-#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_g_object_unref0 (_item_it);
-#line 367 "Stack.c"
+#line 391 "Stack.c"
 		}
 	}
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self;
-#line 372 "Stack.c"
+#line 396 "Stack.c"
 }
 
 
 SystemCollectionsGenericStack* system_collections_generic_stack_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* collection) {
-#line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return system_collections_generic_stack_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, t_type, t_dup_func, t_destroy_func, collection);
-#line 379 "Stack.c"
+#line 403 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_real_Add (SystemCollectionsGenericICollection* base, gconstpointer item) {
 	SystemCollectionsGenericStack * self;
 	gconstpointer _tmp0_ = NULL;
-#line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = item;
-#line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	system_collections_generic_stack_Push (self, _tmp0_);
-#line 392 "Stack.c"
+#line 416 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_real_Clear (SystemCollectionsGenericICollection* base) {
 	SystemCollectionsGenericStack * self;
 	gint _tmp7_ = 0;
-#line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 401 "Stack.c"
+#line 425 "Stack.c"
 	{
 		gint index = 0;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		index = 0;
-#line 406 "Stack.c"
+#line 430 "Stack.c"
 		{
 			gboolean _tmp0_ = FALSE;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp0_ = TRUE;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			while (TRUE) {
-#line 413 "Stack.c"
+#line 437 "Stack.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
 				gpointer* _tmp4_ = NULL;
 				gint _tmp4__length1 = 0;
 				gint _tmp5_ = 0;
 				gpointer _tmp6_ = NULL;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				if (!_tmp0_) {
-#line 422 "Stack.c"
+#line 446 "Stack.c"
 					gint _tmp1_ = 0;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 					_tmp1_ = index;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 					index = _tmp1_ + 1;
-#line 428 "Stack.c"
+#line 452 "Stack.c"
 				}
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp0_ = FALSE;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp2_ = index;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp3_ = self->priv->_size;
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				if (!(_tmp2_ < _tmp3_)) {
-#line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 					break;
-#line 440 "Stack.c"
+#line 464 "Stack.c"
 				}
-#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp4_ = self->priv->_array;
-#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp4__length1 = self->priv->_array_length1;
-#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp5_ = index;
-#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				((_tmp4_[_tmp5_] == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (_tmp4_[_tmp5_] = (self->priv->t_destroy_func (_tmp4_[_tmp5_]), NULL));
-#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp4_[_tmp5_] = NULL;
-#line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp6_ = _tmp4_[_tmp5_];
-#line 454 "Stack.c"
+#line 478 "Stack.c"
 			}
 		}
 	}
-#line 75 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_size = 0;
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp7_ = self->priv->_version;
-#line 76 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_version = _tmp7_ + 1;
-#line 464 "Stack.c"
+#line 488 "Stack.c"
 }
 
 
@@ -469,17 +493,17 @@ static gboolean system_collections_generic_stack_real_contains (SystemCollection
 	gboolean result = FALSE;
 	gconstpointer _tmp0_ = NULL;
 	gboolean _tmp1_ = FALSE;
-#line 79 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 84 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = item;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = system_collections_generic_icollection_Contains ((SystemCollectionsGenericICollection*) self, _tmp0_);
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp1_;
-#line 80 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 483 "Stack.c"
+#line 507 "Stack.c"
 }
 
 
@@ -490,57 +514,57 @@ static gboolean system_collections_generic_stack_real_Contains (SystemCollection
 	gint _tmp0_ = 0;
 	SystemCollectionsGenericEqualityComparer* c = NULL;
 	SystemCollectionsGenericEqualityComparer* _tmp1_ = NULL;
-#line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_size;
-#line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	count = _tmp0_;
-#line 92 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = system_collections_generic_equality_comparer_Default (self->priv->t_type, (GBoxedCopyFunc) self->priv->t_dup_func, self->priv->t_destroy_func);
-#line 92 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	c = _tmp1_;
-#line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	while (TRUE) {
-#line 506 "Stack.c"
+#line 530 "Stack.c"
 		gint _tmp2_ = 0;
 		gconstpointer _tmp3_ = NULL;
-#line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp2_ = count;
-#line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		count = _tmp2_ - 1;
-#line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		if (!(_tmp2_ > 0)) {
-#line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			break;
-#line 517 "Stack.c"
+#line 541 "Stack.c"
 		}
-#line 95 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp3_ = item;
-#line 95 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		if (_tmp3_ == NULL) {
-#line 523 "Stack.c"
+#line 547 "Stack.c"
 			gpointer* _tmp4_ = NULL;
 			gint _tmp4__length1 = 0;
 			gint _tmp5_ = 0;
 			gconstpointer _tmp6_ = NULL;
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp4_ = self->priv->_array;
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp4__length1 = self->priv->_array_length1;
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp5_ = count;
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp6_ = _tmp4_[_tmp5_];
-#line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			if (_tmp6_ == NULL) {
-#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				result = TRUE;
-#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_g_object_unref0 (c);
-#line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				return result;
-#line 544 "Stack.c"
+#line 568 "Stack.c"
 			}
 		} else {
 			gboolean _tmp7_ = FALSE;
@@ -548,17 +572,17 @@ static gboolean system_collections_generic_stack_real_Contains (SystemCollection
 			gint _tmp8__length1 = 0;
 			gint _tmp9_ = 0;
 			gconstpointer _tmp10_ = NULL;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp8_ = self->priv->_array;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp8__length1 = self->priv->_array_length1;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp9_ = count;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp10_ = _tmp8_[_tmp9_];
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			if (_tmp10_ != NULL) {
-#line 562 "Stack.c"
+#line 586 "Stack.c"
 				SystemCollectionsGenericEqualityComparer* _tmp11_ = NULL;
 				gpointer* _tmp12_ = NULL;
 				gint _tmp12__length1 = 0;
@@ -566,47 +590,47 @@ static gboolean system_collections_generic_stack_real_Contains (SystemCollection
 				gconstpointer _tmp14_ = NULL;
 				gconstpointer _tmp15_ = NULL;
 				gboolean _tmp16_ = FALSE;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp11_ = c;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp12_ = self->priv->_array;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp12__length1 = self->priv->_array_length1;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp13_ = count;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp14_ = _tmp12_[_tmp13_];
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp15_ = item;
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp16_ = system_collections_generic_equality_comparer_Equals (_tmp11_, _tmp14_, _tmp15_);
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp7_ = _tmp16_;
-#line 586 "Stack.c"
+#line 610 "Stack.c"
 			} else {
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp7_ = FALSE;
-#line 590 "Stack.c"
+#line 614 "Stack.c"
 			}
-#line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			if (_tmp7_) {
-#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 107 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				result = TRUE;
-#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 107 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_g_object_unref0 (c);
-#line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 107 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				return result;
-#line 600 "Stack.c"
+#line 624 "Stack.c"
 			}
 		}
 	}
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = FALSE;
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_g_object_unref0 (c);
-#line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 610 "Stack.c"
+#line 634 "Stack.c"
 }
 
 
@@ -624,49 +648,49 @@ static void system_collections_generic_stack_real_CopyTo (SystemCollectionsGener
 	gint dstIndex = 0;
 	gint _tmp6_ = 0;
 	gint _tmp7_ = 0;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = arrayIndex;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = arrayIndex;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2_ = array;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2__length1 = array_length1;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_vala_return_if_fail ((_tmp0_ >= 0) || (_tmp1_ < _tmp2__length1), "arrayIndex >= 0 || arrayIndex < array.length");
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp3_ = array;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp3__length1 = array_length1;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp4_ = arrayIndex;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp5_ = self->priv->_size;
-#line 108 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_vala_return_if_fail ((_tmp3__length1 - _tmp4_) >= _tmp5_, "array.length - arrayIndex >= _size");
-#line 112 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 117 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	srcIndex = 0;
-#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp6_ = arrayIndex;
-#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp7_ = self->priv->_size;
-#line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	dstIndex = _tmp6_ + _tmp7_;
-#line 658 "Stack.c"
+#line 682 "Stack.c"
 	{
 		gint i = 0;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		i = 0;
-#line 663 "Stack.c"
+#line 687 "Stack.c"
 		{
 			gboolean _tmp8_ = FALSE;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp8_ = TRUE;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			while (TRUE) {
-#line 670 "Stack.c"
+#line 694 "Stack.c"
 				gint _tmp10_ = 0;
 				gint _tmp11_ = 0;
 				gpointer* _tmp12_ = NULL;
@@ -679,57 +703,57 @@ static void system_collections_generic_stack_real_CopyTo (SystemCollectionsGener
 				gconstpointer _tmp17_ = NULL;
 				gpointer _tmp18_ = NULL;
 				gpointer _tmp19_ = NULL;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				if (!_tmp8_) {
-#line 685 "Stack.c"
+#line 709 "Stack.c"
 					gint _tmp9_ = 0;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 					_tmp9_ = i;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 					i = _tmp9_ + 1;
-#line 691 "Stack.c"
+#line 715 "Stack.c"
 				}
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp8_ = FALSE;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp10_ = i;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp11_ = self->priv->_size;
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				if (!(_tmp10_ < _tmp11_)) {
-#line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 					break;
-#line 703 "Stack.c"
+#line 727 "Stack.c"
 				}
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp12_ = array;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp12__length1 = array_length1;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp13_ = dstIndex;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				dstIndex = _tmp13_ - 1;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp14_ = dstIndex;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp15_ = self->priv->_array;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp15__length1 = self->priv->_array_length1;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp16_ = srcIndex;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				srcIndex = _tmp16_ + 1;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp17_ = _tmp15_[_tmp16_];
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp18_ = ((_tmp17_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp17_) : ((gpointer) _tmp17_);
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				((_tmp12_[_tmp14_] == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (_tmp12_[_tmp14_] = (self->priv->t_destroy_func (_tmp12_[_tmp14_]), NULL));
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp12_[_tmp14_] = _tmp18_;
-#line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 				_tmp19_ = _tmp12_[_tmp14_];
-#line 733 "Stack.c"
+#line 757 "Stack.c"
 			}
 		}
 	}
@@ -743,30 +767,30 @@ static gpointer system_collections_generic_stack_real_get (SystemCollectionsGene
 	gint _tmp1_ = 0;
 	gconstpointer _tmp2_ = NULL;
 	gpointer _tmp3_ = NULL;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_array;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0__length1 = self->priv->_array_length1;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = item;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2_ = _tmp0_[_tmp1_];
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp3_ = ((_tmp2_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp2_) : ((gpointer) _tmp2_);
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp3_;
-#line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 761 "Stack.c"
+#line 785 "Stack.c"
 }
 
 
 gpointer system_collections_generic_stack_get (SystemCollectionsGenericStack* self, gint item) {
-#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 123 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 118 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 123 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_STACK_GET_CLASS (self)->get (self, item);
-#line 770 "Stack.c"
+#line 794 "Stack.c"
 }
 
 
@@ -774,15 +798,15 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_stack_rea
 	SystemCollectionsGenericStack * self;
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericStackEnumerator* _tmp0_ = NULL;
-#line 122 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = system_collections_generic_stack_enumerator_new (self->priv->t_type, (GBoxedCopyFunc) self->priv->t_dup_func, self->priv->t_destroy_func, self);
-#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = (SystemCollectionsGenericIEnumerator*) _tmp0_;
-#line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 786 "Stack.c"
+#line 810 "Stack.c"
 }
 
 
@@ -790,28 +814,28 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_stack_rea
 	SystemCollectionsGenericStack * self;
 	SystemCollectionsGenericIEnumerator* result = NULL;
 	SystemCollectionsGenericIEnumerator* _tmp0_ = NULL;
-#line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 132 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 134 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = system_collections_generic_ienumerable_GetEnumerator ((SystemCollectionsGenericIEnumerable*) self);
-#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 134 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp0_;
-#line 129 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 134 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 802 "Stack.c"
+#line 826 "Stack.c"
 }
 
 
 static gboolean system_collections_generic_stack_real_Remove (SystemCollectionsGenericICollection* base, gconstpointer item) {
 	SystemCollectionsGenericStack * self;
 	gboolean result = FALSE;
-#line 132 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 137 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 133 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 138 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_assert_not_reached ();
-#line 132 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 137 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 815 "Stack.c"
+#line 839 "Stack.c"
 }
 
 
@@ -821,41 +845,41 @@ void system_collections_generic_stack_TrimExcess (SystemCollectionsGenericStack*
 	gint _tmp0__length1 = 0;
 	gint _tmp1_ = 0;
 	gint _tmp2_ = 0;
-#line 138 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 143 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_if_fail (self != NULL);
-#line 140 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_array;
-#line 140 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0__length1 = self->priv->_array_length1;
-#line 140 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	threshold = (gint) (((gdouble) _tmp0__length1) * 0.9);
-#line 141 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = self->priv->_size;
-#line 141 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2_ = threshold;
-#line 141 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	if (_tmp1_ < _tmp2_) {
-#line 839 "Stack.c"
+#line 863 "Stack.c"
 		gint _tmp3_ = 0;
 		gint _tmp4_ = 0;
 		gint _tmp5_ = 0;
-#line 143 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp3_ = self->priv->_size;
-#line 143 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp4_ = _tmp3_;
-#line 143 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_array = g_renew (gpointer, self->priv->_array, _tmp3_);
-#line 143 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		(_tmp4_ > self->priv->_array_length1) ? memset (self->priv->_array + self->priv->_array_length1, 0, sizeof (gpointer) * (_tmp4_ - self->priv->_array_length1)) : NULL;
-#line 143 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_array_length1 = _tmp4_;
-#line 143 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 148 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->__array_size_ = _tmp4_;
-#line 144 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 149 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp5_ = self->priv->_version;
-#line 144 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 149 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_version = _tmp5_ + 1;
-#line 859 "Stack.c"
+#line 883 "Stack.c"
 	}
 }
 
@@ -868,27 +892,27 @@ gpointer system_collections_generic_stack_Peek (SystemCollectionsGenericStack* s
 	gint _tmp2_ = 0;
 	gconstpointer _tmp3_ = NULL;
 	gpointer _tmp4_ = NULL;
-#line 151 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 156 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 151 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 156 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_size;
-#line 151 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 156 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_vala_return_val_if_fail (_tmp0_ > 0, "_size > 0", NULL);
-#line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = self->priv->_array;
-#line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1__length1 = self->priv->_array_length1;
-#line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2_ = self->priv->_size;
-#line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp3_ = _tmp1_[_tmp2_ - 1];
-#line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp4_ = ((_tmp3_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp3_) : ((gpointer) _tmp3_);
-#line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp4_;
-#line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 892 "Stack.c"
+#line 916 "Stack.c"
 }
 
 
@@ -907,49 +931,49 @@ gpointer system_collections_generic_stack_Pop (SystemCollectionsGenericStack* se
 	gint _tmp7__length1 = 0;
 	gint _tmp8_ = 0;
 	gpointer _tmp9_ = NULL;
-#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_size;
-#line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_vala_return_val_if_fail (_tmp0_ > 0, "_size > 0", NULL);
-#line 162 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = self->priv->_version;
-#line 162 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_version = _tmp1_ + 1;
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2_ = self->priv->_array;
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2__length1 = self->priv->_array_length1;
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp3_ = self->priv->_size;
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_size = _tmp3_ - 1;
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp4_ = self->priv->_size;
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp5_ = _tmp2_[_tmp4_];
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp6_ = ((_tmp5_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp5_) : ((gpointer) _tmp5_);
-#line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	item = _tmp6_;
-#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp7_ = self->priv->_array;
-#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp7__length1 = self->priv->_array_length1;
-#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp8_ = self->priv->_size;
-#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	((_tmp7_[_tmp8_] == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (_tmp7_[_tmp8_] = (self->priv->t_destroy_func (_tmp7_[_tmp8_]), NULL));
-#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp7_[_tmp8_] = NULL;
-#line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp9_ = _tmp7_[_tmp8_];
-#line 165 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 170 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = item;
-#line 165 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 170 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 953 "Stack.c"
+#line 977 "Stack.c"
 }
 
 
@@ -964,76 +988,76 @@ void system_collections_generic_stack_Push (SystemCollectionsGenericStack* self,
 	gpointer _tmp9_ = NULL;
 	gpointer _tmp10_ = NULL;
 	gint _tmp11_ = 0;
-#line 170 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_if_fail (self != NULL);
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_size;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = self->priv->_array;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1__length1 = self->priv->_array_length1;
-#line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 177 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	if (_tmp0_ == _tmp1__length1) {
-#line 978 "Stack.c"
+#line 1002 "Stack.c"
 		gint _tmp2_ = 0;
 		gpointer* _tmp3_ = NULL;
 		gint _tmp3__length1 = 0;
 		gint _tmp5_ = 0;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp3_ = self->priv->_array;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp3__length1 = self->priv->_array_length1;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		if (_tmp3__length1 == 0) {
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp2_ = SYSTEM_COLLECTIONS_GENERIC_STACK_DefaultCapacity;
-#line 991 "Stack.c"
+#line 1015 "Stack.c"
 		} else {
 			gpointer* _tmp4_ = NULL;
 			gint _tmp4__length1 = 0;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp4_ = self->priv->_array;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp4__length1 = self->priv->_array_length1;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp2_ = 2 * _tmp4__length1;
-#line 1001 "Stack.c"
+#line 1025 "Stack.c"
 		}
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp5_ = _tmp2_;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_array = g_renew (gpointer, self->priv->_array, _tmp2_);
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		(_tmp5_ > self->priv->_array_length1) ? memset (self->priv->_array + self->priv->_array_length1, 0, sizeof (gpointer) * (_tmp5_ - self->priv->_array_length1)) : NULL;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_array_length1 = _tmp5_;
-#line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->__array_size_ = _tmp5_;
-#line 1013 "Stack.c"
-	}
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp6_ = self->priv->_array;
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp6__length1 = self->priv->_array_length1;
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp7_ = self->priv->_size;
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	self->priv->_size = _tmp7_ + 1;
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp8_ = item;
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp9_ = ((_tmp8_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp8_) : ((gpointer) _tmp8_);
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	((_tmp6_[_tmp7_] == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (_tmp6_[_tmp7_] = (self->priv->t_destroy_func (_tmp6_[_tmp7_]), NULL));
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp6_[_tmp7_] = _tmp9_;
-#line 175 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp10_ = _tmp6_[_tmp7_];
-#line 176 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp11_ = self->priv->_version;
-#line 176 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	self->priv->_version = _tmp11_ + 1;
 #line 1037 "Stack.c"
+	}
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp6_ = self->priv->_array;
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp6__length1 = self->priv->_array_length1;
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp7_ = self->priv->_size;
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	self->priv->_size = _tmp7_ + 1;
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp8_ = item;
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp9_ = ((_tmp8_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp8_) : ((gpointer) _tmp8_);
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	((_tmp6_[_tmp7_] == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (_tmp6_[_tmp7_] = (self->priv->t_destroy_func (_tmp6_[_tmp7_]), NULL));
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp6_[_tmp7_] = _tmp9_;
+#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp10_ = _tmp6_[_tmp7_];
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp11_ = self->priv->_version;
+#line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	self->priv->_version = _tmp11_ + 1;
+#line 1061 "Stack.c"
 }
 
 
@@ -1047,23 +1071,23 @@ gpointer* system_collections_generic_stack_ToArray (SystemCollectionsGenericStac
 	gint i = 0;
 	gpointer* _tmp13_ = NULL;
 	gint _tmp13__length1 = 0;
-#line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 185 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_size;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = g_new0 (gpointer, _tmp0_);
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	objArray = _tmp1_;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	objArray_length1 = _tmp0_;
-#line 182 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_objArray_size_ = objArray_length1;
-#line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	i = 0;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	while (TRUE) {
-#line 1067 "Stack.c"
+#line 1091 "Stack.c"
 		gint _tmp2_ = 0;
 		gint _tmp3_ = 0;
 		gpointer* _tmp4_ = NULL;
@@ -1077,61 +1101,61 @@ gpointer* system_collections_generic_stack_ToArray (SystemCollectionsGenericStac
 		gpointer _tmp10_ = NULL;
 		gpointer _tmp11_ = NULL;
 		gint _tmp12_ = 0;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp2_ = i;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp3_ = self->priv->_size;
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		if (!(_tmp2_ < _tmp3_)) {
-#line 184 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			break;
-#line 1089 "Stack.c"
+#line 1113 "Stack.c"
 		}
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp4_ = objArray;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp4__length1 = objArray_length1;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp5_ = i;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp6_ = self->priv->_array;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp6__length1 = self->priv->_array_length1;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp7_ = self->priv->_size;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp8_ = i;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp9_ = _tmp6_[(_tmp7_ - _tmp8_) - 1];
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp10_ = ((_tmp9_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp9_) : ((gpointer) _tmp9_);
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		((_tmp4_[_tmp5_] == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (_tmp4_[_tmp5_] = (self->priv->t_destroy_func (_tmp4_[_tmp5_]), NULL));
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp4_[_tmp5_] = _tmp10_;
-#line 186 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 191 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp11_ = _tmp4_[_tmp5_];
-#line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp12_ = i;
-#line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		i = _tmp12_ + 1;
-#line 1119 "Stack.c"
+#line 1143 "Stack.c"
 	}
-#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp13_ = objArray;
-#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp13__length1 = objArray_length1;
-#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	if (result_length1) {
-#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		*result_length1 = _tmp13__length1;
-#line 1129 "Stack.c"
+#line 1153 "Stack.c"
 	}
-#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp13_;
-#line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1135 "Stack.c"
+#line 1159 "Stack.c"
 }
 
 
@@ -1139,52 +1163,52 @@ static gint system_collections_generic_stack_real_get_Count (SystemCollectionsGe
 	gint result;
 	SystemCollectionsGenericStack* self;
 	gint _tmp0_ = 0;
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_size;
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp0_;
-#line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1151 "Stack.c"
+#line 1175 "Stack.c"
 }
 
 
 static gboolean system_collections_generic_stack_real_get_IsReadOnly (SystemCollectionsGenericICollection* base) {
 	gboolean result;
 	SystemCollectionsGenericStack* self;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = FALSE;
-#line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1164 "Stack.c"
+#line 1188 "Stack.c"
 }
 
 
 gboolean system_collections_generic_stack_get_IsSynchronized (SystemCollectionsGenericStack* self) {
 	gboolean result;
-#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = FALSE;
-#line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1176 "Stack.c"
+#line 1200 "Stack.c"
 }
 
 
 GObject* system_collections_generic_stack_get_SyncRoot (SystemCollectionsGenericStack* self) {
 	GObject* result;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 71 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 71 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = G_TYPE_CHECK_INSTANCE_TYPE (self, G_TYPE_OBJECT) ? ((GObject*) self) : NULL;
-#line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 71 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1188 "Stack.c"
+#line 1212 "Stack.c"
 }
 
 
@@ -1192,22 +1216,22 @@ static gint system_collections_generic_stack_real_get_size (SystemCollectionsGen
 	gint result;
 	SystemCollectionsGenericStack* self;
 	gint _tmp0_ = 0;
-#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStack*) base;
-#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_size;
-#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp0_;
-#line 85 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1204 "Stack.c"
+#line 1228 "Stack.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 207 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 1211 "Stack.c"
+#line 1235 "Stack.c"
 }
 
 
@@ -1217,55 +1241,55 @@ SystemCollectionsGenericStackEnumerator* system_collections_generic_stack_enumer
 	SystemCollectionsGenericStack* _tmp1_ = NULL;
 	SystemCollectionsGenericStack* _tmp2_ = NULL;
 	gint _tmp3_ = 0;
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_val_if_fail (stack != NULL, NULL);
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	self = (SystemCollectionsGenericStackEnumerator*) g_object_new (object_type, NULL);
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	self = (SystemCollectionsGenericStackEnumerator*) system_linq_enumerable_construct (object_type, t_type, (GBoxedCopyFunc) t_dup_func, t_destroy_func);
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_type = t_type;
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_dup_func = t_dup_func;
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->t_destroy_func = t_destroy_func;
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 207 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = stack;
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 207 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = _g_object_ref0 (_tmp0_);
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 207 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_g_object_unref0 (self->priv->_stack);
-#line 202 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 207 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_stack = _tmp1_;
-#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2_ = self->priv->_stack;
-#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp3_ = _tmp2_->priv->_version;
-#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_version = _tmp3_;
-#line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 209 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_index = -2;
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 210 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_t_destroy_func0 (self->priv->_currentElement);
-#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 210 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_currentElement = NULL;
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self;
-#line 1253 "Stack.c"
+#line 1277 "Stack.c"
 }
 
 
 SystemCollectionsGenericStackEnumerator* system_collections_generic_stack_enumerator_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericStack* stack) {
-#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return system_collections_generic_stack_enumerator_construct (SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, t_type, t_dup_func, t_destroy_func, stack);
-#line 1260 "Stack.c"
+#line 1284 "Stack.c"
 }
 
 
 void system_collections_generic_stack_enumerator_Dispose (SystemCollectionsGenericStackEnumerator* self) {
-#line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 213 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_return_if_fail (self != NULL);
-#line 210 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 215 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_index = -1;
-#line 1269 "Stack.c"
+#line 1293 "Stack.c"
 }
 
 
@@ -1274,17 +1298,17 @@ static gpointer system_collections_generic_stack_enumerator_real_get (SystemColl
 	gpointer result = NULL;
 	gpointer _tmp0_ = NULL;
 	gpointer _tmp1_ = NULL;
-#line 213 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStackEnumerator*) base;
-#line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = system_collections_generic_ienumerator_get_Current ((SystemCollectionsGenericIEnumerator*) self);
-#line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = _tmp0_;
-#line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp1_;
-#line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1288 "Stack.c"
+#line 1312 "Stack.c"
 }
 
 
@@ -1300,142 +1324,142 @@ static gboolean system_collections_generic_stack_enumerator_real_MoveNext (Syste
 	gint _tmp14_ = 0;
 	gint _tmp15_ = 0;
 	gboolean _tmp16_ = FALSE;
-#line 225 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStackEnumerator*) base;
-#line 225 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_version;
-#line 225 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = self->priv->_stack;
-#line 225 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp2_ = _tmp1_->priv->_version;
-#line 225 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_vala_return_val_if_fail (_tmp0_ == _tmp2_, "_version == _stack._version", FALSE);
-#line 229 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 234 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp3_ = self->priv->_index;
-#line 229 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 234 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	if (_tmp3_ == -2) {
-#line 1318 "Stack.c"
+#line 1342 "Stack.c"
 		SystemCollectionsGenericStack* _tmp4_ = NULL;
 		gint _tmp5_ = 0;
 		gint _tmp6_ = 0;
 		gboolean _tmp7_ = FALSE;
-#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp4_ = self->priv->_stack;
-#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp5_ = _tmp4_->priv->_size;
-#line 230 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_index = _tmp5_ - 1;
-#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp6_ = self->priv->_index;
-#line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 236 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		retval = _tmp6_ >= 0;
-#line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp7_ = retval;
-#line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		if (_tmp7_) {
-#line 1337 "Stack.c"
+#line 1361 "Stack.c"
 			SystemCollectionsGenericStack* _tmp8_ = NULL;
 			gpointer* _tmp9_ = NULL;
 			gint _tmp9__length1 = 0;
 			gint _tmp10_ = 0;
 			gconstpointer _tmp11_ = NULL;
 			gpointer _tmp12_ = NULL;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp8_ = self->priv->_stack;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp9_ = _tmp8_->priv->_array;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp9__length1 = _tmp8_->priv->_array_length1;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp10_ = self->priv->_index;
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp11_ = _tmp9_[_tmp10_];
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			_tmp12_ = ((_tmp11_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp11_) : ((gpointer) _tmp11_);
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			((self->priv->_currentElement == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (self->priv->_currentElement = (self->priv->t_destroy_func (self->priv->_currentElement), NULL));
-#line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 			self->priv->_currentElement = _tmp12_;
-#line 1360 "Stack.c"
+#line 1384 "Stack.c"
 		}
-#line 234 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 239 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		result = retval;
-#line 234 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 239 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		return result;
-#line 1366 "Stack.c"
-	}
-#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp13_ = self->priv->_index;
-#line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	if (_tmp13_ == -1) {
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-		result = FALSE;
-#line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-		return result;
-#line 1376 "Stack.c"
-	}
-#line 240 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp14_ = self->priv->_index;
-#line 240 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	self->priv->_index = _tmp14_ - 1;
-#line 240 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp15_ = self->priv->_index;
-#line 240 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	retval = _tmp15_ >= 0;
-#line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_tmp16_ = retval;
-#line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	if (_tmp16_) {
 #line 1390 "Stack.c"
+	}
+#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp13_ = self->priv->_index;
+#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	if (_tmp13_ == -1) {
+#line 243 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+		result = FALSE;
+#line 243 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+		return result;
+#line 1400 "Stack.c"
+	}
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp14_ = self->priv->_index;
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	self->priv->_index = _tmp14_ - 1;
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp15_ = self->priv->_index;
+#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	retval = _tmp15_ >= 0;
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_tmp16_ = retval;
+#line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	if (_tmp16_) {
+#line 1414 "Stack.c"
 		SystemCollectionsGenericStack* _tmp17_ = NULL;
 		gpointer* _tmp18_ = NULL;
 		gint _tmp18__length1 = 0;
 		gint _tmp19_ = 0;
 		gconstpointer _tmp20_ = NULL;
 		gpointer _tmp21_ = NULL;
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp17_ = self->priv->_stack;
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp18_ = _tmp17_->priv->_array;
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp18__length1 = _tmp17_->priv->_array_length1;
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp19_ = self->priv->_index;
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp20_ = _tmp18_[_tmp19_];
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		_tmp21_ = ((_tmp20_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp20_) : ((gpointer) _tmp20_);
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		((self->priv->_currentElement == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (self->priv->_currentElement = (self->priv->t_destroy_func (self->priv->_currentElement), NULL));
-#line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_currentElement = _tmp21_;
-#line 1413 "Stack.c"
+#line 1437 "Stack.c"
 	} else {
-#line 244 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		((self->priv->_currentElement == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (self->priv->_currentElement = (self->priv->t_destroy_func (self->priv->_currentElement), NULL));
-#line 244 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->_currentElement = NULL;
-#line 1419 "Stack.c"
+#line 1443 "Stack.c"
 	}
-#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 250 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = retval;
-#line 245 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 250 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1425 "Stack.c"
+#line 1449 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_enumerator_real_Reset (SystemCollectionsGenericIEnumerator* base) {
 	SystemCollectionsGenericStackEnumerator * self;
-#line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 253 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStackEnumerator*) base;
-#line 250 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 255 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_index = -2;
-#line 251 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 256 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	((self->priv->_currentElement == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (self->priv->_currentElement = (self->priv->t_destroy_func (self->priv->_currentElement), NULL));
-#line 251 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 256 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_currentElement = NULL;
-#line 1439 "Stack.c"
+#line 1463 "Stack.c"
 }
 
 
@@ -1444,103 +1468,103 @@ static gpointer system_collections_generic_stack_enumerator_real_get_Current (Sy
 	SystemCollectionsGenericStackEnumerator* self;
 	gconstpointer _tmp0_ = NULL;
 	gpointer _tmp1_ = NULL;
-#line 219 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 224 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = (SystemCollectionsGenericStackEnumerator*) base;
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 226 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp0_ = self->priv->_currentElement;
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 226 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_tmp1_ = ((_tmp0_ != NULL) && (self->priv->t_dup_func != NULL)) ? self->priv->t_dup_func ((gpointer) _tmp0_) : ((gpointer) _tmp0_);
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 226 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	result = _tmp1_;
-#line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 226 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return result;
-#line 1458 "Stack.c"
+#line 1482 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_enumerator_class_init (SystemCollectionsGenericStackEnumeratorClass * klass) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	system_collections_generic_stack_enumerator_parent_class = g_type_class_peek_parent (klass);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericStackEnumeratorPrivate));
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_stack_enumerator_get_property;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_stack_enumerator_set_property;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_stack_enumerator_finalize;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_CURRENT, g_param_spec_pointer ("Current", "Current", "Current", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 1481 "Stack.c"
+#line 1505 "Stack.c"
 }
 
 
 static GType system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_get_t_type (SystemCollectionsGenericStackEnumerator* self) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self->priv->t_type;
-#line 1488 "Stack.c"
+#line 1512 "Stack.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_get_t_dup_func (SystemCollectionsGenericStackEnumerator* self) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self->priv->t_dup_func;
-#line 1495 "Stack.c"
+#line 1519 "Stack.c"
 }
 
 
 static GDestroyNotify system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_get_t_destroy_func (SystemCollectionsGenericStackEnumerator* self) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self->priv->t_destroy_func;
-#line 1502 "Stack.c"
+#line 1526 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_interface_init (SystemCollectionsGenericIEnumeratorIface * iface) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_parent_iface = g_type_interface_peek_parent (iface);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get = (gpointer (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_stack_enumerator_real_get;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_stack_enumerator_real_MoveNext;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->Reset = (void (*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_stack_enumerator_real_Reset;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_get_t_type;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_get_t_dup_func;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_get_t_destroy_func;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get_Current = system_collections_generic_stack_enumerator_real_get_Current;
-#line 1523 "Stack.c"
+#line 1547 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_enumerator_instance_init (SystemCollectionsGenericStackEnumerator * self) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_GET_PRIVATE (self);
-#line 1530 "Stack.c"
+#line 1554 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_enumerator_finalize (GObject* obj) {
 	SystemCollectionsGenericStackEnumerator * self;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, SystemCollectionsGenericStackEnumerator);
-#line 195 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	_g_object_unref0 (self->priv->_stack);
 #line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, SystemCollectionsGenericStackEnumerator);
+#line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	_g_object_unref0 (self->priv->_stack);
+#line 203 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	((self->priv->_currentElement == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (self->priv->_currentElement = (self->priv->t_destroy_func (self->priv->_currentElement), NULL));
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (system_collections_generic_stack_enumerator_parent_class)->finalize (obj);
-#line 1544 "Stack.c"
+#line 1568 "Stack.c"
 }
 
 
@@ -1550,7 +1574,7 @@ GType system_collections_generic_stack_enumerator_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsGenericStackEnumeratorClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) system_collections_generic_stack_enumerator_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (SystemCollectionsGenericStackEnumerator), 0, (GInstanceInitFunc) system_collections_generic_stack_enumerator_instance_init, NULL };
 		static const GInterfaceInfo system_collections_generic_ienumerator_info = { (GInterfaceInitFunc) system_collections_generic_stack_enumerator_system_collections_generic_ienumerator_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_stack_enumerator_type_id;
-		system_collections_generic_stack_enumerator_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericStackEnumerator", &g_define_type_info, 0);
+		system_collections_generic_stack_enumerator_type_id = g_type_register_static (SYSTEM_LINQ_TYPE_ENUMERABLE, "SystemCollectionsGenericStackEnumerator", &g_define_type_info, 0);
 		g_type_add_interface_static (system_collections_generic_stack_enumerator_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERATOR, &system_collections_generic_ienumerator_info);
 		g_once_init_leave (&system_collections_generic_stack_enumerator_type_id__volatile, system_collections_generic_stack_enumerator_type_id);
 	}
@@ -1561,21 +1585,21 @@ GType system_collections_generic_stack_enumerator_get_type (void) {
 static void _vala_system_collections_generic_stack_enumerator_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericStackEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, SystemCollectionsGenericStackEnumerator);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	switch (property_id) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_CURRENT:
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		g_value_set_pointer (value, system_collections_generic_ienumerator_get_Current ((SystemCollectionsGenericIEnumerator*) self));
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1573 "Stack.c"
+#line 1597 "Stack.c"
 		default:
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1579 "Stack.c"
+#line 1603 "Stack.c"
 	}
 }
 
@@ -1583,158 +1607,158 @@ static void _vala_system_collections_generic_stack_enumerator_get_property (GObj
 static void _vala_system_collections_generic_stack_enumerator_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericStackEnumerator * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_STACK_TYPE_ENUMERATOR, SystemCollectionsGenericStackEnumerator);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	switch (property_id) {
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_T_TYPE:
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->t_type = g_value_get_gtype (value);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_T_DUP_FUNC:
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->t_dup_func = g_value_get_pointer (value);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_ENUMERATOR_T_DESTROY_FUNC:
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->t_destroy_func = g_value_get_pointer (value);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1607 "Stack.c"
+#line 1631 "Stack.c"
 		default:
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 198 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1613 "Stack.c"
+#line 1637 "Stack.c"
 	}
 }
 
 
 static void system_collections_generic_stack_class_init (SystemCollectionsGenericStackClass * klass) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	system_collections_generic_stack_parent_class = g_type_class_peek_parent (klass);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericStackPrivate));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	((SystemCollectionsGenericStackClass *) klass)->get = system_collections_generic_stack_real_get;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_system_collections_generic_stack_get_property;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_system_collections_generic_stack_set_property;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (klass)->finalize = system_collections_generic_stack_finalize;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_T_TYPE, g_param_spec_gtype ("t-type", "type", "type", G_TYPE_NONE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_T_DUP_FUNC, g_param_spec_pointer ("t-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_T_DESTROY_FUNC, g_param_spec_pointer ("t-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_COUNT, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_IS_READ_ONLY, g_param_spec_boolean ("IsReadOnly", "IsReadOnly", "IsReadOnly", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_IS_SYNCHRONIZED, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_SYNC_ROOT, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_STACK_SIZE, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 1647 "Stack.c"
+#line 1671 "Stack.c"
 }
 
 
 static GType system_collections_generic_stack_system_collections_generic_ienumerable_get_t_type (SystemCollectionsGenericStack* self) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self->priv->t_type;
-#line 1654 "Stack.c"
+#line 1678 "Stack.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_stack_system_collections_generic_ienumerable_get_t_dup_func (SystemCollectionsGenericStack* self) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	return self->priv->t_dup_func;
-#line 1661 "Stack.c"
-}
-
-
-static GDestroyNotify system_collections_generic_stack_system_collections_generic_ienumerable_get_t_destroy_func (SystemCollectionsGenericStack* self) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	return self->priv->t_destroy_func;
-#line 1668 "Stack.c"
-}
-
-
-static void system_collections_generic_stack_system_collections_generic_ienumerable_interface_init (SystemCollectionsGenericIEnumerableIface * iface) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	system_collections_generic_stack_system_collections_generic_ienumerable_parent_iface = g_type_interface_peek_parent (iface);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	iface->GetEnumerator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_real_GetEnumerator;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	iface->iterator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_real_iterator;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_system_collections_generic_ienumerable_get_t_type;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_system_collections_generic_ienumerable_get_t_dup_func;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
-	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_system_collections_generic_ienumerable_get_t_destroy_func;
 #line 1685 "Stack.c"
 }
 
 
+static GDestroyNotify system_collections_generic_stack_system_collections_generic_ienumerable_get_t_destroy_func (SystemCollectionsGenericStack* self) {
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	return self->priv->t_destroy_func;
+#line 1692 "Stack.c"
+}
+
+
+static void system_collections_generic_stack_system_collections_generic_ienumerable_interface_init (SystemCollectionsGenericIEnumerableIface * iface) {
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	system_collections_generic_stack_system_collections_generic_ienumerable_parent_iface = g_type_interface_peek_parent (iface);
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	iface->GetEnumerator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_real_GetEnumerator;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	iface->iterator = (SystemCollectionsGenericIEnumerator* (*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_real_iterator;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	iface->get_t_type = (GType(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_system_collections_generic_ienumerable_get_t_type;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_system_collections_generic_ienumerable_get_t_dup_func;
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_stack_system_collections_generic_ienumerable_get_t_destroy_func;
+#line 1709 "Stack.c"
+}
+
+
 static void system_collections_generic_stack_system_collections_generic_icollection_interface_init (SystemCollectionsGenericICollectionIface * iface) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	system_collections_generic_stack_system_collections_generic_icollection_parent_iface = g_type_interface_peek_parent (iface);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->Add = (void (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_stack_real_Add;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->Clear = (void (*)(SystemCollectionsGenericICollection*)) system_collections_generic_stack_real_Clear;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_stack_real_contains;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->Contains = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_stack_real_Contains;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->CopyTo = (void (*)(SystemCollectionsGenericICollection*, gpointer*, int, gint)) system_collections_generic_stack_real_CopyTo;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->Remove = (gboolean (*)(SystemCollectionsGenericICollection*, gconstpointer)) system_collections_generic_stack_real_Remove;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get_Count = system_collections_generic_stack_real_get_Count;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get_IsReadOnly = system_collections_generic_stack_real_get_IsReadOnly;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	iface->get_size = system_collections_generic_stack_real_get_size;
-#line 1710 "Stack.c"
+#line 1734 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_system_collections_generic_iread_only_collection_interface_init (SystemCollectionsGenericIReadOnlyCollectionIface * iface) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	system_collections_generic_stack_system_collections_generic_iread_only_collection_parent_iface = g_type_interface_peek_parent (iface);
-#line 1717 "Stack.c"
+#line 1741 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_instance_init (SystemCollectionsGenericStack * self) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_STACK_GET_PRIVATE (self);
-#line 1724 "Stack.c"
+#line 1748 "Stack.c"
 }
 
 
 static void system_collections_generic_stack_finalize (GObject* obj) {
 	SystemCollectionsGenericStack * self;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, SystemCollectionsGenericStack);
-#line 22 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	self->priv->_array = (_vala_array_free (self->priv->_array, self->priv->_array_length1, (GDestroyNotify) self->priv->t_destroy_func), NULL);
-#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	_g_object_unref0 (self->priv->_syncRoot);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	G_OBJECT_CLASS (system_collections_generic_stack_parent_class)->finalize (obj);
-#line 1738 "Stack.c"
+#line 1762 "Stack.c"
 }
 
 
@@ -1746,7 +1770,7 @@ GType system_collections_generic_stack_get_type (void) {
 		static const GInterfaceInfo system_collections_generic_icollection_info = { (GInterfaceInitFunc) system_collections_generic_stack_system_collections_generic_icollection_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		static const GInterfaceInfo system_collections_generic_iread_only_collection_info = { (GInterfaceInitFunc) system_collections_generic_stack_system_collections_generic_iread_only_collection_interface_init, (GInterfaceFinalizeFunc) NULL, NULL};
 		GType system_collections_generic_stack_type_id;
-		system_collections_generic_stack_type_id = g_type_register_static (G_TYPE_OBJECT, "SystemCollectionsGenericStack", &g_define_type_info, 0);
+		system_collections_generic_stack_type_id = g_type_register_static (SYSTEM_LINQ_TYPE_ENUMERABLE, "SystemCollectionsGenericStack", &g_define_type_info, 0);
 		g_type_add_interface_static (system_collections_generic_stack_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, &system_collections_generic_ienumerable_info);
 		g_type_add_interface_static (system_collections_generic_stack_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, &system_collections_generic_icollection_info);
 		g_type_add_interface_static (system_collections_generic_stack_type_id, SYSTEM_COLLECTIONS_GENERIC_TYPE_IREAD_ONLY_COLLECTION, &system_collections_generic_iread_only_collection_info);
@@ -1759,45 +1783,45 @@ GType system_collections_generic_stack_get_type (void) {
 static void _vala_system_collections_generic_stack_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericStack * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, SystemCollectionsGenericStack);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	switch (property_id) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_COUNT:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		g_value_set_int (value, system_collections_generic_icollection_get_Count ((SystemCollectionsGenericICollection*) self));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_IS_READ_ONLY:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		g_value_set_boolean (value, system_collections_generic_icollection_get_IsReadOnly ((SystemCollectionsGenericICollection*) self));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_IS_SYNCHRONIZED:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		g_value_set_boolean (value, system_collections_generic_stack_get_IsSynchronized (self));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_SYNC_ROOT:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		g_value_set_object (value, system_collections_generic_stack_get_SyncRoot (self));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_SIZE:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		g_value_set_int (value, system_collections_generic_icollection_get_size ((SystemCollectionsGenericICollection*) self));
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1795 "Stack.c"
+#line 1819 "Stack.c"
 		default:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1801 "Stack.c"
+#line 1825 "Stack.c"
 	}
 }
 
@@ -1805,33 +1829,33 @@ static void _vala_system_collections_generic_stack_get_property (GObject * objec
 static void _vala_system_collections_generic_stack_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	SystemCollectionsGenericStack * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_STACK, SystemCollectionsGenericStack);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 	switch (property_id) {
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_T_TYPE:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->t_type = g_value_get_gtype (value);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_T_DUP_FUNC:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->t_dup_func = g_value_get_pointer (value);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		case SYSTEM_COLLECTIONS_GENERIC_STACK_T_DESTROY_FUNC:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		self->priv->t_destroy_func = g_value_get_pointer (value);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1829 "Stack.c"
+#line 1853 "Stack.c"
 		default:
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 20 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
+#line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/Stack.vala"
 		break;
-#line 1835 "Stack.c"
+#line 1859 "Stack.c"
 	}
 }
 

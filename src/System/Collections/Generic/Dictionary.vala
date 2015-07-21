@@ -14,7 +14,7 @@
 namespace System.Collections.Generic {
 
     using System;
-    //using System.Collections;
+    using System.Linq;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Runtime.Serialization;
@@ -22,7 +22,7 @@ namespace System.Collections.Generic {
 
 
 	public abstract class AbstractDictionary<TKey,TValue> : 
-		GLib.Object,
+		Enumerable<KeyValuePair<TKey, TValue>>,
 		IEnumerable<KeyValuePair<TKey, TValue>>,
 		IDictionary<TKey,TValue>,
 		ICollection<KeyValuePair<TKey, TValue>>,
@@ -404,7 +404,7 @@ namespace System.Collections.Generic {
             }
         }
 
-        private class KeyCollection<TKey,TValue>: GLib.Object, IEnumerable<TKey>, ICollection<TKey>, IReadOnlyCollection<TKey>
+        private class KeyCollection<TKey,TValue>: Enumerable<TKey>, IEnumerable<TKey>, ICollection<TKey>, IReadOnlyCollection<TKey>
         {
             private Dictionary<TKey,TValue> dictionary;
 
@@ -501,7 +501,7 @@ namespace System.Collections.Generic {
             }                        
         }
 
-        private class ValueCollection<TKey,TValue>: GLib.Object, IEnumerable<TValue>, ICollection<TValue>
+        private class ValueCollection<TKey,TValue>: Enumerable<TValue>, IEnumerable<TValue>, ICollection<TValue>
         {
             private Dictionary<TKey,TValue> dictionary;
 
@@ -615,7 +615,7 @@ namespace System.Collections.Generic {
 		}
 	}
 
-	internal abstract class NodeEnumerator<TKey,TValue> : GLib.Object {
+	internal abstract class NodeEnumerator<TKey,TValue> : Enumerable<TKey> {
 		public NodeEnumerator (Dictionary dictionary) {
 			_dictionary = dictionary;
 			_stamp = _dictionary._stamp;

@@ -9,7 +9,8 @@ namespace System {
 		VALUE,
 		NEED_NON_NEG_NUM,
 		BEGIN_INDEX_NOT_NEGATIVE,
-		LENGTH_NOT_NEGATIVE
+		LENGTH_NOT_NEGATIVE,
+		NEGATIVE_CAPACITY
 	}
 
 	public errordomain Error {
@@ -43,5 +44,9 @@ namespace System {
 		READ_ONLY_COLLECTION,
 		SORTED_LIST_NESTED_WRITE,
 		KEY_COLLECTION_SET
+	}
+	
+	public errordomain SerializationException {
+		SERIALIZATION
 	}
 }

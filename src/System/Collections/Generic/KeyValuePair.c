@@ -138,24 +138,18 @@ SystemCollectionsGenericKeyValuePair* system_collections_generic_key_value_pair_
 
 gchar* system_collections_generic_key_value_pair_ToString (SystemCollectionsGenericKeyValuePair* self, GString* s) {
 	gchar* result = NULL;
-	GString* _tmp0_ = NULL;
-	const gchar* _tmp1_ = NULL;
-	gchar* _tmp2_ = NULL;
+	gchar* _tmp0_ = NULL;
 #line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	g_return_val_if_fail (self != NULL, NULL);
 #line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	g_return_val_if_fail (s != NULL, NULL);
 #line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
-	_tmp0_ = s;
+	_tmp0_ = g_strdup ("");
 #line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
-	_tmp1_ = _tmp0_->str;
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
-	_tmp2_ = g_strdup (_tmp1_);
-#line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
-	result = _tmp2_;
+	result = _tmp0_;
 #line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return result;
-#line 159 "KeyValuePair.c"
+#line 153 "KeyValuePair.c"
 }
 
 
@@ -170,7 +164,7 @@ gconstpointer system_collections_generic_key_value_pair_get_Key (SystemCollectio
 	result = _tmp0_;
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return result;
-#line 174 "KeyValuePair.c"
+#line 168 "KeyValuePair.c"
 }
 
 
@@ -185,14 +179,14 @@ gconstpointer system_collections_generic_key_value_pair_get_Value (SystemCollect
 	result = _tmp0_;
 #line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return result;
-#line 189 "KeyValuePair.c"
+#line 183 "KeyValuePair.c"
 }
 
 
 static void system_collections_generic_value_key_value_pair_init (GValue* value) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	value->data[0].v_pointer = NULL;
-#line 196 "KeyValuePair.c"
+#line 190 "KeyValuePair.c"
 }
 
 
@@ -201,7 +195,7 @@ static void system_collections_generic_value_key_value_pair_free_value (GValue* 
 	if (value->data[0].v_pointer) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		system_collections_generic_key_value_pair_unref (value->data[0].v_pointer);
-#line 205 "KeyValuePair.c"
+#line 199 "KeyValuePair.c"
 	}
 }
 
@@ -211,11 +205,11 @@ static void system_collections_generic_value_key_value_pair_copy_value (const GV
 	if (src_value->data[0].v_pointer) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		dest_value->data[0].v_pointer = system_collections_generic_key_value_pair_ref (src_value->data[0].v_pointer);
-#line 215 "KeyValuePair.c"
+#line 209 "KeyValuePair.c"
 	} else {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		dest_value->data[0].v_pointer = NULL;
-#line 219 "KeyValuePair.c"
+#line 213 "KeyValuePair.c"
 	}
 }
 
@@ -223,37 +217,37 @@ static void system_collections_generic_value_key_value_pair_copy_value (const GV
 static gpointer system_collections_generic_value_key_value_pair_peek_pointer (const GValue* value) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return value->data[0].v_pointer;
-#line 227 "KeyValuePair.c"
+#line 221 "KeyValuePair.c"
 }
 
 
 static gchar* system_collections_generic_value_key_value_pair_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	if (collect_values[0].v_pointer) {
-#line 234 "KeyValuePair.c"
+#line 228 "KeyValuePair.c"
 		SystemCollectionsGenericKeyValuePair* object;
 		object = collect_values[0].v_pointer;
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		if (object->parent_instance.g_class == NULL) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 241 "KeyValuePair.c"
+#line 235 "KeyValuePair.c"
 		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 245 "KeyValuePair.c"
+#line 239 "KeyValuePair.c"
 		}
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		value->data[0].v_pointer = system_collections_generic_key_value_pair_ref (object);
-#line 249 "KeyValuePair.c"
+#line 243 "KeyValuePair.c"
 	} else {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		value->data[0].v_pointer = NULL;
-#line 253 "KeyValuePair.c"
+#line 247 "KeyValuePair.c"
 	}
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return NULL;
-#line 257 "KeyValuePair.c"
+#line 251 "KeyValuePair.c"
 }
 
 
@@ -264,25 +258,25 @@ static gchar* system_collections_generic_value_key_value_pair_lcopy_value (const
 	if (!object_p) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 268 "KeyValuePair.c"
+#line 262 "KeyValuePair.c"
 	}
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	if (!value->data[0].v_pointer) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		*object_p = NULL;
-#line 274 "KeyValuePair.c"
+#line 268 "KeyValuePair.c"
 	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		*object_p = value->data[0].v_pointer;
-#line 278 "KeyValuePair.c"
+#line 272 "KeyValuePair.c"
 	} else {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		*object_p = system_collections_generic_key_value_pair_ref (value->data[0].v_pointer);
-#line 282 "KeyValuePair.c"
+#line 276 "KeyValuePair.c"
 	}
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return NULL;
-#line 286 "KeyValuePair.c"
+#line 280 "KeyValuePair.c"
 }
 
 
@@ -296,7 +290,7 @@ GParamSpec* system_collections_generic_param_spec_key_value_pair (const gchar* n
 	G_PARAM_SPEC (spec)->value_type = object_type;
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return G_PARAM_SPEC (spec);
-#line 300 "KeyValuePair.c"
+#line 294 "KeyValuePair.c"
 }
 
 
@@ -305,7 +299,7 @@ gpointer system_collections_generic_value_get_key_value_pair (const GValue* valu
 	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_COLLECTIONS_GENERIC_TYPE_KEY_VALUE_PAIR), NULL);
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return value->data[0].v_pointer;
-#line 309 "KeyValuePair.c"
+#line 303 "KeyValuePair.c"
 }
 
 
@@ -325,17 +319,17 @@ void system_collections_generic_value_set_key_value_pair (GValue* value, gpointe
 		value->data[0].v_pointer = v_object;
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		system_collections_generic_key_value_pair_ref (value->data[0].v_pointer);
-#line 329 "KeyValuePair.c"
+#line 323 "KeyValuePair.c"
 	} else {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		value->data[0].v_pointer = NULL;
-#line 333 "KeyValuePair.c"
+#line 327 "KeyValuePair.c"
 	}
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	if (old) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		system_collections_generic_key_value_pair_unref (old);
-#line 339 "KeyValuePair.c"
+#line 333 "KeyValuePair.c"
 	}
 }
 
@@ -354,17 +348,17 @@ void system_collections_generic_value_take_key_value_pair (GValue* value, gpoint
 		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		value->data[0].v_pointer = v_object;
-#line 358 "KeyValuePair.c"
+#line 352 "KeyValuePair.c"
 	} else {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		value->data[0].v_pointer = NULL;
-#line 362 "KeyValuePair.c"
+#line 356 "KeyValuePair.c"
 	}
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	if (old) {
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		system_collections_generic_key_value_pair_unref (old);
-#line 368 "KeyValuePair.c"
+#line 362 "KeyValuePair.c"
 	}
 }
 
@@ -376,7 +370,7 @@ static void system_collections_generic_key_value_pair_class_init (SystemCollecti
 	((SystemCollectionsGenericKeyValuePairClass *) klass)->finalize = system_collections_generic_key_value_pair_finalize;
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	g_type_class_add_private (klass, sizeof (SystemCollectionsGenericKeyValuePairPrivate));
-#line 380 "KeyValuePair.c"
+#line 374 "KeyValuePair.c"
 }
 
 
@@ -385,7 +379,7 @@ static void system_collections_generic_key_value_pair_instance_init (SystemColle
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR_GET_PRIVATE (self);
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	self->ref_count = 1;
-#line 389 "KeyValuePair.c"
+#line 383 "KeyValuePair.c"
 }
 
 
@@ -399,7 +393,7 @@ static void system_collections_generic_key_value_pair_finalize (SystemCollection
 	((self->priv->key == NULL) || (self->priv->tkey_destroy_func == NULL)) ? NULL : (self->priv->key = (self->priv->tkey_destroy_func (self->priv->key), NULL));
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	((self->priv->value == NULL) || (self->priv->tvalue_destroy_func == NULL)) ? NULL : (self->priv->value = (self->priv->tvalue_destroy_func (self->priv->value), NULL));
-#line 403 "KeyValuePair.c"
+#line 397 "KeyValuePair.c"
 }
 
 
@@ -424,7 +418,7 @@ gpointer system_collections_generic_key_value_pair_ref (gpointer instance) {
 	g_atomic_int_inc (&self->ref_count);
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 	return instance;
-#line 428 "KeyValuePair.c"
+#line 422 "KeyValuePair.c"
 }
 
 
@@ -437,7 +431,7 @@ void system_collections_generic_key_value_pair_unref (gpointer instance) {
 		SYSTEM_COLLECTIONS_GENERIC_KEY_VALUE_PAIR_GET_CLASS (self)->finalize (self);
 #line 26 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/KeyValuePair.vala"
 		g_type_free_instance ((GTypeInstance *) self);
-#line 441 "KeyValuePair.c"
+#line 435 "KeyValuePair.c"
 	}
 }
 

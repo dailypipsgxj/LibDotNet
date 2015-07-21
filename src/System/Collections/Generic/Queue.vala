@@ -9,6 +9,7 @@
 **
 =============================================================================*/
 using System;
+using System.Linq;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
@@ -18,7 +19,7 @@ namespace System.Collections.Generic
     // circular buffer, so Enqueue can be O(n).  Dequeue is O(1).
 
     public class Queue<T> :
-		GLib.Object,
+		Enumerable<T>,
 		IEnumerable<T>,
 		ICollection<T>,
         IReadOnlyCollection<T>
@@ -298,7 +299,7 @@ namespace System.Collections.Generic
         // made to the list while an enumeration is in progress.
 
 		//[Compact]
-        public class Enumerator<T> : GLib.Object, IEnumerator<T>
+        public class Enumerator<T> : Enumerable<T>, IEnumerator<T>
         {
             private Queue<T> _q;
             private int _index;   // -1 = not started, -2 = ended/disposed

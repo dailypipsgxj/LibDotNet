@@ -19,7 +19,7 @@ namespace System.Collections.Generic {
     using System.Runtime.InteropServices;
     using System.Runtime.CompilerServices;
     using System.Diagnostics.Contracts;
-
+	using System.Linq;
     // Implement this interface if you need to support foreach semantics.
 
     // Note that T[] : IList<T>, and we want to ensure that if you use
@@ -29,7 +29,7 @@ namespace System.Collections.Generic {
     // The same attribute is on IList<T> and ICollection<T>.
 
 	[GenericAccessors]
-    public interface IEnumerable<T> : GLib.Object
+    public interface IEnumerable<T> : Enumerable<T>
     {
 		public virtual GLib.Type get_element_type () {
 			return typeof (T);

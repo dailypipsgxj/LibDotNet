@@ -13,6 +13,17 @@
 G_BEGIN_DECLS
 
 
+#define SYSTEM_LINQ_TYPE_ENUMERABLE (system_linq_enumerable_get_type ())
+#define SYSTEM_LINQ_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerable))
+#define SYSTEM_LINQ_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+#define SYSTEM_LINQ_IS_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_IS_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_ENUMERABLE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+
+typedef struct _SystemLinqEnumerable SystemLinqEnumerable;
+typedef struct _SystemLinqEnumerableClass SystemLinqEnumerableClass;
+typedef struct _SystemLinqEnumerablePrivate SystemLinqEnumerablePrivate;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -251,17 +262,6 @@ typedef struct _SystemCollectionsGenericStackPrivate SystemCollectionsGenericSta
 typedef struct _SystemCollectionsGenericStackEnumerator SystemCollectionsGenericStackEnumerator;
 typedef struct _SystemCollectionsGenericStackEnumeratorClass SystemCollectionsGenericStackEnumeratorClass;
 typedef struct _SystemCollectionsGenericStackEnumeratorPrivate SystemCollectionsGenericStackEnumeratorPrivate;
-
-#define SYSTEM_COLLECTIONS_GENERIC_TYPE_SORTED_LIST (system_collections_generic_sorted_list_get_type ())
-#define SYSTEM_COLLECTIONS_GENERIC_SORTED_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_SORTED_LIST, SystemCollectionsGenericSortedList))
-#define SYSTEM_COLLECTIONS_GENERIC_SORTED_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_SORTED_LIST, SystemCollectionsGenericSortedListClass))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_SORTED_LIST(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_SORTED_LIST))
-#define SYSTEM_COLLECTIONS_GENERIC_IS_SORTED_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_COLLECTIONS_GENERIC_TYPE_SORTED_LIST))
-#define SYSTEM_COLLECTIONS_GENERIC_SORTED_LIST_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_SORTED_LIST, SystemCollectionsGenericSortedListClass))
-
-typedef struct _SystemCollectionsGenericSortedList SystemCollectionsGenericSortedList;
-typedef struct _SystemCollectionsGenericSortedListClass SystemCollectionsGenericSortedListClass;
-typedef struct _SystemCollectionsGenericSortedListPrivate SystemCollectionsGenericSortedListPrivate;
 typedef struct _SystemCollectionsObjectModelReadOnlyCollectionPrivate SystemCollectionsObjectModelReadOnlyCollectionPrivate;
 
 #define SYSTEM_TYPE_NULLABLE (system_nullable_get_type ())
@@ -274,6 +274,29 @@ typedef struct _SystemCollectionsObjectModelReadOnlyCollectionPrivate SystemColl
 typedef struct _SystemNullable SystemNullable;
 typedef struct _SystemNullableClass SystemNullableClass;
 typedef struct _SystemNullablePrivate SystemNullablePrivate;
+
+#define TYPE_OBJECT (object_get_type ())
+#define OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_OBJECT, Object))
+#define OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_OBJECT, ObjectClass))
+#define IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_OBJECT))
+#define IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TYPE_OBJECT))
+#define OBJECT_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_OBJECT, ObjectClass))
+
+typedef struct _Object Object;
+typedef struct _ObjectClass ObjectClass;
+typedef struct _ObjectPrivate ObjectPrivate;
+
+#define SYSTEM_TYPE_OBJECT (system_object_get_type ())
+#define SYSTEM_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_OBJECT, Systemobject))
+#define SYSTEM_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_TYPE_OBJECT, SystemobjectClass))
+#define SYSTEM_IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_TYPE_OBJECT))
+#define SYSTEM_IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_TYPE_OBJECT))
+#define SYSTEM_OBJECT_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_TYPE_OBJECT, SystemobjectClass))
+
+typedef struct _Systemobject Systemobject;
+typedef struct _SystemobjectClass SystemobjectClass;
+typedef struct _SystemobjectPrivate SystemobjectPrivate;
+typedef struct _SystemString SystemString;
 
 #define SYSTEM_TYPE_IDISPOSABLE (system_idisposable_get_type ())
 #define SYSTEM_IDISPOSABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable))
@@ -309,6 +332,7 @@ typedef struct _SystemICloneableIface SystemICloneableIface;
 
 #define SYSTEM_GLOBALIZATION_CULTURE_INFO_TYPE_STRING_COMPARISON (system_globalization_culture_info_string_comparison_get_type ())
 
+typedef gpointer (*SystemFunc) (gconstpointer arg, void* user_data);
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
 	GType (*get_t_type) (SystemCollectionsGenericIEnumerator* self);
@@ -329,6 +353,16 @@ struct _SystemCollectionsGenericIEnumerableIface {
 	GType (*get_element_type) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericIEnumerable* self);
 	SystemCollectionsGenericIEnumerator* (*GetEnumerator) (SystemCollectionsGenericIEnumerable* self);
+};
+
+struct _SystemLinqEnumerable {
+	GObject parent_instance;
+	SystemLinqEnumerablePrivate * priv;
+};
+
+struct _SystemLinqEnumerableClass {
+	GObjectClass parent_class;
+	SystemCollectionsGenericIEnumerable* (*Where) (SystemLinqEnumerable* self, SystemFunc predicate, void* predicate_target);
 };
 
 struct _SystemCollectionsGenericICollectionIface {
@@ -474,12 +508,12 @@ struct _SystemCollectionsGenericEqualityComparerClass {
 };
 
 struct _SystemCollectionsGenericAbstractDictionary {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericAbstractDictionaryPrivate * priv;
 };
 
 struct _SystemCollectionsGenericAbstractDictionaryClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 	gpointer (*get) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key);
 	void (*set) (SystemCollectionsGenericAbstractDictionary* self, gconstpointer key, gconstpointer item);
 	GType (*get_element_type) (SystemCollectionsGenericAbstractDictionary* self);
@@ -524,12 +558,12 @@ struct _SystemCollectionsGenericDictionaryClass {
 typedef gboolean (*SystemPredicate) (gconstpointer obj, void* user_data);
 typedef void (*SystemAction) (gconstpointer obj, void* user_data);
 struct _SystemCollectionsGenericAbstractList {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericAbstractListPrivate * priv;
 };
 
 struct _SystemCollectionsGenericAbstractListClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 	GType (*get_element_type) (SystemCollectionsGenericAbstractList* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericAbstractList* self);
 	gboolean (*contains) (SystemCollectionsGenericAbstractList* self, gconstpointer item);
@@ -587,59 +621,49 @@ struct _SystemCollectionsGenericListClass {
 };
 
 struct _SystemCollectionsGenericQueue {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericQueuePrivate * priv;
 };
 
 struct _SystemCollectionsGenericQueueClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 };
 
 struct _SystemCollectionsGenericQueueEnumerator {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericQueueEnumeratorPrivate * priv;
 };
 
 struct _SystemCollectionsGenericQueueEnumeratorClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 };
 
 struct _SystemCollectionsGenericStack {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericStackPrivate * priv;
 };
 
 struct _SystemCollectionsGenericStackClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 	gpointer (*get) (SystemCollectionsGenericStack* self, gint item);
 };
 
 struct _SystemCollectionsGenericStackEnumerator {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericStackEnumeratorPrivate * priv;
 };
 
 struct _SystemCollectionsGenericStackEnumeratorClass {
-	GObjectClass parent_class;
-};
-
-struct _SystemCollectionsGenericSortedList {
-	SystemCollectionsGenericDictionary parent_instance;
-	SystemCollectionsGenericSortedListPrivate * priv;
-	SystemCollectionsGenericIComparer* _value_compare_func;
-};
-
-struct _SystemCollectionsGenericSortedListClass {
-	SystemCollectionsGenericDictionaryClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 };
 
 struct _SystemCollectionsObjectModelReadOnlyCollection {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsObjectModelReadOnlyCollectionPrivate * priv;
 };
 
 struct _SystemCollectionsObjectModelReadOnlyCollectionClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 	gint (*get_size) (SystemCollectionsObjectModelReadOnlyCollection* self);
 	gboolean (*get_IsReadOnly) (SystemCollectionsObjectModelReadOnlyCollection* self);
 };
@@ -654,6 +678,28 @@ struct _SystemNullable {
 struct _SystemNullableClass {
 	GTypeClass parent_class;
 	void (*finalize) (SystemNullable *self);
+};
+
+struct _Object {
+	GObject parent_instance;
+	ObjectPrivate * priv;
+};
+
+struct _ObjectClass {
+	GObjectClass parent_class;
+};
+
+struct _Systemobject {
+	Object parent_instance;
+	SystemobjectPrivate * priv;
+};
+
+struct _SystemobjectClass {
+	ObjectClass parent_class;
+};
+
+struct _SystemString {
+	int dummy;
 };
 
 typedef enum  {
@@ -701,7 +747,6 @@ typedef enum  {
 	SYSTEM_NOT_SUPPORTED_EXCEPTION_KEY_COLLECTION_SET
 } SystemNotSupportedException;
 #define SYSTEM_NOT_SUPPORTED_EXCEPTION system_not_supported_exception_quark ()
-typedef gpointer (*SystemFunc) (gconstpointer arg, void* user_data);
 struct _SystemIDisposableIface {
 	GTypeInterface parent_iface;
 	void (*Dispose) (SystemIDisposable* self);
@@ -732,8 +777,11 @@ typedef enum  {
 } SystemGlobalizationCultureInfoStringComparison;
 
 
+GType system_linq_enumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
+SystemCollectionsGenericIEnumerable* system_linq_enumerable_Where (SystemLinqEnumerable* self, SystemFunc predicate, void* predicate_target);
+SystemLinqEnumerable* system_linq_enumerable_construct (GType object_type, GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func);
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
 void system_collections_generic_icollection_Add (SystemCollectionsGenericICollection* self, gconstpointer item);
 void system_collections_generic_icollection_Clear (SystemCollectionsGenericICollection* self);
@@ -943,14 +991,6 @@ GType system_collections_generic_stack_enumerator_get_type (void) G_GNUC_CONST;
 SystemCollectionsGenericStackEnumerator* system_collections_generic_stack_enumerator_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericStack* stack);
 SystemCollectionsGenericStackEnumerator* system_collections_generic_stack_enumerator_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericStack* stack);
 void system_collections_generic_stack_enumerator_Dispose (SystemCollectionsGenericStackEnumerator* self);
-GType system_collections_generic_sorted_list_get_type (void) G_GNUC_CONST;
-SystemCollectionsGenericSortedList* system_collections_generic_sorted_list_new (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIComparer* comparer, gint capacity);
-SystemCollectionsGenericSortedList* system_collections_generic_sorted_list_construct (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, SystemCollectionsGenericIComparer* comparer, gint capacity);
-SystemCollectionsGenericSortedList* system_collections_generic_sorted_list_new_WithCapacity (GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, gint capacity, SystemCollectionsGenericIComparer* comparer);
-SystemCollectionsGenericSortedList* system_collections_generic_sorted_list_construct_WithCapacity (GType object_type, GType tkey_type, GBoxedCopyFunc tkey_dup_func, GDestroyNotify tkey_destroy_func, GType tvalue_type, GBoxedCopyFunc tvalue_dup_func, GDestroyNotify tvalue_destroy_func, gint capacity, SystemCollectionsGenericIComparer* comparer);
-gint system_collections_generic_sorted_list_IndexOfKey (SystemCollectionsGenericSortedList* self, gconstpointer key);
-gint system_collections_generic_sorted_list_get_Capacity (SystemCollectionsGenericSortedList* self);
-void system_collections_generic_sorted_list_set_Capacity (SystemCollectionsGenericSortedList* self, gint value);
 SystemCollectionsObjectModelReadOnlyCollection* system_collections_object_model_read_only_collection_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIList* list);
 SystemCollectionsObjectModelReadOnlyCollection* system_collections_object_model_read_only_collection_construct (GType object_type, GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIList* list);
 gpointer system_collections_object_model_read_only_collection_get (SystemCollectionsObjectModelReadOnlyCollection* self, gint index);
@@ -978,6 +1018,16 @@ gint system_nullable_GetHashCode (SystemNullable* self);
 gchar* system_nullable_ToString (SystemNullable* self);
 gboolean system_nullable_get_HasValue (SystemNullable* self);
 gconstpointer system_nullable_get_Value (SystemNullable* self);
+GType object_get_type (void) G_GNUC_CONST;
+Object* object_new (void);
+Object* object_construct (GType object_type);
+GType system_object_get_type (void) G_GNUC_CONST;
+Systemobject* system_object_new (void);
+Systemobject* system_object_construct (GType object_type);
+void system_string_free (SystemString* self);
+gchar* system_string_Join (const gchar* separator, SystemCollectionsGenericIEnumerable* enumerable);
+const SystemString* system_string_new (void);
+const SystemString* system_string_new (void);
 GQuark system_array_type_mismatch_exception_quark (void);
 GQuark system_argument_out_of_range_exception_quark (void);
 GQuark system_error_quark (void);

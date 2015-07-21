@@ -52,7 +52,7 @@ namespace System.Collections.Generic {
             }
             s.append(']');
             */
-            return s.str;
+            return ""; //s.str;
         }
     }
 }

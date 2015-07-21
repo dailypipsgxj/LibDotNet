@@ -8,13 +8,14 @@
 namespace System.Collections.ObjectModel
 {
     using System;
-    using System.Collections;
+    //using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime;
+	using System.Linq;
     
     [GenericAccessors]
-    public class ReadOnlyCollection<T>: GLib.Object, IEnumerable<T>, ICollection<T>, IReadOnlyCollection<T>
+    public class ReadOnlyCollection<T>: Enumerable<T>, IEnumerable<T>, ICollection<T>, IReadOnlyCollection<T>
     {
         IList<T> list;
         private GLib.Object _syncRoot;

@@ -39,6 +39,16 @@ typedef struct _SystemCollectionsGenericTimSort SystemCollectionsGenericTimSort;
 typedef struct _SystemCollectionsGenericTimSortClass SystemCollectionsGenericTimSortClass;
 typedef struct _SystemCollectionsGenericTimSortPrivate SystemCollectionsGenericTimSortPrivate;
 
+#define SYSTEM_LINQ_TYPE_ENUMERABLE (system_linq_enumerable_get_type ())
+#define SYSTEM_LINQ_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerable))
+#define SYSTEM_LINQ_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+#define SYSTEM_LINQ_IS_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_IS_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_ENUMERABLE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+
+typedef struct _SystemLinqEnumerable SystemLinqEnumerable;
+typedef struct _SystemLinqEnumerableClass SystemLinqEnumerableClass;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -85,6 +95,7 @@ typedef struct _SystemCollectionsGenericAbstractListClass SystemCollectionsGener
 typedef struct _SystemCollectionsGenericList SystemCollectionsGenericList;
 typedef struct _SystemCollectionsGenericListClass SystemCollectionsGenericListClass;
 #define _g_destroy_func0(var) (((var == NULL) || (g_destroy_func == NULL)) ? NULL : (var = (g_destroy_func (var), NULL)))
+typedef struct _SystemLinqEnumerablePrivate SystemLinqEnumerablePrivate;
 
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_ILIST (system_collections_generic_ilist_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_ILIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_ILIST, SystemCollectionsGenericIList))
@@ -198,6 +209,17 @@ struct _SystemCollectionsGenericTimSortPrivate {
 	gpointer compare_target;
 };
 
+typedef gpointer (*SystemFunc) (gconstpointer arg, void* user_data);
+struct _SystemLinqEnumerable {
+	GObject parent_instance;
+	SystemLinqEnumerablePrivate * priv;
+};
+
+struct _SystemLinqEnumerableClass {
+	GObjectClass parent_class;
+	SystemCollectionsGenericIEnumerable* (*Where) (SystemLinqEnumerable* self, SystemFunc predicate, void* predicate_target);
+};
+
 struct _SystemCollectionsGenericIListIface {
 	GTypeInterface parent_iface;
 	gpointer (*get) (SystemCollectionsGenericIList* self, gint index);
@@ -228,12 +250,12 @@ struct _SystemCollectionsGenericIComparerIface {
 typedef gboolean (*SystemPredicate) (gconstpointer obj, void* user_data);
 typedef void (*SystemAction) (gconstpointer obj, void* user_data);
 struct _SystemCollectionsGenericAbstractList {
-	GObject parent_instance;
+	SystemLinqEnumerable parent_instance;
 	SystemCollectionsGenericAbstractListPrivate * priv;
 };
 
 struct _SystemCollectionsGenericAbstractListClass {
-	GObjectClass parent_class;
+	SystemLinqEnumerableClass parent_class;
 	GType (*get_element_type) (SystemCollectionsGenericAbstractList* self);
 	SystemCollectionsGenericIEnumerator* (*iterator) (SystemCollectionsGenericAbstractList* self);
 	gboolean (*contains) (SystemCollectionsGenericAbstractList* self, gconstpointer item);
@@ -302,6 +324,7 @@ typedef gboolean (*SystemCollectionsGenericTimSortLowerFunc) (gconstpointer left
 static gpointer system_collections_generic_tim_sort_parent_class = NULL;
 
 GType system_collections_generic_tim_sort_get_type (void) G_GNUC_CONST;
+GType system_linq_enumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_icollection_get_type (void) G_GNUC_CONST;
@@ -374,7 +397,7 @@ void system_collections_generic_tim_sort_sort (GType g_type, GBoxedCopyFunc g_du
 	_tmp0_ = list;
 #line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_LIST)) {
-#line 378 "timsort.c"
+#line 401 "timsort.c"
 		SystemCollectionsGenericICollection* _tmp1_ = NULL;
 		GCompareDataFunc _tmp2_ = NULL;
 		void* _tmp2__target = NULL;
@@ -386,7 +409,7 @@ void system_collections_generic_tim_sort_sort (GType g_type, GBoxedCopyFunc g_du
 		_tmp2__target = compare_target;
 #line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		system_collections_generic_tim_sort_sort_list (g_type, (GBoxedCopyFunc) g_dup_func, g_destroy_func, G_TYPE_CHECK_INSTANCE_CAST (_tmp1_, SYSTEM_COLLECTIONS_GENERIC_TYPE_LIST, SystemCollectionsGenericList), _tmp2_, _tmp2__target);
-#line 390 "timsort.c"
+#line 413 "timsort.c"
 	} else {
 		SystemCollectionsGenericICollection* _tmp3_ = NULL;
 		GCompareDataFunc _tmp4_ = NULL;
@@ -399,7 +422,7 @@ void system_collections_generic_tim_sort_sort (GType g_type, GBoxedCopyFunc g_du
 		_tmp4__target = compare_target;
 #line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		system_collections_generic_tim_sort_sort_ICollection (g_type, (GBoxedCopyFunc) g_dup_func, g_destroy_func, _tmp3_, _tmp4_, _tmp4__target);
-#line 403 "timsort.c"
+#line 426 "timsort.c"
 	}
 }
 
@@ -407,7 +430,7 @@ void system_collections_generic_tim_sort_sort (GType g_type, GBoxedCopyFunc g_du
 static gpointer _g_object_ref0 (gpointer self) {
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 411 "timsort.c"
+#line 434 "timsort.c"
 }
 
 
@@ -512,7 +535,7 @@ static void system_collections_generic_tim_sort_sort_ICollection (GType g_type, 
 	_tmp20_ = _tmp19_->priv->array;
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp20__length1 = _tmp19_->priv->array_length1;
-#line 516 "timsort.c"
+#line 539 "timsort.c"
 	{
 		gpointer* item_collection = NULL;
 		gint item_collection_length1 = 0;
@@ -524,14 +547,14 @@ static void system_collections_generic_tim_sort_sort_ICollection (GType g_type, 
 		item_collection_length1 = _tmp20__length1;
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		for (item_it = 0; item_it < _tmp20__length1; item_it = item_it + 1) {
-#line 528 "timsort.c"
+#line 551 "timsort.c"
 			gpointer _tmp21_ = NULL;
 			gpointer item = NULL;
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp21_ = ((item_collection[item_it] != NULL) && (g_dup_func != NULL)) ? g_dup_func ((gpointer) item_collection[item_it]) : ((gpointer) item_collection[item_it]);
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			item = _tmp21_;
-#line 535 "timsort.c"
+#line 558 "timsort.c"
 			{
 				SystemCollectionsGenericICollection* _tmp22_ = NULL;
 				gconstpointer _tmp23_ = NULL;
@@ -543,13 +566,13 @@ static void system_collections_generic_tim_sort_sort_ICollection (GType g_type, 
 				system_collections_generic_icollection_Add (_tmp22_, _tmp23_);
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_g_destroy_func0 (item);
-#line 547 "timsort.c"
+#line 570 "timsort.c"
 			}
 		}
 	}
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_g_object_unref0 (helper);
-#line 553 "timsort.c"
+#line 576 "timsort.c"
 }
 
 
@@ -607,7 +630,7 @@ static void system_collections_generic_tim_sort_sort_list (GType g_type, GBoxedC
 	system_collections_generic_tim_sort_do_sort (helper);
 #line 77 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_g_object_unref0 (helper);
-#line 611 "timsort.c"
+#line 634 "timsort.c"
 }
 
 
@@ -618,13 +641,13 @@ static void _vala_array_add1 (SystemCollectionsGenericTimSortSlice*** array, int
 		*size = (*size) ? (2 * (*size)) : 4;
 #line 138 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		*array = g_renew (SystemCollectionsGenericTimSortSlice*, *array, (*size) + 1);
-#line 622 "timsort.c"
+#line 645 "timsort.c"
 	}
 #line 138 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	(*array)[(*length)++] = value;
 #line 138 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	(*array)[*length] = NULL;
-#line 628 "timsort.c"
+#line 651 "timsort.c"
 }
 
 
@@ -662,7 +685,7 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 	if (_tmp0_ < 2) {
 #line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		return;
-#line 666 "timsort.c"
+#line 689 "timsort.c"
 	}
 #line 105 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp1_ = g_new0 (SystemCollectionsGenericTimSortSlice*, 0 + 1);
@@ -696,7 +719,7 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 	minimum_length = _tmp8_;
 #line 111 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	while (TRUE) {
-#line 700 "timsort.c"
+#line 723 "timsort.c"
 		SystemCollectionsGenericTimSortSlice* _tmp9_ = NULL;
 		gint _tmp10_ = 0;
 		gboolean descending = FALSE;
@@ -722,7 +745,7 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 		if (!(_tmp10_ > 0)) {
 #line 111 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			break;
-#line 726 "timsort.c"
+#line 749 "timsort.c"
 		}
 #line 114 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp11_ = remaining;
@@ -736,13 +759,13 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 		_tmp14_ = descending;
 #line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp14_) {
-#line 740 "timsort.c"
+#line 763 "timsort.c"
 			SystemCollectionsGenericTimSortSlice* _tmp15_ = NULL;
 #line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp15_ = run;
 #line 120 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			system_collections_generic_tim_sort_slice_reverse (_tmp15_);
-#line 746 "timsort.c"
+#line 769 "timsort.c"
 		}
 #line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp16_ = run;
@@ -752,7 +775,7 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 		_tmp18_ = minimum_length;
 #line 124 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp17_ < _tmp18_) {
-#line 756 "timsort.c"
+#line 779 "timsort.c"
 			gint sorted_count = 0;
 			SystemCollectionsGenericTimSortSlice* _tmp19_ = NULL;
 			gint _tmp20_ = 0;
@@ -787,7 +810,7 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 			_tmp27_ = sorted_count;
 #line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			system_collections_generic_tim_sort_insertion_sort (self, _tmp26_, _tmp27_);
-#line 791 "timsort.c"
+#line 814 "timsort.c"
 		}
 #line 135 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp28_ = remaining;
@@ -811,7 +834,7 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 		system_collections_generic_tim_sort_merge_collapse (self);
 #line 111 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_system_collections_generic_tim_sort_slice_free0 (run);
-#line 815 "timsort.c"
+#line 838 "timsort.c"
 	}
 #line 142 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp33_ = remaining;
@@ -853,7 +876,7 @@ static void system_collections_generic_tim_sort_do_sort (SystemCollectionsGeneri
 	_vala_assert (_tmp42_ == _tmp43_, "pending[0].length == size");
 #line 100 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_system_collections_generic_tim_sort_slice_free0 (remaining);
-#line 857 "timsort.c"
+#line 880 "timsort.c"
 }
 
 
@@ -880,7 +903,7 @@ static inline gboolean system_collections_generic_tim_sort_lower_than (SystemCol
 	result = _tmp3_ < 0;
 #line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 884 "timsort.c"
+#line 907 "timsort.c"
 }
 
 
@@ -907,7 +930,7 @@ static inline gboolean system_collections_generic_tim_sort_lower_than_or_equal_t
 	result = _tmp3_ <= 0;
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 911 "timsort.c"
+#line 934 "timsort.c"
 }
 
 
@@ -922,7 +945,7 @@ static gint system_collections_generic_tim_sort_compute_minimum_run_length (Syst
 	run_length = 0;
 #line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	while (TRUE) {
-#line 926 "timsort.c"
+#line 949 "timsort.c"
 		gint _tmp0_ = 0;
 		gint _tmp1_ = 0;
 		gint _tmp2_ = 0;
@@ -933,7 +956,7 @@ static gint system_collections_generic_tim_sort_compute_minimum_run_length (Syst
 		if (!(_tmp0_ >= 64)) {
 #line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			break;
-#line 937 "timsort.c"
+#line 960 "timsort.c"
 		}
 #line 164 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp1_ = run_length;
@@ -945,7 +968,7 @@ static gint system_collections_generic_tim_sort_compute_minimum_run_length (Syst
 		_tmp3_ = length;
 #line 165 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		length = _tmp3_ >> 1;
-#line 949 "timsort.c"
+#line 972 "timsort.c"
 	}
 #line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp4_ = length;
@@ -955,7 +978,7 @@ static gint system_collections_generic_tim_sort_compute_minimum_run_length (Syst
 	result = _tmp4_ + _tmp5_;
 #line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 959 "timsort.c"
+#line 982 "timsort.c"
 }
 
 
@@ -981,7 +1004,7 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 	_tmp1_ = _tmp0_->length;
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	if (_tmp1_ <= 1) {
-#line 985 "timsort.c"
+#line 1008 "timsort.c"
 		SystemCollectionsGenericTimSortSlice* _tmp2_ = NULL;
 		gint _tmp3_ = 0;
 #line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -992,7 +1015,7 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 		run_length = _tmp3_;
 #line 174 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_vala_descending = FALSE;
-#line 996 "timsort.c"
+#line 1019 "timsort.c"
 	} else {
 		SystemCollectionsGenericTimSortSlice* _tmp4_ = NULL;
 		void** _tmp5_ = NULL;
@@ -1033,7 +1056,7 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 		if (_tmp14_) {
 #line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_vala_descending = TRUE;
-#line 1037 "timsort.c"
+#line 1060 "timsort.c"
 			{
 				gint i = 0;
 				SystemCollectionsGenericTimSortSlice* _tmp15_ = NULL;
@@ -1044,14 +1067,14 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 				_tmp16_ = _tmp15_->index;
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				i = _tmp16_ + 2;
-#line 1048 "timsort.c"
+#line 1071 "timsort.c"
 				{
 					gboolean _tmp17_ = FALSE;
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp17_ = TRUE;
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					while (TRUE) {
-#line 1055 "timsort.c"
+#line 1078 "timsort.c"
 						gint _tmp19_ = 0;
 						SystemCollectionsGenericTimSortSlice* _tmp20_ = NULL;
 						gint _tmp21_ = 0;
@@ -1068,13 +1091,13 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 						gboolean _tmp32_ = FALSE;
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						if (!_tmp17_) {
-#line 1072 "timsort.c"
+#line 1095 "timsort.c"
 							gint _tmp18_ = 0;
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							_tmp18_ = i;
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							i = _tmp18_ + 1;
-#line 1078 "timsort.c"
+#line 1101 "timsort.c"
 						}
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_tmp17_ = FALSE;
@@ -1092,7 +1115,7 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 						if (!(_tmp19_ < (_tmp21_ + _tmp23_))) {
 #line 179 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							break;
-#line 1096 "timsort.c"
+#line 1119 "timsort.c"
 						}
 #line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_tmp24_ = a;
@@ -1114,17 +1137,17 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 						_tmp32_ = system_collections_generic_tim_sort_lower_than (self, _tmp27_, _tmp31_);
 #line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						if (_tmp32_) {
-#line 1118 "timsort.c"
+#line 1141 "timsort.c"
 							gint _tmp33_ = 0;
 #line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							_tmp33_ = run_length;
 #line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							run_length = _tmp33_ + 1;
-#line 1124 "timsort.c"
+#line 1147 "timsort.c"
 						} else {
 #line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							break;
-#line 1128 "timsort.c"
+#line 1151 "timsort.c"
 						}
 					}
 				}
@@ -1132,7 +1155,7 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 		} else {
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_vala_descending = FALSE;
-#line 1136 "timsort.c"
+#line 1159 "timsort.c"
 			{
 				gint i = 0;
 				SystemCollectionsGenericTimSortSlice* _tmp34_ = NULL;
@@ -1143,14 +1166,14 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 				_tmp35_ = _tmp34_->index;
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				i = _tmp35_ + 2;
-#line 1147 "timsort.c"
+#line 1170 "timsort.c"
 				{
 					gboolean _tmp36_ = FALSE;
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp36_ = TRUE;
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					while (TRUE) {
-#line 1154 "timsort.c"
+#line 1177 "timsort.c"
 						gint _tmp38_ = 0;
 						SystemCollectionsGenericTimSortSlice* _tmp39_ = NULL;
 						gint _tmp40_ = 0;
@@ -1167,13 +1190,13 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 						gboolean _tmp51_ = FALSE;
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						if (!_tmp36_) {
-#line 1171 "timsort.c"
+#line 1194 "timsort.c"
 							gint _tmp37_ = 0;
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							_tmp37_ = i;
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							i = _tmp37_ + 1;
-#line 1177 "timsort.c"
+#line 1200 "timsort.c"
 						}
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_tmp36_ = FALSE;
@@ -1191,7 +1214,7 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 						if (!(_tmp38_ < (_tmp40_ + _tmp42_))) {
 #line 188 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							break;
-#line 1195 "timsort.c"
+#line 1218 "timsort.c"
 						}
 #line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_tmp43_ = a;
@@ -1215,14 +1238,14 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 						if (_tmp51_) {
 #line 190 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							break;
-#line 1219 "timsort.c"
+#line 1242 "timsort.c"
 						} else {
 							gint _tmp52_ = 0;
 #line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							_tmp52_ = run_length;
 #line 192 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							run_length = _tmp52_ + 1;
-#line 1226 "timsort.c"
+#line 1249 "timsort.c"
 						}
 					}
 				}
@@ -1247,11 +1270,11 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 	if (descending) {
 #line 197 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		*descending = _vala_descending;
-#line 1251 "timsort.c"
+#line 1274 "timsort.c"
 	}
 #line 197 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 1255 "timsort.c"
+#line 1278 "timsort.c"
 }
 
 
@@ -1260,7 +1283,7 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 	g_return_if_fail (self != NULL);
 #line 200 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	g_return_if_fail (a != NULL);
-#line 1264 "timsort.c"
+#line 1287 "timsort.c"
 	{
 		gint start = 0;
 		SystemCollectionsGenericTimSortSlice* _tmp0_ = NULL;
@@ -1274,14 +1297,14 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 		_tmp2_ = offset;
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		start = _tmp1_ + _tmp2_;
-#line 1278 "timsort.c"
+#line 1301 "timsort.c"
 		{
 			gboolean _tmp3_ = FALSE;
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp3_ = TRUE;
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			while (TRUE) {
-#line 1285 "timsort.c"
+#line 1308 "timsort.c"
 				gint _tmp5_ = 0;
 				SystemCollectionsGenericTimSortSlice* _tmp6_ = NULL;
 				gint _tmp7_ = 0;
@@ -1314,13 +1337,13 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 				void* _tmp44_ = NULL;
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (!_tmp3_) {
-#line 1318 "timsort.c"
+#line 1341 "timsort.c"
 					gint _tmp4_ = 0;
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp4_ = start;
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					start = _tmp4_ + 1;
-#line 1324 "timsort.c"
+#line 1347 "timsort.c"
 				}
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp3_ = FALSE;
@@ -1338,7 +1361,7 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 				if (!(_tmp5_ < (_tmp7_ + _tmp9_))) {
 #line 204 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					break;
-#line 1342 "timsort.c"
+#line 1365 "timsort.c"
 				}
 #line 205 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp10_ = a;
@@ -1362,7 +1385,7 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 				pivot = _tmp16_;
 #line 209 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				while (TRUE) {
-#line 1366 "timsort.c"
+#line 1389 "timsort.c"
 					gint _tmp17_ = 0;
 					gint _tmp18_ = 0;
 					gint p = 0;
@@ -1383,7 +1406,7 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 					if (!(_tmp17_ < _tmp18_)) {
 #line 209 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						break;
-#line 1387 "timsort.c"
+#line 1410 "timsort.c"
 					}
 #line 210 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp19_ = left;
@@ -1407,20 +1430,20 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 					_tmp27_ = system_collections_generic_tim_sort_lower_than (self, _tmp22_, _tmp26_);
 #line 211 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					if (_tmp27_) {
-#line 1411 "timsort.c"
+#line 1434 "timsort.c"
 						gint _tmp28_ = 0;
 #line 212 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_tmp28_ = p;
 #line 212 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						right = _tmp28_;
-#line 1417 "timsort.c"
+#line 1440 "timsort.c"
 					} else {
 						gint _tmp29_ = 0;
 #line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_tmp29_ = p;
 #line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						left = _tmp29_ + 1;
-#line 1424 "timsort.c"
+#line 1447 "timsort.c"
 					}
 				}
 #line 217 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -1459,7 +1482,7 @@ static void system_collections_generic_tim_sort_insertion_sort (SystemCollection
 				_tmp41_[_tmp42_] = _tmp43_;
 #line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp44_ = _tmp41_[_tmp42_];
-#line 1463 "timsort.c"
+#line 1486 "timsort.c"
 			}
 		}
 	}
@@ -1480,7 +1503,7 @@ static void system_collections_generic_tim_sort_merge_collapse (SystemCollection
 	count = _tmp0__length1;
 #line 229 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	while (TRUE) {
-#line 1484 "timsort.c"
+#line 1507 "timsort.c"
 		gint _tmp1_ = 0;
 		gboolean _tmp2_ = FALSE;
 		gint _tmp3_ = 0;
@@ -1492,13 +1515,13 @@ static void system_collections_generic_tim_sort_merge_collapse (SystemCollection
 		if (!(_tmp1_ > 1)) {
 #line 229 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			break;
-#line 1496 "timsort.c"
+#line 1519 "timsort.c"
 		}
 #line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp3_ = count;
 #line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp3_ >= 3) {
-#line 1502 "timsort.c"
+#line 1525 "timsort.c"
 			SystemCollectionsGenericTimSortSlice** _tmp4_ = NULL;
 			gint _tmp4__length1 = 0;
 			gint _tmp5_ = 0;
@@ -1546,15 +1569,15 @@ static void system_collections_generic_tim_sort_merge_collapse (SystemCollection
 			_tmp15_ = _tmp14_->length;
 #line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp2_ = _tmp7_ <= (_tmp11_ + _tmp15_);
-#line 1550 "timsort.c"
+#line 1573 "timsort.c"
 		} else {
 #line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp2_ = FALSE;
-#line 1554 "timsort.c"
+#line 1577 "timsort.c"
 		}
 #line 237 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp2_) {
-#line 1558 "timsort.c"
+#line 1581 "timsort.c"
 			SystemCollectionsGenericTimSortSlice** _tmp16_ = NULL;
 			gint _tmp16__length1 = 0;
 			gint _tmp17_ = 0;
@@ -1587,20 +1610,20 @@ static void system_collections_generic_tim_sort_merge_collapse (SystemCollection
 			_tmp23_ = _tmp22_->length;
 #line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			if (_tmp19_ < _tmp23_) {
-#line 1591 "timsort.c"
+#line 1614 "timsort.c"
 				gint _tmp24_ = 0;
 #line 239 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp24_ = count;
 #line 239 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				system_collections_generic_tim_sort_merge_at (self, _tmp24_ - 3);
-#line 1597 "timsort.c"
+#line 1620 "timsort.c"
 			} else {
 				gint _tmp25_ = 0;
 #line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp25_ = count;
 #line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				system_collections_generic_tim_sort_merge_at (self, _tmp25_ - 2);
-#line 1604 "timsort.c"
+#line 1627 "timsort.c"
 			}
 		} else {
 			SystemCollectionsGenericTimSortSlice** _tmp26_ = NULL;
@@ -1635,17 +1658,17 @@ static void system_collections_generic_tim_sort_merge_collapse (SystemCollection
 			_tmp33_ = _tmp32_->length;
 #line 243 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			if (_tmp29_ <= _tmp33_) {
-#line 1639 "timsort.c"
+#line 1662 "timsort.c"
 				gint _tmp34_ = 0;
 #line 244 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp34_ = count;
 #line 244 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				system_collections_generic_tim_sort_merge_at (self, _tmp34_ - 2);
-#line 1645 "timsort.c"
+#line 1668 "timsort.c"
 			} else {
 #line 246 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 1649 "timsort.c"
+#line 1672 "timsort.c"
 			}
 		}
 #line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -1654,7 +1677,7 @@ static void system_collections_generic_tim_sort_merge_collapse (SystemCollection
 		_tmp35__length1 = self->priv->pending_length1;
 #line 248 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		count = _tmp35__length1;
-#line 1658 "timsort.c"
+#line 1681 "timsort.c"
 	}
 }
 
@@ -1673,7 +1696,7 @@ static void system_collections_generic_tim_sort_merge_force_collapse (SystemColl
 	count = _tmp0__length1;
 #line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	while (TRUE) {
-#line 1677 "timsort.c"
+#line 1700 "timsort.c"
 		gint _tmp1_ = 0;
 		gboolean _tmp2_ = FALSE;
 		gint _tmp3_ = 0;
@@ -1685,13 +1708,13 @@ static void system_collections_generic_tim_sort_merge_force_collapse (SystemColl
 		if (!(_tmp1_ > 1)) {
 #line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			break;
-#line 1689 "timsort.c"
+#line 1712 "timsort.c"
 		}
 #line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp3_ = count;
 #line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp3_ >= 3) {
-#line 1695 "timsort.c"
+#line 1718 "timsort.c"
 			SystemCollectionsGenericTimSortSlice** _tmp4_ = NULL;
 			gint _tmp4__length1 = 0;
 			gint _tmp5_ = 0;
@@ -1724,28 +1747,28 @@ static void system_collections_generic_tim_sort_merge_force_collapse (SystemColl
 			_tmp11_ = _tmp10_->length;
 #line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp2_ = _tmp7_ < _tmp11_;
-#line 1728 "timsort.c"
+#line 1751 "timsort.c"
 		} else {
 #line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp2_ = FALSE;
-#line 1732 "timsort.c"
+#line 1755 "timsort.c"
 		}
 #line 264 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp2_) {
-#line 1736 "timsort.c"
+#line 1759 "timsort.c"
 			gint _tmp12_ = 0;
 #line 265 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp12_ = count;
 #line 265 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			system_collections_generic_tim_sort_merge_at (self, _tmp12_ - 3);
-#line 1742 "timsort.c"
+#line 1765 "timsort.c"
 		} else {
 			gint _tmp13_ = 0;
 #line 267 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp13_ = count;
 #line 267 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			system_collections_generic_tim_sort_merge_at (self, _tmp13_ - 2);
-#line 1749 "timsort.c"
+#line 1772 "timsort.c"
 		}
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp14_ = self->priv->pending;
@@ -1753,7 +1776,7 @@ static void system_collections_generic_tim_sort_merge_force_collapse (SystemColl
 		_tmp14__length1 = self->priv->pending_length1;
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		count = _tmp14__length1;
-#line 1757 "timsort.c"
+#line 1780 "timsort.c"
 	}
 }
 
@@ -1943,7 +1966,7 @@ static void system_collections_generic_tim_sort_merge_at (SystemCollectionsGener
 		_system_collections_generic_tim_sort_slice_free0 (a);
 #line 294 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		return;
-#line 1947 "timsort.c"
+#line 1970 "timsort.c"
 	}
 #line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp40_ = b;
@@ -1973,7 +1996,7 @@ static void system_collections_generic_tim_sort_merge_at (SystemCollectionsGener
 		_system_collections_generic_tim_sort_slice_free0 (a);
 #line 299 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		return;
-#line 1977 "timsort.c"
+#line 2000 "timsort.c"
 	}
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp49_ = a;
@@ -1985,7 +2008,7 @@ static void system_collections_generic_tim_sort_merge_at (SystemCollectionsGener
 	_tmp52_ = _tmp51_->length;
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	if (_tmp50_ <= _tmp52_) {
-#line 1989 "timsort.c"
+#line 2012 "timsort.c"
 		SystemCollectionsGenericTimSortSlice* _tmp53_ = NULL;
 		SystemCollectionsGenericTimSortSlice* _tmp54_ = NULL;
 #line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -1998,7 +2021,7 @@ static void system_collections_generic_tim_sort_merge_at (SystemCollectionsGener
 		b = NULL;
 #line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		system_collections_generic_tim_sort_merge_low (self, _tmp53_, _tmp54_);
-#line 2002 "timsort.c"
+#line 2025 "timsort.c"
 	} else {
 		SystemCollectionsGenericTimSortSlice* _tmp55_ = NULL;
 		SystemCollectionsGenericTimSortSlice* _tmp56_ = NULL;
@@ -2012,13 +2035,13 @@ static void system_collections_generic_tim_sort_merge_at (SystemCollectionsGener
 		b = NULL;
 #line 305 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		system_collections_generic_tim_sort_merge_high (self, _tmp55_, _tmp56_);
-#line 2016 "timsort.c"
+#line 2039 "timsort.c"
 	}
 #line 276 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_system_collections_generic_tim_sort_slice_free0 (b);
 #line 276 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_system_collections_generic_tim_sort_slice_free0 (a);
-#line 2022 "timsort.c"
+#line 2045 "timsort.c"
 }
 
 
@@ -2091,7 +2114,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 	_tmp12_ = system_collections_generic_tim_sort_lower_than (self, _tmp10_, _tmp11_);
 #line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	if (_tmp12_) {
-#line 2095 "timsort.c"
+#line 2118 "timsort.c"
 		gint max_offset = 0;
 		SystemCollectionsGenericTimSortSlice* _tmp13_ = NULL;
 		gint _tmp14_ = 0;
@@ -2112,7 +2135,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		max_offset = _tmp14_ - _tmp15_;
 #line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		while (TRUE) {
-#line 2116 "timsort.c"
+#line 2139 "timsort.c"
 			gint _tmp16_ = 0;
 			gint _tmp17_ = 0;
 			SystemCollectionsGenericTimSortSlice* _tmp18_ = NULL;
@@ -2130,7 +2153,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 			if (!(_tmp16_ < _tmp17_)) {
 #line 321 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2134 "timsort.c"
+#line 2157 "timsort.c"
 			}
 #line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp18_ = a;
@@ -2148,7 +2171,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 			_tmp24_ = system_collections_generic_tim_sort_lower_than (self, _tmp22_, _tmp23_);
 #line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			if (_tmp24_) {
-#line 2152 "timsort.c"
+#line 2175 "timsort.c"
 				gint _tmp25_ = 0;
 				gint _tmp26_ = 0;
 				gint _tmp27_ = 0;
@@ -2164,11 +2187,11 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 				_tmp27_ = offset;
 #line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				offset = _tmp27_ + 1;
-#line 2168 "timsort.c"
+#line 2191 "timsort.c"
 			} else {
 #line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2172 "timsort.c"
+#line 2195 "timsort.c"
 			}
 		}
 #line 331 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -2177,13 +2200,13 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		_tmp29_ = max_offset;
 #line 331 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp28_ > _tmp29_) {
-#line 2181 "timsort.c"
+#line 2204 "timsort.c"
 			gint _tmp30_ = 0;
 #line 332 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp30_ = max_offset;
 #line 332 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			offset = _tmp30_;
-#line 2187 "timsort.c"
+#line 2210 "timsort.c"
 		}
 #line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp31_ = hint;
@@ -2197,7 +2220,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		_tmp34_ = offset;
 #line 336 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		offset = _tmp33_ + _tmp34_;
-#line 2201 "timsort.c"
+#line 2224 "timsort.c"
 	} else {
 		gint max_offset = 0;
 		gint _tmp35_ = 0;
@@ -2217,7 +2240,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		max_offset = _tmp35_ + 1;
 #line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		while (TRUE) {
-#line 2221 "timsort.c"
+#line 2244 "timsort.c"
 			gint _tmp36_ = 0;
 			gint _tmp37_ = 0;
 			SystemCollectionsGenericTimSortSlice* _tmp38_ = NULL;
@@ -2235,7 +2258,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 			if (!(_tmp36_ < _tmp37_)) {
 #line 339 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2239 "timsort.c"
+#line 2262 "timsort.c"
 			}
 #line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp38_ = a;
@@ -2255,7 +2278,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 			if (_tmp44_) {
 #line 341 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2259 "timsort.c"
+#line 2282 "timsort.c"
 			} else {
 				gint _tmp45_ = 0;
 				gint _tmp46_ = 0;
@@ -2272,7 +2295,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 				_tmp47_ = offset;
 #line 345 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				offset = _tmp47_ + 1;
-#line 2276 "timsort.c"
+#line 2299 "timsort.c"
 			}
 		}
 #line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -2281,13 +2304,13 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		_tmp49_ = max_offset;
 #line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp48_ > _tmp49_) {
-#line 2285 "timsort.c"
+#line 2308 "timsort.c"
 			gint _tmp50_ = 0;
 #line 350 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp50_ = max_offset;
 #line 350 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			offset = _tmp50_;
-#line 2291 "timsort.c"
+#line 2314 "timsort.c"
 		}
 #line 353 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp51_ = last_offset;
@@ -2309,7 +2332,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		_tmp56_ = temp_last_offset;
 #line 356 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		offset = _tmp55_ - _tmp56_;
-#line 2313 "timsort.c"
+#line 2336 "timsort.c"
 	}
 #line 359 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp57_ = last_offset;
@@ -2335,7 +2358,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 	last_offset = _tmp63_ + 1;
 #line 364 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	while (TRUE) {
-#line 2339 "timsort.c"
+#line 2362 "timsort.c"
 		gint _tmp64_ = 0;
 		gint _tmp65_ = 0;
 		gint m = 0;
@@ -2358,7 +2381,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		if (!(_tmp64_ < _tmp65_)) {
 #line 364 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			break;
-#line 2362 "timsort.c"
+#line 2385 "timsort.c"
 		}
 #line 365 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp66_ = last_offset;
@@ -2386,20 +2409,20 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 		_tmp76_ = system_collections_generic_tim_sort_lower_than (self, _tmp74_, _tmp75_);
 #line 366 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp76_) {
-#line 2390 "timsort.c"
+#line 2413 "timsort.c"
 			gint _tmp77_ = 0;
 #line 367 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp77_ = m;
 #line 367 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			last_offset = _tmp77_ + 1;
-#line 2396 "timsort.c"
+#line 2419 "timsort.c"
 		} else {
 			gint _tmp78_ = 0;
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp78_ = m;
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			offset = _tmp78_;
-#line 2403 "timsort.c"
+#line 2426 "timsort.c"
 		}
 	}
 #line 373 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -2412,7 +2435,7 @@ static gint system_collections_generic_tim_sort_gallop_leftmost (SystemCollectio
 	result = offset;
 #line 374 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 2416 "timsort.c"
+#line 2439 "timsort.c"
 }
 
 
@@ -2485,7 +2508,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 	_tmp12_ = system_collections_generic_tim_sort_lower_than_or_equal_to (self, _tmp10_, _tmp11_);
 #line 387 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	if (_tmp12_) {
-#line 2489 "timsort.c"
+#line 2512 "timsort.c"
 		gint max_offset = 0;
 		SystemCollectionsGenericTimSortSlice* _tmp13_ = NULL;
 		gint _tmp14_ = 0;
@@ -2506,7 +2529,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		max_offset = _tmp14_ - _tmp15_;
 #line 389 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		while (TRUE) {
-#line 2510 "timsort.c"
+#line 2533 "timsort.c"
 			gint _tmp16_ = 0;
 			gint _tmp17_ = 0;
 			SystemCollectionsGenericTimSortSlice* _tmp18_ = NULL;
@@ -2524,7 +2547,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 			if (!(_tmp16_ < _tmp17_)) {
 #line 389 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2528 "timsort.c"
+#line 2551 "timsort.c"
 			}
 #line 390 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp18_ = a;
@@ -2542,7 +2565,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 			_tmp24_ = system_collections_generic_tim_sort_lower_than_or_equal_to (self, _tmp22_, _tmp23_);
 #line 390 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			if (_tmp24_) {
-#line 2546 "timsort.c"
+#line 2569 "timsort.c"
 				gint _tmp25_ = 0;
 				gint _tmp26_ = 0;
 				gint _tmp27_ = 0;
@@ -2558,11 +2581,11 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 				_tmp27_ = offset;
 #line 393 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				offset = _tmp27_ + 1;
-#line 2562 "timsort.c"
+#line 2585 "timsort.c"
 			} else {
 #line 395 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2566 "timsort.c"
+#line 2589 "timsort.c"
 			}
 		}
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -2571,13 +2594,13 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		_tmp29_ = max_offset;
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp28_ > _tmp29_) {
-#line 2575 "timsort.c"
+#line 2598 "timsort.c"
 			gint _tmp30_ = 0;
 #line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp30_ = max_offset;
 #line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			offset = _tmp30_;
-#line 2581 "timsort.c"
+#line 2604 "timsort.c"
 		}
 #line 403 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp31_ = hint;
@@ -2591,7 +2614,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		_tmp34_ = offset;
 #line 404 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		offset = _tmp33_ + _tmp34_;
-#line 2595 "timsort.c"
+#line 2618 "timsort.c"
 	} else {
 		gint max_offset = 0;
 		gint _tmp35_ = 0;
@@ -2611,7 +2634,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		max_offset = _tmp35_ + 1;
 #line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		while (TRUE) {
-#line 2615 "timsort.c"
+#line 2638 "timsort.c"
 			gint _tmp36_ = 0;
 			gint _tmp37_ = 0;
 			SystemCollectionsGenericTimSortSlice* _tmp38_ = NULL;
@@ -2629,7 +2652,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 			if (!(_tmp36_ < _tmp37_)) {
 #line 407 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2633 "timsort.c"
+#line 2656 "timsort.c"
 			}
 #line 408 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp38_ = a;
@@ -2649,7 +2672,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 			if (_tmp44_) {
 #line 409 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				break;
-#line 2653 "timsort.c"
+#line 2676 "timsort.c"
 			} else {
 				gint _tmp45_ = 0;
 				gint _tmp46_ = 0;
@@ -2666,7 +2689,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 				_tmp47_ = offset;
 #line 413 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				offset = _tmp47_ + 1;
-#line 2670 "timsort.c"
+#line 2693 "timsort.c"
 			}
 		}
 #line 417 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -2675,13 +2698,13 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		_tmp49_ = max_offset;
 #line 417 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp48_ > _tmp49_) {
-#line 2679 "timsort.c"
+#line 2702 "timsort.c"
 			gint _tmp50_ = 0;
 #line 418 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp50_ = max_offset;
 #line 418 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			offset = _tmp50_;
-#line 2685 "timsort.c"
+#line 2708 "timsort.c"
 		}
 #line 421 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp51_ = last_offset;
@@ -2703,7 +2726,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		_tmp56_ = temp_last_offset;
 #line 424 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		offset = _tmp55_ - _tmp56_;
-#line 2707 "timsort.c"
+#line 2730 "timsort.c"
 	}
 #line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp57_ = last_offset;
@@ -2729,7 +2752,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 	last_offset = _tmp63_ + 1;
 #line 432 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	while (TRUE) {
-#line 2733 "timsort.c"
+#line 2756 "timsort.c"
 		gint _tmp64_ = 0;
 		gint _tmp65_ = 0;
 		gint m = 0;
@@ -2752,7 +2775,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		if (!(_tmp64_ < _tmp65_)) {
 #line 432 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			break;
-#line 2756 "timsort.c"
+#line 2779 "timsort.c"
 		}
 #line 433 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp66_ = last_offset;
@@ -2780,20 +2803,20 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 		_tmp76_ = system_collections_generic_tim_sort_lower_than_or_equal_to (self, _tmp74_, _tmp75_);
 #line 434 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp76_) {
-#line 2784 "timsort.c"
+#line 2807 "timsort.c"
 			gint _tmp77_ = 0;
 #line 435 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp77_ = m;
 #line 435 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			last_offset = _tmp77_ + 1;
-#line 2790 "timsort.c"
+#line 2813 "timsort.c"
 		} else {
 			gint _tmp78_ = 0;
 #line 437 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp78_ = m;
 #line 437 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			offset = _tmp78_;
-#line 2797 "timsort.c"
+#line 2820 "timsort.c"
 		}
 	}
 #line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -2806,7 +2829,7 @@ static gint system_collections_generic_tim_sort_gallop_rightmost (SystemCollecti
 	result = offset;
 #line 442 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 2810 "timsort.c"
+#line 2833 "timsort.c"
 }
 
 
@@ -2874,7 +2897,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 	_tmp13_ = a;
 #line 455 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	system_collections_generic_tim_sort_slice_copy (_tmp13_);
-#line 2878 "timsort.c"
+#line 2901 "timsort.c"
 	{
 		void** _tmp14_ = NULL;
 		gint _tmp15_ = 0;
@@ -2906,7 +2929,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 		if (_tmp21_ == 1) {
 #line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp19_ = TRUE;
-#line 2910 "timsort.c"
+#line 2933 "timsort.c"
 		} else {
 			SystemCollectionsGenericTimSortSlice* _tmp22_ = NULL;
 			gint _tmp23_ = 0;
@@ -2916,11 +2939,11 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 			_tmp23_ = _tmp22_->length;
 #line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp19_ = _tmp23_ == 0;
-#line 2920 "timsort.c"
+#line 2943 "timsort.c"
 		}
 #line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp19_) {
-#line 2924 "timsort.c"
+#line 2947 "timsort.c"
 			{
 				SystemCollectionsGenericTimSortSlice* _tmp24_ = NULL;
 				gint _tmp25_ = 0;
@@ -2990,7 +3013,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 				_tmp43_ = _tmp42_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				system_collections_generic_tim_sort_slice_merge_in (_tmp35_, _tmp36_, _tmp38_, _tmp39_ + _tmp41_, _tmp43_);
-#line 2994 "timsort.c"
+#line 3017 "timsort.c"
 			}
 #line 460 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_system_collections_generic_tim_sort_slice_free0 (a);
@@ -2998,11 +3021,11 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 			_system_collections_generic_tim_sort_slice_free0 (b);
 #line 460 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			return;
-#line 3002 "timsort.c"
+#line 3025 "timsort.c"
 		}
 #line 463 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		while (TRUE) {
-#line 3006 "timsort.c"
+#line 3029 "timsort.c"
 			gint a_count = 0;
 			gint b_count = 0;
 			gint _tmp109_ = 0;
@@ -3014,7 +3037,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 			b_count = 0;
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			while (TRUE) {
-#line 3018 "timsort.c"
+#line 3041 "timsort.c"
 				SystemCollectionsGenericTimSortSlice* _tmp44_ = NULL;
 				void* _tmp45_ = NULL;
 				SystemCollectionsGenericTimSortSlice* _tmp46_ = NULL;
@@ -3032,7 +3055,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 				_tmp48_ = system_collections_generic_tim_sort_lower_than (self, _tmp45_, _tmp47_);
 #line 468 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp48_) {
-#line 3036 "timsort.c"
+#line 3059 "timsort.c"
 					void** _tmp49_ = NULL;
 					gint _tmp50_ = 0;
 					SystemCollectionsGenericTimSortSlice* _tmp51_ = NULL;
@@ -3063,7 +3086,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					_tmp55_ = _tmp54_->length;
 #line 470 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					if (_tmp55_ == 0) {
-#line 3067 "timsort.c"
+#line 3090 "timsort.c"
 						{
 							SystemCollectionsGenericTimSortSlice* _tmp56_ = NULL;
 							gint _tmp57_ = 0;
@@ -3133,7 +3156,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 							_tmp75_ = _tmp74_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							system_collections_generic_tim_sort_slice_merge_in (_tmp67_, _tmp68_, _tmp70_, _tmp71_ + _tmp73_, _tmp75_);
-#line 3137 "timsort.c"
+#line 3160 "timsort.c"
 						}
 #line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_system_collections_generic_tim_sort_slice_free0 (a);
@@ -3141,7 +3164,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 						_system_collections_generic_tim_sort_slice_free0 (b);
 #line 471 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						return;
-#line 3145 "timsort.c"
+#line 3168 "timsort.c"
 					}
 #line 474 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp76_ = b_count;
@@ -3157,7 +3180,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					if (_tmp77_ >= _tmp78_) {
 #line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						break;
-#line 3161 "timsort.c"
+#line 3184 "timsort.c"
 					}
 				} else {
 					void** _tmp79_ = NULL;
@@ -3190,7 +3213,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					_tmp85_ = _tmp84_->length;
 #line 481 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					if (_tmp85_ == 1) {
-#line 3194 "timsort.c"
+#line 3217 "timsort.c"
 						{
 							SystemCollectionsGenericTimSortSlice* _tmp86_ = NULL;
 							gint _tmp87_ = 0;
@@ -3260,7 +3283,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 							_tmp105_ = _tmp104_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							system_collections_generic_tim_sort_slice_merge_in (_tmp97_, _tmp98_, _tmp100_, _tmp101_ + _tmp103_, _tmp105_);
-#line 3264 "timsort.c"
+#line 3287 "timsort.c"
 						}
 #line 482 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_system_collections_generic_tim_sort_slice_free0 (a);
@@ -3268,7 +3291,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 						_system_collections_generic_tim_sort_slice_free0 (b);
 #line 482 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						return;
-#line 3272 "timsort.c"
+#line 3295 "timsort.c"
 					}
 #line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp106_ = a_count;
@@ -3284,7 +3307,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					if (_tmp107_ >= _tmp108_) {
 #line 488 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						break;
-#line 3288 "timsort.c"
+#line 3311 "timsort.c"
 					}
 				}
 			}
@@ -3294,7 +3317,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 			minimum_gallop = _tmp109_ + 1;
 #line 495 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			while (TRUE) {
-#line 3298 "timsort.c"
+#line 3321 "timsort.c"
 				gint _tmp110_ = 0;
 				gint _tmp111_ = 0;
 				gint _tmp112_ = 0;
@@ -3353,11 +3376,11 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 				if (_tmp111_ > 1) {
 #line 496 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp110_ = 1;
-#line 3357 "timsort.c"
+#line 3380 "timsort.c"
 				} else {
 #line 496 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp110_ = 0;
-#line 3361 "timsort.c"
+#line 3384 "timsort.c"
 				}
 #line 496 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp112_ = minimum_gallop;
@@ -3409,7 +3432,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 				_tmp129_ = _tmp128_->length;
 #line 503 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp129_ <= 1) {
-#line 3413 "timsort.c"
+#line 3436 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp130_ = NULL;
 						gint _tmp131_ = 0;
@@ -3479,7 +3502,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 						_tmp149_ = _tmp148_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in (_tmp141_, _tmp142_, _tmp144_, _tmp145_ + _tmp147_, _tmp149_);
-#line 3483 "timsort.c"
+#line 3506 "timsort.c"
 					}
 #line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -3487,7 +3510,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 3491 "timsort.c"
+#line 3514 "timsort.c"
 				}
 #line 507 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp150_ = self->priv->list;
@@ -3509,7 +3532,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 				_tmp156_ = _tmp155_->length;
 #line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp156_ == 0) {
-#line 3513 "timsort.c"
+#line 3536 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp157_ = NULL;
 						gint _tmp158_ = 0;
@@ -3579,7 +3602,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 						_tmp176_ = _tmp175_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in (_tmp168_, _tmp169_, _tmp171_, _tmp172_ + _tmp174_, _tmp176_);
-#line 3583 "timsort.c"
+#line 3606 "timsort.c"
 					}
 #line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -3587,7 +3610,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 509 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 3591 "timsort.c"
+#line 3614 "timsort.c"
 				}
 #line 512 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp177_ = a;
@@ -3631,7 +3654,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 				_tmp192_ = _tmp191_->length;
 #line 516 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp192_ == 0) {
-#line 3635 "timsort.c"
+#line 3658 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp193_ = NULL;
 						gint _tmp194_ = 0;
@@ -3701,7 +3724,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 						_tmp212_ = _tmp211_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in (_tmp204_, _tmp205_, _tmp207_, _tmp208_ + _tmp210_, _tmp212_);
-#line 3705 "timsort.c"
+#line 3728 "timsort.c"
 					}
 #line 517 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -3709,7 +3732,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 517 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 3713 "timsort.c"
+#line 3736 "timsort.c"
 				}
 #line 520 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp213_ = self->priv->list;
@@ -3731,7 +3754,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 				_tmp219_ = _tmp218_->length;
 #line 521 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp219_ == 1) {
-#line 3735 "timsort.c"
+#line 3758 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp220_ = NULL;
 						gint _tmp221_ = 0;
@@ -3801,7 +3824,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 						_tmp239_ = _tmp238_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in (_tmp231_, _tmp232_, _tmp234_, _tmp235_ + _tmp237_, _tmp239_);
-#line 3805 "timsort.c"
+#line 3828 "timsort.c"
 					}
 #line 522 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -3809,29 +3832,29 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 522 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 3813 "timsort.c"
+#line 3836 "timsort.c"
 				}
 #line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp241_ = a_count;
 #line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp241_ < SYSTEM_COLLECTIONS_GENERIC_TIM_SORT_MINIMUM_GALLOP) {
-#line 3819 "timsort.c"
+#line 3842 "timsort.c"
 					gint _tmp242_ = 0;
 #line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp242_ = b_count;
 #line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp240_ = _tmp242_ < SYSTEM_COLLECTIONS_GENERIC_TIM_SORT_MINIMUM_GALLOP;
-#line 3825 "timsort.c"
+#line 3848 "timsort.c"
 				} else {
 #line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp240_ = FALSE;
-#line 3829 "timsort.c"
+#line 3852 "timsort.c"
 				}
 #line 525 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp240_) {
 #line 526 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					break;
-#line 3835 "timsort.c"
+#line 3858 "timsort.c"
 				}
 			}
 #line 530 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -3842,7 +3865,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 			_tmp244_ = minimum_gallop;
 #line 531 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			self->priv->minimum_gallop = _tmp244_;
-#line 3846 "timsort.c"
+#line 3869 "timsort.c"
 		}
 	}
 	__finally0:
@@ -3915,7 +3938,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 		_tmp264_ = _tmp263_->length;
 #line 537 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		system_collections_generic_tim_sort_slice_merge_in (_tmp256_, _tmp257_, _tmp259_, _tmp260_ + _tmp262_, _tmp264_);
-#line 3919 "timsort.c"
+#line 3942 "timsort.c"
 	}
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_system_collections_generic_tim_sort_slice_free0 (a);
@@ -3927,7 +3950,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 	g_clear_error (&_inner_error_);
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return;
-#line 3931 "timsort.c"
+#line 3954 "timsort.c"
 }
 
 
@@ -4001,7 +4024,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 	_tmp15_ = b;
 #line 551 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	system_collections_generic_tim_sort_slice_copy (_tmp15_);
-#line 4005 "timsort.c"
+#line 4028 "timsort.c"
 	{
 		void** _tmp16_ = NULL;
 		gint _tmp17_ = 0;
@@ -4036,7 +4059,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 		if (_tmp24_ == 0) {
 #line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp22_ = TRUE;
-#line 4040 "timsort.c"
+#line 4063 "timsort.c"
 		} else {
 			SystemCollectionsGenericTimSortSlice* _tmp25_ = NULL;
 			gint _tmp26_ = 0;
@@ -4046,11 +4069,11 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 			_tmp26_ = _tmp25_->length;
 #line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_tmp22_ = _tmp26_ == 1;
-#line 4050 "timsort.c"
+#line 4073 "timsort.c"
 		}
 #line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		if (_tmp22_) {
-#line 4054 "timsort.c"
+#line 4077 "timsort.c"
 			{
 				SystemCollectionsGenericTimSortSlice* _tmp27_ = NULL;
 				gint _tmp28_ = 0;
@@ -4132,7 +4155,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 				_tmp50_ = _tmp49_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp40_, _tmp41_, _tmp43_, (_tmp44_ - _tmp46_) - _tmp48_, _tmp50_);
-#line 4136 "timsort.c"
+#line 4159 "timsort.c"
 			}
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			_system_collections_generic_tim_sort_slice_free0 (a);
@@ -4140,11 +4163,11 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 			_system_collections_generic_tim_sort_slice_free0 (b);
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			return;
-#line 4144 "timsort.c"
+#line 4167 "timsort.c"
 		}
 #line 559 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		while (TRUE) {
-#line 4148 "timsort.c"
+#line 4171 "timsort.c"
 			gint a_count = 0;
 			gint b_count = 0;
 			gint _tmp126_ = 0;
@@ -4156,7 +4179,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 			b_count = 0;
 #line 563 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			while (TRUE) {
-#line 4160 "timsort.c"
+#line 4183 "timsort.c"
 				SystemCollectionsGenericTimSortSlice* _tmp51_ = NULL;
 				void* _tmp52_ = NULL;
 				SystemCollectionsGenericTimSortSlice* _tmp53_ = NULL;
@@ -4174,7 +4197,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 				_tmp55_ = system_collections_generic_tim_sort_lower_than (self, _tmp52_, _tmp54_);
 #line 564 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp55_) {
-#line 4178 "timsort.c"
+#line 4201 "timsort.c"
 					void** _tmp56_ = NULL;
 					gint _tmp57_ = 0;
 					gint _tmp58_ = 0;
@@ -4208,7 +4231,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					_tmp63_ = _tmp62_->length;
 #line 566 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					if (_tmp63_ == 0) {
-#line 4212 "timsort.c"
+#line 4235 "timsort.c"
 						{
 							SystemCollectionsGenericTimSortSlice* _tmp64_ = NULL;
 							gint _tmp65_ = 0;
@@ -4290,7 +4313,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 							_tmp87_ = _tmp86_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp77_, _tmp78_, _tmp80_, (_tmp81_ - _tmp83_) - _tmp85_, _tmp87_);
-#line 4294 "timsort.c"
+#line 4317 "timsort.c"
 						}
 #line 567 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_system_collections_generic_tim_sort_slice_free0 (a);
@@ -4298,7 +4321,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 						_system_collections_generic_tim_sort_slice_free0 (b);
 #line 567 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						return;
-#line 4302 "timsort.c"
+#line 4325 "timsort.c"
 					}
 #line 570 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp88_ = a_count;
@@ -4314,7 +4337,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					if (_tmp89_ >= _tmp90_) {
 #line 573 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						break;
-#line 4318 "timsort.c"
+#line 4341 "timsort.c"
 					}
 				} else {
 					void** _tmp91_ = NULL;
@@ -4350,7 +4373,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					_tmp98_ = _tmp97_->length;
 #line 577 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					if (_tmp98_ == 1) {
-#line 4354 "timsort.c"
+#line 4377 "timsort.c"
 						{
 							SystemCollectionsGenericTimSortSlice* _tmp99_ = NULL;
 							gint _tmp100_ = 0;
@@ -4432,7 +4455,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 							_tmp122_ = _tmp121_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 							system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp112_, _tmp113_, _tmp115_, (_tmp116_ - _tmp118_) - _tmp120_, _tmp122_);
-#line 4436 "timsort.c"
+#line 4459 "timsort.c"
 						}
 #line 578 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						_system_collections_generic_tim_sort_slice_free0 (a);
@@ -4440,7 +4463,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 						_system_collections_generic_tim_sort_slice_free0 (b);
 #line 578 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						return;
-#line 4444 "timsort.c"
+#line 4467 "timsort.c"
 					}
 #line 581 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp123_ = b_count;
@@ -4456,7 +4479,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					if (_tmp124_ >= _tmp125_) {
 #line 584 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						break;
-#line 4460 "timsort.c"
+#line 4483 "timsort.c"
 					}
 				}
 			}
@@ -4466,7 +4489,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 			minimum_gallop = _tmp126_ + 1;
 #line 591 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			while (TRUE) {
-#line 4470 "timsort.c"
+#line 4493 "timsort.c"
 				gint _tmp127_ = 0;
 				gint _tmp128_ = 0;
 				gint _tmp129_ = 0;
@@ -4542,11 +4565,11 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 				if (_tmp128_ > 1) {
 #line 592 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp127_ = 1;
-#line 4546 "timsort.c"
+#line 4569 "timsort.c"
 				} else {
 #line 592 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp127_ = 0;
-#line 4550 "timsort.c"
+#line 4573 "timsort.c"
 				}
 #line 592 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp129_ = minimum_gallop;
@@ -4614,7 +4637,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 				_tmp153_ = _tmp152_->length;
 #line 600 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp153_ == 0) {
-#line 4618 "timsort.c"
+#line 4641 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp154_ = NULL;
 						gint _tmp155_ = 0;
@@ -4696,7 +4719,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 						_tmp177_ = _tmp176_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp167_, _tmp168_, _tmp170_, (_tmp171_ - _tmp173_) - _tmp175_, _tmp177_);
-#line 4700 "timsort.c"
+#line 4723 "timsort.c"
 					}
 #line 601 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -4704,7 +4727,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 601 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 4708 "timsort.c"
+#line 4731 "timsort.c"
 				}
 #line 604 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp178_ = self->priv->list;
@@ -4728,7 +4751,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 				_tmp185_ = _tmp184_->length;
 #line 605 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp185_ == 1) {
-#line 4732 "timsort.c"
+#line 4755 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp186_ = NULL;
 						gint _tmp187_ = 0;
@@ -4810,7 +4833,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 						_tmp209_ = _tmp208_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp199_, _tmp200_, _tmp202_, (_tmp203_ - _tmp205_) - _tmp207_, _tmp209_);
-#line 4814 "timsort.c"
+#line 4837 "timsort.c"
 					}
 #line 606 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -4818,7 +4841,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 606 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 4822 "timsort.c"
+#line 4845 "timsort.c"
 				}
 #line 609 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp210_ = a;
@@ -4878,7 +4901,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 				_tmp232_ = _tmp231_->length;
 #line 614 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp232_ <= 1) {
-#line 4882 "timsort.c"
+#line 4905 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp233_ = NULL;
 						gint _tmp234_ = 0;
@@ -4960,7 +4983,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 						_tmp256_ = _tmp255_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp246_, _tmp247_, _tmp249_, (_tmp250_ - _tmp252_) - _tmp254_, _tmp256_);
-#line 4964 "timsort.c"
+#line 4987 "timsort.c"
 					}
 #line 615 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -4968,7 +4991,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 615 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 4972 "timsort.c"
+#line 4995 "timsort.c"
 				}
 #line 618 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp257_ = self->priv->list;
@@ -4992,7 +5015,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 				_tmp264_ = _tmp263_->length;
 #line 619 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp264_ == 0) {
-#line 4996 "timsort.c"
+#line 5019 "timsort.c"
 					{
 						SystemCollectionsGenericTimSortSlice* _tmp265_ = NULL;
 						gint _tmp266_ = 0;
@@ -5074,7 +5097,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 						_tmp288_ = _tmp287_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 						system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp278_, _tmp279_, _tmp281_, (_tmp282_ - _tmp284_) - _tmp286_, _tmp288_);
-#line 5078 "timsort.c"
+#line 5101 "timsort.c"
 					}
 #line 620 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_system_collections_generic_tim_sort_slice_free0 (a);
@@ -5082,29 +5105,29 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 					_system_collections_generic_tim_sort_slice_free0 (b);
 #line 620 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					return;
-#line 5086 "timsort.c"
+#line 5109 "timsort.c"
 				}
 #line 623 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				_tmp290_ = a_count;
 #line 623 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp290_ < SYSTEM_COLLECTIONS_GENERIC_TIM_SORT_MINIMUM_GALLOP) {
-#line 5092 "timsort.c"
+#line 5115 "timsort.c"
 					gint _tmp291_ = 0;
 #line 623 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp291_ = b_count;
 #line 623 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp289_ = _tmp291_ < SYSTEM_COLLECTIONS_GENERIC_TIM_SORT_MINIMUM_GALLOP;
-#line 5098 "timsort.c"
+#line 5121 "timsort.c"
 				} else {
 #line 623 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					_tmp289_ = FALSE;
-#line 5102 "timsort.c"
+#line 5125 "timsort.c"
 				}
 #line 623 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 				if (_tmp289_) {
 #line 624 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 					break;
-#line 5108 "timsort.c"
+#line 5131 "timsort.c"
 				}
 			}
 #line 628 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
@@ -5115,7 +5138,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 			_tmp293_ = minimum_gallop;
 #line 629 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			self->priv->minimum_gallop = _tmp293_;
-#line 5119 "timsort.c"
+#line 5142 "timsort.c"
 		}
 	}
 	__finally1:
@@ -5200,7 +5223,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 		_tmp317_ = _tmp316_->length;
 #line 635 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		system_collections_generic_tim_sort_slice_merge_in_reversed (_tmp307_, _tmp308_, _tmp310_, (_tmp311_ - _tmp313_) - _tmp315_, _tmp317_);
-#line 5204 "timsort.c"
+#line 5227 "timsort.c"
 	}
 #line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_system_collections_generic_tim_sort_slice_free0 (a);
@@ -5212,7 +5235,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 	g_clear_error (&_inner_error_);
 #line 553 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return;
-#line 5216 "timsort.c"
+#line 5239 "timsort.c"
 }
 
 
@@ -5228,14 +5251,14 @@ SystemCollectionsGenericTimSort* system_collections_generic_tim_sort_construct (
 	self->priv->g_destroy_func = g_destroy_func;
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return self;
-#line 5232 "timsort.c"
+#line 5255 "timsort.c"
 }
 
 
 SystemCollectionsGenericTimSort* system_collections_generic_tim_sort_new (GType g_type, GBoxedCopyFunc g_dup_func, GDestroyNotify g_destroy_func) {
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return system_collections_generic_tim_sort_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_TIM_SORT, g_type, g_dup_func, g_destroy_func);
-#line 5239 "timsort.c"
+#line 5262 "timsort.c"
 }
 
 
@@ -5262,7 +5285,7 @@ static SystemCollectionsGenericTimSortSlice* system_collections_generic_tim_sort
 	self->length = _tmp2_;
 #line 647 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return self;
-#line 5266 "timsort.c"
+#line 5289 "timsort.c"
 }
 
 
@@ -5290,7 +5313,7 @@ static void system_collections_generic_tim_sort_slice_copy (SystemCollectionsGen
 	self->list = _tmp4_;
 #line 661 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	self->index = 0;
-#line 5294 "timsort.c"
+#line 5317 "timsort.c"
 }
 
 
@@ -5314,7 +5337,7 @@ static inline void system_collections_generic_tim_sort_slice_merge_in (SystemCol
 	_tmp4_ = count;
 #line 665 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	g_memmove (&_tmp0_[_tmp1_], &_tmp2_[_tmp3_], (gsize) (sizeof (gpointer) * _tmp4_));
-#line 5318 "timsort.c"
+#line 5341 "timsort.c"
 }
 
 
@@ -5338,7 +5361,7 @@ static inline void system_collections_generic_tim_sort_slice_merge_in_reversed (
 	_tmp4_ = count;
 #line 669 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	g_memmove (&_tmp0_[_tmp1_], &_tmp2_[_tmp3_], (gsize) (sizeof (gpointer) * _tmp4_));
-#line 5342 "timsort.c"
+#line 5365 "timsort.c"
 }
 
 
@@ -5361,7 +5384,7 @@ static inline void system_collections_generic_tim_sort_slice_shorten_start (Syst
 	_tmp3_ = n;
 #line 674 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	self->length = _tmp2_ - _tmp3_;
-#line 5365 "timsort.c"
+#line 5388 "timsort.c"
 }
 
 
@@ -5376,7 +5399,7 @@ static inline void system_collections_generic_tim_sort_slice_shorten_end (System
 	_tmp1_ = n;
 #line 678 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	self->length = _tmp0_ - _tmp1_;
-#line 5380 "timsort.c"
+#line 5403 "timsort.c"
 }
 
 
@@ -5404,7 +5427,7 @@ static inline void* system_collections_generic_tim_sort_slice_pop_first (SystemC
 	result = _tmp3_;
 #line 683 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 5408 "timsort.c"
+#line 5431 "timsort.c"
 }
 
 
@@ -5433,7 +5456,7 @@ static inline void* system_collections_generic_tim_sort_slice_pop_last (SystemCo
 	result = _tmp4_;
 #line 688 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 5437 "timsort.c"
+#line 5460 "timsort.c"
 }
 
 
@@ -5454,7 +5477,7 @@ static inline void* system_collections_generic_tim_sort_slice_peek_first (System
 	result = _tmp2_;
 #line 692 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 5458 "timsort.c"
+#line 5481 "timsort.c"
 }
 
 
@@ -5478,7 +5501,7 @@ static inline void* system_collections_generic_tim_sort_slice_peek_last (SystemC
 	result = _tmp3_;
 #line 696 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	return result;
-#line 5482 "timsort.c"
+#line 5505 "timsort.c"
 }
 
 
@@ -5502,7 +5525,7 @@ static void system_collections_generic_tim_sort_slice_reverse (SystemCollections
 	high = (_tmp1_ + _tmp2_) - 1;
 #line 702 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	while (TRUE) {
-#line 5506 "timsort.c"
+#line 5529 "timsort.c"
 		gint _tmp3_ = 0;
 		gint _tmp4_ = 0;
 		gint _tmp5_ = 0;
@@ -5515,7 +5538,7 @@ static void system_collections_generic_tim_sort_slice_reverse (SystemCollections
 		if (!(_tmp3_ < _tmp4_)) {
 #line 702 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 			break;
-#line 5519 "timsort.c"
+#line 5542 "timsort.c"
 		}
 #line 703 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp5_ = low;
@@ -5527,7 +5550,7 @@ static void system_collections_generic_tim_sort_slice_reverse (SystemCollections
 		high = _tmp6_ - 1;
 #line 703 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		system_collections_generic_tim_sort_slice_swap (self, _tmp5_, _tmp6_);
-#line 5531 "timsort.c"
+#line 5554 "timsort.c"
 	}
 }
 
@@ -5578,7 +5601,7 @@ static inline void system_collections_generic_tim_sort_slice_swap (SystemCollect
 	_tmp9_[_tmp10_] = temp;
 #line 710 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	_tmp11_ = _tmp9_[_tmp10_];
-#line 5582 "timsort.c"
+#line 5605 "timsort.c"
 }
 
 
@@ -5592,17 +5615,17 @@ static void system_collections_generic_tim_sort_slice_free (SystemCollectionsGen
 	_tmp0_ = self->new_list;
 #line 654 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	if (_tmp0_ != NULL) {
-#line 5596 "timsort.c"
+#line 5619 "timsort.c"
 		void** _tmp1_ = NULL;
 #line 655 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		_tmp1_ = self->new_list;
 #line 655 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		g_free (_tmp1_);
-#line 5602 "timsort.c"
+#line 5625 "timsort.c"
 	}
 #line 640 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	g_slice_free (SystemCollectionsGenericTimSortSlice, self);
-#line 5606 "timsort.c"
+#line 5629 "timsort.c"
 }
 
 
@@ -5623,14 +5646,14 @@ static void system_collections_generic_tim_sort_class_init (SystemCollectionsGen
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_TIM_SORT_G_DUP_FUNC, g_param_spec_pointer ("g-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_TIM_SORT_G_DESTROY_FUNC, g_param_spec_pointer ("g-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 5627 "timsort.c"
+#line 5650 "timsort.c"
 }
 
 
 static void system_collections_generic_tim_sort_instance_init (SystemCollectionsGenericTimSort * self) {
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_TIM_SORT_GET_PRIVATE (self);
-#line 5634 "timsort.c"
+#line 5657 "timsort.c"
 }
 
 
@@ -5646,7 +5669,7 @@ static void system_collections_generic_tim_sort_finalize (GObject* obj) {
 	self->priv->pending = (_vala_array_free (self->priv->pending, self->priv->pending_length1, (GDestroyNotify) system_collections_generic_tim_sort_slice_free), NULL);
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	G_OBJECT_CLASS (system_collections_generic_tim_sort_parent_class)->finalize (obj);
-#line 5650 "timsort.c"
+#line 5673 "timsort.c"
 }
 
 
@@ -5691,13 +5714,13 @@ static void _vala_system_collections_generic_tim_sort_get_property (GObject * ob
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_TIM_SORT, SystemCollectionsGenericTimSort);
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 	switch (property_id) {
-#line 5695 "timsort.c"
+#line 5718 "timsort.c"
 		default:
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		break;
-#line 5701 "timsort.c"
+#line 5724 "timsort.c"
 	}
 }
 
@@ -5725,13 +5748,13 @@ static void _vala_system_collections_generic_tim_sort_set_property (GObject * ob
 		self->priv->g_destroy_func = g_value_get_pointer (value);
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		break;
-#line 5729 "timsort.c"
+#line 5752 "timsort.c"
 		default:
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/timsort.vala"
 		break;
-#line 5735 "timsort.c"
+#line 5758 "timsort.c"
 	}
 }
 

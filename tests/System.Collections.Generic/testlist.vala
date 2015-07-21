@@ -54,7 +54,7 @@ public class SystemCollectionsGenricListTests : LibDotNet.TestCase {
 		add_test ("List<String> methods ToArray", string_list_methods_to_array);
 		add_test ("List<String> methods TrimExcess", string_list_methods_trim_excess);
 		add_test ("List<String> methods TrueForAll", string_list_methods_true_for_all);
-		
+		add_test ("List<String> Linq methods Where ", string_list_linq_where);
 	}
 
 	public void string_list_new_with_default_constructor () {
@@ -523,6 +523,31 @@ public class SystemCollectionsGenricListTests : LibDotNet.TestCase {
         myL.Add("Amargasaurus");
 		GLib.assert_true (myL.TrueForAll(x => x.has_suffix("us")));
         GLib.assert_true (myL.TrueForAll(x => x.has_suffix("rus"))!= true);
+ 	}
+
+	public void string_list_linq_where () {
+		var myL = new System.Collections.Generic.List<string> ();
+		myL.Add("Tyrannosaurus");
+        myL.Add("Amargasaurus");
+        myL.Add("Mamenchisaurus");
+        myL.Add("Deinonychus");
+        myL.Add("Amargasaurus");
+        
+        IEnumerable<string> query = myL.Where(dino => dino.length > 13);
+        string dinolist = "";
+        foreach (var dino in query)
+        {
+			dinolist += dino;
+        }
+ 		GLib.assert_true (dinolist == "Mamenchisaurus" );
+
+		string testString = String.Join(",", myL.Where(dino => dino.length > 11));
+ 		GLib.assert_true (testString == "Tyrannosaurus,Amargasaurus,Mamenchisaurus,Amargasaurus" );
+ 		//GLib.assert_true (myL.TrueForAll(x => x.has_suffix("us")));
+        //GLib.assert_true (myL.TrueForAll(x => x.has_suffix("rus"))!= true);
+        
+        
+        
  	}
 
 }

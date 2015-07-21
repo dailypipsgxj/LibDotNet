@@ -213,6 +213,9 @@ public class SystemCollectionsGenricStackTests : LibDotNet.TestCase {
         testStack.Push("Deinonychus");
         testStack.Push("Amargasaurus");
 		testStack.TrimExcess();
+		
+		//GLib.stdout.puts(@"$testStack.Peek()");
+		
  	}
 
 }

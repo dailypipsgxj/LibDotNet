@@ -9,6 +9,7 @@
 **
 =============================================================================*/
 using System;
+using System.Linq;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
@@ -17,7 +18,11 @@ namespace System.Collections.Generic
     // A simple stack of objects.  Internally it is implemented as an array,
     // so Push can be O(n).  Pop is O(1).
 
-    public class Stack<T> : GLib.Object, IEnumerable<T>, ICollection<T>, IReadOnlyCollection<T>
+    public class Stack<T> :
+		Enumerable<T>,
+		IEnumerable<T>,
+		ICollection<T>,
+		IReadOnlyCollection<T>
     {
         private T[] _array;     // Storage for stack elements
         private int _size;           // Number of items in the stack.
@@ -190,7 +195,7 @@ namespace System.Collections.Generic
         }
 
 		//[Compact]
-        public class Enumerator<T> : GLib.Object, IEnumerator<T>
+        public class Enumerator<T> : Enumerable<T>, IEnumerator<T>
         {
             private Stack<T> _stack;
             private int _index;

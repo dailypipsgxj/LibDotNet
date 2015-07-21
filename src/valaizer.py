@@ -38,14 +38,16 @@ def processFile (path):
 		data = re.sub('implicit ', "", data)
 		data = re.sub('readonly ', "", data)
 		data = re.sub('sealed ', "", data)
+		data = re.sub('partial  ', "", data)
 		data = re.sub('volatile ', "", data)
+		data = re.sub('[NotNull] ', "", data)
 		data = re.sub('protected internal', "internal protected", data)
 		data = re.sub('throw new', "throw", data)
 		data = re.sub('\sthrow;', "//throw;", data)
 		data = re.sub('\s*(object)\s* ', " Object ", data)
-		data = re.sub('\#region', "", data)
-		data = re.sub('\#endregion', "", data)
-		data = re.sub('[\s\W]*String', "string", data)
+		data = re.sub('\s*\#region\s*', "", data)
+		data = re.sub('\s*\#endregion\s*', "", data)
+		#data = re.sub('[\s\W]*String', "string", data)
 		data = re.sub('Int32', "int32", data)
 		data = re.sub(ur'\s*: base\s*\(([\w\W\s\S[\].=&\':/*]*?)\)\s*?\s*(?={){', baseReplace, data)
 		data = re.sub(ur'\s*: this\s*\(([\w\W\s\S[\].=&\':/*]*?)\)\s*?\s*(?={){', thisReplace, data)
@@ -88,11 +90,10 @@ if __name__ == "__main__":
 
 # Strip from files:
 # unsafe
-# explicit
-# implicit
-# readonly
+# [NotNull] 
 
 # preprocessor directives
+# #pragma?
 # #region
 # #endregion
 
@@ -100,3 +101,4 @@ if __name__ == "__main__":
 # Mangel attributes
 # Overloaded constructors
 # base calls
+# struct and class initialization

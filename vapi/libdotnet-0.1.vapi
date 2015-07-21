@@ -344,8 +344,6 @@ namespace System {
 			}
 		}
 	}
-	namespace IO {
-	}
 	namespace Linq {
 		[CCode (cheader_filename = "libdotnet.h")]
 		public abstract class Enumerable<TSource> : GLib.Object {
@@ -372,8 +370,6 @@ namespace System {
 	namespace Text {
 	}
 	namespace Threading {
-		namespace Tasks {
-		}
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public class Nullable<T> {
@@ -391,10 +387,6 @@ namespace System {
 	public class String {
 		public String ();
 		public static string Join (string separator, System.Collections.Generic.IEnumerable<string> enumerable);
-	}
-	[CCode (cheader_filename = "libdotnet.h")]
-	public class object : Object {
-		public object ();
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public interface ICloneable {
@@ -465,8 +457,4 @@ namespace System {
 	public delegate TResult Func<T,TResult> (T arg);
 	[CCode (cheader_filename = "libdotnet.h")]
 	public delegate bool Predicate<T> (T obj);
-}
-[CCode (cheader_filename = "libdotnet.h")]
-public class Object : GLib.Object {
-	public Object ();
 }

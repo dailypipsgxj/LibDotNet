@@ -82,7 +82,7 @@ build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/base.am $(top_srcdir)/src/sourcefiles.am \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(srcdir)/libdotnet-0.1.pc.in \
+	$(srcdir)/libdotnet-0.1.pc.in System/Linq/Enumerable.c \
 	System/Collections/Generic/icollection.c \
 	System/Collections/Generic/icomparer.c \
 	System/Collections/Generic/idictionary.c \
@@ -105,13 +105,19 @@ DIST_COMMON = $(top_srcdir)/base.am $(top_srcdir)/src/sourcefiles.am \
 	System/Collections/Generic/Queue.c \
 	System/Collections/Generic/Stack.c \
 	System/Collections/ObjectModel/ReadOnlyCollection.c \
+	System/Runtime/Serialization/iserializable.c \
+	System/Runtime/Serialization/ideserializationcallback.c \
 	System/Text/Text.c System/Globalization/Globalization.c \
 	System/Diagnostics/Diagnostics.c \
 	System/Reflection/Reflection.c System/Runtime/Runtime.c \
 	System/Security/Security.c System/Threading/Threading.c \
-	System/Nullable.c System/Exceptions.c System/action.c \
+	System/IO/InvalidDataException.c System/IO/TextReader.c \
+	System/Text/StringBuilder.c System/Nullable.c System/Object.c \
+	System/String.c System/Exceptions.c System/action.c \
 	System/default.c System/idisposable.c System/icomparable.c \
-	System/iequatable.c System/icloneable.c System/Linq/Errors.c \
+	System/iequatable.c System/iformattable.c \
+	System/iformatprovider.c System/icustomformatter.c \
+	System/icloneable.c System/Linq/Errors.c \
 	System/Globalization/CultureInfo.c $(top_srcdir)/depcomp \
 	$(srcdir)/libdotnet-0.1.vapi $(srcdir)/libdotnet.h \
 	$(srcdir)/libdotnet_la_vala.stamp $(dist_vapi_DATA) \
@@ -163,7 +169,8 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libdotnet_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = System/Collections/Generic/icollection.lo \
+am__objects_1 = System/Linq/Enumerable.lo \
+	System/Collections/Generic/icollection.lo \
 	System/Collections/Generic/icomparer.lo \
 	System/Collections/Generic/idictionary.lo \
 	System/Collections/Generic/idictionaryenumerator.lo \
@@ -185,21 +192,27 @@ am__objects_2 = System/Collections/Generic/timsort.lo \
 	System/Collections/Generic/Queue.lo \
 	System/Collections/Generic/Stack.lo
 am__objects_3 = System/Collections/ObjectModel/ReadOnlyCollection.lo
-am__objects_4 = System/Text/Text.lo \
+am__objects_4 = System/Runtime/Serialization/iserializable.lo \
+	System/Runtime/Serialization/ideserializationcallback.lo
+am__objects_5 = System/Text/Text.lo \
 	System/Globalization/Globalization.lo \
 	System/Diagnostics/Diagnostics.lo \
 	System/Reflection/Reflection.lo System/Runtime/Runtime.lo \
 	System/Security/Security.lo System/Threading/Threading.lo
-am__objects_5 = System/Nullable.lo System/Exceptions.lo \
-	System/action.lo System/default.lo
-am__objects_6 = System/idisposable.lo System/icomparable.lo \
-	System/iequatable.lo System/icloneable.lo
-am__objects_7 = System/Linq/Errors.lo \
+am__objects_6 = System/IO/InvalidDataException.lo \
+	System/IO/TextReader.lo System/Text/StringBuilder.lo \
+	System/Nullable.lo System/Object.lo System/String.lo \
+	System/Exceptions.lo System/action.lo System/default.lo
+am__objects_7 = System/idisposable.lo System/icomparable.lo \
+	System/iequatable.lo System/iformattable.lo \
+	System/iformatprovider.lo System/icustomformatter.lo \
+	System/icloneable.lo
+am__objects_8 = System/Linq/Errors.lo \
 	System/Globalization/CultureInfo.lo
-am__objects_8 = $(am__objects_1) $(am__objects_2) $(am__objects_3) \
+am__objects_9 = $(am__objects_1) $(am__objects_2) $(am__objects_3) \
 	$(am__objects_4) $(am__objects_5) $(am__objects_6) \
-	$(am__objects_7)
-am_libdotnet_la_OBJECTS = $(am__objects_8)
+	$(am__objects_7) $(am__objects_8)
+am_libdotnet_la_OBJECTS = $(am__objects_9)
 libdotnet_la_OBJECTS = $(am_libdotnet_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -480,6 +493,7 @@ LIBDOTNET_COLLECTIONS = \
 	System/Collections/StructuralComparisons.vala
 
 LIBDOTNET_COLLECTIONS_GEN_IFACE = \
+	System/Linq/Enumerable.vala \
 	System/Collections/Generic/icollection.vala \
 	System/Collections/Generic/icomparer.vala \
 	System/Collections/Generic/idictionary.vala \
@@ -526,7 +540,12 @@ LIBDOTNET_SYSTEM_NS = \
 	System/Threading/Threading.vala
 
 LIBDOTNET_SYSTEM = \
+	System/IO/InvalidDataException.vala \
+	System/IO/TextReader.vala \
+	System/Text/StringBuilder.vala \
 	System/Nullable.vala \
+	System/Object.vala \
+	System/String.vala \
 	System/Exceptions.vala \
 	System/action.vala \
 	System/default.vala
@@ -535,6 +554,9 @@ LIBDOTNET_SYSTEM_IFACE = \
 	System/idisposable.vala \
 	System/icomparable.vala \
 	System/iequatable.vala \
+	System/iformattable.vala \
+	System/iformatprovider.vala \
+	System/icustomformatter.vala \
 	System/icloneable.vala
 
 LIBDOTNET_SERIAL = \
@@ -549,6 +571,7 @@ LIBDOTNET_SOURCES = \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
 	$(LIBDOTNET_COLLECTIONS_OBJMODEL) \
+	$(LIBDOTNET_SERIAL) \
 	$(LIBDOTNET_SYSTEM_NS) \
 	$(LIBDOTNET_SYSTEM) \
 	$(LIBDOTNET_SYSTEM_IFACE) \
@@ -576,7 +599,7 @@ AM_CFLAGS = \
 	 -g
 
 lib_LTLIBRARIES = libdotnet.la
-vapidir = $(top_srcdir)/vapi
+vapidir = $(datadir)/vala/vapi
 dist_vapi_DATA = libdotnet-0.1.vapi
 libdotnet_la_SOURCES = $(LIBDOTNET_SOURCES)
 libdotnet_la_LDFLAGS = $(am__append_1) $(am__append_2)
@@ -667,6 +690,14 @@ clean-libLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
+System/Linq/$(am__dirstamp):
+	@$(MKDIR_P) System/Linq
+	@: > System/Linq/$(am__dirstamp)
+System/Linq/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) System/Linq/$(DEPDIR)
+	@: > System/Linq/$(DEPDIR)/$(am__dirstamp)
+System/Linq/Enumerable.lo: System/Linq/$(am__dirstamp) \
+	System/Linq/$(DEPDIR)/$(am__dirstamp)
 System/Collections/Generic/$(am__dirstamp):
 	@$(MKDIR_P) System/Collections/Generic
 	@: > System/Collections/Generic/$(am__dirstamp)
@@ -745,6 +776,18 @@ System/Collections/ObjectModel/$(DEPDIR)/$(am__dirstamp):
 System/Collections/ObjectModel/ReadOnlyCollection.lo:  \
 	System/Collections/ObjectModel/$(am__dirstamp) \
 	System/Collections/ObjectModel/$(DEPDIR)/$(am__dirstamp)
+System/Runtime/Serialization/$(am__dirstamp):
+	@$(MKDIR_P) System/Runtime/Serialization
+	@: > System/Runtime/Serialization/$(am__dirstamp)
+System/Runtime/Serialization/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) System/Runtime/Serialization/$(DEPDIR)
+	@: > System/Runtime/Serialization/$(DEPDIR)/$(am__dirstamp)
+System/Runtime/Serialization/iserializable.lo:  \
+	System/Runtime/Serialization/$(am__dirstamp) \
+	System/Runtime/Serialization/$(DEPDIR)/$(am__dirstamp)
+System/Runtime/Serialization/ideserializationcallback.lo:  \
+	System/Runtime/Serialization/$(am__dirstamp) \
+	System/Runtime/Serialization/$(DEPDIR)/$(am__dirstamp)
 System/Text/$(am__dirstamp):
 	@$(MKDIR_P) System/Text
 	@: > System/Text/$(am__dirstamp)
@@ -802,6 +845,18 @@ System/Threading/$(DEPDIR)/$(am__dirstamp):
 	@: > System/Threading/$(DEPDIR)/$(am__dirstamp)
 System/Threading/Threading.lo: System/Threading/$(am__dirstamp) \
 	System/Threading/$(DEPDIR)/$(am__dirstamp)
+System/IO/$(am__dirstamp):
+	@$(MKDIR_P) System/IO
+	@: > System/IO/$(am__dirstamp)
+System/IO/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) System/IO/$(DEPDIR)
+	@: > System/IO/$(DEPDIR)/$(am__dirstamp)
+System/IO/InvalidDataException.lo: System/IO/$(am__dirstamp) \
+	System/IO/$(DEPDIR)/$(am__dirstamp)
+System/IO/TextReader.lo: System/IO/$(am__dirstamp) \
+	System/IO/$(DEPDIR)/$(am__dirstamp)
+System/Text/StringBuilder.lo: System/Text/$(am__dirstamp) \
+	System/Text/$(DEPDIR)/$(am__dirstamp)
 System/$(am__dirstamp):
 	@$(MKDIR_P) System
 	@: > System/$(am__dirstamp)
@@ -809,6 +864,10 @@ System/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) System/$(DEPDIR)
 	@: > System/$(DEPDIR)/$(am__dirstamp)
 System/Nullable.lo: System/$(am__dirstamp) \
+	System/$(DEPDIR)/$(am__dirstamp)
+System/Object.lo: System/$(am__dirstamp) \
+	System/$(DEPDIR)/$(am__dirstamp)
+System/String.lo: System/$(am__dirstamp) \
 	System/$(DEPDIR)/$(am__dirstamp)
 System/Exceptions.lo: System/$(am__dirstamp) \
 	System/$(DEPDIR)/$(am__dirstamp)
@@ -822,14 +881,14 @@ System/icomparable.lo: System/$(am__dirstamp) \
 	System/$(DEPDIR)/$(am__dirstamp)
 System/iequatable.lo: System/$(am__dirstamp) \
 	System/$(DEPDIR)/$(am__dirstamp)
+System/iformattable.lo: System/$(am__dirstamp) \
+	System/$(DEPDIR)/$(am__dirstamp)
+System/iformatprovider.lo: System/$(am__dirstamp) \
+	System/$(DEPDIR)/$(am__dirstamp)
+System/icustomformatter.lo: System/$(am__dirstamp) \
+	System/$(DEPDIR)/$(am__dirstamp)
 System/icloneable.lo: System/$(am__dirstamp) \
 	System/$(DEPDIR)/$(am__dirstamp)
-System/Linq/$(am__dirstamp):
-	@$(MKDIR_P) System/Linq
-	@: > System/Linq/$(am__dirstamp)
-System/Linq/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) System/Linq/$(DEPDIR)
-	@: > System/Linq/$(DEPDIR)/$(am__dirstamp)
 System/Linq/Errors.lo: System/Linq/$(am__dirstamp) \
 	System/Linq/$(DEPDIR)/$(am__dirstamp)
 System/Globalization/CultureInfo.lo:  \
@@ -851,12 +910,16 @@ mostlyclean-compile:
 	-rm -f System/Diagnostics/*.lo
 	-rm -f System/Globalization/*.$(OBJEXT)
 	-rm -f System/Globalization/*.lo
+	-rm -f System/IO/*.$(OBJEXT)
+	-rm -f System/IO/*.lo
 	-rm -f System/Linq/*.$(OBJEXT)
 	-rm -f System/Linq/*.lo
 	-rm -f System/Reflection/*.$(OBJEXT)
 	-rm -f System/Reflection/*.lo
 	-rm -f System/Runtime/*.$(OBJEXT)
 	-rm -f System/Runtime/*.lo
+	-rm -f System/Runtime/Serialization/*.$(OBJEXT)
+	-rm -f System/Runtime/Serialization/*.lo
 	-rm -f System/Security/*.$(OBJEXT)
 	-rm -f System/Security/*.lo
 	-rm -f System/Text/*.$(OBJEXT)
@@ -869,12 +932,17 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/Exceptions.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/Nullable.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/Object.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/String.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/action.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/default.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/icloneable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/icomparable.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/icustomformatter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/idisposable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/iequatable.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/iformatprovider.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/$(DEPDIR)/iformattable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/Comparer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/Dictionary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Collections/Generic/$(DEPDIR)/DictionaryEntry.Plo@am__quote@
@@ -900,10 +968,16 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@System/Diagnostics/$(DEPDIR)/Diagnostics.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Globalization/$(DEPDIR)/CultureInfo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Globalization/$(DEPDIR)/Globalization.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/IO/$(DEPDIR)/InvalidDataException.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/IO/$(DEPDIR)/TextReader.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Linq/$(DEPDIR)/Enumerable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Linq/$(DEPDIR)/Errors.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Reflection/$(DEPDIR)/Reflection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Runtime/$(DEPDIR)/Runtime.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Runtime/Serialization/$(DEPDIR)/ideserializationcallback.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Runtime/Serialization/$(DEPDIR)/iserializable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Security/$(DEPDIR)/Security.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@System/Text/$(DEPDIR)/StringBuilder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Text/$(DEPDIR)/Text.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@System/Threading/$(DEPDIR)/Threading.Plo@am__quote@
 
@@ -930,6 +1004,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+$(srcdir)/System/Linq/Enumerable.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
 $(srcdir)/System/Collections/Generic/icollection.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -1040,6 +1119,16 @@ $(srcdir)/System/Collections/ObjectModel/ReadOnlyCollection.c: $(srcdir)/libdotn
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
+$(srcdir)/System/Runtime/Serialization/iserializable.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/Runtime/Serialization/ideserializationcallback.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
 $(srcdir)/System/Text/Text.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -1075,7 +1164,32 @@ $(srcdir)/System/Threading/Threading.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
+$(srcdir)/System/IO/InvalidDataException.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/IO/TextReader.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/Text/StringBuilder.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
 $(srcdir)/System/Nullable.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/Object.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/String.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
@@ -1110,6 +1224,21 @@ $(srcdir)/System/iequatable.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
+$(srcdir)/System/iformattable.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/iformatprovider.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
+$(srcdir)/System/icustomformatter.c: $(srcdir)/libdotnet_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
+	fi
 $(srcdir)/System/icloneable.c: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/libdotnet_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -1135,9 +1264,9 @@ $(srcdir)/libdotnet.h: $(srcdir)/libdotnet_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/libdotnet_la_vala.stamp; \
 	fi
-$(srcdir)/libdotnet_la_vala.stamp: System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/idictionaryenumerator.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/DictionaryEntry.vala System/Collections/Generic/timsort.vala System/Collections/Generic/Comparer.vala System/Collections/Generic/EqualityComparer.vala System/Collections/Generic/Dictionary.vala System/Collections/Generic/List.vala System/Collections/Generic/Queue.vala System/Collections/Generic/Stack.vala System/Collections/ObjectModel/ReadOnlyCollection.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/Nullable.vala System/Exceptions.vala System/action.vala System/default.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
+$(srcdir)/libdotnet_la_vala.stamp: System/Linq/Enumerable.vala System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/idictionaryenumerator.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/DictionaryEntry.vala System/Collections/Generic/timsort.vala System/Collections/Generic/Comparer.vala System/Collections/Generic/EqualityComparer.vala System/Collections/Generic/Dictionary.vala System/Collections/Generic/List.vala System/Collections/Generic/Queue.vala System/Collections/Generic/Stack.vala System/Collections/ObjectModel/ReadOnlyCollection.vala System/Runtime/Serialization/iserializable.vala System/Runtime/Serialization/ideserializationcallback.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/IO/InvalidDataException.vala System/IO/TextReader.vala System/Text/StringBuilder.vala System/Nullable.vala System/Object.vala System/String.vala System/Exceptions.vala System/action.vala System/default.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/iformattable.vala System/iformatprovider.vala System/icustomformatter.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(libdotnet_la_VALAFLAGS) $(VALAFLAGS) -C System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/idictionaryenumerator.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/DictionaryEntry.vala System/Collections/Generic/timsort.vala System/Collections/Generic/Comparer.vala System/Collections/Generic/EqualityComparer.vala System/Collections/Generic/Dictionary.vala System/Collections/Generic/List.vala System/Collections/Generic/Queue.vala System/Collections/Generic/Stack.vala System/Collections/ObjectModel/ReadOnlyCollection.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/Nullable.vala System/Exceptions.vala System/action.vala System/default.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(libdotnet_la_VALAFLAGS) $(VALAFLAGS) -C System/Linq/Enumerable.vala System/Collections/Generic/icollection.vala System/Collections/Generic/icomparer.vala System/Collections/Generic/idictionary.vala System/Collections/Generic/idictionaryenumerator.vala System/Collections/Generic/ienumerable.vala System/Collections/Generic/ienumerator.vala System/Collections/Generic/iequalitycomparer.vala System/Collections/Generic/ilist.vala System/Collections/Generic/iset.vala System/Collections/Generic/ireadonlycollection.vala System/Collections/Generic/ireadonlydictionary.vala System/Collections/Generic/ireadonlylist.vala System/Collections/Generic/KeyValuePair.vala System/Collections/Generic/DictionaryEntry.vala System/Collections/Generic/timsort.vala System/Collections/Generic/Comparer.vala System/Collections/Generic/EqualityComparer.vala System/Collections/Generic/Dictionary.vala System/Collections/Generic/List.vala System/Collections/Generic/Queue.vala System/Collections/Generic/Stack.vala System/Collections/ObjectModel/ReadOnlyCollection.vala System/Runtime/Serialization/iserializable.vala System/Runtime/Serialization/ideserializationcallback.vala System/Text/Text.vala System/Globalization/Globalization.vala System/Diagnostics/Diagnostics.vala System/Reflection/Reflection.vala System/Runtime/Runtime.vala System/Security/Security.vala System/Threading/Threading.vala System/IO/InvalidDataException.vala System/IO/TextReader.vala System/Text/StringBuilder.vala System/Nullable.vala System/Object.vala System/String.vala System/Exceptions.vala System/action.vala System/default.vala System/idisposable.vala System/icomparable.vala System/iequatable.vala System/iformattable.vala System/iformatprovider.vala System/icustomformatter.vala System/icloneable.vala System/Linq/Errors.vala System/Globalization/CultureInfo.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -1150,9 +1279,11 @@ clean-libtool:
 	-rm -rf System/Collections/ObjectModel/.libs System/Collections/ObjectModel/_libs
 	-rm -rf System/Diagnostics/.libs System/Diagnostics/_libs
 	-rm -rf System/Globalization/.libs System/Globalization/_libs
+	-rm -rf System/IO/.libs System/IO/_libs
 	-rm -rf System/Linq/.libs System/Linq/_libs
 	-rm -rf System/Reflection/.libs System/Reflection/_libs
 	-rm -rf System/Runtime/.libs System/Runtime/_libs
+	-rm -rf System/Runtime/Serialization/.libs System/Runtime/Serialization/_libs
 	-rm -rf System/Security/.libs System/Security/_libs
 	-rm -rf System/Text/.libs System/Text/_libs
 	-rm -rf System/Threading/.libs System/Threading/_libs
@@ -1346,12 +1477,16 @@ distclean-generic:
 	-rm -f System/Diagnostics/$(am__dirstamp)
 	-rm -f System/Globalization/$(DEPDIR)/$(am__dirstamp)
 	-rm -f System/Globalization/$(am__dirstamp)
+	-rm -f System/IO/$(DEPDIR)/$(am__dirstamp)
+	-rm -f System/IO/$(am__dirstamp)
 	-rm -f System/Linq/$(DEPDIR)/$(am__dirstamp)
 	-rm -f System/Linq/$(am__dirstamp)
 	-rm -f System/Reflection/$(DEPDIR)/$(am__dirstamp)
 	-rm -f System/Reflection/$(am__dirstamp)
 	-rm -f System/Runtime/$(DEPDIR)/$(am__dirstamp)
 	-rm -f System/Runtime/$(am__dirstamp)
+	-rm -f System/Runtime/Serialization/$(DEPDIR)/$(am__dirstamp)
+	-rm -f System/Runtime/Serialization/$(am__dirstamp)
 	-rm -f System/Security/$(DEPDIR)/$(am__dirstamp)
 	-rm -f System/Security/$(am__dirstamp)
 	-rm -f System/Text/$(DEPDIR)/$(am__dirstamp)
@@ -1388,19 +1523,30 @@ maintainer-clean-generic:
 	-rm -f $(srcdir)/System/Exceptions.c
 	-rm -f $(srcdir)/System/Globalization/CultureInfo.c
 	-rm -f $(srcdir)/System/Globalization/Globalization.c
+	-rm -f $(srcdir)/System/IO/InvalidDataException.c
+	-rm -f $(srcdir)/System/IO/TextReader.c
+	-rm -f $(srcdir)/System/Linq/Enumerable.c
 	-rm -f $(srcdir)/System/Linq/Errors.c
 	-rm -f $(srcdir)/System/Nullable.c
+	-rm -f $(srcdir)/System/Object.c
 	-rm -f $(srcdir)/System/Reflection/Reflection.c
 	-rm -f $(srcdir)/System/Runtime/Runtime.c
+	-rm -f $(srcdir)/System/Runtime/Serialization/ideserializationcallback.c
+	-rm -f $(srcdir)/System/Runtime/Serialization/iserializable.c
 	-rm -f $(srcdir)/System/Security/Security.c
+	-rm -f $(srcdir)/System/String.c
+	-rm -f $(srcdir)/System/Text/StringBuilder.c
 	-rm -f $(srcdir)/System/Text/Text.c
 	-rm -f $(srcdir)/System/Threading/Threading.c
 	-rm -f $(srcdir)/System/action.c
 	-rm -f $(srcdir)/System/default.c
 	-rm -f $(srcdir)/System/icloneable.c
 	-rm -f $(srcdir)/System/icomparable.c
+	-rm -f $(srcdir)/System/icustomformatter.c
 	-rm -f $(srcdir)/System/idisposable.c
 	-rm -f $(srcdir)/System/iequatable.c
+	-rm -f $(srcdir)/System/iformatprovider.c
+	-rm -f $(srcdir)/System/iformattable.c
 	-rm -f $(srcdir)/libdotnet-0.1.vapi
 	-rm -f $(srcdir)/libdotnet.h
 	-rm -f $(srcdir)/libdotnet_la_vala.stamp
@@ -1430,26 +1576,37 @@ maintainer-clean-generic:
 	-rm -f System/Exceptions.c
 	-rm -f System/Globalization/CultureInfo.c
 	-rm -f System/Globalization/Globalization.c
+	-rm -f System/IO/InvalidDataException.c
+	-rm -f System/IO/TextReader.c
+	-rm -f System/Linq/Enumerable.c
 	-rm -f System/Linq/Errors.c
 	-rm -f System/Nullable.c
+	-rm -f System/Object.c
 	-rm -f System/Reflection/Reflection.c
 	-rm -f System/Runtime/Runtime.c
+	-rm -f System/Runtime/Serialization/ideserializationcallback.c
+	-rm -f System/Runtime/Serialization/iserializable.c
 	-rm -f System/Security/Security.c
+	-rm -f System/String.c
+	-rm -f System/Text/StringBuilder.c
 	-rm -f System/Text/Text.c
 	-rm -f System/Threading/Threading.c
 	-rm -f System/action.c
 	-rm -f System/default.c
 	-rm -f System/icloneable.c
 	-rm -f System/icomparable.c
+	-rm -f System/icustomformatter.c
 	-rm -f System/idisposable.c
 	-rm -f System/iequatable.c
+	-rm -f System/iformatprovider.c
+	-rm -f System/iformattable.c
 clean: clean-am
 
 clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf System/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Collections/ObjectModel/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
+	-rm -rf System/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Collections/ObjectModel/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/IO/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Runtime/Serialization/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1496,7 +1653,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf System/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Collections/ObjectModel/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
+	-rm -rf System/$(DEPDIR) System/Collections/Generic/$(DEPDIR) System/Collections/ObjectModel/$(DEPDIR) System/Diagnostics/$(DEPDIR) System/Globalization/$(DEPDIR) System/IO/$(DEPDIR) System/Linq/$(DEPDIR) System/Reflection/$(DEPDIR) System/Runtime/$(DEPDIR) System/Runtime/Serialization/$(DEPDIR) System/Security/$(DEPDIR) System/Text/$(DEPDIR) System/Threading/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

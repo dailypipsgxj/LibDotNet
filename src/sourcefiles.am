@@ -40,6 +40,7 @@ LIBDOTNET_COLLECTIONS = \
 	System/Collections/StructuralComparisons.vala
 
 LIBDOTNET_COLLECTIONS_GEN_IFACE = \
+	System/Linq/Enumerable.vala \
 	System/Collections/Generic/icollection.vala \
 	System/Collections/Generic/icomparer.vala \
 	System/Collections/Generic/idictionary.vala \
@@ -89,7 +90,12 @@ LIBDOTNET_SYSTEM_NS = \
 	System/Threading/Threading.vala
 
 LIBDOTNET_SYSTEM = \
+	System/IO/InvalidDataException.vala \
+	System/IO/TextReader.vala \
+	System/Text/StringBuilder.vala \
 	System/Nullable.vala \
+	System/Object.vala \
+	System/String.vala \
 	System/Exceptions.vala \
 	System/action.vala \
 	System/default.vala
@@ -98,6 +104,9 @@ LIBDOTNET_SYSTEM_IFACE = \
 	System/idisposable.vala \
 	System/icomparable.vala \
 	System/iequatable.vala \
+	System/iformattable.vala \
+	System/iformatprovider.vala \
+	System/icustomformatter.vala \
 	System/icloneable.vala
 
 LIBDOTNET_SERIAL = \
@@ -112,6 +121,7 @@ LIBDOTNET_SOURCES = \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
 	$(LIBDOTNET_COLLECTIONS_OBJMODEL) \
+	$(LIBDOTNET_SERIAL) \
 	$(LIBDOTNET_SYSTEM_NS) \
 	$(LIBDOTNET_SYSTEM) \
 	$(LIBDOTNET_SYSTEM_IFACE) \

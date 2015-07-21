@@ -20,6 +20,16 @@
 #include <glib-object.h>
 
 
+#define SYSTEM_LINQ_TYPE_ENUMERABLE (system_linq_enumerable_get_type ())
+#define SYSTEM_LINQ_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerable))
+#define SYSTEM_LINQ_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+#define SYSTEM_LINQ_IS_ENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_IS_ENUMERABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SYSTEM_LINQ_TYPE_ENUMERABLE))
+#define SYSTEM_LINQ_ENUMERABLE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerableClass))
+
+typedef struct _SystemLinqEnumerable SystemLinqEnumerable;
+typedef struct _SystemLinqEnumerableClass SystemLinqEnumerableClass;
+
 #define SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE (system_collections_generic_ienumerable_get_type ())
 #define SYSTEM_COLLECTIONS_GENERIC_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, SystemCollectionsGenericIEnumerable))
 #define SYSTEM_COLLECTIONS_GENERIC_IS_IENUMERABLE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE))
@@ -90,6 +100,7 @@ struct _SystemCollectionsGenericIReadOnlyDictionaryIface {
 
 
 
+GType system_linq_enumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerator_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_ienumerable_get_type (void) G_GNUC_CONST;
 GType system_collections_generic_iread_only_collection_get_type (void) G_GNUC_CONST;
@@ -105,7 +116,7 @@ gboolean system_collections_generic_iread_only_dictionary_ContainsKey (SystemCol
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->ContainsKey (self, key);
-#line 109 "ireadonlydictionary.c"
+#line 120 "ireadonlydictionary.c"
 }
 
 
@@ -114,7 +125,7 @@ gboolean system_collections_generic_iread_only_dictionary_TryGetValue (SystemCol
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->TryGetValue (self, key, value);
-#line 118 "ireadonlydictionary.c"
+#line 129 "ireadonlydictionary.c"
 }
 
 
@@ -123,7 +134,7 @@ SystemCollectionsGenericIEnumerable* system_collections_generic_iread_only_dicti
 	g_return_val_if_fail (self != NULL, NULL);
 #line 27 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->get_Keys (self);
-#line 127 "ireadonlydictionary.c"
+#line 138 "ireadonlydictionary.c"
 }
 
 
@@ -132,7 +143,7 @@ SystemCollectionsGenericIEnumerable* system_collections_generic_iread_only_dicti
 	g_return_val_if_fail (self != NULL, NULL);
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_IREAD_ONLY_DICTIONARY_GET_INTERFACE (self)->get_Values (self);
-#line 136 "ireadonlydictionary.c"
+#line 147 "ireadonlydictionary.c"
 }
 
 
@@ -147,7 +158,7 @@ static void system_collections_generic_iread_only_dictionary_base_init (SystemCo
 		g_object_interface_install_property (iface, g_param_spec_object ("Keys", "Keys", "Keys", SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 21 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/ireadonlydictionary.vala"
 		g_object_interface_install_property (iface, g_param_spec_object ("Values", "Values", "Values", SYSTEM_COLLECTIONS_GENERIC_TYPE_IENUMERABLE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 151 "ireadonlydictionary.c"
+#line 162 "ireadonlydictionary.c"
 	}
 }
 

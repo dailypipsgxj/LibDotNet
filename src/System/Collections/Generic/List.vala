@@ -19,10 +19,10 @@ namespace System.Collections.Generic {
     using System.Diagnostics.Contracts;
     using System.Collections.ObjectModel;
     using System.Security.Permissions;
-
+	using System.Linq;
 
 	public abstract class AbstractList<T> :
-		GLib.Object,
+		Enumerable<T>,
 		IEnumerable<T>,
 		ICollection<T>,
    		IList<T>,
@@ -484,7 +484,7 @@ namespace System.Collections.Generic {
 			_items.resize (value);
 		}
 
-		internal class Enumerator<T> : GLib.Object, IEnumerator<T>  {
+		internal class Enumerator<T> : Enumerable<T>, IEnumerator<T>  {
 
 			private List<T> _list;
 			private int _index = -1;
