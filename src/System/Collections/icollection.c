@@ -30,31 +30,42 @@
 typedef struct _SystemCollectionsICollection SystemCollectionsICollection;
 typedef struct _SystemCollectionsICollectionIface SystemCollectionsICollectionIface;
 
+#define TYPE_OBJECT (object_get_type ())
+#define OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_OBJECT, Object))
+#define OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_OBJECT, ObjectClass))
+#define IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_OBJECT))
+#define IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TYPE_OBJECT))
+#define OBJECT_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_OBJECT, ObjectClass))
+
+typedef struct _Object Object;
+typedef struct _ObjectClass ObjectClass;
+
 struct _SystemCollectionsICollectionIface {
 	GTypeInterface parent_iface;
-	void (*CopyTo) (SystemCollectionsICollection* self, GArray* array, gint arrayIndex);
+	void (*CopyTo) (SystemCollectionsICollection* self, Object** array, int array_length1, gint arrayIndex);
 	gint (*get_size) (SystemCollectionsICollection* self);
 	gint (*get_Count) (SystemCollectionsICollection* self);
 	gboolean (*get_IsSynchronized) (SystemCollectionsICollection* self);
-	GObject* (*get_SyncRoot) (SystemCollectionsICollection* self);
+	Object* (*get_SyncRoot) (SystemCollectionsICollection* self);
 };
 
 
 
+GType object_get_type (void) G_GNUC_CONST;
 GType system_collections_icollection_get_type (void) G_GNUC_CONST;
-void system_collections_icollection_CopyTo (SystemCollectionsICollection* self, GArray* array, gint arrayIndex);
+void system_collections_icollection_CopyTo (SystemCollectionsICollection* self, Object** array, int array_length1, gint arrayIndex);
 gint system_collections_icollection_get_size (SystemCollectionsICollection* self);
 gint system_collections_icollection_get_Count (SystemCollectionsICollection* self);
 gboolean system_collections_icollection_get_IsSynchronized (SystemCollectionsICollection* self);
-GObject* system_collections_icollection_get_SyncRoot (SystemCollectionsICollection* self);
+Object* system_collections_icollection_get_SyncRoot (SystemCollectionsICollection* self);
 
 
-void system_collections_icollection_CopyTo (SystemCollectionsICollection* self, GArray* array, gint arrayIndex) {
+void system_collections_icollection_CopyTo (SystemCollectionsICollection* self, Object** array, int array_length1, gint arrayIndex) {
 #line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
 	g_return_if_fail (self != NULL);
 #line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
-	SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE (self)->CopyTo (self, array, arrayIndex);
-#line 58 "icollection.c"
+	SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE (self)->CopyTo (self, array, array_length1, arrayIndex);
+#line 69 "icollection.c"
 }
 
 
@@ -63,7 +74,7 @@ gint system_collections_icollection_get_size (SystemCollectionsICollection* self
 	g_return_val_if_fail (self != NULL, 0);
 #line 30 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
 	return SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE (self)->get_size (self);
-#line 67 "icollection.c"
+#line 78 "icollection.c"
 }
 
 
@@ -72,7 +83,7 @@ gint system_collections_icollection_get_Count (SystemCollectionsICollection* sel
 	g_return_val_if_fail (self != NULL, 0);
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
 	return SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE (self)->get_Count (self);
-#line 76 "icollection.c"
+#line 87 "icollection.c"
 }
 
 
@@ -81,16 +92,16 @@ gboolean system_collections_icollection_get_IsSynchronized (SystemCollectionsICo
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
 	return SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE (self)->get_IsSynchronized (self);
-#line 85 "icollection.c"
+#line 96 "icollection.c"
 }
 
 
-GObject* system_collections_icollection_get_SyncRoot (SystemCollectionsICollection* self) {
+Object* system_collections_icollection_get_SyncRoot (SystemCollectionsICollection* self) {
 #line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
 	g_return_val_if_fail (self != NULL, NULL);
 #line 73 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
 	return SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE (self)->get_SyncRoot (self);
-#line 94 "icollection.c"
+#line 105 "icollection.c"
 }
 
 
@@ -101,19 +112,7 @@ static void system_collections_icollection_base_init (SystemCollectionsICollecti
 	if (!initialized) {
 #line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
 		initialized = TRUE;
-#line 105 "icollection.c"
-		/**
-		 * The number of items in this collection.
-		 */
-#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
-		g_object_interface_install_property (iface, g_param_spec_int ("size", "size", "size", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
-		g_object_interface_install_property (iface, g_param_spec_int ("Count", "Count", "Count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
-		g_object_interface_install_property (iface, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 25 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/icollection.vala"
-		g_object_interface_install_property (iface, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 117 "icollection.c"
+#line 116 "icollection.c"
 	}
 }
 
@@ -124,7 +123,6 @@ GType system_collections_icollection_get_type (void) {
 		static const GTypeInfo g_define_type_info = { sizeof (SystemCollectionsICollectionIface), (GBaseInitFunc) system_collections_icollection_base_init, (GBaseFinalizeFunc) NULL, (GClassInitFunc) NULL, (GClassFinalizeFunc) NULL, NULL, 0, 0, (GInstanceInitFunc) NULL, NULL };
 		GType system_collections_icollection_type_id;
 		system_collections_icollection_type_id = g_type_register_static (G_TYPE_INTERFACE, "SystemCollectionsICollection", &g_define_type_info, 0);
-		g_type_interface_add_prerequisite (system_collections_icollection_type_id, G_TYPE_OBJECT);
 		g_once_init_leave (&system_collections_icollection_type_id__volatile, system_collections_icollection_type_id);
 	}
 	return system_collections_icollection_type_id__volatile;

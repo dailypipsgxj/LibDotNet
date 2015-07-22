@@ -9,10 +9,10 @@
 namespace System.Text.RegularExpressions
 {
     /// <summary>
-    /// Represents the results from a single subexpression capture. TheObjectrepresents
+    /// Represents the results from a single subexpression capture. The Object represents
     /// one substring for a single successful capture.
     /// </summary>
-    public class Capture
+    public class Capture : Object
     {
         internal string _text;
         internal int _index;
@@ -24,10 +24,6 @@ namespace System.Text.RegularExpressions
             _index = i;
             _length = l;
         }
-
-        /*
-         * The index of the beginning of the matched capture
-         */
         /// <summary>
         /// Returns the position in the original string where the first character of
         /// captured substring was found.
@@ -39,10 +35,6 @@ namespace System.Text.RegularExpressions
                 return _index;
             }
         }
-
-        /*
-         * The length of the matched capture
-         */
         /// <summary>
         /// Returns the length of the captured substring.
         /// </summary>
@@ -57,7 +49,6 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the value of this Regex Capture.
         /// </summary>
-        //[ CCode ( returns_floating_reference = true ) ]
         public string Value
         {
             owned get
@@ -66,39 +57,12 @@ namespace System.Text.RegularExpressions
             }
         }
 
-        /*
-         * The capture as a string
-         */
         /// <summary>
         /// Returns the substring that was matched.
         /// </summary>
         public string ToString()
         {
             return Value;
-        }
-
-        /*
-         * The original string
-         */
-        internal string GetOriginalString()
-        {
-            return _text;
-        }
-
-        /*
-         * The substring to the left of the capture
-         */
-        internal string GetLeftSubString()
-        {
-            return _text.substring(0, _index);
-        }
-
-        /*
-         * The substring to the right of the capture
-         */
-        internal string GetRightSubString()
-        {
-            return _text.substring(_index + _length, _text.length - _index - _length);
         }
 
     }

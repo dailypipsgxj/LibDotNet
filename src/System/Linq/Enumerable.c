@@ -226,7 +226,6 @@ struct _SystemLinqIterator {
 
 struct _SystemLinqIteratorClass {
 	SystemLinqEnumerableClass parent_class;
-	gpointer (*get) (SystemLinqIterator* self);
 	SystemLinqIterator* (*Clone) (SystemLinqIterator* self);
 	void (*Dispose) (SystemLinqIterator* self);
 	gboolean (*MoveNext) (SystemLinqIterator* self);
@@ -519,8 +518,7 @@ enum  {
 	SYSTEM_LINQ_ITERATOR_CURRENT
 };
 SystemLinqIterator* system_linq_iterator_construct (GType object_type, GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func);
-gpointer system_linq_iterator_get (SystemLinqIterator* self);
-static gpointer system_linq_iterator_real_get (SystemLinqIterator* self);
+static gpointer system_linq_iterator_real_get (SystemCollectionsGenericIEnumerator* base);
 SystemLinqIterator* system_linq_iterator_Clone (SystemLinqIterator* self);
 static SystemLinqIterator* system_linq_iterator_real_Clone (SystemLinqIterator* self);
 void system_linq_iterator_Dispose (SystemLinqIterator* self);
@@ -705,7 +703,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_enumerable_real_Where (S
 	SystemCollectionsGenericIEnumerable* _tmp8_ = NULL;
 #line 15 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (self, SYSTEM_LINQ_TYPE_ITERATOR)) {
-#line 709 "Enumerable.c"
+#line 707 "Enumerable.c"
 		SystemFunc _tmp0_ = NULL;
 		void* _tmp0__target = NULL;
 		SystemCollectionsGenericIEnumerable* _tmp1_ = NULL;
@@ -719,11 +717,11 @@ static SystemCollectionsGenericIEnumerable* system_linq_enumerable_real_Where (S
 		result = _tmp1_;
 #line 15 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 723 "Enumerable.c"
+#line 721 "Enumerable.c"
 	}
 #line 16 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (self, G_TYPE_INVALID)) {
-#line 727 "Enumerable.c"
+#line 725 "Enumerable.c"
 		SystemFunc _tmp2_ = NULL;
 		void* _tmp2__target = NULL;
 		SystemLinqWhereArrayIterator* _tmp3_ = NULL;
@@ -737,11 +735,11 @@ static SystemCollectionsGenericIEnumerable* system_linq_enumerable_real_Where (S
 		result = (SystemCollectionsGenericIEnumerable*) _tmp3_;
 #line 16 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 741 "Enumerable.c"
+#line 739 "Enumerable.c"
 	}
 #line 17 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (self, SYSTEM_COLLECTIONS_GENERIC_TYPE_LIST)) {
-#line 745 "Enumerable.c"
+#line 743 "Enumerable.c"
 		SystemFunc _tmp4_ = NULL;
 		void* _tmp4__target = NULL;
 		SystemLinqWhereListIterator* _tmp5_ = NULL;
@@ -755,7 +753,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_enumerable_real_Where (S
 		result = (SystemCollectionsGenericIEnumerable*) _tmp5_;
 #line 17 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 759 "Enumerable.c"
+#line 757 "Enumerable.c"
 	}
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp6_ = predicate;
@@ -769,13 +767,13 @@ static SystemCollectionsGenericIEnumerable* system_linq_enumerable_real_Where (S
 	if (_tmp8_ == NULL) {
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_g_object_unref0 (_tmp7_);
-#line 773 "Enumerable.c"
+#line 771 "Enumerable.c"
 	}
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = _tmp8_;
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 779 "Enumerable.c"
+#line 777 "Enumerable.c"
 }
 
 
@@ -784,7 +782,7 @@ SystemCollectionsGenericIEnumerable* system_linq_enumerable_Where (SystemLinqEnu
 	g_return_val_if_fail (self != NULL, NULL);
 #line 13 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return SYSTEM_LINQ_ENUMERABLE_GET_CLASS (self)->Where (self, predicate, predicate_target);
-#line 788 "Enumerable.c"
+#line 786 "Enumerable.c"
 }
 
 
@@ -800,7 +798,7 @@ SystemLinqEnumerable* system_linq_enumerable_construct (GType object_type, GType
 	self->priv->tsource_destroy_func = tsource_destroy_func;
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 804 "Enumerable.c"
+#line 802 "Enumerable.c"
 }
 
 
@@ -821,14 +819,14 @@ static void system_linq_enumerable_class_init (SystemLinqEnumerableClass * klass
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_ENUMERABLE_TSOURCE_DUP_FUNC, g_param_spec_pointer ("tsource-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_ENUMERABLE_TSOURCE_DESTROY_FUNC, g_param_spec_pointer ("tsource-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 825 "Enumerable.c"
+#line 823 "Enumerable.c"
 }
 
 
 static void system_linq_enumerable_instance_init (SystemLinqEnumerable * self) {
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_ENUMERABLE_GET_PRIVATE (self);
-#line 832 "Enumerable.c"
+#line 830 "Enumerable.c"
 }
 
 
@@ -849,13 +847,13 @@ static void _vala_system_linq_enumerable_get_property (GObject * object, guint p
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_LINQ_TYPE_ENUMERABLE, SystemLinqEnumerable);
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	switch (property_id) {
-#line 853 "Enumerable.c"
+#line 851 "Enumerable.c"
 		default:
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 859 "Enumerable.c"
+#line 857 "Enumerable.c"
 	}
 }
 
@@ -883,13 +881,13 @@ static void _vala_system_linq_enumerable_set_property (GObject * object, guint p
 		self->priv->tsource_destroy_func = g_value_get_pointer (value);
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 887 "Enumerable.c"
+#line 885 "Enumerable.c"
 		default:
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 11 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 893 "Enumerable.c"
+#line 891 "Enumerable.c"
 	}
 }
 
@@ -906,14 +904,17 @@ SystemLinqIterator* system_linq_iterator_construct (GType object_type, GType tso
 	self->priv->tsource_destroy_func = tsource_destroy_func;
 #line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 910 "Enumerable.c"
+#line 908 "Enumerable.c"
 }
 
 
-static gpointer system_linq_iterator_real_get (SystemLinqIterator* self) {
+static gpointer system_linq_iterator_real_get (SystemCollectionsGenericIEnumerator* base) {
+	SystemLinqIterator * self;
 	gpointer result = NULL;
 	gconstpointer _tmp0_ = NULL;
 	gpointer _tmp1_ = NULL;
+#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
+	self = (SystemLinqIterator*) base;
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp0_ = self->current;
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
@@ -922,16 +923,7 @@ static gpointer system_linq_iterator_real_get (SystemLinqIterator* self) {
 	result = _tmp1_;
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 926 "Enumerable.c"
-}
-
-
-gpointer system_linq_iterator_get (SystemLinqIterator* self) {
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
-	g_return_val_if_fail (self != NULL, NULL);
-#line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
-	return SYSTEM_LINQ_ITERATOR_GET_CLASS (self)->get (self);
-#line 935 "Enumerable.c"
+#line 927 "Enumerable.c"
 }
 
 
@@ -940,7 +932,7 @@ static SystemLinqIterator* system_linq_iterator_real_Clone (SystemLinqIterator* 
 	g_critical ("Type `%s' does not implement abstract method `system_linq_iterator_Clone'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return NULL;
-#line 944 "Enumerable.c"
+#line 936 "Enumerable.c"
 }
 
 
@@ -949,7 +941,7 @@ SystemLinqIterator* system_linq_iterator_Clone (SystemLinqIterator* self) {
 	g_return_val_if_fail (self != NULL, NULL);
 #line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return SYSTEM_LINQ_ITERATOR_GET_CLASS (self)->Clone (self);
-#line 953 "Enumerable.c"
+#line 945 "Enumerable.c"
 }
 
 
@@ -960,7 +952,7 @@ static void system_linq_iterator_real_Dispose (SystemLinqIterator* self) {
 	self->current = NULL;
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->state = -1;
-#line 964 "Enumerable.c"
+#line 956 "Enumerable.c"
 }
 
 
@@ -969,7 +961,7 @@ void system_linq_iterator_Dispose (SystemLinqIterator* self) {
 	g_return_if_fail (self != NULL);
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	SYSTEM_LINQ_ITERATOR_GET_CLASS (self)->Dispose (self);
-#line 973 "Enumerable.c"
+#line 965 "Enumerable.c"
 }
 
 
@@ -985,7 +977,7 @@ static SystemCollectionsGenericIEnumerator* system_linq_iterator_real_iterator (
 	result = _tmp0_;
 #line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 989 "Enumerable.c"
+#line 981 "Enumerable.c"
 }
 
 
@@ -1006,7 +998,7 @@ static SystemCollectionsGenericIEnumerator* system_linq_iterator_real_GetEnumera
 	result = (SystemCollectionsGenericIEnumerator*) duplicate;
 #line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1010 "Enumerable.c"
+#line 1002 "Enumerable.c"
 }
 
 
@@ -1015,7 +1007,7 @@ static gboolean system_linq_iterator_real_MoveNext (SystemLinqIterator* self) {
 	g_critical ("Type `%s' does not implement abstract method `system_linq_iterator_MoveNext'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return FALSE;
-#line 1019 "Enumerable.c"
+#line 1011 "Enumerable.c"
 }
 
 
@@ -1024,7 +1016,7 @@ gboolean system_linq_iterator_MoveNext (SystemLinqIterator* self) {
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return SYSTEM_LINQ_ITERATOR_GET_CLASS (self)->MoveNext (self);
-#line 1028 "Enumerable.c"
+#line 1020 "Enumerable.c"
 }
 
 
@@ -1033,7 +1025,7 @@ static Block1Data* block1_data_ref (Block1Data* _data1_) {
 	g_atomic_int_inc (&_data1_->_ref_count_);
 #line 83 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return _data1_;
-#line 1037 "Enumerable.c"
+#line 1029 "Enumerable.c"
 }
 
 
@@ -1042,7 +1034,7 @@ static void block1_data_unref (void * _userdata_) {
 	_data1_ = (Block1Data*) _userdata_;
 #line 83 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (g_atomic_int_dec_and_test (&_data1_->_ref_count_)) {
-#line 1046 "Enumerable.c"
+#line 1038 "Enumerable.c"
 		SystemLinqIterator* self;
 		GType tresult_type;
 		GBoxedCopyFunc tresult_dup_func;
@@ -1059,7 +1051,7 @@ static void block1_data_unref (void * _userdata_) {
 		_g_object_unref0 (self);
 #line 83 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		g_slice_free (Block1Data, _data1_);
-#line 1063 "Enumerable.c"
+#line 1055 "Enumerable.c"
 	}
 }
 
@@ -1082,7 +1074,7 @@ static gboolean __lambda7_ (Block1Data* _data1_, gconstpointer x) {
 	result = TRUE;
 #line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1086 "Enumerable.c"
+#line 1078 "Enumerable.c"
 }
 
 
@@ -1091,7 +1083,7 @@ static gpointer ___lambda7__system_func (gconstpointer arg, gpointer self) {
 	result = (gpointer) ((gintptr) __lambda7_ (self, arg));
 #line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1095 "Enumerable.c"
+#line 1087 "Enumerable.c"
 }
 
 
@@ -1120,7 +1112,7 @@ SystemCollectionsGenericIEnumerable* system_linq_iterator_Select (SystemLinqIter
 	_data1_->tresult_destroy_func = tresult_destroy_func;
 #line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (self, SYSTEM_LINQ_TYPE_WHERE_ENUMERABLE_ITERATOR)) {
-#line 1124 "Enumerable.c"
+#line 1116 "Enumerable.c"
 		SystemFunc _tmp0_ = NULL;
 		void* _tmp0__target = NULL;
 		SystemCollectionsGenericIEnumerable* _tmp1_ = NULL;
@@ -1138,11 +1130,11 @@ SystemCollectionsGenericIEnumerable* system_linq_iterator_Select (SystemLinqIter
 		_data1_ = NULL;
 #line 91 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 1142 "Enumerable.c"
+#line 1134 "Enumerable.c"
 	}
 #line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (self, SYSTEM_LINQ_TYPE_WHERE_ARRAY_ITERATOR)) {
-#line 1146 "Enumerable.c"
+#line 1138 "Enumerable.c"
 		SystemFunc _tmp2_ = NULL;
 		void* _tmp2__target = NULL;
 		SystemCollectionsGenericIEnumerable* _tmp3_ = NULL;
@@ -1160,11 +1152,11 @@ SystemCollectionsGenericIEnumerable* system_linq_iterator_Select (SystemLinqIter
 		_data1_ = NULL;
 #line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 1164 "Enumerable.c"
+#line 1156 "Enumerable.c"
 	}
 #line 96 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (self, SYSTEM_LINQ_TYPE_WHERE_LIST_ITERATOR)) {
-#line 1168 "Enumerable.c"
+#line 1160 "Enumerable.c"
 		SystemFunc _tmp4_ = NULL;
 		void* _tmp4__target = NULL;
 		SystemCollectionsGenericIEnumerable* _tmp5_ = NULL;
@@ -1182,7 +1174,7 @@ SystemCollectionsGenericIEnumerable* system_linq_iterator_Select (SystemLinqIter
 		_data1_ = NULL;
 #line 97 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 1186 "Enumerable.c"
+#line 1178 "Enumerable.c"
 	}
 #line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp6_ = system_linq_where_enumerable_iterator_new (self->priv->tsource_type, (GBoxedCopyFunc) self->priv->tsource_dup_func, self->priv->tsource_destroy_func, (SystemCollectionsGenericIEnumerable*) self, ___lambda7__system_func, _data1_);
@@ -1206,7 +1198,7 @@ SystemCollectionsGenericIEnumerable* system_linq_iterator_Select (SystemLinqIter
 	_data1_ = NULL;
 #line 110 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1210 "Enumerable.c"
+#line 1202 "Enumerable.c"
 }
 
 
@@ -1215,7 +1207,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_iterator_real_Where (Sys
 	g_critical ("Type `%s' does not implement abstract method `system_linq_iterator_Where'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return NULL;
-#line 1219 "Enumerable.c"
+#line 1211 "Enumerable.c"
 }
 
 
@@ -1224,7 +1216,7 @@ SystemCollectionsGenericIEnumerable* system_linq_iterator_Where (SystemLinqItera
 	g_return_val_if_fail (self != NULL, NULL);
 #line 113 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return SYSTEM_LINQ_ITERATOR_GET_CLASS (self)->Where (self, predicate, predicate_target);
-#line 1228 "Enumerable.c"
+#line 1220 "Enumerable.c"
 }
 
 
@@ -1258,13 +1250,13 @@ static gpointer* system_linq_iterator_real_ToArray (SystemLinqIterator* self, in
 	if (result_length1) {
 #line 117 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		*result_length1 = _tmp5__length1;
-#line 1262 "Enumerable.c"
+#line 1254 "Enumerable.c"
 	}
 #line 117 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = _tmp5_;
 #line 117 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1268 "Enumerable.c"
+#line 1260 "Enumerable.c"
 }
 
 
@@ -1273,7 +1265,7 @@ gpointer* system_linq_iterator_ToArray (SystemLinqIterator* self, int* result_le
 	g_return_val_if_fail (self != NULL, NULL);
 #line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return SYSTEM_LINQ_ITERATOR_GET_CLASS (self)->ToArray (self, result_length1);
-#line 1277 "Enumerable.c"
+#line 1269 "Enumerable.c"
 }
 
 
@@ -1293,7 +1285,7 @@ static void system_linq_iterator_real_Reset (SystemCollectionsGenericIEnumerator
 	g_clear_error (&_inner_error_);
 #line 122 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return;
-#line 1297 "Enumerable.c"
+#line 1289 "Enumerable.c"
 }
 
 
@@ -1312,7 +1304,7 @@ static gpointer system_linq_iterator_real_get_Current (SystemCollectionsGenericI
 	result = _tmp1_;
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1316 "Enumerable.c"
+#line 1308 "Enumerable.c"
 }
 
 
@@ -1321,8 +1313,6 @@ static void system_linq_iterator_class_init (SystemLinqIteratorClass * klass) {
 	system_linq_iterator_parent_class = g_type_class_peek_parent (klass);
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_type_class_add_private (klass, sizeof (SystemLinqIteratorPrivate));
-#line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
-	((SystemLinqIteratorClass *) klass)->get = system_linq_iterator_real_get;
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	((SystemLinqIteratorClass *) klass)->Clone = system_linq_iterator_real_Clone;
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
@@ -1347,28 +1337,28 @@ static void system_linq_iterator_class_init (SystemLinqIteratorClass * klass) {
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_ITERATOR_TSOURCE_DESTROY_FUNC, g_param_spec_pointer ("tsource-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_ITERATOR_CURRENT, g_param_spec_pointer ("Current", "Current", "Current", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 1351 "Enumerable.c"
+#line 1341 "Enumerable.c"
 }
 
 
 static GType system_linq_iterator_system_collections_generic_ienumerable_get_t_type (SystemLinqIterator* self) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self->priv->tsource_type;
-#line 1358 "Enumerable.c"
+#line 1348 "Enumerable.c"
 }
 
 
 static GBoxedCopyFunc system_linq_iterator_system_collections_generic_ienumerable_get_t_dup_func (SystemLinqIterator* self) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self->priv->tsource_dup_func;
-#line 1365 "Enumerable.c"
+#line 1355 "Enumerable.c"
 }
 
 
 static GDestroyNotify system_linq_iterator_system_collections_generic_ienumerable_get_t_destroy_func (SystemLinqIterator* self) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self->priv->tsource_destroy_func;
-#line 1372 "Enumerable.c"
+#line 1362 "Enumerable.c"
 }
 
 
@@ -1385,28 +1375,28 @@ static void system_linq_iterator_system_collections_generic_ienumerable_interfac
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_linq_iterator_system_collections_generic_ienumerable_get_t_dup_func;
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_linq_iterator_system_collections_generic_ienumerable_get_t_destroy_func;
-#line 1389 "Enumerable.c"
+#line 1379 "Enumerable.c"
 }
 
 
 static GType system_linq_iterator_system_collections_generic_ienumerator_get_t_type (SystemLinqIterator* self) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self->priv->tsource_type;
-#line 1396 "Enumerable.c"
+#line 1386 "Enumerable.c"
 }
 
 
 static GBoxedCopyFunc system_linq_iterator_system_collections_generic_ienumerator_get_t_dup_func (SystemLinqIterator* self) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self->priv->tsource_dup_func;
-#line 1403 "Enumerable.c"
+#line 1393 "Enumerable.c"
 }
 
 
 static GDestroyNotify system_linq_iterator_system_collections_generic_ienumerator_get_t_destroy_func (SystemLinqIterator* self) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self->priv->tsource_destroy_func;
-#line 1410 "Enumerable.c"
+#line 1400 "Enumerable.c"
 }
 
 
@@ -1414,7 +1404,7 @@ static void system_linq_iterator_system_collections_generic_ienumerator_interfac
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	system_linq_iterator_system_collections_generic_ienumerator_parent_iface = g_type_interface_peek_parent (iface);
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
-	iface->get = (gpointer (*)(SystemCollectionsGenericIEnumerator*)) system_linq_iterator_get;
+	iface->get = (gpointer (*)(SystemCollectionsGenericIEnumerator*)) system_linq_iterator_real_get;
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	iface->MoveNext = (gboolean (*)(SystemCollectionsGenericIEnumerator*)) system_linq_iterator_MoveNext;
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
@@ -1427,14 +1417,14 @@ static void system_linq_iterator_system_collections_generic_ienumerator_interfac
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerator*)) system_linq_iterator_system_collections_generic_ienumerator_get_t_destroy_func;
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	iface->get_Current = system_linq_iterator_real_get_Current;
-#line 1431 "Enumerable.c"
+#line 1421 "Enumerable.c"
 }
 
 
 static void system_linq_iterator_instance_init (SystemLinqIterator * self) {
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_ITERATOR_GET_PRIVATE (self);
-#line 1438 "Enumerable.c"
+#line 1428 "Enumerable.c"
 }
 
 
@@ -1446,7 +1436,7 @@ static void system_linq_iterator_finalize (GObject* obj) {
 	((self->current == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (self->current = (self->priv->tsource_destroy_func (self->current), NULL));
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	G_OBJECT_CLASS (system_linq_iterator_parent_class)->finalize (obj);
-#line 1450 "Enumerable.c"
+#line 1440 "Enumerable.c"
 }
 
 
@@ -1477,13 +1467,13 @@ static void _vala_system_linq_iterator_get_property (GObject * object, guint pro
 		g_value_set_pointer (value, system_collections_generic_ienumerator_get_Current ((SystemCollectionsGenericIEnumerator*) self));
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1481 "Enumerable.c"
+#line 1471 "Enumerable.c"
 		default:
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1487 "Enumerable.c"
+#line 1477 "Enumerable.c"
 	}
 }
 
@@ -1511,13 +1501,13 @@ static void _vala_system_linq_iterator_set_property (GObject * object, guint pro
 		self->priv->tsource_destroy_func = g_value_get_pointer (value);
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1515 "Enumerable.c"
+#line 1505 "Enumerable.c"
 		default:
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1521 "Enumerable.c"
+#line 1511 "Enumerable.c"
 	}
 }
 
@@ -1525,7 +1515,7 @@ static void _vala_system_linq_iterator_set_property (GObject * object, guint pro
 static gpointer _g_object_ref0 (gpointer self) {
 #line 134 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 1529 "Enumerable.c"
+#line 1519 "Enumerable.c"
 }
 
 
@@ -1573,14 +1563,14 @@ SystemLinqWhereEnumerableIterator* system_linq_where_enumerable_iterator_constru
 	self->priv->_predicate_target_destroy_notify = NULL;
 #line 132 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 1577 "Enumerable.c"
+#line 1567 "Enumerable.c"
 }
 
 
 SystemLinqWhereEnumerableIterator* system_linq_where_enumerable_iterator_new (GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func, SystemCollectionsGenericIEnumerable* source, SystemFunc predicate, void* predicate_target) {
 #line 132 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return system_linq_where_enumerable_iterator_construct (SYSTEM_LINQ_TYPE_WHERE_ENUMERABLE_ITERATOR, tsource_type, tsource_dup_func, tsource_destroy_func, source, predicate, predicate_target);
-#line 1584 "Enumerable.c"
+#line 1574 "Enumerable.c"
 }
 
 
@@ -1605,7 +1595,7 @@ static SystemLinqIterator* system_linq_where_enumerable_iterator_real_Clone (Sys
 	result = (SystemLinqIterator*) _tmp2_;
 #line 140 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1609 "Enumerable.c"
+#line 1599 "Enumerable.c"
 }
 
 
@@ -1618,13 +1608,13 @@ static void system_linq_where_enumerable_iterator_real_Dispose (SystemLinqIterat
 	_tmp0_ = self->priv->_enumerator;
 #line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_TYPE_IDISPOSABLE)) {
-#line 1622 "Enumerable.c"
+#line 1612 "Enumerable.c"
 		SystemCollectionsGenericIEnumerator* _tmp1_ = NULL;
 #line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp1_ = self->priv->_enumerator;
 #line 145 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_idisposable_Dispose (G_TYPE_CHECK_INSTANCE_CAST (_tmp1_, SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable));
-#line 1628 "Enumerable.c"
+#line 1618 "Enumerable.c"
 	}
 #line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_g_object_unref0 (self->priv->_enumerator);
@@ -1632,7 +1622,7 @@ static void system_linq_where_enumerable_iterator_real_Dispose (SystemLinqIterat
 	self->priv->_enumerator = NULL;
 #line 147 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	SYSTEM_LINQ_ITERATOR_CLASS (system_linq_where_enumerable_iterator_parent_class)->Dispose (G_TYPE_CHECK_INSTANCE_CAST (self, SYSTEM_LINQ_TYPE_ITERATOR, SystemLinqIterator));
-#line 1636 "Enumerable.c"
+#line 1626 "Enumerable.c"
 }
 
 
@@ -1648,7 +1638,7 @@ static gboolean system_linq_where_enumerable_iterator_real_MoveNext (SystemLinqI
 	switch (_tmp0_) {
 #line 152 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 1:
-#line 1652 "Enumerable.c"
+#line 1642 "Enumerable.c"
 		{
 			SystemCollectionsGenericIEnumerable* _tmp1_ = NULL;
 			SystemCollectionsGenericIEnumerator* _tmp2_ = NULL;
@@ -1669,15 +1659,15 @@ static gboolean system_linq_where_enumerable_iterator_real_MoveNext (SystemLinqI
 			result = _tmp3_;
 #line 157 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			return result;
-#line 1673 "Enumerable.c"
+#line 1663 "Enumerable.c"
 		}
 #line 152 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 2:
-#line 1677 "Enumerable.c"
+#line 1667 "Enumerable.c"
 		{
 #line 160 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			while (TRUE) {
-#line 1681 "Enumerable.c"
+#line 1671 "Enumerable.c"
 				SystemCollectionsGenericIEnumerator* _tmp4_ = NULL;
 				gboolean _tmp5_ = FALSE;
 				gpointer item = NULL;
@@ -1696,7 +1686,7 @@ static gboolean system_linq_where_enumerable_iterator_real_MoveNext (SystemLinqI
 				if (!_tmp5_) {
 #line 160 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					break;
-#line 1700 "Enumerable.c"
+#line 1690 "Enumerable.c"
 				}
 #line 162 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp6_ = self->priv->_enumerator;
@@ -1716,7 +1706,7 @@ static gboolean system_linq_where_enumerable_iterator_real_MoveNext (SystemLinqI
 				_tmp11_ = _tmp9_ (_tmp10_, _tmp9__target);
 #line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if ((gboolean) ((gintptr) _tmp11_)) {
-#line 1720 "Enumerable.c"
+#line 1710 "Enumerable.c"
 					gconstpointer _tmp12_ = NULL;
 					gpointer _tmp13_ = NULL;
 #line 165 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
@@ -1733,28 +1723,28 @@ static gboolean system_linq_where_enumerable_iterator_real_MoveNext (SystemLinqI
 					((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
 #line 166 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					return result;
-#line 1737 "Enumerable.c"
+#line 1727 "Enumerable.c"
 				}
 #line 160 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
-#line 1741 "Enumerable.c"
+#line 1731 "Enumerable.c"
 			}
 #line 169 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			system_linq_iterator_Dispose ((SystemLinqIterator*) self);
 #line 170 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			break;
-#line 1747 "Enumerable.c"
+#line 1737 "Enumerable.c"
 		}
 		default:
 #line 152 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1752 "Enumerable.c"
+#line 1742 "Enumerable.c"
 	}
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = FALSE;
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1758 "Enumerable.c"
+#line 1748 "Enumerable.c"
 }
 
 
@@ -1784,7 +1774,7 @@ SystemCollectionsGenericIEnumerable* system_linq_where_enumerable_iterator_Selec
 	result = (SystemCollectionsGenericIEnumerable*) _tmp3_;
 #line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1788 "Enumerable.c"
+#line 1778 "Enumerable.c"
 }
 
 
@@ -1840,7 +1830,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_where_enumerable_iterato
 	result = _tmp8_;
 #line 183 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1844 "Enumerable.c"
+#line 1834 "Enumerable.c"
 }
 
 
@@ -1869,14 +1859,14 @@ static void system_linq_where_enumerable_iterator_class_init (SystemLinqWhereEnu
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_ENUMERABLE_ITERATOR_TSOURCE_DUP_FUNC, g_param_spec_pointer ("tsource-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_ENUMERABLE_ITERATOR_TSOURCE_DESTROY_FUNC, g_param_spec_pointer ("tsource-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 1873 "Enumerable.c"
+#line 1863 "Enumerable.c"
 }
 
 
 static void system_linq_where_enumerable_iterator_instance_init (SystemLinqWhereEnumerableIterator * self) {
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_WHERE_ENUMERABLE_ITERATOR_GET_PRIVATE (self);
-#line 1880 "Enumerable.c"
+#line 1870 "Enumerable.c"
 }
 
 
@@ -1898,7 +1888,7 @@ static void system_linq_where_enumerable_iterator_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_enumerator);
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	G_OBJECT_CLASS (system_linq_where_enumerable_iterator_parent_class)->finalize (obj);
-#line 1902 "Enumerable.c"
+#line 1892 "Enumerable.c"
 }
 
 
@@ -1919,13 +1909,13 @@ static void _vala_system_linq_where_enumerable_iterator_get_property (GObject * 
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_LINQ_TYPE_WHERE_ENUMERABLE_ITERATOR, SystemLinqWhereEnumerableIterator);
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	switch (property_id) {
-#line 1923 "Enumerable.c"
+#line 1913 "Enumerable.c"
 		default:
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1929 "Enumerable.c"
+#line 1919 "Enumerable.c"
 	}
 }
 
@@ -1953,13 +1943,13 @@ static void _vala_system_linq_where_enumerable_iterator_set_property (GObject * 
 		self->priv->tsource_destroy_func = g_value_get_pointer (value);
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1957 "Enumerable.c"
+#line 1947 "Enumerable.c"
 		default:
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 126 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 1963 "Enumerable.c"
+#line 1953 "Enumerable.c"
 	}
 }
 
@@ -1971,17 +1961,17 @@ static gpointer* _vala_array_dup1 (gpointer* self, int length, GBoxedCopyFunc ts
 	result = g_new0 (gpointer, length);
 #line 195 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	for (i = 0; i < length; i++) {
-#line 1975 "Enumerable.c"
+#line 1965 "Enumerable.c"
 		gpointer _tmp0_ = NULL;
 #line 195 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp0_ = ((self[i] != NULL) && (tsource_dup_func != NULL)) ? tsource_dup_func ((gpointer) self[i]) : ((gpointer) self[i]);
 #line 195 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result[i] = _tmp0_;
-#line 1981 "Enumerable.c"
+#line 1971 "Enumerable.c"
 	}
 #line 195 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 1985 "Enumerable.c"
+#line 1975 "Enumerable.c"
 }
 
 
@@ -2037,14 +2027,14 @@ SystemLinqWhereArrayIterator* system_linq_where_array_iterator_construct (GType 
 	self->priv->_predicate_target_destroy_notify = NULL;
 #line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 2041 "Enumerable.c"
+#line 2031 "Enumerable.c"
 }
 
 
 SystemLinqWhereArrayIterator* system_linq_where_array_iterator_new (GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func, gpointer* source, int source_length1, SystemFunc predicate, void* predicate_target) {
 #line 193 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return system_linq_where_array_iterator_construct (SYSTEM_LINQ_TYPE_WHERE_ARRAY_ITERATOR, tsource_type, tsource_dup_func, tsource_destroy_func, source, source_length1, predicate, predicate_target);
-#line 2048 "Enumerable.c"
+#line 2038 "Enumerable.c"
 }
 
 
@@ -2072,7 +2062,7 @@ static SystemLinqIterator* system_linq_where_array_iterator_real_Clone (SystemLi
 	result = (SystemLinqIterator*) _tmp2_;
 #line 201 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2076 "Enumerable.c"
+#line 2066 "Enumerable.c"
 }
 
 
@@ -2088,7 +2078,7 @@ static gboolean system_linq_where_array_iterator_real_MoveNext (SystemLinqIterat
 	if (_tmp0_ == 1) {
 #line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		while (TRUE) {
-#line 2092 "Enumerable.c"
+#line 2082 "Enumerable.c"
 			gint _tmp1_ = 0;
 			gpointer* _tmp2_ = NULL;
 			gint _tmp2__length1 = 0;
@@ -2113,7 +2103,7 @@ static gboolean system_linq_where_array_iterator_real_MoveNext (SystemLinqIterat
 			if (!(_tmp1_ < _tmp2__length1)) {
 #line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				break;
-#line 2117 "Enumerable.c"
+#line 2107 "Enumerable.c"
 			}
 #line 210 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			_tmp3_ = self->priv->_source;
@@ -2141,7 +2131,7 @@ static gboolean system_linq_where_array_iterator_real_MoveNext (SystemLinqIterat
 			_tmp10_ = _tmp8_ (_tmp9_, _tmp8__target);
 #line 212 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			if ((gboolean) ((gintptr) _tmp10_)) {
-#line 2145 "Enumerable.c"
+#line 2135 "Enumerable.c"
 				gconstpointer _tmp11_ = NULL;
 				gpointer _tmp12_ = NULL;
 #line 214 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
@@ -2158,21 +2148,21 @@ static gboolean system_linq_where_array_iterator_real_MoveNext (SystemLinqIterat
 				((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
 #line 215 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				return result;
-#line 2162 "Enumerable.c"
+#line 2152 "Enumerable.c"
 			}
 #line 208 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
-#line 2166 "Enumerable.c"
+#line 2156 "Enumerable.c"
 		}
 #line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_linq_iterator_Dispose ((SystemLinqIterator*) self);
-#line 2170 "Enumerable.c"
+#line 2160 "Enumerable.c"
 	}
 #line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = FALSE;
 #line 220 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2176 "Enumerable.c"
+#line 2166 "Enumerable.c"
 }
 
 
@@ -2205,7 +2195,7 @@ SystemCollectionsGenericIEnumerable* system_linq_where_array_iterator_SelectImpl
 	result = (SystemCollectionsGenericIEnumerable*) _tmp3_;
 #line 226 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2209 "Enumerable.c"
+#line 2199 "Enumerable.c"
 }
 
 
@@ -2264,7 +2254,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_where_array_iterator_rea
 	result = _tmp8_;
 #line 231 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2268 "Enumerable.c"
+#line 2258 "Enumerable.c"
 }
 
 
@@ -2291,14 +2281,14 @@ static void system_linq_where_array_iterator_class_init (SystemLinqWhereArrayIte
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_ARRAY_ITERATOR_TSOURCE_DUP_FUNC, g_param_spec_pointer ("tsource-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_ARRAY_ITERATOR_TSOURCE_DESTROY_FUNC, g_param_spec_pointer ("tsource-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 2295 "Enumerable.c"
+#line 2285 "Enumerable.c"
 }
 
 
 static void system_linq_where_array_iterator_instance_init (SystemLinqWhereArrayIterator * self) {
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_WHERE_ARRAY_ITERATOR_GET_PRIVATE (self);
-#line 2302 "Enumerable.c"
+#line 2292 "Enumerable.c"
 }
 
 
@@ -2318,7 +2308,7 @@ static void system_linq_where_array_iterator_finalize (GObject* obj) {
 	self->priv->_predicate_target_destroy_notify = NULL;
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	G_OBJECT_CLASS (system_linq_where_array_iterator_parent_class)->finalize (obj);
-#line 2322 "Enumerable.c"
+#line 2312 "Enumerable.c"
 }
 
 
@@ -2339,13 +2329,13 @@ static void _vala_system_linq_where_array_iterator_get_property (GObject * objec
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_LINQ_TYPE_WHERE_ARRAY_ITERATOR, SystemLinqWhereArrayIterator);
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	switch (property_id) {
-#line 2343 "Enumerable.c"
+#line 2333 "Enumerable.c"
 		default:
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 2349 "Enumerable.c"
+#line 2339 "Enumerable.c"
 	}
 }
 
@@ -2373,13 +2363,13 @@ static void _vala_system_linq_where_array_iterator_set_property (GObject * objec
 		self->priv->tsource_destroy_func = g_value_get_pointer (value);
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 2377 "Enumerable.c"
+#line 2367 "Enumerable.c"
 		default:
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 187 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 2383 "Enumerable.c"
+#line 2373 "Enumerable.c"
 	}
 }
 
@@ -2428,14 +2418,14 @@ SystemLinqWhereListIterator* system_linq_where_list_iterator_construct (GType ob
 	self->priv->_predicate_target_destroy_notify = NULL;
 #line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 2432 "Enumerable.c"
+#line 2422 "Enumerable.c"
 }
 
 
 SystemLinqWhereListIterator* system_linq_where_list_iterator_new (GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func, SystemCollectionsGenericList* source, SystemFunc predicate, void* predicate_target) {
 #line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return system_linq_where_list_iterator_construct (SYSTEM_LINQ_TYPE_WHERE_LIST_ITERATOR, tsource_type, tsource_dup_func, tsource_destroy_func, source, predicate, predicate_target);
-#line 2439 "Enumerable.c"
+#line 2429 "Enumerable.c"
 }
 
 
@@ -2460,7 +2450,7 @@ static SystemLinqIterator* system_linq_where_list_iterator_real_Clone (SystemLin
 	result = (SystemLinqIterator*) _tmp2_;
 #line 249 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2464 "Enumerable.c"
+#line 2454 "Enumerable.c"
 }
 
 
@@ -2476,7 +2466,7 @@ static gboolean system_linq_where_list_iterator_real_MoveNext (SystemLinqIterato
 	switch (_tmp0_) {
 #line 255 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 1:
-#line 2480 "Enumerable.c"
+#line 2470 "Enumerable.c"
 		{
 			SystemCollectionsGenericList* _tmp1_ = NULL;
 			SystemCollectionsGenericIEnumerator* _tmp2_ = NULL;
@@ -2497,15 +2487,15 @@ static gboolean system_linq_where_list_iterator_real_MoveNext (SystemLinqIterato
 			result = _tmp3_;
 #line 260 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			return result;
-#line 2501 "Enumerable.c"
+#line 2491 "Enumerable.c"
 		}
 #line 255 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 2:
-#line 2505 "Enumerable.c"
+#line 2495 "Enumerable.c"
 		{
 #line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			while (TRUE) {
-#line 2509 "Enumerable.c"
+#line 2499 "Enumerable.c"
 				SystemCollectionsGenericListEnumerator* _tmp4_ = NULL;
 				gboolean _tmp5_ = FALSE;
 				gpointer item = NULL;
@@ -2524,7 +2514,7 @@ static gboolean system_linq_where_list_iterator_real_MoveNext (SystemLinqIterato
 				if (!_tmp5_) {
 #line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					break;
-#line 2528 "Enumerable.c"
+#line 2518 "Enumerable.c"
 				}
 #line 265 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp6_ = self->priv->_enumerator;
@@ -2544,7 +2534,7 @@ static gboolean system_linq_where_list_iterator_real_MoveNext (SystemLinqIterato
 				_tmp11_ = _tmp9_ (_tmp10_, _tmp9__target);
 #line 266 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if ((gboolean) ((gintptr) _tmp11_)) {
-#line 2548 "Enumerable.c"
+#line 2538 "Enumerable.c"
 					gconstpointer _tmp12_ = NULL;
 					gpointer _tmp13_ = NULL;
 #line 268 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
@@ -2561,28 +2551,28 @@ static gboolean system_linq_where_list_iterator_real_MoveNext (SystemLinqIterato
 					((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					return result;
-#line 2565 "Enumerable.c"
+#line 2555 "Enumerable.c"
 				}
 #line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
-#line 2569 "Enumerable.c"
+#line 2559 "Enumerable.c"
 			}
 #line 272 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			system_linq_iterator_Dispose ((SystemLinqIterator*) self);
 #line 273 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			break;
-#line 2575 "Enumerable.c"
+#line 2565 "Enumerable.c"
 		}
 		default:
 #line 255 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 2580 "Enumerable.c"
+#line 2570 "Enumerable.c"
 	}
 #line 275 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = FALSE;
 #line 275 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2586 "Enumerable.c"
+#line 2576 "Enumerable.c"
 }
 
 
@@ -2612,7 +2602,7 @@ SystemCollectionsGenericIEnumerable* system_linq_where_list_iterator_SelectImpl 
 	result = (SystemCollectionsGenericIEnumerable*) _tmp3_;
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2616 "Enumerable.c"
+#line 2606 "Enumerable.c"
 }
 
 
@@ -2668,7 +2658,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_where_list_iterator_real
 	result = _tmp8_;
 #line 286 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2672 "Enumerable.c"
+#line 2662 "Enumerable.c"
 }
 
 
@@ -2695,14 +2685,14 @@ static void system_linq_where_list_iterator_class_init (SystemLinqWhereListItera
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_LIST_ITERATOR_TSOURCE_DUP_FUNC, g_param_spec_pointer ("tsource-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_LIST_ITERATOR_TSOURCE_DESTROY_FUNC, g_param_spec_pointer ("tsource-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 2699 "Enumerable.c"
+#line 2689 "Enumerable.c"
 }
 
 
 static void system_linq_where_list_iterator_instance_init (SystemLinqWhereListIterator * self) {
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_WHERE_LIST_ITERATOR_GET_PRIVATE (self);
-#line 2706 "Enumerable.c"
+#line 2696 "Enumerable.c"
 }
 
 
@@ -2724,7 +2714,7 @@ static void system_linq_where_list_iterator_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_enumerator);
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	G_OBJECT_CLASS (system_linq_where_list_iterator_parent_class)->finalize (obj);
-#line 2728 "Enumerable.c"
+#line 2718 "Enumerable.c"
 }
 
 
@@ -2745,13 +2735,13 @@ static void _vala_system_linq_where_list_iterator_get_property (GObject * object
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_LINQ_TYPE_WHERE_LIST_ITERATOR, SystemLinqWhereListIterator);
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	switch (property_id) {
-#line 2749 "Enumerable.c"
+#line 2739 "Enumerable.c"
 		default:
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 2755 "Enumerable.c"
+#line 2745 "Enumerable.c"
 	}
 }
 
@@ -2779,13 +2769,13 @@ static void _vala_system_linq_where_list_iterator_set_property (GObject * object
 		self->priv->tsource_destroy_func = g_value_get_pointer (value);
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 2783 "Enumerable.c"
+#line 2773 "Enumerable.c"
 		default:
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 235 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 2789 "Enumerable.c"
+#line 2779 "Enumerable.c"
 	}
 }
 
@@ -2860,14 +2850,14 @@ SystemLinqWhereSelectEnumerableIterator* system_linq_where_select_enumerable_ite
 	self->priv->_selector_target_destroy_notify = NULL;
 #line 298 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 2864 "Enumerable.c"
+#line 2854 "Enumerable.c"
 }
 
 
 SystemLinqWhereSelectEnumerableIterator* system_linq_where_select_enumerable_iterator_new (GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func, GType tresult_type, GBoxedCopyFunc tresult_dup_func, GDestroyNotify tresult_destroy_func, SystemCollectionsGenericIEnumerable* source, SystemFunc predicate, void* predicate_target, SystemFunc selector, void* selector_target) {
 #line 298 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return system_linq_where_select_enumerable_iterator_construct (SYSTEM_LINQ_TYPE_WHERE_SELECT_ENUMERABLE_ITERATOR, tsource_type, tsource_dup_func, tsource_destroy_func, tresult_type, tresult_dup_func, tresult_destroy_func, source, predicate, predicate_target, selector, selector_target);
-#line 2871 "Enumerable.c"
+#line 2861 "Enumerable.c"
 }
 
 
@@ -2898,7 +2888,7 @@ static SystemLinqIterator* system_linq_where_select_enumerable_iterator_real_Clo
 	result = (SystemLinqIterator*) _tmp3_;
 #line 307 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 2902 "Enumerable.c"
+#line 2892 "Enumerable.c"
 }
 
 
@@ -2911,13 +2901,13 @@ static void system_linq_where_select_enumerable_iterator_real_Dispose (SystemLin
 	_tmp0_ = self->priv->_enumerator;
 #line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp0_, SYSTEM_TYPE_IDISPOSABLE)) {
-#line 2915 "Enumerable.c"
+#line 2905 "Enumerable.c"
 		SystemCollectionsGenericIEnumerator* _tmp1_ = NULL;
 #line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp1_ = self->priv->_enumerator;
 #line 312 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_idisposable_Dispose (G_TYPE_CHECK_INSTANCE_CAST (_tmp1_, SYSTEM_TYPE_IDISPOSABLE, SystemIDisposable));
-#line 2921 "Enumerable.c"
+#line 2911 "Enumerable.c"
 	}
 #line 313 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_g_object_unref0 (self->priv->_enumerator);
@@ -2925,7 +2915,7 @@ static void system_linq_where_select_enumerable_iterator_real_Dispose (SystemLin
 	self->priv->_enumerator = NULL;
 #line 314 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	SYSTEM_LINQ_ITERATOR_CLASS (system_linq_where_select_enumerable_iterator_parent_class)->Dispose (G_TYPE_CHECK_INSTANCE_CAST (self, SYSTEM_LINQ_TYPE_ITERATOR, SystemLinqIterator));
-#line 2929 "Enumerable.c"
+#line 2919 "Enumerable.c"
 }
 
 
@@ -2941,7 +2931,7 @@ static gboolean system_linq_where_select_enumerable_iterator_real_MoveNext (Syst
 	switch (_tmp0_) {
 #line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 1:
-#line 2945 "Enumerable.c"
+#line 2935 "Enumerable.c"
 		{
 			SystemCollectionsGenericIEnumerable* _tmp1_ = NULL;
 			SystemCollectionsGenericIEnumerator* _tmp2_ = NULL;
@@ -2962,15 +2952,15 @@ static gboolean system_linq_where_select_enumerable_iterator_real_MoveNext (Syst
 			result = _tmp3_;
 #line 324 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			return result;
-#line 2966 "Enumerable.c"
+#line 2956 "Enumerable.c"
 		}
 #line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 2:
-#line 2970 "Enumerable.c"
+#line 2960 "Enumerable.c"
 		{
 #line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			while (TRUE) {
-#line 2974 "Enumerable.c"
+#line 2964 "Enumerable.c"
 				SystemCollectionsGenericIEnumerator* _tmp4_ = NULL;
 				gboolean _tmp5_ = FALSE;
 				gpointer item = NULL;
@@ -2988,7 +2978,7 @@ static gboolean system_linq_where_select_enumerable_iterator_real_MoveNext (Syst
 				if (!_tmp5_) {
 #line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					break;
-#line 2992 "Enumerable.c"
+#line 2982 "Enumerable.c"
 				}
 #line 328 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp6_ = self->priv->_enumerator;
@@ -3006,7 +2996,7 @@ static gboolean system_linq_where_select_enumerable_iterator_real_MoveNext (Syst
 				if (_tmp10_ == NULL) {
 #line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_tmp9_ = TRUE;
-#line 3010 "Enumerable.c"
+#line 3000 "Enumerable.c"
 				} else {
 					SystemFunc _tmp11_ = NULL;
 					void* _tmp11__target = NULL;
@@ -3022,11 +3012,11 @@ static gboolean system_linq_where_select_enumerable_iterator_real_MoveNext (Syst
 					_tmp13_ = _tmp11_ (_tmp12_, _tmp11__target);
 #line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_tmp9_ = (gboolean) ((gintptr) _tmp13_);
-#line 3026 "Enumerable.c"
+#line 3016 "Enumerable.c"
 				}
 #line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if (_tmp9_) {
-#line 3030 "Enumerable.c"
+#line 3020 "Enumerable.c"
 					SystemFunc _tmp14_ = NULL;
 					void* _tmp14__target = NULL;
 					gconstpointer _tmp15_ = NULL;
@@ -3049,28 +3039,28 @@ static gboolean system_linq_where_select_enumerable_iterator_real_MoveNext (Syst
 					((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
 #line 332 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					return result;
-#line 3053 "Enumerable.c"
+#line 3043 "Enumerable.c"
 				}
 #line 326 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
-#line 3057 "Enumerable.c"
+#line 3047 "Enumerable.c"
 			}
 #line 335 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			system_linq_iterator_Dispose ((SystemLinqIterator*) self);
 #line 336 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			break;
-#line 3063 "Enumerable.c"
+#line 3053 "Enumerable.c"
 		}
 		default:
 #line 319 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 3068 "Enumerable.c"
+#line 3058 "Enumerable.c"
 	}
 #line 338 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = FALSE;
 #line 338 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3074 "Enumerable.c"
+#line 3064 "Enumerable.c"
 }
 
 
@@ -3131,7 +3121,7 @@ SystemCollectionsGenericIEnumerable* system_linq_where_select_enumerable_iterato
 	result = _tmp9_;
 #line 344 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3135 "Enumerable.c"
+#line 3125 "Enumerable.c"
 }
 
 
@@ -3153,7 +3143,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_where_select_enumerable_
 	result = (SystemCollectionsGenericIEnumerable*) _tmp1_;
 #line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3157 "Enumerable.c"
+#line 3147 "Enumerable.c"
 }
 
 
@@ -3188,14 +3178,14 @@ static void system_linq_where_select_enumerable_iterator_class_init (SystemLinqW
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_SELECT_ENUMERABLE_ITERATOR_TRESULT_DUP_FUNC, g_param_spec_pointer ("tresult-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_SELECT_ENUMERABLE_ITERATOR_TRESULT_DESTROY_FUNC, g_param_spec_pointer ("tresult-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 3192 "Enumerable.c"
+#line 3182 "Enumerable.c"
 }
 
 
 static void system_linq_where_select_enumerable_iterator_instance_init (SystemLinqWhereSelectEnumerableIterator * self) {
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_WHERE_SELECT_ENUMERABLE_ITERATOR_GET_PRIVATE (self);
-#line 3199 "Enumerable.c"
+#line 3189 "Enumerable.c"
 }
 
 
@@ -3225,7 +3215,7 @@ static void system_linq_where_select_enumerable_iterator_finalize (GObject* obj)
 	_g_object_unref0 (self->priv->_enumerator);
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	G_OBJECT_CLASS (system_linq_where_select_enumerable_iterator_parent_class)->finalize (obj);
-#line 3229 "Enumerable.c"
+#line 3219 "Enumerable.c"
 }
 
 
@@ -3246,13 +3236,13 @@ static void _vala_system_linq_where_select_enumerable_iterator_get_property (GOb
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_LINQ_TYPE_WHERE_SELECT_ENUMERABLE_ITERATOR, SystemLinqWhereSelectEnumerableIterator);
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	switch (property_id) {
-#line 3250 "Enumerable.c"
+#line 3240 "Enumerable.c"
 		default:
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 3256 "Enumerable.c"
+#line 3246 "Enumerable.c"
 	}
 }
 
@@ -3298,13 +3288,13 @@ static void _vala_system_linq_where_select_enumerable_iterator_set_property (GOb
 		self->priv->tresult_destroy_func = g_value_get_pointer (value);
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 3302 "Enumerable.c"
+#line 3292 "Enumerable.c"
 		default:
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 3308 "Enumerable.c"
+#line 3298 "Enumerable.c"
 	}
 }
 
@@ -3316,17 +3306,17 @@ static gpointer* _vala_array_dup2 (gpointer* self, int length, GBoxedCopyFunc ts
 	result = g_new0 (gpointer, length);
 #line 364 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	for (i = 0; i < length; i++) {
-#line 3320 "Enumerable.c"
+#line 3310 "Enumerable.c"
 		gpointer _tmp0_ = NULL;
 #line 364 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp0_ = ((self[i] != NULL) && (tsource_dup_func != NULL)) ? tsource_dup_func ((gpointer) self[i]) : ((gpointer) self[i]);
 #line 364 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result[i] = _tmp0_;
-#line 3326 "Enumerable.c"
+#line 3316 "Enumerable.c"
 	}
 #line 364 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3330 "Enumerable.c"
+#line 3320 "Enumerable.c"
 }
 
 
@@ -3408,14 +3398,14 @@ SystemLinqWhereSelectArrayIterator* system_linq_where_select_array_iterator_cons
 	self->priv->_selector_target_destroy_notify = NULL;
 #line 362 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 3412 "Enumerable.c"
+#line 3402 "Enumerable.c"
 }
 
 
 SystemLinqWhereSelectArrayIterator* system_linq_where_select_array_iterator_new (GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func, GType tresult_type, GBoxedCopyFunc tresult_dup_func, GDestroyNotify tresult_destroy_func, gpointer* source, int source_length1, SystemFunc predicate, void* predicate_target, SystemFunc selector, void* selector_target) {
 #line 362 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return system_linq_where_select_array_iterator_construct (SYSTEM_LINQ_TYPE_WHERE_SELECT_ARRAY_ITERATOR, tsource_type, tsource_dup_func, tsource_destroy_func, tresult_type, tresult_dup_func, tresult_destroy_func, source, source_length1, predicate, predicate_target, selector, selector_target);
-#line 3419 "Enumerable.c"
+#line 3409 "Enumerable.c"
 }
 
 
@@ -3449,7 +3439,7 @@ static SystemLinqIterator* system_linq_where_select_array_iterator_real_Clone (S
 	result = (SystemLinqIterator*) _tmp3_;
 #line 371 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3453 "Enumerable.c"
+#line 3443 "Enumerable.c"
 }
 
 
@@ -3465,7 +3455,7 @@ static gboolean system_linq_where_select_array_iterator_real_MoveNext (SystemLin
 	if (_tmp0_ == 1) {
 #line 378 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		while (TRUE) {
-#line 3469 "Enumerable.c"
+#line 3459 "Enumerable.c"
 			gint _tmp1_ = 0;
 			gpointer* _tmp2_ = NULL;
 			gint _tmp2__length1 = 0;
@@ -3489,7 +3479,7 @@ static gboolean system_linq_where_select_array_iterator_real_MoveNext (SystemLin
 			if (!(_tmp1_ < _tmp2__length1)) {
 #line 378 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				break;
-#line 3493 "Enumerable.c"
+#line 3483 "Enumerable.c"
 			}
 #line 380 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			_tmp3_ = self->priv->_source;
@@ -3515,7 +3505,7 @@ static gboolean system_linq_where_select_array_iterator_real_MoveNext (SystemLin
 			if (_tmp9_ == NULL) {
 #line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp8_ = TRUE;
-#line 3519 "Enumerable.c"
+#line 3509 "Enumerable.c"
 			} else {
 				SystemFunc _tmp10_ = NULL;
 				void* _tmp10__target = NULL;
@@ -3531,11 +3521,11 @@ static gboolean system_linq_where_select_array_iterator_real_MoveNext (SystemLin
 				_tmp12_ = _tmp10_ (_tmp11_, _tmp10__target);
 #line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp8_ = (gboolean) ((gintptr) _tmp12_);
-#line 3535 "Enumerable.c"
+#line 3525 "Enumerable.c"
 			}
 #line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			if (_tmp8_) {
-#line 3539 "Enumerable.c"
+#line 3529 "Enumerable.c"
 				SystemFunc _tmp13_ = NULL;
 				void* _tmp13__target = NULL;
 				gconstpointer _tmp14_ = NULL;
@@ -3558,21 +3548,21 @@ static gboolean system_linq_where_select_array_iterator_real_MoveNext (SystemLin
 				((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
 #line 385 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				return result;
-#line 3562 "Enumerable.c"
+#line 3552 "Enumerable.c"
 			}
 #line 378 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
-#line 3566 "Enumerable.c"
+#line 3556 "Enumerable.c"
 		}
 #line 388 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_linq_iterator_Dispose ((SystemLinqIterator*) self);
-#line 3570 "Enumerable.c"
+#line 3560 "Enumerable.c"
 	}
 #line 390 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = FALSE;
 #line 390 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3576 "Enumerable.c"
+#line 3566 "Enumerable.c"
 }
 
 
@@ -3636,7 +3626,7 @@ SystemCollectionsGenericIEnumerable* system_linq_where_select_array_iterator_Sel
 	result = _tmp9_;
 #line 396 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3640 "Enumerable.c"
+#line 3630 "Enumerable.c"
 }
 
 
@@ -3658,7 +3648,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_where_select_array_itera
 	result = (SystemCollectionsGenericIEnumerable*) _tmp1_;
 #line 401 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3662 "Enumerable.c"
+#line 3652 "Enumerable.c"
 }
 
 
@@ -3683,7 +3673,7 @@ static gpointer* system_linq_where_select_array_iterator_real_ToArray (SystemLin
 	_tmp0__target = self->priv->_predicate_target;
 #line 406 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (_tmp0_ != NULL) {
-#line 3687 "Enumerable.c"
+#line 3677 "Enumerable.c"
 		gint _tmp1_ = 0;
 		gpointer* _tmp2_ = NULL;
 		gpointer* _tmp3_ = NULL;
@@ -3698,13 +3688,13 @@ static gpointer* system_linq_where_select_array_iterator_real_ToArray (SystemLin
 		if (result_length1) {
 #line 408 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			*result_length1 = _tmp3__length1;
-#line 3702 "Enumerable.c"
+#line 3692 "Enumerable.c"
 		}
 #line 408 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result = _tmp3_;
 #line 408 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 3708 "Enumerable.c"
+#line 3698 "Enumerable.c"
 	}
 #line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp4_ = self->priv->_source;
@@ -3718,19 +3708,19 @@ static gpointer* system_linq_where_select_array_iterator_real_ToArray (SystemLin
 	results_length1 = _tmp4__length1;
 #line 411 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_results_size_ = results_length1;
-#line 3722 "Enumerable.c"
+#line 3712 "Enumerable.c"
 	{
 		gint i = 0;
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		i = 0;
-#line 3727 "Enumerable.c"
+#line 3717 "Enumerable.c"
 		{
 			gboolean _tmp6_ = FALSE;
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			_tmp6_ = TRUE;
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			while (TRUE) {
-#line 3734 "Enumerable.c"
+#line 3724 "Enumerable.c"
 				gint _tmp8_ = 0;
 				gpointer* _tmp9_ = NULL;
 				gint _tmp9__length1 = 0;
@@ -3747,13 +3737,13 @@ static gpointer* system_linq_where_select_array_iterator_real_ToArray (SystemLin
 				gpointer _tmp17_ = NULL;
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if (!_tmp6_) {
-#line 3751 "Enumerable.c"
+#line 3741 "Enumerable.c"
 					gint _tmp7_ = 0;
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_tmp7_ = i;
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					i = _tmp7_ + 1;
-#line 3757 "Enumerable.c"
+#line 3747 "Enumerable.c"
 				}
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp6_ = FALSE;
@@ -3767,7 +3757,7 @@ static gpointer* system_linq_where_select_array_iterator_real_ToArray (SystemLin
 				if (!(_tmp8_ < _tmp9__length1)) {
 #line 412 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					break;
-#line 3771 "Enumerable.c"
+#line 3761 "Enumerable.c"
 				}
 #line 414 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp10_ = results;
@@ -3795,7 +3785,7 @@ static gpointer* system_linq_where_select_array_iterator_real_ToArray (SystemLin
 				_tmp10_[_tmp11_] = _tmp16_;
 #line 414 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp17_ = _tmp10_[_tmp11_];
-#line 3799 "Enumerable.c"
+#line 3789 "Enumerable.c"
 			}
 		}
 	}
@@ -3807,13 +3797,13 @@ static gpointer* system_linq_where_select_array_iterator_real_ToArray (SystemLin
 	if (result_length1) {
 #line 416 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		*result_length1 = _tmp18__length1;
-#line 3811 "Enumerable.c"
+#line 3801 "Enumerable.c"
 	}
 #line 416 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = _tmp18_;
 #line 416 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 3817 "Enumerable.c"
+#line 3807 "Enumerable.c"
 }
 
 
@@ -3848,14 +3838,14 @@ static void system_linq_where_select_array_iterator_class_init (SystemLinqWhereS
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_SELECT_ARRAY_ITERATOR_TRESULT_DUP_FUNC, g_param_spec_pointer ("tresult-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_SELECT_ARRAY_ITERATOR_TRESULT_DESTROY_FUNC, g_param_spec_pointer ("tresult-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 3852 "Enumerable.c"
+#line 3842 "Enumerable.c"
 }
 
 
 static void system_linq_where_select_array_iterator_instance_init (SystemLinqWhereSelectArrayIterator * self) {
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_WHERE_SELECT_ARRAY_ITERATOR_GET_PRIVATE (self);
-#line 3859 "Enumerable.c"
+#line 3849 "Enumerable.c"
 }
 
 
@@ -3883,7 +3873,7 @@ static void system_linq_where_select_array_iterator_finalize (GObject* obj) {
 	self->priv->_selector_target_destroy_notify = NULL;
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	G_OBJECT_CLASS (system_linq_where_select_array_iterator_parent_class)->finalize (obj);
-#line 3887 "Enumerable.c"
+#line 3877 "Enumerable.c"
 }
 
 
@@ -3904,13 +3894,13 @@ static void _vala_system_linq_where_select_array_iterator_get_property (GObject 
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_LINQ_TYPE_WHERE_SELECT_ARRAY_ITERATOR, SystemLinqWhereSelectArrayIterator);
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	switch (property_id) {
-#line 3908 "Enumerable.c"
+#line 3898 "Enumerable.c"
 		default:
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 3914 "Enumerable.c"
+#line 3904 "Enumerable.c"
 	}
 }
 
@@ -3956,13 +3946,13 @@ static void _vala_system_linq_where_select_array_iterator_set_property (GObject 
 		self->priv->tresult_destroy_func = g_value_get_pointer (value);
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 3960 "Enumerable.c"
+#line 3950 "Enumerable.c"
 		default:
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 355 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 3966 "Enumerable.c"
+#line 3956 "Enumerable.c"
 	}
 }
 
@@ -4037,14 +4027,14 @@ SystemLinqWhereSelectListIterator* system_linq_where_select_list_iterator_constr
 	self->priv->_selector_target_destroy_notify = NULL;
 #line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 4041 "Enumerable.c"
+#line 4031 "Enumerable.c"
 }
 
 
 SystemLinqWhereSelectListIterator* system_linq_where_select_list_iterator_new (GType tsource_type, GBoxedCopyFunc tsource_dup_func, GDestroyNotify tsource_destroy_func, GType tresult_type, GBoxedCopyFunc tresult_dup_func, GDestroyNotify tresult_destroy_func, SystemCollectionsGenericList* source, SystemFunc predicate, void* predicate_target, SystemFunc selector, void* selector_target) {
 #line 427 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return system_linq_where_select_list_iterator_construct (SYSTEM_LINQ_TYPE_WHERE_SELECT_LIST_ITERATOR, tsource_type, tsource_dup_func, tsource_destroy_func, tresult_type, tresult_dup_func, tresult_destroy_func, source, predicate, predicate_target, selector, selector_target);
-#line 4048 "Enumerable.c"
+#line 4038 "Enumerable.c"
 }
 
 
@@ -4075,7 +4065,7 @@ static SystemLinqIterator* system_linq_where_select_list_iterator_real_Clone (Sy
 	result = (SystemLinqIterator*) _tmp3_;
 #line 436 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 4079 "Enumerable.c"
+#line 4069 "Enumerable.c"
 }
 
 
@@ -4091,7 +4081,7 @@ static gboolean system_linq_where_select_list_iterator_real_MoveNext (SystemLinq
 	switch (_tmp0_) {
 #line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 1:
-#line 4095 "Enumerable.c"
+#line 4085 "Enumerable.c"
 		{
 			SystemCollectionsGenericList* _tmp1_ = NULL;
 			SystemCollectionsGenericIEnumerator* _tmp2_ = NULL;
@@ -4107,15 +4097,15 @@ static gboolean system_linq_where_select_list_iterator_real_MoveNext (SystemLinq
 			((SystemLinqIterator*) self)->state = 2;
 #line 446 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			break;
-#line 4111 "Enumerable.c"
+#line 4101 "Enumerable.c"
 		}
 #line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		case 2:
-#line 4115 "Enumerable.c"
+#line 4105 "Enumerable.c"
 		{
 #line 449 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			while (TRUE) {
-#line 4119 "Enumerable.c"
+#line 4109 "Enumerable.c"
 				SystemCollectionsGenericListEnumerator* _tmp3_ = NULL;
 				gboolean _tmp4_ = FALSE;
 				gpointer item = NULL;
@@ -4133,7 +4123,7 @@ static gboolean system_linq_where_select_list_iterator_real_MoveNext (SystemLinq
 				if (!_tmp4_) {
 #line 449 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					break;
-#line 4137 "Enumerable.c"
+#line 4127 "Enumerable.c"
 				}
 #line 451 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp5_ = self->priv->_enumerator;
@@ -4151,7 +4141,7 @@ static gboolean system_linq_where_select_list_iterator_real_MoveNext (SystemLinq
 				if (_tmp9_ == NULL) {
 #line 452 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_tmp8_ = TRUE;
-#line 4155 "Enumerable.c"
+#line 4145 "Enumerable.c"
 				} else {
 					SystemFunc _tmp10_ = NULL;
 					void* _tmp10__target = NULL;
@@ -4167,11 +4157,11 @@ static gboolean system_linq_where_select_list_iterator_real_MoveNext (SystemLinq
 					_tmp12_ = _tmp10_ (_tmp11_, _tmp10__target);
 #line 452 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_tmp8_ = (gboolean) ((gintptr) _tmp12_);
-#line 4171 "Enumerable.c"
+#line 4161 "Enumerable.c"
 				}
 #line 452 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if (_tmp8_) {
-#line 4175 "Enumerable.c"
+#line 4165 "Enumerable.c"
 					SystemFunc _tmp13_ = NULL;
 					void* _tmp13__target = NULL;
 					gconstpointer _tmp14_ = NULL;
@@ -4194,28 +4184,28 @@ static gboolean system_linq_where_select_list_iterator_real_MoveNext (SystemLinq
 					((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
 #line 455 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					return result;
-#line 4198 "Enumerable.c"
+#line 4188 "Enumerable.c"
 				}
 #line 449 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				((item == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (item = (self->priv->tsource_destroy_func (item), NULL));
-#line 4202 "Enumerable.c"
+#line 4192 "Enumerable.c"
 			}
 #line 458 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			system_linq_iterator_Dispose ((SystemLinqIterator*) self);
 #line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			break;
-#line 4208 "Enumerable.c"
+#line 4198 "Enumerable.c"
 		}
 		default:
 #line 441 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 4213 "Enumerable.c"
+#line 4203 "Enumerable.c"
 	}
 #line 461 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = FALSE;
 #line 461 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 4219 "Enumerable.c"
+#line 4209 "Enumerable.c"
 }
 
 
@@ -4276,7 +4266,7 @@ SystemCollectionsGenericIEnumerable* system_linq_where_select_list_iterator_Sele
 	result = _tmp9_;
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 4280 "Enumerable.c"
+#line 4270 "Enumerable.c"
 }
 
 
@@ -4298,7 +4288,7 @@ static SystemCollectionsGenericIEnumerable* system_linq_where_select_list_iterat
 	result = (SystemCollectionsGenericIEnumerable*) _tmp1_;
 #line 472 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 4302 "Enumerable.c"
+#line 4292 "Enumerable.c"
 }
 
 
@@ -4324,7 +4314,7 @@ static gpointer* system_linq_where_select_list_iterator_real_ToArray (SystemLinq
 	_tmp0__target = self->priv->_predicate_target;
 #line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (_tmp0_ != NULL) {
-#line 4328 "Enumerable.c"
+#line 4318 "Enumerable.c"
 		gint _tmp1_ = 0;
 		gpointer* _tmp2_ = NULL;
 		gpointer* _tmp3_ = NULL;
@@ -4339,13 +4329,13 @@ static gpointer* system_linq_where_select_list_iterator_real_ToArray (SystemLinq
 		if (result_length1) {
 #line 479 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			*result_length1 = _tmp3__length1;
-#line 4343 "Enumerable.c"
+#line 4333 "Enumerable.c"
 		}
 #line 479 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result = _tmp3_;
 #line 479 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 4349 "Enumerable.c"
+#line 4339 "Enumerable.c"
 	}
 #line 482 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp4_ = self->priv->_source;
@@ -4361,19 +4351,19 @@ static gpointer* system_linq_where_select_list_iterator_real_ToArray (SystemLinq
 	results_length1 = _tmp6_;
 #line 482 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_results_size_ = results_length1;
-#line 4365 "Enumerable.c"
+#line 4355 "Enumerable.c"
 	{
 		gint i = 0;
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		i = 0;
-#line 4370 "Enumerable.c"
+#line 4360 "Enumerable.c"
 		{
 			gboolean _tmp8_ = FALSE;
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			_tmp8_ = TRUE;
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			while (TRUE) {
-#line 4377 "Enumerable.c"
+#line 4367 "Enumerable.c"
 				gint _tmp10_ = 0;
 				gpointer* _tmp11_ = NULL;
 				gint _tmp11__length1 = 0;
@@ -4390,13 +4380,13 @@ static gpointer* system_linq_where_select_list_iterator_real_ToArray (SystemLinq
 				gpointer _tmp20_ = NULL;
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if (!_tmp8_) {
-#line 4394 "Enumerable.c"
+#line 4384 "Enumerable.c"
 					gint _tmp9_ = 0;
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_tmp9_ = i;
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					i = _tmp9_ + 1;
-#line 4400 "Enumerable.c"
+#line 4390 "Enumerable.c"
 				}
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp8_ = FALSE;
@@ -4410,7 +4400,7 @@ static gpointer* system_linq_where_select_list_iterator_real_ToArray (SystemLinq
 				if (!(_tmp10_ < _tmp11__length1)) {
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					break;
-#line 4414 "Enumerable.c"
+#line 4404 "Enumerable.c"
 				}
 #line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp12_ = results;
@@ -4440,7 +4430,7 @@ static gpointer* system_linq_where_select_list_iterator_real_ToArray (SystemLinq
 				_tmp20_ = _tmp12_[_tmp13_];
 #line 485 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				((_tmp18_ == NULL) || (self->priv->tsource_destroy_func == NULL)) ? NULL : (_tmp18_ = (self->priv->tsource_destroy_func (_tmp18_), NULL));
-#line 4444 "Enumerable.c"
+#line 4434 "Enumerable.c"
 			}
 		}
 	}
@@ -4452,13 +4442,13 @@ static gpointer* system_linq_where_select_list_iterator_real_ToArray (SystemLinq
 	if (result_length1) {
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		*result_length1 = _tmp21__length1;
-#line 4456 "Enumerable.c"
+#line 4446 "Enumerable.c"
 	}
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = _tmp21_;
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 4462 "Enumerable.c"
+#line 4452 "Enumerable.c"
 }
 
 
@@ -4493,14 +4483,14 @@ static void system_linq_where_select_list_iterator_class_init (SystemLinqWhereSe
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_SELECT_LIST_ITERATOR_TRESULT_DUP_FUNC, g_param_spec_pointer ("tresult-dup-func", "dup func", "dup func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_LINQ_WHERE_SELECT_LIST_ITERATOR_TRESULT_DESTROY_FUNC, g_param_spec_pointer ("tresult-destroy-func", "destroy func", "destroy func", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 4497 "Enumerable.c"
+#line 4487 "Enumerable.c"
 }
 
 
 static void system_linq_where_select_list_iterator_instance_init (SystemLinqWhereSelectListIterator * self) {
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->priv = SYSTEM_LINQ_WHERE_SELECT_LIST_ITERATOR_GET_PRIVATE (self);
-#line 4504 "Enumerable.c"
+#line 4494 "Enumerable.c"
 }
 
 
@@ -4530,7 +4520,7 @@ static void system_linq_where_select_list_iterator_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_enumerator);
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	G_OBJECT_CLASS (system_linq_where_select_list_iterator_parent_class)->finalize (obj);
-#line 4534 "Enumerable.c"
+#line 4524 "Enumerable.c"
 }
 
 
@@ -4551,13 +4541,13 @@ static void _vala_system_linq_where_select_list_iterator_get_property (GObject *
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_LINQ_TYPE_WHERE_SELECT_LIST_ITERATOR, SystemLinqWhereSelectListIterator);
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	switch (property_id) {
-#line 4555 "Enumerable.c"
+#line 4545 "Enumerable.c"
 		default:
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 4561 "Enumerable.c"
+#line 4551 "Enumerable.c"
 	}
 }
 
@@ -4603,13 +4593,13 @@ static void _vala_system_linq_where_select_list_iterator_set_property (GObject *
 		self->priv->tresult_destroy_func = g_value_get_pointer (value);
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 4607 "Enumerable.c"
+#line 4597 "Enumerable.c"
 		default:
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 420 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		break;
-#line 4613 "Enumerable.c"
+#line 4603 "Enumerable.c"
 	}
 }
 
@@ -4621,17 +4611,17 @@ static gpointer* _vala_array_dup3 (gpointer* self, int length, GBoxedCopyFunc te
 	result = g_new0 (gpointer, length);
 #line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	for (i = 0; i < length; i++) {
-#line 4625 "Enumerable.c"
+#line 4615 "Enumerable.c"
 		gpointer _tmp0_ = NULL;
 #line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp0_ = ((self[i] != NULL) && (telement_dup_func != NULL)) ? telement_dup_func ((gpointer) self[i]) : ((gpointer) self[i]);
 #line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result[i] = _tmp0_;
-#line 4631 "Enumerable.c"
+#line 4621 "Enumerable.c"
 	}
 #line 541 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 4635 "Enumerable.c"
+#line 4625 "Enumerable.c"
 }
 
 
@@ -4642,17 +4632,17 @@ static gpointer* _vala_array_dup4 (gpointer* self, int length, GBoxedCopyFunc te
 	result = g_new0 (gpointer, length);
 #line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	for (i = 0; i < length; i++) {
-#line 4646 "Enumerable.c"
+#line 4636 "Enumerable.c"
 		gpointer _tmp0_ = NULL;
 #line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp0_ = ((self[i] != NULL) && (telement_dup_func != NULL)) ? telement_dup_func ((gpointer) self[i]) : ((gpointer) self[i]);
 #line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result[i] = _tmp0_;
-#line 4652 "Enumerable.c"
+#line 4642 "Enumerable.c"
 	}
 #line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 4656 "Enumerable.c"
+#line 4646 "Enumerable.c"
 }
 
 
@@ -4692,7 +4682,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 	_tmp0_ = queryInterfaces;
 #line 501 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (_tmp0_) {
-#line 4696 "Enumerable.c"
+#line 4686 "Enumerable.c"
 		SystemLinqIterator* iterator = NULL;
 		SystemCollectionsGenericIEnumerable* _tmp1_ = NULL;
 		SystemLinqIterator* _tmp2_ = NULL;
@@ -4707,7 +4697,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 		_tmp3_ = iterator;
 #line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		if (_tmp3_ != NULL) {
-#line 4711 "Enumerable.c"
+#line 4701 "Enumerable.c"
 			SystemLinqIterator* _tmp4_ = NULL;
 			gint _tmp5_ = 0;
 			gpointer* _tmp6_ = NULL;
@@ -4731,7 +4721,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 			_tmp7__length1 = items_length1;
 #line 507 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			count = _tmp7__length1;
-#line 4735 "Enumerable.c"
+#line 4725 "Enumerable.c"
 		} else {
 			SystemCollectionsGenericICollection* collection = NULL;
 			SystemCollectionsGenericIEnumerable* _tmp8_ = NULL;
@@ -4747,7 +4737,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 			_tmp10_ = collection;
 #line 512 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			if (_tmp10_ != NULL) {
-#line 4751 "Enumerable.c"
+#line 4741 "Enumerable.c"
 				SystemCollectionsGenericICollection* _tmp11_ = NULL;
 				gint _tmp12_ = 0;
 				gint _tmp13_ = 0;
@@ -4764,7 +4754,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 				_tmp14_ = count;
 #line 515 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if (_tmp14_ > 0) {
-#line 4768 "Enumerable.c"
+#line 4758 "Enumerable.c"
 					gint _tmp15_ = 0;
 					gpointer* _tmp16_ = NULL;
 					SystemCollectionsGenericICollection* _tmp17_ = NULL;
@@ -4790,16 +4780,16 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 					_tmp18__length1 = items_length1;
 #line 518 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					system_collections_generic_icollection_CopyTo (_tmp17_, _tmp18_, _tmp18__length1, 0);
-#line 4794 "Enumerable.c"
+#line 4784 "Enumerable.c"
 				}
 			}
 #line 504 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			_g_object_unref0 (collection);
-#line 4799 "Enumerable.c"
+#line 4789 "Enumerable.c"
 		}
 #line 501 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_g_object_unref0 (iterator);
-#line 4803 "Enumerable.c"
+#line 4793 "Enumerable.c"
 	}
 #line 524 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp19_ = items;
@@ -4807,7 +4797,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 	_tmp19__length1 = items_length1;
 #line 524 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (_tmp19_ == NULL) {
-#line 4811 "Enumerable.c"
+#line 4801 "Enumerable.c"
 		{
 			SystemCollectionsGenericIEnumerator* _item_it = NULL;
 			SystemCollectionsGenericIEnumerable* _tmp20_ = NULL;
@@ -4820,7 +4810,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 			_item_it = _tmp21_;
 #line 526 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			while (TRUE) {
-#line 4824 "Enumerable.c"
+#line 4814 "Enumerable.c"
 				SystemCollectionsGenericIEnumerator* _tmp22_ = NULL;
 				gboolean _tmp23_ = FALSE;
 				gpointer item = NULL;
@@ -4843,7 +4833,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 				if (!_tmp23_) {
 #line 526 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					break;
-#line 4847 "Enumerable.c"
+#line 4837 "Enumerable.c"
 				}
 #line 526 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_tmp24_ = _item_it;
@@ -4857,7 +4847,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 				_tmp26__length1 = items_length1;
 #line 528 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				if (_tmp26_ == NULL) {
-#line 4861 "Enumerable.c"
+#line 4851 "Enumerable.c"
 					gpointer* _tmp27_ = NULL;
 #line 530 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_tmp27_ = g_new0 (gpointer, 4);
@@ -4869,7 +4859,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 					items_length1 = 4;
 #line 530 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					_items_size_ = items_length1;
-#line 4873 "Enumerable.c"
+#line 4863 "Enumerable.c"
 				} else {
 					gpointer* _tmp28_ = NULL;
 					gint _tmp28__length1 = 0;
@@ -4882,7 +4872,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 					_tmp29_ = count;
 #line 532 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 					if (_tmp28__length1 == _tmp29_) {
-#line 4886 "Enumerable.c"
+#line 4876 "Enumerable.c"
 						gint newSize = 0;
 						gint _tmp30_ = 0;
 						gpointer* _tmp31_ = NULL;
@@ -4900,7 +4890,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 						_tmp32_ = newSize;
 #line 535 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 						if (_tmp31__length1 != _tmp32_) {
-#line 4904 "Enumerable.c"
+#line 4894 "Enumerable.c"
 							gpointer* newArray = NULL;
 							gint _tmp33_ = 0;
 							gpointer* _tmp34_ = NULL;
@@ -4929,7 +4919,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 							_tmp35_ = items;
 #line 538 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 							_tmp35__length1 = items_length1;
-#line 4933 "Enumerable.c"
+#line 4923 "Enumerable.c"
 							{
 								gpointer* it_collection = NULL;
 								gint it_collection_length1 = 0;
@@ -4941,14 +4931,14 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 								it_collection_length1 = _tmp35__length1;
 #line 538 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 								for (it_it = 0; it_it < _tmp35__length1; it_it = it_it + 1) {
-#line 4945 "Enumerable.c"
+#line 4935 "Enumerable.c"
 									gpointer _tmp36_ = NULL;
 									gpointer it = NULL;
 #line 538 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 									_tmp36_ = ((it_collection[it_it] != NULL) && (telement_dup_func != NULL)) ? telement_dup_func ((gpointer) it_collection[it_it]) : ((gpointer) it_collection[it_it]);
 #line 538 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 									it = _tmp36_;
-#line 4952 "Enumerable.c"
+#line 4942 "Enumerable.c"
 									{
 										gpointer* _tmp37_ = NULL;
 										gint _tmp37__length1 = 0;
@@ -4976,7 +4966,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 										_tmp41_ = _tmp37_[_tmp38_];
 #line 538 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 										_telement_destroy_func0 (it);
-#line 4980 "Enumerable.c"
+#line 4970 "Enumerable.c"
 									}
 								}
 							}
@@ -4998,7 +4988,7 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 							_items_size_ = items_length1;
 #line 535 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 							newArray = (_vala_array_free (newArray, newArray_length1, (GDestroyNotify) telement_destroy_func), NULL);
-#line 5002 "Enumerable.c"
+#line 4992 "Enumerable.c"
 						}
 					}
 				}
@@ -5024,11 +5014,11 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 				count = _tmp49_ + 1;
 #line 526 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				_telement_destroy_func0 (item);
-#line 5028 "Enumerable.c"
+#line 5018 "Enumerable.c"
 			}
 #line 526 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			_g_object_unref0 (_item_it);
-#line 5032 "Enumerable.c"
+#line 5022 "Enumerable.c"
 		}
 	}
 #line 549 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
@@ -5055,14 +5045,14 @@ SystemLinqBuffer* system_linq_buffer_construct (GType object_type, GType telemen
 	items = (_vala_array_free (items, items_length1, (GDestroyNotify) telement_destroy_func), NULL);
 #line 496 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return self;
-#line 5059 "Enumerable.c"
+#line 5049 "Enumerable.c"
 }
 
 
 SystemLinqBuffer* system_linq_buffer_new (GType telement_type, GBoxedCopyFunc telement_dup_func, GDestroyNotify telement_destroy_func, SystemCollectionsGenericIEnumerable* source, gboolean queryInterfaces) {
 #line 496 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return system_linq_buffer_construct (SYSTEM_LINQ_TYPE_BUFFER, telement_type, telement_dup_func, telement_destroy_func, source, queryInterfaces);
-#line 5066 "Enumerable.c"
+#line 5056 "Enumerable.c"
 }
 
 
@@ -5073,17 +5063,17 @@ static gpointer* _vala_array_dup5 (gpointer* self, int length, GBoxedCopyFunc te
 	result = g_new0 (gpointer, length);
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	for (i = 0; i < length; i++) {
-#line 5077 "Enumerable.c"
+#line 5067 "Enumerable.c"
 		gpointer _tmp0_ = NULL;
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp0_ = ((self[i] != NULL) && (telement_dup_func != NULL)) ? telement_dup_func ((gpointer) self[i]) : ((gpointer) self[i]);
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result[i] = _tmp0_;
-#line 5083 "Enumerable.c"
+#line 5073 "Enumerable.c"
 	}
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5087 "Enumerable.c"
+#line 5077 "Enumerable.c"
 }
 
 
@@ -5109,7 +5099,7 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 	_tmp0_ = self->count;
 #line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (_tmp0_ == 0) {
-#line 5113 "Enumerable.c"
+#line 5103 "Enumerable.c"
 		gpointer* _tmp1_ = NULL;
 		gpointer* _tmp2_ = NULL;
 		gint _tmp2__length1 = 0;
@@ -5123,13 +5113,13 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 		if (result_length1) {
 #line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			*result_length1 = _tmp2__length1;
-#line 5127 "Enumerable.c"
+#line 5117 "Enumerable.c"
 		}
 #line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result = _tmp2_;
 #line 555 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 5133 "Enumerable.c"
+#line 5123 "Enumerable.c"
 	}
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp3_ = self->items;
@@ -5139,7 +5129,7 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 	_tmp4_ = self->count;
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (_tmp3__length1 == _tmp4_) {
-#line 5143 "Enumerable.c"
+#line 5133 "Enumerable.c"
 		gpointer* _tmp5_ = NULL;
 		gint _tmp5__length1 = 0;
 		gpointer* _tmp6_ = NULL;
@@ -5162,13 +5152,13 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 		if (result_length1) {
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			*result_length1 = _tmp7__length1;
-#line 5166 "Enumerable.c"
+#line 5156 "Enumerable.c"
 		}
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		result = _tmp7_;
 #line 556 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return result;
-#line 5172 "Enumerable.c"
+#line 5162 "Enumerable.c"
 	}
 #line 558 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp8_ = self->count;
@@ -5186,7 +5176,7 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 	_tmp10_ = self->items;
 #line 560 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	_tmp10__length1 = self->items_length1;
-#line 5190 "Enumerable.c"
+#line 5180 "Enumerable.c"
 	{
 		gpointer* item_collection = NULL;
 		gint item_collection_length1 = 0;
@@ -5198,14 +5188,14 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 		item_collection_length1 = _tmp10__length1;
 #line 560 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		for (item_it = 0; item_it < _tmp10__length1; item_it = item_it + 1) {
-#line 5202 "Enumerable.c"
+#line 5192 "Enumerable.c"
 			gpointer _tmp11_ = NULL;
 			gpointer item = NULL;
 #line 560 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			_tmp11_ = ((item_collection[item_it] != NULL) && (self->priv->telement_dup_func != NULL)) ? self->priv->telement_dup_func ((gpointer) item_collection[item_it]) : ((gpointer) item_collection[item_it]);
 #line 560 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			item = _tmp11_;
-#line 5209 "Enumerable.c"
+#line 5199 "Enumerable.c"
 			{
 				gpointer* _tmp12_ = NULL;
 				gint _tmp12__length1 = 0;
@@ -5233,7 +5223,7 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 				_tmp16_ = _tmp12_[_tmp13_];
 #line 560 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 				((item == NULL) || (self->priv->telement_destroy_func == NULL)) ? NULL : (item = (self->priv->telement_destroy_func (item), NULL));
-#line 5237 "Enumerable.c"
+#line 5227 "Enumerable.c"
 			}
 		}
 	}
@@ -5245,20 +5235,20 @@ gpointer* system_linq_buffer_ToArray (SystemLinqBuffer* self, int* result_length
 	if (result_length1) {
 #line 563 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		*result_length1 = _tmp17__length1;
-#line 5249 "Enumerable.c"
+#line 5239 "Enumerable.c"
 	}
 #line 563 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = _tmp17_;
 #line 563 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5255 "Enumerable.c"
+#line 5245 "Enumerable.c"
 }
 
 
 static void system_linq_value_buffer_init (GValue* value) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	value->data[0].v_pointer = NULL;
-#line 5262 "Enumerable.c"
+#line 5252 "Enumerable.c"
 }
 
 
@@ -5267,7 +5257,7 @@ static void system_linq_value_buffer_free_value (GValue* value) {
 	if (value->data[0].v_pointer) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_linq_buffer_unref (value->data[0].v_pointer);
-#line 5271 "Enumerable.c"
+#line 5261 "Enumerable.c"
 	}
 }
 
@@ -5277,11 +5267,11 @@ static void system_linq_value_buffer_copy_value (const GValue* src_value, GValue
 	if (src_value->data[0].v_pointer) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		dest_value->data[0].v_pointer = system_linq_buffer_ref (src_value->data[0].v_pointer);
-#line 5281 "Enumerable.c"
+#line 5271 "Enumerable.c"
 	} else {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		dest_value->data[0].v_pointer = NULL;
-#line 5285 "Enumerable.c"
+#line 5275 "Enumerable.c"
 	}
 }
 
@@ -5289,37 +5279,37 @@ static void system_linq_value_buffer_copy_value (const GValue* src_value, GValue
 static gpointer system_linq_value_buffer_peek_pointer (const GValue* value) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return value->data[0].v_pointer;
-#line 5293 "Enumerable.c"
+#line 5283 "Enumerable.c"
 }
 
 
 static gchar* system_linq_value_buffer_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (collect_values[0].v_pointer) {
-#line 5300 "Enumerable.c"
+#line 5290 "Enumerable.c"
 		SystemLinqBuffer* object;
 		object = collect_values[0].v_pointer;
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		if (object->parent_instance.g_class == NULL) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 5307 "Enumerable.c"
+#line 5297 "Enumerable.c"
 		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 5311 "Enumerable.c"
+#line 5301 "Enumerable.c"
 		}
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		value->data[0].v_pointer = system_linq_buffer_ref (object);
-#line 5315 "Enumerable.c"
+#line 5305 "Enumerable.c"
 	} else {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		value->data[0].v_pointer = NULL;
-#line 5319 "Enumerable.c"
+#line 5309 "Enumerable.c"
 	}
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return NULL;
-#line 5323 "Enumerable.c"
+#line 5313 "Enumerable.c"
 }
 
 
@@ -5330,25 +5320,25 @@ static gchar* system_linq_value_buffer_lcopy_value (const GValue* value, guint n
 	if (!object_p) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 5334 "Enumerable.c"
+#line 5324 "Enumerable.c"
 	}
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (!value->data[0].v_pointer) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		*object_p = NULL;
-#line 5340 "Enumerable.c"
+#line 5330 "Enumerable.c"
 	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		*object_p = value->data[0].v_pointer;
-#line 5344 "Enumerable.c"
+#line 5334 "Enumerable.c"
 	} else {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		*object_p = system_linq_buffer_ref (value->data[0].v_pointer);
-#line 5348 "Enumerable.c"
+#line 5338 "Enumerable.c"
 	}
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return NULL;
-#line 5352 "Enumerable.c"
+#line 5342 "Enumerable.c"
 }
 
 
@@ -5362,7 +5352,7 @@ GParamSpec* system_linq_param_spec_buffer (const gchar* name, const gchar* nick,
 	G_PARAM_SPEC (spec)->value_type = object_type;
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return G_PARAM_SPEC (spec);
-#line 5366 "Enumerable.c"
+#line 5356 "Enumerable.c"
 }
 
 
@@ -5371,7 +5361,7 @@ gpointer system_linq_value_get_buffer (const GValue* value) {
 	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, SYSTEM_LINQ_TYPE_BUFFER), NULL);
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return value->data[0].v_pointer;
-#line 5375 "Enumerable.c"
+#line 5365 "Enumerable.c"
 }
 
 
@@ -5391,17 +5381,17 @@ void system_linq_value_set_buffer (GValue* value, gpointer v_object) {
 		value->data[0].v_pointer = v_object;
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_linq_buffer_ref (value->data[0].v_pointer);
-#line 5395 "Enumerable.c"
+#line 5385 "Enumerable.c"
 	} else {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		value->data[0].v_pointer = NULL;
-#line 5399 "Enumerable.c"
+#line 5389 "Enumerable.c"
 	}
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (old) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_linq_buffer_unref (old);
-#line 5405 "Enumerable.c"
+#line 5395 "Enumerable.c"
 	}
 }
 
@@ -5420,17 +5410,17 @@ void system_linq_value_take_buffer (GValue* value, gpointer v_object) {
 		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		value->data[0].v_pointer = v_object;
-#line 5424 "Enumerable.c"
+#line 5414 "Enumerable.c"
 	} else {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		value->data[0].v_pointer = NULL;
-#line 5428 "Enumerable.c"
+#line 5418 "Enumerable.c"
 	}
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (old) {
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		system_linq_buffer_unref (old);
-#line 5434 "Enumerable.c"
+#line 5424 "Enumerable.c"
 	}
 }
 
@@ -5442,7 +5432,7 @@ static void system_linq_buffer_class_init (SystemLinqBufferClass * klass) {
 	((SystemLinqBufferClass *) klass)->finalize = system_linq_buffer_finalize;
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	g_type_class_add_private (klass, sizeof (SystemLinqBufferPrivate));
-#line 5446 "Enumerable.c"
+#line 5436 "Enumerable.c"
 }
 
 
@@ -5451,7 +5441,7 @@ static void system_linq_buffer_instance_init (SystemLinqBuffer * self) {
 	self->priv = SYSTEM_LINQ_BUFFER_GET_PRIVATE (self);
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->ref_count = 1;
-#line 5455 "Enumerable.c"
+#line 5445 "Enumerable.c"
 }
 
 
@@ -5463,7 +5453,7 @@ static void system_linq_buffer_finalize (SystemLinqBuffer* obj) {
 	g_signal_handlers_destroy (self);
 #line 493 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	self->items = (_vala_array_free (self->items, self->items_length1, (GDestroyNotify) self->priv->telement_destroy_func), NULL);
-#line 5467 "Enumerable.c"
+#line 5457 "Enumerable.c"
 }
 
 
@@ -5488,7 +5478,7 @@ gpointer system_linq_buffer_ref (gpointer instance) {
 	g_atomic_int_inc (&self->ref_count);
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return instance;
-#line 5492 "Enumerable.c"
+#line 5482 "Enumerable.c"
 }
 
 
@@ -5501,7 +5491,7 @@ void system_linq_buffer_unref (gpointer instance) {
 		SYSTEM_LINQ_BUFFER_GET_CLASS (self)->finalize (self);
 #line 491 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		g_type_free_instance ((GTypeInstance *) self);
-#line 5505 "Enumerable.c"
+#line 5495 "Enumerable.c"
 	}
 }
 
@@ -5511,7 +5501,7 @@ static Block2Data* block2_data_ref (Block2Data* _data2_) {
 	g_atomic_int_inc (&_data2_->_ref_count_);
 #line 567 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return _data2_;
-#line 5515 "Enumerable.c"
+#line 5505 "Enumerable.c"
 }
 
 
@@ -5520,7 +5510,7 @@ static void block2_data_unref (void * _userdata_) {
 	_data2_ = (Block2Data*) _userdata_;
 #line 567 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (g_atomic_int_dec_and_test (&_data2_->_ref_count_)) {
-#line 5524 "Enumerable.c"
+#line 5514 "Enumerable.c"
 		GType tsource_type;
 		GBoxedCopyFunc tsource_dup_func;
 		GDestroyNotify tsource_destroy_func;
@@ -5532,7 +5522,7 @@ static void block2_data_unref (void * _userdata_) {
 		tsource_destroy_func = _data2_->tsource_destroy_func;
 #line 567 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		g_slice_free (Block2Data, _data2_);
-#line 5536 "Enumerable.c"
+#line 5526 "Enumerable.c"
 	}
 }
 
@@ -5563,7 +5553,7 @@ static gboolean __lambda5_ (Block2Data* _data2_, gconstpointer x) {
 	_tmp3_ = _tmp1_ (_tmp2_, _tmp1__target);
 #line 569 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if ((gboolean) ((gintptr) _tmp3_)) {
-#line 5567 "Enumerable.c"
+#line 5557 "Enumerable.c"
 		SystemFunc _tmp4_ = NULL;
 		void* _tmp4__target = NULL;
 		gconstpointer _tmp5_ = NULL;
@@ -5578,17 +5568,17 @@ static gboolean __lambda5_ (Block2Data* _data2_, gconstpointer x) {
 		_tmp6_ = _tmp4_ (_tmp5_, _tmp4__target);
 #line 569 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp0_ = (gboolean) ((gintptr) _tmp6_);
-#line 5582 "Enumerable.c"
+#line 5572 "Enumerable.c"
 	} else {
 #line 569 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		_tmp0_ = FALSE;
-#line 5586 "Enumerable.c"
+#line 5576 "Enumerable.c"
 	}
 #line 569 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	result = _tmp0_;
 #line 569 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5592 "Enumerable.c"
+#line 5582 "Enumerable.c"
 }
 
 
@@ -5597,7 +5587,7 @@ static gpointer ___lambda5__system_func (gconstpointer arg, gpointer self) {
 	result = (gpointer) ((gintptr) __lambda5_ (self, arg));
 #line 569 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5601 "Enumerable.c"
+#line 5591 "Enumerable.c"
 }
 
 
@@ -5655,7 +5645,7 @@ SystemFunc system_linq_CombinePredicates (GType tsource_type, GBoxedCopyFunc tso
 	_data2_ = NULL;
 #line 569 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5659 "Enumerable.c"
+#line 5649 "Enumerable.c"
 }
 
 
@@ -5664,7 +5654,7 @@ static Block3Data* block3_data_ref (Block3Data* _data3_) {
 	g_atomic_int_inc (&_data3_->_ref_count_);
 #line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return _data3_;
-#line 5668 "Enumerable.c"
+#line 5658 "Enumerable.c"
 }
 
 
@@ -5673,7 +5663,7 @@ static void block3_data_unref (void * _userdata_) {
 	_data3_ = (Block3Data*) _userdata_;
 #line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	if (g_atomic_int_dec_and_test (&_data3_->_ref_count_)) {
-#line 5677 "Enumerable.c"
+#line 5667 "Enumerable.c"
 		GType tsource_type;
 		GBoxedCopyFunc tsource_dup_func;
 		GDestroyNotify tsource_destroy_func;
@@ -5703,7 +5693,7 @@ static void block3_data_unref (void * _userdata_) {
 		tresult_destroy_func = _data3_->tresult_destroy_func;
 #line 572 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 		g_slice_free (Block3Data, _data3_);
-#line 5707 "Enumerable.c"
+#line 5697 "Enumerable.c"
 	}
 }
 
@@ -5770,7 +5760,7 @@ static gpointer __lambda4_ (Block3Data* _data3_, gconstpointer x) {
 	result = _tmp6_;
 #line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5774 "Enumerable.c"
+#line 5764 "Enumerable.c"
 }
 
 
@@ -5779,7 +5769,7 @@ static gpointer ___lambda4__system_func (gconstpointer arg, gpointer self) {
 	result = __lambda4_ (self, arg);
 #line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5783 "Enumerable.c"
+#line 5773 "Enumerable.c"
 }
 
 
@@ -5849,7 +5839,7 @@ SystemFunc system_linq_CombineSelectors (GType tsource_type, GBoxedCopyFunc tsou
 	_data3_ = NULL;
 #line 576 "/home/developer/projects/Backup/LibDotNet/src/System/Linq/Enumerable.vala"
 	return result;
-#line 5853 "Enumerable.c"
+#line 5843 "Enumerable.c"
 }
 
 

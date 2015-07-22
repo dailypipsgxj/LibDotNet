@@ -9,7 +9,7 @@ LIBDOTNET_REGEX = \
 	System/Text/RegularExpressions/RegexMatchTimeoutException.vala \
 	System/Text/RegularExpressions/RegexOptions.vala
 	
-LIBDOTNET_COLLECTIONS_IFACE = \
+LIBDOTNET_COLLECTIONS_IFACE_X = \
 	System/Collections/icollection.vala \
 	System/Collections/icomparer.vala \
 	System/Collections/idictionary.vala \
@@ -38,6 +38,13 @@ LIBDOTNET_COLLECTIONS = \
 	System/Collections/SortedList.vala \
 	System/Collections/Stack.vala \
 	System/Collections/StructuralComparisons.vala
+
+
+LIBDOTNET_COLLECTIONS_IFACE = \
+	System/Collections/icollection.vala \
+	System/Collections/ienumerable.vala \
+	System/Collections/ienumerator.vala
+
 
 LIBDOTNET_COLLECTIONS_GEN_IFACE = \
 	System/Linq/Enumerable.vala \
@@ -72,6 +79,7 @@ LIBDOTNET_COLLECTIONS_OBJMODEL = \
 
 
 LIBDOTNET_COLLECTIONS_GENX = \
+	System/IO/TextReader.vala \
 	System/Linq/Enumerable.vala \
 	System/Array.vala \
 	System/Collections/Generic/SortedDictionary.vala \
@@ -91,7 +99,6 @@ LIBDOTNET_SYSTEM_NS = \
 
 LIBDOTNET_SYSTEM = \
 	System/IO/InvalidDataException.vala \
-	System/IO/TextReader.vala \
 	System/Text/StringBuilder.vala \
 	System/Nullable.vala \
 	System/Object.vala \
@@ -118,6 +125,8 @@ LIBDOTNET_SYSTEM_MISC = \
 	System/Globalization/CultureInfo.vala
 
 LIBDOTNET_SOURCES = \
+	$(LIBDOTNET_REGEX) \
+	$(LIBDOTNET_COLLECTIONS_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN_IFACE) \
 	$(LIBDOTNET_COLLECTIONS_GEN) \
 	$(LIBDOTNET_COLLECTIONS_OBJMODEL) \

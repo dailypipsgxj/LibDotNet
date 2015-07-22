@@ -4,9 +4,10 @@
 // The MatchCollection lists the successful matches that
 // result when searching a string for a regular expression.
 
-using System.Collections;
-//using System.Collections.Generic;
+//using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace System.Text.RegularExpressions
 {
@@ -19,21 +20,28 @@ namespace System.Text.RegularExpressions
     /// Represents the set of names appearing as capturing group
     /// names in a regular expression.
     /// </summary>
-    public class MatchCollection : Object, ICollection, IEnumerable
+    public class MatchCollection : ICollection<Match>, IEnumerable<Match>
     {
-        private   GLib.Regex _regex;
-        private   string _input;
-        private   int _beginning;
-        private   int _length;
+        private Regex _regex;
+        private List<Match> _matches;
+        private bool _done;
+        private string _input;
+        private int _beginning;
+        private int _length;
         private int _startat;
+        private int _prevlen;
 
-        public MatchCollection(GLib.Regex regex, string input, int beginning, int length, int startat)
+        public MatchCollection(Regex regex, string input, int beginning, int length, int startat)
+			requires (startat >= 0 || startat < input.length)
         {
             _regex = regex;
             _input = input;
             _beginning = beginning;
             _length = length;
             _startat = startat;
+            _prevlen = -1;
+            _matches = new List<Match>();
+            _done = false;
         }
 
         /// <summary>
@@ -43,14 +51,25 @@ namespace System.Text.RegularExpressions
         {
             get
             {
-                return -1;//_matches.Count;
+                EnsureInitialized();
+                return _matches.Count;
+            }
+        }
+
+        public int size
+        {
+            get
+            {
+                return Count;//_matches.Count;
             }
         }
 
         /// <summary>
         /// Returns the ith Match in the collection.
         /// </summary>
-        new Match get (int i)
+        public new Match get (int i)
+			requires (i >= 0)
+			ensures (result != null)
         {
 			Match match = GetMatch(i);
 			return match;
@@ -59,19 +78,51 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Provides an enumerator in the same order as Item[i].
         /// </summary>
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Match> GetEnumerator()
         {
             return new Enumerator(this);
         }
 
-        private Match GetMatch(int i)
+        public IEnumerator<Match> iterator()
         {
-            return this as Match;
+            return GetEnumerator();
+        }
+
+        private Match? GetMatch(int i)
+			requires (i >= 0)
+        {
+            if (_matches.Count > i)
+                return _matches[i];
+
+            if (_done)
+                return null;
+
+            Match match;
+
+            do {
+                match = _regex.Run(false, _prevlen, _input, _beginning, _length, _startat);
+
+                if (!match.Success)
+                {
+                    _done = true;
+                    return null;
+                }
+
+                _matches.Add(match);
+
+                _prevlen = match._length;
+                _startat = match._textpos;
+            } while (_matches.Count <= i);
+
+            return match;
         }
 
         private void EnsureInitialized()
         {
-			GetMatch(int.MAX);
+            if (!_done)
+            {
+                GetMatch(int.MAX);
+            }
         }
 
         bool IsSynchronized
@@ -79,26 +130,25 @@ namespace System.Text.RegularExpressions
             get { return false; }
         }
 
-        Object SyncRoot
+        public Object SyncRoot
         {
             get { return this as Object; }
         }
 
-
-        public class Enumerator : Object, IEnumerator
+        private class Enumerator : IEnumerator<Match>
         {
-            private   MatchCollection _collection;
+            private  MatchCollection _collection;
             private int _index;
-
-			private Object _currentElement { get; set;}
-			private Gee.Iterator<Object> _iterator { get; set;}
-
 
             internal Enumerator(MatchCollection collection)
             {
                 _collection = collection;
                 _index = -1;
             }
+
+			public Object get () {
+				return Current;
+			}
 
             public bool MoveNext()
             {
@@ -117,16 +167,21 @@ namespace System.Text.RegularExpressions
                 return true;
             }
 
-            public Object Current
+            public bool next()
             {
-                owned get
-                {
-                    return _currentElement;
+				return MoveNext();
+			}
+
+            public Object Current {
+                owned get {
+				if (_index < 0)
+					throw new InvalidOperationException(SR.EnumNotStarted);
+					
+                    return _collection.GetMatch(_index);
                 }
             }
 
-
-            void IEnumerator.Reset()
+            void Reset()
             {
                 _index = -1;
             }

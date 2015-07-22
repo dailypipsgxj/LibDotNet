@@ -336,7 +336,10 @@ typedef enum  {
 	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_VALUE,
 	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_NEED_NON_NEG_NUM,
 	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_BEGIN_INDEX_NOT_NEGATIVE,
-	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_LENGTH_NOT_NEGATIVE
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_LENGTH_NOT_NEGATIVE,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_NEGATIVE_CAPACITY,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_NEGATIVE_LENGTH,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_SMALL_CAPACITY
 } SystemArgumentOutOfRangeException;
 #define SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION system_argument_out_of_range_exception_quark ()
 struct _SystemCollectionsGenericListEnumerator {
@@ -578,7 +581,7 @@ static GType system_collections_generic_abstract_list_real_get_element_type (Sys
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_get_element_type'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return 0UL;
-#line 582 "List.c"
+#line 585 "List.c"
 }
 
 
@@ -587,7 +590,7 @@ GType system_collections_generic_abstract_list_get_element_type (SystemCollectio
 	g_return_val_if_fail (self != NULL, 0UL);
 #line 33 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_element_type (self);
-#line 591 "List.c"
+#line 594 "List.c"
 }
 
 
@@ -596,7 +599,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_iterator'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 600 "List.c"
+#line 603 "List.c"
 }
 
 
@@ -605,7 +608,7 @@ SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_list_it
 	g_return_val_if_fail (self != NULL, NULL);
 #line 41 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->iterator (self);
-#line 609 "List.c"
+#line 612 "List.c"
 }
 
 
@@ -614,7 +617,7 @@ static gboolean system_collections_generic_abstract_list_real_contains (SystemCo
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_contains'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return FALSE;
-#line 618 "List.c"
+#line 621 "List.c"
 }
 
 
@@ -623,7 +626,7 @@ gboolean system_collections_generic_abstract_list_contains (SystemCollectionsGen
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 42 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->contains (self, item);
-#line 627 "List.c"
+#line 630 "List.c"
 }
 
 
@@ -632,7 +635,7 @@ static gint system_collections_generic_abstract_list_real_IndexOf (SystemCollect
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_IndexOf'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return 0;
-#line 636 "List.c"
+#line 639 "List.c"
 }
 
 
@@ -641,7 +644,7 @@ gint system_collections_generic_abstract_list_IndexOf (SystemCollectionsGenericA
 	g_return_val_if_fail (self != NULL, 0);
 #line 43 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->IndexOf (self, item, startIndex);
-#line 645 "List.c"
+#line 648 "List.c"
 }
 
 
@@ -650,7 +653,7 @@ static gpointer system_collections_generic_abstract_list_real_get (SystemCollect
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_get'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 654 "List.c"
+#line 657 "List.c"
 }
 
 
@@ -659,7 +662,7 @@ gpointer system_collections_generic_abstract_list_get (SystemCollectionsGenericA
 	g_return_val_if_fail (self != NULL, NULL);
 #line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get (self, index);
-#line 663 "List.c"
+#line 666 "List.c"
 }
 
 
@@ -668,7 +671,7 @@ static void system_collections_generic_abstract_list_real_set (SystemCollections
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_set'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 672 "List.c"
+#line 675 "List.c"
 }
 
 
@@ -677,7 +680,7 @@ void system_collections_generic_abstract_list_set (SystemCollectionsGenericAbstr
 	g_return_if_fail (self != NULL);
 #line 45 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->set (self, index, item);
-#line 681 "List.c"
+#line 684 "List.c"
 }
 
 
@@ -686,7 +689,7 @@ static void system_collections_generic_abstract_list_real_Add (SystemCollections
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Add'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 690 "List.c"
+#line 693 "List.c"
 }
 
 
@@ -695,7 +698,7 @@ void system_collections_generic_abstract_list_Add (SystemCollectionsGenericAbstr
 	g_return_if_fail (self != NULL);
 #line 46 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Add (self, item);
-#line 699 "List.c"
+#line 702 "List.c"
 }
 
 
@@ -704,7 +707,7 @@ static void system_collections_generic_abstract_list_real_AddRange (SystemCollec
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_AddRange'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 708 "List.c"
+#line 711 "List.c"
 }
 
 
@@ -713,7 +716,7 @@ void system_collections_generic_abstract_list_AddRange (SystemCollectionsGeneric
 	g_return_if_fail (self != NULL);
 #line 47 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->AddRange (self, collection);
-#line 717 "List.c"
+#line 720 "List.c"
 }
 
 
@@ -722,7 +725,7 @@ static SystemCollectionsObjectModelReadOnlyCollection* system_collections_generi
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_AsReadOnly'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 726 "List.c"
+#line 729 "List.c"
 }
 
 
@@ -731,7 +734,7 @@ SystemCollectionsObjectModelReadOnlyCollection* system_collections_generic_abstr
 	g_return_val_if_fail (self != NULL, NULL);
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->AsReadOnly (self);
-#line 735 "List.c"
+#line 738 "List.c"
 }
 
 
@@ -740,7 +743,7 @@ static gint system_collections_generic_abstract_list_real_BinarySearch (SystemCo
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_BinarySearch'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return 0;
-#line 744 "List.c"
+#line 747 "List.c"
 }
 
 
@@ -749,7 +752,7 @@ gint system_collections_generic_abstract_list_BinarySearch (SystemCollectionsGen
 	g_return_val_if_fail (self != NULL, 0);
 #line 49 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->BinarySearch (self, index, count, item, comparer);
-#line 753 "List.c"
+#line 756 "List.c"
 }
 
 
@@ -758,7 +761,7 @@ static void system_collections_generic_abstract_list_real_Clear (SystemCollectio
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Clear'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 762 "List.c"
+#line 765 "List.c"
 }
 
 
@@ -767,7 +770,7 @@ void system_collections_generic_abstract_list_Clear (SystemCollectionsGenericAbs
 	g_return_if_fail (self != NULL);
 #line 50 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Clear (self);
-#line 771 "List.c"
+#line 774 "List.c"
 }
 
 
@@ -776,7 +779,7 @@ static void system_collections_generic_abstract_list_real_CopyTo (SystemCollecti
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_CopyTo'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 780 "List.c"
+#line 783 "List.c"
 }
 
 
@@ -785,7 +788,7 @@ void system_collections_generic_abstract_list_CopyTo (SystemCollectionsGenericAb
 	g_return_if_fail (self != NULL);
 #line 51 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->CopyTo (self, array, array_length1, arrayIndex);
-#line 789 "List.c"
+#line 792 "List.c"
 }
 
 
@@ -794,7 +797,7 @@ static gboolean system_collections_generic_abstract_list_real_Exists (SystemColl
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Exists'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return FALSE;
-#line 798 "List.c"
+#line 801 "List.c"
 }
 
 
@@ -803,7 +806,7 @@ gboolean system_collections_generic_abstract_list_Exists (SystemCollectionsGener
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Exists (self, match, match_target);
-#line 807 "List.c"
+#line 810 "List.c"
 }
 
 
@@ -812,7 +815,7 @@ static gpointer system_collections_generic_abstract_list_real_Find (SystemCollec
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Find'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 816 "List.c"
+#line 819 "List.c"
 }
 
 
@@ -821,7 +824,7 @@ gpointer system_collections_generic_abstract_list_Find (SystemCollectionsGeneric
 	g_return_val_if_fail (self != NULL, NULL);
 #line 53 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Find (self, match, match_target);
-#line 825 "List.c"
+#line 828 "List.c"
 }
 
 
@@ -830,7 +833,7 @@ static SystemCollectionsGenericList* system_collections_generic_abstract_list_re
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_FindAll'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 834 "List.c"
+#line 837 "List.c"
 }
 
 
@@ -839,7 +842,7 @@ SystemCollectionsGenericList* system_collections_generic_abstract_list_FindAll (
 	g_return_val_if_fail (self != NULL, NULL);
 #line 54 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->FindAll (self, match, match_target);
-#line 843 "List.c"
+#line 846 "List.c"
 }
 
 
@@ -848,7 +851,7 @@ static gint system_collections_generic_abstract_list_real_FindIndex (SystemColle
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_FindIndex'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return 0;
-#line 852 "List.c"
+#line 855 "List.c"
 }
 
 
@@ -857,7 +860,7 @@ gint system_collections_generic_abstract_list_FindIndex (SystemCollectionsGeneri
 	g_return_val_if_fail (self != NULL, 0);
 #line 55 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->FindIndex (self, match, match_target);
-#line 861 "List.c"
+#line 864 "List.c"
 }
 
 
@@ -866,7 +869,7 @@ static gpointer system_collections_generic_abstract_list_real_FindLast (SystemCo
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_FindLast'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 870 "List.c"
+#line 873 "List.c"
 }
 
 
@@ -875,7 +878,7 @@ gpointer system_collections_generic_abstract_list_FindLast (SystemCollectionsGen
 	g_return_val_if_fail (self != NULL, NULL);
 #line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->FindLast (self, match, match_target);
-#line 879 "List.c"
+#line 882 "List.c"
 }
 
 
@@ -884,7 +887,7 @@ static gint system_collections_generic_abstract_list_real_FindLastIndex (SystemC
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_FindLastIndex'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return 0;
-#line 888 "List.c"
+#line 891 "List.c"
 }
 
 
@@ -893,7 +896,7 @@ gint system_collections_generic_abstract_list_FindLastIndex (SystemCollectionsGe
 	g_return_val_if_fail (self != NULL, 0);
 #line 57 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->FindLastIndex (self, match, match_target);
-#line 897 "List.c"
+#line 900 "List.c"
 }
 
 
@@ -902,7 +905,7 @@ static void system_collections_generic_abstract_list_real_ForEach (SystemCollect
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_ForEach'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 906 "List.c"
+#line 909 "List.c"
 }
 
 
@@ -911,7 +914,7 @@ void system_collections_generic_abstract_list_ForEach (SystemCollectionsGenericA
 	g_return_if_fail (self != NULL);
 #line 58 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->ForEach (self, action, action_target);
-#line 915 "List.c"
+#line 918 "List.c"
 }
 
 
@@ -920,7 +923,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_GetEnumerator'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 924 "List.c"
+#line 927 "List.c"
 }
 
 
@@ -929,7 +932,7 @@ SystemCollectionsGenericIEnumerator* system_collections_generic_abstract_list_Ge
 	g_return_val_if_fail (self != NULL, NULL);
 #line 59 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->GetEnumerator (self);
-#line 933 "List.c"
+#line 936 "List.c"
 }
 
 
@@ -938,7 +941,7 @@ static SystemCollectionsGenericList* system_collections_generic_abstract_list_re
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_GetRange'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 942 "List.c"
+#line 945 "List.c"
 }
 
 
@@ -947,7 +950,7 @@ SystemCollectionsGenericList* system_collections_generic_abstract_list_GetRange 
 	g_return_val_if_fail (self != NULL, NULL);
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->GetRange (self, index, count);
-#line 951 "List.c"
+#line 954 "List.c"
 }
 
 
@@ -956,7 +959,7 @@ static void system_collections_generic_abstract_list_real_InsertRange (SystemCol
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_InsertRange'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 960 "List.c"
+#line 963 "List.c"
 }
 
 
@@ -965,7 +968,7 @@ void system_collections_generic_abstract_list_InsertRange (SystemCollectionsGene
 	g_return_if_fail (self != NULL);
 #line 61 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->InsertRange (self, index, collection);
-#line 969 "List.c"
+#line 972 "List.c"
 }
 
 
@@ -974,7 +977,7 @@ static void system_collections_generic_abstract_list_real_Insert (SystemCollecti
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Insert'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 978 "List.c"
+#line 981 "List.c"
 }
 
 
@@ -983,7 +986,7 @@ void system_collections_generic_abstract_list_Insert (SystemCollectionsGenericAb
 	g_return_if_fail (self != NULL);
 #line 62 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Insert (self, index, item);
-#line 987 "List.c"
+#line 990 "List.c"
 }
 
 
@@ -992,7 +995,7 @@ static gint system_collections_generic_abstract_list_real_LastIndexOf (SystemCol
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_LastIndexOf'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return 0;
-#line 996 "List.c"
+#line 999 "List.c"
 }
 
 
@@ -1001,7 +1004,7 @@ gint system_collections_generic_abstract_list_LastIndexOf (SystemCollectionsGene
 	g_return_val_if_fail (self != NULL, 0);
 #line 63 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->LastIndexOf (self, item);
-#line 1005 "List.c"
+#line 1008 "List.c"
 }
 
 
@@ -1010,7 +1013,7 @@ static gboolean system_collections_generic_abstract_list_real_Remove (SystemColl
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Remove'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return FALSE;
-#line 1014 "List.c"
+#line 1017 "List.c"
 }
 
 
@@ -1019,7 +1022,7 @@ gboolean system_collections_generic_abstract_list_Remove (SystemCollectionsGener
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Remove (self, item);
-#line 1023 "List.c"
+#line 1026 "List.c"
 }
 
 
@@ -1028,7 +1031,7 @@ static void system_collections_generic_abstract_list_real_RemoveAt (SystemCollec
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_RemoveAt'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 1032 "List.c"
+#line 1035 "List.c"
 }
 
 
@@ -1037,7 +1040,7 @@ void system_collections_generic_abstract_list_RemoveAt (SystemCollectionsGeneric
 	g_return_if_fail (self != NULL);
 #line 65 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->RemoveAt (self, index);
-#line 1041 "List.c"
+#line 1044 "List.c"
 }
 
 
@@ -1046,7 +1049,7 @@ static gint system_collections_generic_abstract_list_real_RemoveAll (SystemColle
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_RemoveAll'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return 0;
-#line 1050 "List.c"
+#line 1053 "List.c"
 }
 
 
@@ -1055,7 +1058,7 @@ gint system_collections_generic_abstract_list_RemoveAll (SystemCollectionsGeneri
 	g_return_val_if_fail (self != NULL, 0);
 #line 66 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->RemoveAll (self, match, match_target);
-#line 1059 "List.c"
+#line 1062 "List.c"
 }
 
 
@@ -1064,7 +1067,7 @@ static void system_collections_generic_abstract_list_real_RemoveRange (SystemCol
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_RemoveRange'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 1068 "List.c"
+#line 1071 "List.c"
 }
 
 
@@ -1073,7 +1076,7 @@ void system_collections_generic_abstract_list_RemoveRange (SystemCollectionsGene
 	g_return_if_fail (self != NULL);
 #line 67 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->RemoveRange (self, index, count);
-#line 1077 "List.c"
+#line 1080 "List.c"
 }
 
 
@@ -1082,7 +1085,7 @@ static void system_collections_generic_abstract_list_real_Reverse (SystemCollect
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Reverse'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 68 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 1086 "List.c"
+#line 1089 "List.c"
 }
 
 
@@ -1091,7 +1094,7 @@ void system_collections_generic_abstract_list_Reverse (SystemCollectionsGenericA
 	g_return_if_fail (self != NULL);
 #line 68 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Reverse (self);
-#line 1095 "List.c"
+#line 1098 "List.c"
 }
 
 
@@ -1100,7 +1103,7 @@ static void system_collections_generic_abstract_list_real_Sort (SystemCollection
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_Sort'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 1104 "List.c"
+#line 1107 "List.c"
 }
 
 
@@ -1109,7 +1112,7 @@ void system_collections_generic_abstract_list_Sort (SystemCollectionsGenericAbst
 	g_return_if_fail (self != NULL);
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->Sort (self, comparer);
-#line 1113 "List.c"
+#line 1116 "List.c"
 }
 
 
@@ -1118,7 +1121,7 @@ static gpointer* system_collections_generic_abstract_list_real_ToArray (SystemCo
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_ToArray'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return NULL;
-#line 1122 "List.c"
+#line 1125 "List.c"
 }
 
 
@@ -1127,7 +1130,7 @@ gpointer* system_collections_generic_abstract_list_ToArray (SystemCollectionsGen
 	g_return_val_if_fail (self != NULL, NULL);
 #line 70 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->ToArray (self, result_length1);
-#line 1131 "List.c"
+#line 1134 "List.c"
 }
 
 
@@ -1136,7 +1139,7 @@ static void system_collections_generic_abstract_list_real_TrimExcess (SystemColl
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_TrimExcess'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 71 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return;
-#line 1140 "List.c"
+#line 1143 "List.c"
 }
 
 
@@ -1145,7 +1148,7 @@ void system_collections_generic_abstract_list_TrimExcess (SystemCollectionsGener
 	g_return_if_fail (self != NULL);
 #line 71 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->TrimExcess (self);
-#line 1149 "List.c"
+#line 1152 "List.c"
 }
 
 
@@ -1154,7 +1157,7 @@ static gboolean system_collections_generic_abstract_list_real_TrueForAll (System
 	g_critical ("Type `%s' does not implement abstract method `system_collections_generic_abstract_list_TrueForAll'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return FALSE;
-#line 1158 "List.c"
+#line 1161 "List.c"
 }
 
 
@@ -1163,7 +1166,7 @@ gboolean system_collections_generic_abstract_list_TrueForAll (SystemCollectionsG
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 72 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->TrueForAll (self, match, match_target);
-#line 1167 "List.c"
+#line 1170 "List.c"
 }
 
 
@@ -1179,7 +1182,7 @@ SystemCollectionsGenericAbstractList* system_collections_generic_abstract_list_c
 	self->priv->t_destroy_func = t_destroy_func;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self;
-#line 1183 "List.c"
+#line 1186 "List.c"
 }
 
 
@@ -1188,7 +1191,7 @@ gint system_collections_generic_abstract_list_get_size (SystemCollectionsGeneric
 	g_return_val_if_fail (self != NULL, 0);
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_size (self);
-#line 1192 "List.c"
+#line 1195 "List.c"
 }
 
 
@@ -1197,7 +1200,7 @@ gint system_collections_generic_abstract_list_get_Capacity (SystemCollectionsGen
 	g_return_val_if_fail (self != NULL, 0);
 #line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_Capacity (self);
-#line 1201 "List.c"
+#line 1204 "List.c"
 }
 
 
@@ -1206,7 +1209,7 @@ void system_collections_generic_abstract_list_set_Capacity (SystemCollectionsGen
 	g_return_if_fail (self != NULL);
 #line 34 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->set_Capacity (self, value);
-#line 1210 "List.c"
+#line 1213 "List.c"
 }
 
 
@@ -1215,7 +1218,7 @@ gint system_collections_generic_abstract_list_get_Count (SystemCollectionsGeneri
 	g_return_val_if_fail (self != NULL, 0);
 #line 35 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_Count (self);
-#line 1219 "List.c"
+#line 1222 "List.c"
 }
 
 
@@ -1224,7 +1227,7 @@ gboolean system_collections_generic_abstract_list_get_IsFixedSize (SystemCollect
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_IsFixedSize (self);
-#line 1228 "List.c"
+#line 1231 "List.c"
 }
 
 
@@ -1233,7 +1236,7 @@ gboolean system_collections_generic_abstract_list_get_IsReadOnly (SystemCollecti
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 37 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_IsReadOnly (self);
-#line 1237 "List.c"
+#line 1240 "List.c"
 }
 
 
@@ -1242,7 +1245,7 @@ gboolean system_collections_generic_abstract_list_get_IsSynchronized (SystemColl
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 38 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_IsSynchronized (self);
-#line 1246 "List.c"
+#line 1249 "List.c"
 }
 
 
@@ -1251,7 +1254,7 @@ GObject* system_collections_generic_abstract_list_get_SyncRoot (SystemCollection
 	g_return_val_if_fail (self != NULL, NULL);
 #line 39 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_CLASS (self)->get_SyncRoot (self);
-#line 1255 "List.c"
+#line 1258 "List.c"
 }
 
 
@@ -1350,28 +1353,28 @@ static void system_collections_generic_abstract_list_class_init (SystemCollectio
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_IS_SYNCHRONIZED, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_SYNC_ROOT, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 1354 "List.c"
+#line 1357 "List.c"
 }
 
 
 static GType system_collections_generic_abstract_list_system_collections_generic_ienumerable_get_t_type (SystemCollectionsGenericAbstractList* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_type;
-#line 1361 "List.c"
+#line 1364 "List.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_abstract_list_system_collections_generic_ienumerable_get_t_dup_func (SystemCollectionsGenericAbstractList* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_dup_func;
-#line 1368 "List.c"
+#line 1371 "List.c"
 }
 
 
 static GDestroyNotify system_collections_generic_abstract_list_system_collections_generic_ienumerable_get_t_destroy_func (SystemCollectionsGenericAbstractList* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_destroy_func;
-#line 1375 "List.c"
+#line 1378 "List.c"
 }
 
 
@@ -1390,7 +1393,7 @@ static void system_collections_generic_abstract_list_system_collections_generic_
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_abstract_list_system_collections_generic_ienumerable_get_t_dup_func;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_collections_generic_abstract_list_system_collections_generic_ienumerable_get_t_destroy_func;
-#line 1394 "List.c"
+#line 1397 "List.c"
 }
 
 
@@ -1413,7 +1416,7 @@ static void system_collections_generic_abstract_list_system_collections_generic_
 	iface->get_Count = (gint (*) (SystemCollectionsGenericICollection *)) system_collections_generic_abstract_list_get_Count;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	iface->get_IsReadOnly = (gboolean (*) (SystemCollectionsGenericICollection *)) system_collections_generic_abstract_list_get_IsReadOnly;
-#line 1417 "List.c"
+#line 1420 "List.c"
 }
 
 
@@ -1430,35 +1433,35 @@ static void system_collections_generic_abstract_list_system_collections_generic_
 	iface->Insert = (void (*)(SystemCollectionsGenericIList*, gint, gconstpointer)) system_collections_generic_abstract_list_Insert;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	iface->RemoveAt = (void (*)(SystemCollectionsGenericIList*, gint)) system_collections_generic_abstract_list_RemoveAt;
-#line 1434 "List.c"
+#line 1437 "List.c"
 }
 
 
 static void system_collections_generic_abstract_list_system_collections_generic_iread_only_collection_interface_init (SystemCollectionsGenericIReadOnlyCollectionIface * iface) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	system_collections_generic_abstract_list_system_collections_generic_iread_only_collection_parent_iface = g_type_interface_peek_parent (iface);
-#line 1441 "List.c"
+#line 1444 "List.c"
 }
 
 
 static GType system_collections_generic_abstract_list_system_collections_generic_iread_only_list_get_t_type (SystemCollectionsGenericAbstractList* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_type;
-#line 1448 "List.c"
+#line 1451 "List.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_abstract_list_system_collections_generic_iread_only_list_get_t_dup_func (SystemCollectionsGenericAbstractList* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_dup_func;
-#line 1455 "List.c"
+#line 1458 "List.c"
 }
 
 
 static GDestroyNotify system_collections_generic_abstract_list_system_collections_generic_iread_only_list_get_t_destroy_func (SystemCollectionsGenericAbstractList* self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_destroy_func;
-#line 1462 "List.c"
+#line 1465 "List.c"
 }
 
 
@@ -1471,14 +1474,14 @@ static void system_collections_generic_abstract_list_system_collections_generic_
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIReadOnlyList*)) system_collections_generic_abstract_list_system_collections_generic_iread_only_list_get_t_dup_func;
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIReadOnlyList*)) system_collections_generic_abstract_list_system_collections_generic_iread_only_list_get_t_destroy_func;
-#line 1475 "List.c"
+#line 1478 "List.c"
 }
 
 
 static void system_collections_generic_abstract_list_instance_init (SystemCollectionsGenericAbstractList * self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->priv = SYSTEM_COLLECTIONS_GENERIC_ABSTRACT_LIST_GET_PRIVATE (self);
-#line 1482 "List.c"
+#line 1485 "List.c"
 }
 
 
@@ -1509,13 +1512,13 @@ static void _vala_system_collections_generic_abstract_list_get_property (GObject
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, SYSTEM_COLLECTIONS_GENERIC_TYPE_ABSTRACT_LIST, SystemCollectionsGenericAbstractList);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	switch (property_id) {
-#line 1513 "List.c"
+#line 1516 "List.c"
 		default:
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 1519 "List.c"
+#line 1522 "List.c"
 	}
 }
 
@@ -1543,13 +1546,13 @@ static void _vala_system_collections_generic_abstract_list_set_property (GObject
 		self->priv->t_destroy_func = g_value_get_pointer (value);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 1547 "List.c"
+#line 1550 "List.c"
 		default:
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 1553 "List.c"
+#line 1556 "List.c"
 	}
 }
 
@@ -1584,13 +1587,13 @@ SystemCollectionsGenericList* system_collections_generic_list_construct (GType o
 	_tmp2_ = g_type_is_a (t_type, SYSTEM_COLLECTIONS_GENERIC_TYPE_IEQUALITY_COMPARER);
 #line 98 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp2_) {
-#line 1588 "List.c"
+#line 1591 "List.c"
 	}
 #line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp3_ = enumerable;
 #line 102 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp3_ != NULL) {
-#line 1594 "List.c"
+#line 1597 "List.c"
 		{
 			SystemCollectionsGenericIEnumerator* _item_it = NULL;
 			SystemCollectionsGenericIEnumerable* _tmp4_ = NULL;
@@ -1603,7 +1606,7 @@ SystemCollectionsGenericList* system_collections_generic_list_construct (GType o
 			_item_it = _tmp5_;
 #line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 1607 "List.c"
+#line 1610 "List.c"
 				SystemCollectionsGenericIEnumerator* _tmp6_ = NULL;
 				gboolean _tmp7_ = FALSE;
 				gpointer item = NULL;
@@ -1618,7 +1621,7 @@ SystemCollectionsGenericList* system_collections_generic_list_construct (GType o
 				if (!_tmp7_) {
 #line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 1622 "List.c"
+#line 1625 "List.c"
 				}
 #line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp8_ = _item_it;
@@ -1632,23 +1635,23 @@ SystemCollectionsGenericList* system_collections_generic_list_construct (GType o
 				system_collections_generic_abstract_list_Add ((SystemCollectionsGenericAbstractList*) self, _tmp10_);
 #line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_t_destroy_func0 (item);
-#line 1636 "List.c"
+#line 1639 "List.c"
 			}
 #line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_g_object_unref0 (_item_it);
-#line 1640 "List.c"
+#line 1643 "List.c"
 		}
 	}
 #line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self;
-#line 1645 "List.c"
+#line 1648 "List.c"
 }
 
 
 SystemCollectionsGenericList* system_collections_generic_list_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIEnumerable* enumerable) {
 #line 94 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return system_collections_generic_list_construct (SYSTEM_COLLECTIONS_GENERIC_TYPE_LIST, t_type, t_dup_func, t_destroy_func, enumerable);
-#line 1652 "List.c"
+#line 1655 "List.c"
 }
 
 
@@ -1669,14 +1672,14 @@ SystemCollectionsGenericList* system_collections_generic_list_construct_WithCapa
 	system_collections_generic_list_set_capacity (self, _tmp0_);
 #line 109 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self;
-#line 1673 "List.c"
+#line 1676 "List.c"
 }
 
 
 SystemCollectionsGenericList* system_collections_generic_list_new_WithCapacity (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, gint defaultCapacity) {
 #line 109 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return system_collections_generic_list_construct_WithCapacity (SYSTEM_COLLECTIONS_GENERIC_TYPE_LIST, t_type, t_dup_func, t_destroy_func, defaultCapacity);
-#line 1680 "List.c"
+#line 1683 "List.c"
 }
 
 
@@ -1689,7 +1692,7 @@ static GType system_collections_generic_list_real_get_element_type (SystemCollec
 	result = self->priv->t_type;
 #line 119 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 1693 "List.c"
+#line 1696 "List.c"
 }
 
 
@@ -1705,7 +1708,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_list_real
 	result = (SystemCollectionsGenericIEnumerator*) _tmp0_;
 #line 150 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 1709 "List.c"
+#line 1712 "List.c"
 }
 
 
@@ -1724,7 +1727,7 @@ static gboolean system_collections_generic_list_real_contains (SystemCollections
 	result = _tmp1_ != -1;
 #line 154 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 1728 "List.c"
+#line 1731 "List.c"
 }
 
 
@@ -1733,7 +1736,7 @@ static gint system_collections_generic_list_real_IndexOf (SystemCollectionsGener
 	gint result = 0;
 #line 157 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 1737 "List.c"
+#line 1740 "List.c"
 	{
 		gint index = 0;
 		gint _tmp0_ = 0;
@@ -1741,14 +1744,14 @@ static gint system_collections_generic_list_real_IndexOf (SystemCollectionsGener
 		_tmp0_ = startIndex;
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		index = _tmp0_;
-#line 1745 "List.c"
+#line 1748 "List.c"
 		{
 			gboolean _tmp1_ = FALSE;
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp1_ = TRUE;
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 1752 "List.c"
+#line 1755 "List.c"
 				gint _tmp3_ = 0;
 				gint _tmp4_ = 0;
 				SystemCollectionsGenericEqualityComparer* _tmp5_ = NULL;
@@ -1760,13 +1763,13 @@ static gint system_collections_generic_list_real_IndexOf (SystemCollectionsGener
 				gboolean _tmp10_ = FALSE;
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp1_) {
-#line 1764 "List.c"
+#line 1767 "List.c"
 					gint _tmp2_ = 0;
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp2_ = index;
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					index = _tmp2_ + 1;
-#line 1770 "List.c"
+#line 1773 "List.c"
 				}
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp1_ = FALSE;
@@ -1778,7 +1781,7 @@ static gint system_collections_generic_list_real_IndexOf (SystemCollectionsGener
 				if (!(_tmp3_ < _tmp4_)) {
 #line 158 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 1782 "List.c"
+#line 1785 "List.c"
 				}
 #line 159 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp5_ = self->priv->_equal_func;
@@ -1800,7 +1803,7 @@ static gint system_collections_generic_list_real_IndexOf (SystemCollectionsGener
 					result = index;
 #line 160 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					return result;
-#line 1804 "List.c"
+#line 1807 "List.c"
 				}
 			}
 		}
@@ -1809,7 +1812,7 @@ static gint system_collections_generic_list_real_IndexOf (SystemCollectionsGener
 	result = -1;
 #line 163 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 1813 "List.c"
+#line 1816 "List.c"
 }
 
 
@@ -1829,7 +1832,7 @@ static gpointer system_collections_generic_list_real_get (SystemCollectionsGener
 	_tmp1_ = index;
 #line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp1_ >= 0) {
-#line 1833 "List.c"
+#line 1836 "List.c"
 		gint _tmp2_ = 0;
 		gint _tmp3_ = 0;
 #line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
@@ -1838,11 +1841,11 @@ static gpointer system_collections_generic_list_real_get (SystemCollectionsGener
 		_tmp3_ = self->_size;
 #line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = _tmp2_ < _tmp3_;
-#line 1842 "List.c"
+#line 1845 "List.c"
 	} else {
 #line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = FALSE;
-#line 1846 "List.c"
+#line 1849 "List.c"
 	}
 #line 167 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_vala_assert (_tmp0_, "index >= 0 && index < _size");
@@ -1860,7 +1863,7 @@ static gpointer system_collections_generic_list_real_get (SystemCollectionsGener
 	result = _tmp7_;
 #line 168 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 1864 "List.c"
+#line 1867 "List.c"
 }
 
 
@@ -1880,7 +1883,7 @@ static void system_collections_generic_list_real_set (SystemCollectionsGenericAb
 	_tmp1_ = index;
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp1_ >= 0) {
-#line 1884 "List.c"
+#line 1887 "List.c"
 		gint _tmp2_ = 0;
 		gint _tmp3_ = 0;
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
@@ -1889,11 +1892,11 @@ static void system_collections_generic_list_real_set (SystemCollectionsGenericAb
 		_tmp3_ = self->_size;
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = _tmp2_ < _tmp3_;
-#line 1893 "List.c"
+#line 1896 "List.c"
 	} else {
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = FALSE;
-#line 1897 "List.c"
+#line 1900 "List.c"
 	}
 #line 172 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_vala_assert (_tmp0_, "index >= 0 && index < _size");
@@ -1913,7 +1916,7 @@ static void system_collections_generic_list_real_set (SystemCollectionsGenericAb
 	_tmp4_[_tmp5_] = _tmp7_;
 #line 173 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp8_ = _tmp4_[_tmp5_];
-#line 1917 "List.c"
+#line 1920 "List.c"
 }
 
 
@@ -1941,7 +1944,7 @@ static void system_collections_generic_list_real_Add (SystemCollectionsGenericAb
 	if (_tmp0_ == _tmp1__length1) {
 #line 178 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		system_collections_generic_list_grow_if_needed (self, 1);
-#line 1945 "List.c"
+#line 1948 "List.c"
 	}
 #line 180 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp2_ = self->_items;
@@ -1965,7 +1968,7 @@ static void system_collections_generic_list_real_Add (SystemCollectionsGenericAb
 	_tmp7_ = self->priv->_stamp;
 #line 181 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->priv->_stamp = _tmp7_ + 1;
-#line 1969 "List.c"
+#line 1972 "List.c"
 }
 
 
@@ -1986,7 +1989,7 @@ static void system_collections_generic_list_real_AddRange (SystemCollectionsGene
 	_tmp2_ = collection;
 #line 189 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	system_collections_generic_abstract_list_InsertRange ((SystemCollectionsGenericAbstractList*) self, _tmp1_, _tmp2_);
-#line 1990 "List.c"
+#line 1993 "List.c"
 }
 
 
@@ -2002,7 +2005,7 @@ static SystemCollectionsObjectModelReadOnlyCollection* system_collections_generi
 	result = _tmp0_;
 #line 194 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2006 "List.c"
+#line 2009 "List.c"
 }
 
 
@@ -2017,7 +2020,7 @@ static gint system_collections_generic_list_real_BinarySearch (SystemCollections
 	result = -1;
 #line 218 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2021 "List.c"
+#line 2024 "List.c"
 }
 
 
@@ -2026,19 +2029,19 @@ static void system_collections_generic_list_real_Clear (SystemCollectionsGeneric
 	gint _tmp7_ = 0;
 #line 221 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 2030 "List.c"
+#line 2033 "List.c"
 	{
 		gint index = 0;
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		index = 0;
-#line 2035 "List.c"
+#line 2038 "List.c"
 		{
 			gboolean _tmp0_ = FALSE;
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = TRUE;
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2042 "List.c"
+#line 2045 "List.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
 				gpointer* _tmp4_ = NULL;
@@ -2047,13 +2050,13 @@ static void system_collections_generic_list_real_Clear (SystemCollectionsGeneric
 				gpointer _tmp6_ = NULL;
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp0_) {
-#line 2051 "List.c"
+#line 2054 "List.c"
 					gint _tmp1_ = 0;
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp1_ = index;
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					index = _tmp1_ + 1;
-#line 2057 "List.c"
+#line 2060 "List.c"
 				}
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp0_ = FALSE;
@@ -2065,7 +2068,7 @@ static void system_collections_generic_list_real_Clear (SystemCollectionsGeneric
 				if (!(_tmp2_ < _tmp3_)) {
 #line 222 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2069 "List.c"
+#line 2072 "List.c"
 				}
 #line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ = self->_items;
@@ -2079,7 +2082,7 @@ static void system_collections_generic_list_real_Clear (SystemCollectionsGeneric
 				_tmp4_[_tmp5_] = NULL;
 #line 223 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp6_ = _tmp4_[_tmp5_];
-#line 2083 "List.c"
+#line 2086 "List.c"
 			}
 		}
 	}
@@ -2089,7 +2092,7 @@ static void system_collections_generic_list_real_Clear (SystemCollectionsGeneric
 	_tmp7_ = self->priv->_stamp;
 #line 226 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->priv->_stamp = _tmp7_ + 1;
-#line 2093 "List.c"
+#line 2096 "List.c"
 }
 
 
@@ -2111,19 +2114,19 @@ static void system_collections_generic_list_real_CopyTo (SystemCollectionsGeneri
 	_tmp2_ = arrayIndex;
 #line 229 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_vala_return_if_fail (_tmp0__length1 >= (_tmp1_ + _tmp2_), "array.length >= _size + arrayIndex");
-#line 2115 "List.c"
+#line 2118 "List.c"
 	{
 		gint index = 0;
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		index = 0;
-#line 2120 "List.c"
+#line 2123 "List.c"
 		{
 			gboolean _tmp3_ = FALSE;
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp3_ = TRUE;
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2127 "List.c"
+#line 2130 "List.c"
 				gint _tmp5_ = 0;
 				gint _tmp6_ = 0;
 				gpointer* _tmp7_ = NULL;
@@ -2138,13 +2141,13 @@ static void system_collections_generic_list_real_CopyTo (SystemCollectionsGeneri
 				gpointer _tmp14_ = NULL;
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp3_) {
-#line 2142 "List.c"
+#line 2145 "List.c"
 					gint _tmp4_ = 0;
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp4_ = index;
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					index = _tmp4_ + 1;
-#line 2148 "List.c"
+#line 2151 "List.c"
 				}
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp3_ = FALSE;
@@ -2156,7 +2159,7 @@ static void system_collections_generic_list_real_CopyTo (SystemCollectionsGeneri
 				if (!(_tmp5_ < _tmp6_)) {
 #line 232 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2160 "List.c"
+#line 2163 "List.c"
 				}
 #line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp7_ = array;
@@ -2182,7 +2185,7 @@ static void system_collections_generic_list_real_CopyTo (SystemCollectionsGeneri
 				_tmp7_[_tmp8_ + _tmp9_] = _tmp13_;
 #line 233 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp14_ = _tmp7_[_tmp8_ + _tmp9_];
-#line 2186 "List.c"
+#line 2189 "List.c"
 			}
 		}
 	}
@@ -2207,7 +2210,7 @@ static gboolean system_collections_generic_list_real_Exists (SystemCollectionsGe
 	result = _tmp1_ != -1;
 #line 238 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2211 "List.c"
+#line 2214 "List.c"
 }
 
 
@@ -2216,19 +2219,19 @@ static gpointer system_collections_generic_list_real_Find (SystemCollectionsGene
 	gpointer result = NULL;
 #line 241 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 2220 "List.c"
+#line 2223 "List.c"
 	{
 		gint i = 0;
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = 0;
-#line 2225 "List.c"
+#line 2228 "List.c"
 		{
 			gboolean _tmp0_ = FALSE;
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = TRUE;
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2232 "List.c"
+#line 2235 "List.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
 				SystemPredicate _tmp4_ = NULL;
@@ -2240,13 +2243,13 @@ static gpointer system_collections_generic_list_real_Find (SystemCollectionsGene
 				gboolean _tmp8_ = FALSE;
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp0_) {
-#line 2244 "List.c"
+#line 2247 "List.c"
 					gint _tmp1_ = 0;
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp1_ = i;
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp1_ + 1;
-#line 2250 "List.c"
+#line 2253 "List.c"
 				}
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp0_ = FALSE;
@@ -2258,7 +2261,7 @@ static gpointer system_collections_generic_list_real_Find (SystemCollectionsGene
 				if (!(_tmp2_ < _tmp3_)) {
 #line 242 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2262 "List.c"
+#line 2265 "List.c"
 				}
 #line 243 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ = match;
@@ -2276,7 +2279,7 @@ static gpointer system_collections_generic_list_real_Find (SystemCollectionsGene
 				_tmp8_ = _tmp4_ (_tmp7_, _tmp4__target);
 #line 243 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (_tmp8_) {
-#line 2280 "List.c"
+#line 2283 "List.c"
 					gpointer* _tmp9_ = NULL;
 					gint _tmp9__length1 = 0;
 					gint _tmp10_ = 0;
@@ -2296,7 +2299,7 @@ static gpointer system_collections_generic_list_real_Find (SystemCollectionsGene
 					result = _tmp12_;
 #line 244 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					return result;
-#line 2300 "List.c"
+#line 2303 "List.c"
 				}
 			}
 		}
@@ -2305,7 +2308,7 @@ static gpointer system_collections_generic_list_real_Find (SystemCollectionsGene
 	result = NULL;
 #line 247 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2309 "List.c"
+#line 2312 "List.c"
 }
 
 
@@ -2320,19 +2323,19 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_FindAl
 	_tmp0_ = system_collections_generic_list_new (self->priv->t_type, (GBoxedCopyFunc) self->priv->t_dup_func, self->priv->t_destroy_func, NULL);
 #line 251 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	list = _tmp0_;
-#line 2324 "List.c"
+#line 2327 "List.c"
 	{
 		gint i = 0;
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = 0;
-#line 2329 "List.c"
+#line 2332 "List.c"
 		{
 			gboolean _tmp1_ = FALSE;
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp1_ = TRUE;
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2336 "List.c"
+#line 2339 "List.c"
 				gint _tmp3_ = 0;
 				gint _tmp4_ = 0;
 				SystemPredicate _tmp5_ = NULL;
@@ -2344,13 +2347,13 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_FindAl
 				gboolean _tmp9_ = FALSE;
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp1_) {
-#line 2348 "List.c"
+#line 2351 "List.c"
 					gint _tmp2_ = 0;
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp2_ = i;
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp2_ + 1;
-#line 2354 "List.c"
+#line 2357 "List.c"
 				}
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp1_ = FALSE;
@@ -2362,7 +2365,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_FindAl
 				if (!(_tmp3_ < _tmp4_)) {
 #line 252 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2366 "List.c"
+#line 2369 "List.c"
 				}
 #line 253 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp5_ = match;
@@ -2380,7 +2383,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_FindAl
 				_tmp9_ = _tmp5_ (_tmp8_, _tmp5__target);
 #line 253 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (_tmp9_) {
-#line 2384 "List.c"
+#line 2387 "List.c"
 					SystemCollectionsGenericList* _tmp10_ = NULL;
 					gpointer* _tmp11_ = NULL;
 					gint _tmp11__length1 = 0;
@@ -2398,7 +2401,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_FindAl
 					_tmp13_ = _tmp11_[_tmp12_];
 #line 254 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					system_collections_generic_abstract_list_Add ((SystemCollectionsGenericAbstractList*) _tmp10_, _tmp13_);
-#line 2402 "List.c"
+#line 2405 "List.c"
 				}
 			}
 		}
@@ -2407,7 +2410,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_FindAl
 	result = list;
 #line 257 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2411 "List.c"
+#line 2414 "List.c"
 }
 
 
@@ -2416,19 +2419,19 @@ static gint system_collections_generic_list_real_FindIndex (SystemCollectionsGen
 	gint result = 0;
 #line 261 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 2420 "List.c"
+#line 2423 "List.c"
 	{
 		gint i = 0;
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = 0;
-#line 2425 "List.c"
+#line 2428 "List.c"
 		{
 			gboolean _tmp0_ = FALSE;
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = TRUE;
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2432 "List.c"
+#line 2435 "List.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
 				SystemPredicate _tmp4_ = NULL;
@@ -2440,13 +2443,13 @@ static gint system_collections_generic_list_real_FindIndex (SystemCollectionsGen
 				gboolean _tmp8_ = FALSE;
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp0_) {
-#line 2444 "List.c"
+#line 2447 "List.c"
 					gint _tmp1_ = 0;
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp1_ = i;
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp1_ + 1;
-#line 2450 "List.c"
+#line 2453 "List.c"
 				}
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp0_ = FALSE;
@@ -2458,7 +2461,7 @@ static gint system_collections_generic_list_real_FindIndex (SystemCollectionsGen
 				if (!(_tmp2_ < _tmp3_)) {
 #line 262 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2462 "List.c"
+#line 2465 "List.c"
 				}
 #line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ = match;
@@ -2480,7 +2483,7 @@ static gint system_collections_generic_list_real_FindIndex (SystemCollectionsGen
 					result = i;
 #line 263 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					return result;
-#line 2484 "List.c"
+#line 2487 "List.c"
 				}
 			}
 		}
@@ -2489,7 +2492,7 @@ static gint system_collections_generic_list_real_FindIndex (SystemCollectionsGen
 	result = -1;
 #line 265 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2493 "List.c"
+#line 2496 "List.c"
 }
 
 
@@ -2498,7 +2501,7 @@ static gpointer system_collections_generic_list_real_FindLast (SystemCollections
 	gpointer result = NULL;
 #line 268 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 2502 "List.c"
+#line 2505 "List.c"
 	{
 		gint i = 0;
 		gint _tmp0_ = 0;
@@ -2506,14 +2509,14 @@ static gpointer system_collections_generic_list_real_FindLast (SystemCollections
 		_tmp0_ = self->_size;
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = _tmp0_ - 1;
-#line 2510 "List.c"
+#line 2513 "List.c"
 		{
 			gboolean _tmp1_ = FALSE;
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp1_ = TRUE;
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2517 "List.c"
+#line 2520 "List.c"
 				gint _tmp3_ = 0;
 				SystemPredicate _tmp4_ = NULL;
 				void* _tmp4__target = NULL;
@@ -2524,13 +2527,13 @@ static gpointer system_collections_generic_list_real_FindLast (SystemCollections
 				gboolean _tmp8_ = FALSE;
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp1_) {
-#line 2528 "List.c"
+#line 2531 "List.c"
 					gint _tmp2_ = 0;
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp2_ = i;
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp2_ - 1;
-#line 2534 "List.c"
+#line 2537 "List.c"
 				}
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp1_ = FALSE;
@@ -2540,7 +2543,7 @@ static gpointer system_collections_generic_list_real_FindLast (SystemCollections
 				if (!(_tmp3_ >= 0)) {
 #line 269 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2544 "List.c"
+#line 2547 "List.c"
 				}
 #line 270 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ = match;
@@ -2558,7 +2561,7 @@ static gpointer system_collections_generic_list_real_FindLast (SystemCollections
 				_tmp8_ = _tmp4_ (_tmp7_, _tmp4__target);
 #line 270 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (_tmp8_) {
-#line 2562 "List.c"
+#line 2565 "List.c"
 					gpointer* _tmp9_ = NULL;
 					gint _tmp9__length1 = 0;
 					gint _tmp10_ = 0;
@@ -2578,7 +2581,7 @@ static gpointer system_collections_generic_list_real_FindLast (SystemCollections
 					result = _tmp12_;
 #line 271 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					return result;
-#line 2582 "List.c"
+#line 2585 "List.c"
 				}
 			}
 		}
@@ -2587,7 +2590,7 @@ static gpointer system_collections_generic_list_real_FindLast (SystemCollections
 	result = NULL;
 #line 274 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2591 "List.c"
+#line 2594 "List.c"
 }
 
 
@@ -2617,7 +2620,7 @@ static gint system_collections_generic_list_real_FindLastIndex (SystemCollection
 	_tmp3_ = count;
 #line 280 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	endIndex = _tmp2_ - _tmp3_;
-#line 2621 "List.c"
+#line 2624 "List.c"
 	{
 		gint i = 0;
 		gint _tmp4_ = 0;
@@ -2625,14 +2628,14 @@ static gint system_collections_generic_list_real_FindLastIndex (SystemCollection
 		_tmp4_ = startIndex;
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = _tmp4_;
-#line 2629 "List.c"
+#line 2632 "List.c"
 		{
 			gboolean _tmp5_ = FALSE;
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp5_ = TRUE;
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2636 "List.c"
+#line 2639 "List.c"
 				gint _tmp7_ = 0;
 				gint _tmp8_ = 0;
 				SystemPredicate _tmp9_ = NULL;
@@ -2644,13 +2647,13 @@ static gint system_collections_generic_list_real_FindLastIndex (SystemCollection
 				gboolean _tmp13_ = FALSE;
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp5_) {
-#line 2648 "List.c"
+#line 2651 "List.c"
 					gint _tmp6_ = 0;
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp6_ = i;
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp6_ - 1;
-#line 2654 "List.c"
+#line 2657 "List.c"
 				}
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp5_ = FALSE;
@@ -2662,7 +2665,7 @@ static gint system_collections_generic_list_real_FindLastIndex (SystemCollection
 				if (!(_tmp7_ > _tmp8_)) {
 #line 281 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2666 "List.c"
+#line 2669 "List.c"
 				}
 #line 282 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp9_ = match;
@@ -2684,7 +2687,7 @@ static gint system_collections_generic_list_real_FindLastIndex (SystemCollection
 					result = i;
 #line 283 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					return result;
-#line 2688 "List.c"
+#line 2691 "List.c"
 				}
 			}
 		}
@@ -2693,7 +2696,7 @@ static gint system_collections_generic_list_real_FindLastIndex (SystemCollection
 	result = -1;
 #line 286 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2697 "List.c"
+#line 2700 "List.c"
 }
 
 
@@ -2701,19 +2704,19 @@ static void system_collections_generic_list_real_ForEach (SystemCollectionsGener
 	SystemCollectionsGenericList * self;
 #line 290 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 2705 "List.c"
+#line 2708 "List.c"
 	{
 		gint i = 0;
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = 0;
-#line 2710 "List.c"
+#line 2713 "List.c"
 		{
 			gboolean _tmp0_ = FALSE;
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = TRUE;
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2717 "List.c"
+#line 2720 "List.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
 				SystemAction _tmp4_ = NULL;
@@ -2724,13 +2727,13 @@ static void system_collections_generic_list_real_ForEach (SystemCollectionsGener
 				gconstpointer _tmp7_ = NULL;
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp0_) {
-#line 2728 "List.c"
+#line 2731 "List.c"
 					gint _tmp1_ = 0;
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp1_ = i;
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp1_ + 1;
-#line 2734 "List.c"
+#line 2737 "List.c"
 				}
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp0_ = FALSE;
@@ -2742,7 +2745,7 @@ static void system_collections_generic_list_real_ForEach (SystemCollectionsGener
 				if (!(_tmp2_ < _tmp3_)) {
 #line 291 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2746 "List.c"
+#line 2749 "List.c"
 				}
 #line 292 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ = action;
@@ -2758,7 +2761,7 @@ static void system_collections_generic_list_real_ForEach (SystemCollectionsGener
 				_tmp7_ = _tmp5_[_tmp6_];
 #line 292 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ (_tmp7_, _tmp4__target);
-#line 2762 "List.c"
+#line 2765 "List.c"
 			}
 		}
 	}
@@ -2777,7 +2780,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_generic_list_real
 	result = _tmp0_;
 #line 297 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2781 "List.c"
+#line 2784 "List.c"
 }
 
 
@@ -2795,7 +2798,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_GetRan
 	_tmp1_ = system_collections_generic_list_new_WithCapacity (self->priv->t_type, (GBoxedCopyFunc) self->priv->t_dup_func, self->priv->t_destroy_func, _tmp0_);
 #line 301 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	list = _tmp1_;
-#line 2799 "List.c"
+#line 2802 "List.c"
 	{
 		gint i = 0;
 		gint _tmp2_ = 0;
@@ -2803,14 +2806,14 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_GetRan
 		_tmp2_ = index;
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = _tmp2_;
-#line 2807 "List.c"
+#line 2810 "List.c"
 		{
 			gboolean _tmp3_ = FALSE;
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp3_ = TRUE;
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 2814 "List.c"
+#line 2817 "List.c"
 				gint _tmp5_ = 0;
 				gint _tmp6_ = 0;
 				gint _tmp7_ = 0;
@@ -2821,13 +2824,13 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_GetRan
 				gconstpointer _tmp11_ = NULL;
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp3_) {
-#line 2825 "List.c"
+#line 2828 "List.c"
 					gint _tmp4_ = 0;
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp4_ = i;
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp4_ + 1;
-#line 2831 "List.c"
+#line 2834 "List.c"
 				}
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp3_ = FALSE;
@@ -2841,7 +2844,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_GetRan
 				if (!(_tmp5_ < (_tmp6_ + _tmp7_))) {
 #line 302 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 2845 "List.c"
+#line 2848 "List.c"
 				}
 #line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp8_ = list;
@@ -2855,7 +2858,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_GetRan
 				_tmp11_ = _tmp9_[_tmp10_];
 #line 303 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				system_collections_generic_abstract_list_Add ((SystemCollectionsGenericAbstractList*) _tmp8_, _tmp11_);
-#line 2859 "List.c"
+#line 2862 "List.c"
 			}
 		}
 	}
@@ -2863,7 +2866,7 @@ static SystemCollectionsGenericList* system_collections_generic_list_real_GetRan
 	result = list;
 #line 305 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 2867 "List.c"
+#line 2870 "List.c"
 }
 
 
@@ -2873,7 +2876,7 @@ static void system_collections_generic_list_real_InsertRange (SystemCollectionsG
 	self = (SystemCollectionsGenericList*) base;
 #line 314 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	g_return_if_fail (collection != NULL);
-#line 2877 "List.c"
+#line 2880 "List.c"
 	{
 		SystemCollectionsGenericIEnumerator* _item_it = NULL;
 		SystemCollectionsGenericIEnumerable* _tmp0_ = NULL;
@@ -2886,7 +2889,7 @@ static void system_collections_generic_list_real_InsertRange (SystemCollectionsG
 		_item_it = _tmp1_;
 #line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		while (TRUE) {
-#line 2890 "List.c"
+#line 2893 "List.c"
 			SystemCollectionsGenericIEnumerator* _tmp2_ = NULL;
 			gboolean _tmp3_ = FALSE;
 			gpointer item = NULL;
@@ -2902,7 +2905,7 @@ static void system_collections_generic_list_real_InsertRange (SystemCollectionsG
 			if (!_tmp3_) {
 #line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				break;
-#line 2906 "List.c"
+#line 2909 "List.c"
 			}
 #line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp4_ = _item_it;
@@ -2920,11 +2923,11 @@ static void system_collections_generic_list_real_InsertRange (SystemCollectionsG
 			system_collections_generic_abstract_list_Insert ((SystemCollectionsGenericAbstractList*) self, _tmp6_, _tmp7_);
 #line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			((item == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (item = (self->priv->t_destroy_func (item), NULL));
-#line 2924 "List.c"
+#line 2927 "List.c"
 		}
 #line 315 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_g_object_unref0 (_item_it);
-#line 2928 "List.c"
+#line 2931 "List.c"
 	}
 }
 
@@ -2950,7 +2953,7 @@ static void system_collections_generic_list_real_Insert (SystemCollectionsGeneri
 	_tmp1_ = index;
 #line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp1_ >= 0) {
-#line 2954 "List.c"
+#line 2957 "List.c"
 		gint _tmp2_ = 0;
 		gint _tmp3_ = 0;
 #line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
@@ -2959,11 +2962,11 @@ static void system_collections_generic_list_real_Insert (SystemCollectionsGeneri
 		_tmp3_ = self->_size;
 #line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = _tmp2_ <= _tmp3_;
-#line 2963 "List.c"
+#line 2966 "List.c"
 	} else {
 #line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = FALSE;
-#line 2967 "List.c"
+#line 2970 "List.c"
 	}
 #line 322 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_vala_assert (_tmp0_, "index >= 0 && index <= _size");
@@ -2977,7 +2980,7 @@ static void system_collections_generic_list_real_Insert (SystemCollectionsGeneri
 	if (_tmp4_ == _tmp5__length1) {
 #line 325 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		system_collections_generic_list_grow_if_needed (self, 1);
-#line 2981 "List.c"
+#line 2984 "List.c"
 	}
 #line 327 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp6_ = index;
@@ -3003,7 +3006,7 @@ static void system_collections_generic_list_real_Insert (SystemCollectionsGeneri
 	_tmp12_ = self->priv->_stamp;
 #line 329 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->priv->_stamp = _tmp12_ + 1;
-#line 3007 "List.c"
+#line 3010 "List.c"
 }
 
 
@@ -3012,7 +3015,7 @@ static Block4Data* block4_data_ref (Block4Data* _data4_) {
 	g_atomic_int_inc (&_data4_->_ref_count_);
 #line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return _data4_;
-#line 3016 "List.c"
+#line 3019 "List.c"
 }
 
 
@@ -3021,7 +3024,7 @@ static void block4_data_unref (void * _userdata_) {
 	_data4_ = (Block4Data*) _userdata_;
 #line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (g_atomic_int_dec_and_test (&_data4_->_ref_count_)) {
-#line 3025 "List.c"
+#line 3028 "List.c"
 		SystemCollectionsGenericList* self;
 #line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		self = _data4_->self;
@@ -3031,7 +3034,7 @@ static void block4_data_unref (void * _userdata_) {
 		_g_object_unref0 (self);
 #line 340 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		g_slice_free (Block4Data, _data4_);
-#line 3035 "List.c"
+#line 3038 "List.c"
 	}
 }
 
@@ -3057,7 +3060,7 @@ static gboolean __lambda6_ (Block4Data* _data4_, gconstpointer x) {
 	result = _tmp3_;
 #line 342 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 3061 "List.c"
+#line 3064 "List.c"
 }
 
 
@@ -3066,7 +3069,7 @@ static gboolean ___lambda6__system_predicate (gconstpointer obj, gpointer self) 
 	result = __lambda6_ (self, obj);
 #line 342 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 3070 "List.c"
+#line 3073 "List.c"
 }
 
 
@@ -3103,7 +3106,7 @@ static gint system_collections_generic_list_real_LastIndexOf (SystemCollectionsG
 	_data4_ = NULL;
 #line 342 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 3107 "List.c"
+#line 3110 "List.c"
 }
 
 
@@ -3112,19 +3115,19 @@ static gboolean system_collections_generic_list_real_Remove (SystemCollectionsGe
 	gboolean result = FALSE;
 #line 346 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 3116 "List.c"
+#line 3119 "List.c"
 	{
 		gint index = 0;
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		index = 0;
-#line 3121 "List.c"
+#line 3124 "List.c"
 		{
 			gboolean _tmp0_ = FALSE;
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = TRUE;
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 3128 "List.c"
+#line 3131 "List.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
 				SystemCollectionsGenericEqualityComparer* _tmp4_ = NULL;
@@ -3136,13 +3139,13 @@ static gboolean system_collections_generic_list_real_Remove (SystemCollectionsGe
 				gboolean _tmp9_ = FALSE;
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp0_) {
-#line 3140 "List.c"
+#line 3143 "List.c"
 					gint _tmp1_ = 0;
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp1_ = index;
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					index = _tmp1_ + 1;
-#line 3146 "List.c"
+#line 3149 "List.c"
 				}
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp0_ = FALSE;
@@ -3154,7 +3157,7 @@ static gboolean system_collections_generic_list_real_Remove (SystemCollectionsGe
 				if (!(_tmp2_ < _tmp3_)) {
 #line 347 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 3158 "List.c"
+#line 3161 "List.c"
 				}
 #line 348 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ = self->priv->_equal_func;
@@ -3172,7 +3175,7 @@ static gboolean system_collections_generic_list_real_Remove (SystemCollectionsGe
 				_tmp9_ = system_collections_generic_equality_comparer_Equals (_tmp4_, _tmp7_, _tmp8_);
 #line 348 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (_tmp9_) {
-#line 3176 "List.c"
+#line 3179 "List.c"
 					gint _tmp10_ = 0;
 #line 349 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp10_ = index;
@@ -3182,7 +3185,7 @@ static gboolean system_collections_generic_list_real_Remove (SystemCollectionsGe
 					result = TRUE;
 #line 350 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					return result;
-#line 3186 "List.c"
+#line 3189 "List.c"
 				}
 			}
 		}
@@ -3191,7 +3194,7 @@ static gboolean system_collections_generic_list_real_Remove (SystemCollectionsGe
 	result = FALSE;
 #line 353 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 3195 "List.c"
+#line 3198 "List.c"
 }
 
 
@@ -3211,7 +3214,7 @@ static void system_collections_generic_list_real_RemoveAt (SystemCollectionsGene
 	_tmp1_ = index;
 #line 357 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp1_ >= 0) {
-#line 3215 "List.c"
+#line 3218 "List.c"
 		gint _tmp2_ = 0;
 		gint _tmp3_ = 0;
 #line 357 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
@@ -3220,11 +3223,11 @@ static void system_collections_generic_list_real_RemoveAt (SystemCollectionsGene
 		_tmp3_ = self->_size;
 #line 357 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = _tmp2_ < _tmp3_;
-#line 3224 "List.c"
+#line 3227 "List.c"
 	} else {
 #line 357 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = FALSE;
-#line 3228 "List.c"
+#line 3231 "List.c"
 	}
 #line 357 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_vala_assert (_tmp0_, "index >= 0 && index < _size");
@@ -3248,7 +3251,7 @@ static void system_collections_generic_list_real_RemoveAt (SystemCollectionsGene
 	_tmp8_ = self->priv->_stamp;
 #line 360 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->priv->_stamp = _tmp8_ + 1;
-#line 3252 "List.c"
+#line 3255 "List.c"
 }
 
 
@@ -3271,7 +3274,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 	freeIndex = 0;
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	while (TRUE) {
-#line 3275 "List.c"
+#line 3278 "List.c"
 		gboolean _tmp0_ = FALSE;
 		gint _tmp1_ = 0;
 		gint _tmp2_ = 0;
@@ -3282,7 +3285,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 		_tmp2_ = self->_size;
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		if (_tmp1_ < _tmp2_) {
-#line 3286 "List.c"
+#line 3289 "List.c"
 			SystemPredicate _tmp3_ = NULL;
 			void* _tmp3__target = NULL;
 			gpointer* _tmp4_ = NULL;
@@ -3306,23 +3309,23 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 			_tmp7_ = _tmp3_ (_tmp6_, _tmp3__target);
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = !_tmp7_;
-#line 3310 "List.c"
+#line 3313 "List.c"
 		} else {
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = FALSE;
-#line 3314 "List.c"
+#line 3317 "List.c"
 		}
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		if (!_tmp0_) {
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			break;
-#line 3320 "List.c"
+#line 3323 "List.c"
 		}
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp8_ = freeIndex;
 #line 369 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		freeIndex = _tmp8_ + 1;
-#line 3326 "List.c"
+#line 3329 "List.c"
 	}
 #line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp9_ = freeIndex;
@@ -3334,7 +3337,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 		result = 0;
 #line 370 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		return result;
-#line 3338 "List.c"
+#line 3341 "List.c"
 	}
 #line 372 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp11_ = freeIndex;
@@ -3342,7 +3345,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 	current = _tmp11_ + 1;
 #line 373 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	while (TRUE) {
-#line 3346 "List.c"
+#line 3349 "List.c"
 		gint _tmp12_ = 0;
 		gint _tmp13_ = 0;
 		gint _tmp23_ = 0;
@@ -3355,11 +3358,11 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 		if (!(_tmp12_ < _tmp13_)) {
 #line 373 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			break;
-#line 3359 "List.c"
+#line 3362 "List.c"
 		}
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		while (TRUE) {
-#line 3363 "List.c"
+#line 3366 "List.c"
 			gboolean _tmp14_ = FALSE;
 			gint _tmp15_ = 0;
 			gint _tmp16_ = 0;
@@ -3370,7 +3373,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 			_tmp16_ = self->_size;
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			if (_tmp15_ < _tmp16_) {
-#line 3374 "List.c"
+#line 3377 "List.c"
 				SystemPredicate _tmp17_ = NULL;
 				void* _tmp17__target = NULL;
 				gpointer* _tmp18_ = NULL;
@@ -3394,23 +3397,23 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 				_tmp21_ = _tmp17_ (_tmp20_, _tmp17__target);
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp14_ = _tmp21_;
-#line 3398 "List.c"
+#line 3401 "List.c"
 			} else {
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp14_ = FALSE;
-#line 3402 "List.c"
+#line 3405 "List.c"
 			}
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			if (!_tmp14_) {
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				break;
-#line 3408 "List.c"
+#line 3411 "List.c"
 			}
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp22_ = current;
 #line 375 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			current = _tmp22_ + 1;
-#line 3414 "List.c"
+#line 3417 "List.c"
 		}
 #line 377 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp23_ = current;
@@ -3418,7 +3421,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 		_tmp24_ = self->_size;
 #line 377 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		if (_tmp23_ < _tmp24_) {
-#line 3422 "List.c"
+#line 3425 "List.c"
 			gpointer* _tmp25_ = NULL;
 			gint _tmp25__length1 = 0;
 			gint _tmp26_ = 0;
@@ -3454,7 +3457,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 			_tmp25_[_tmp26_] = _tmp30_;
 #line 379 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp31_ = _tmp25_[_tmp26_];
-#line 3458 "List.c"
+#line 3461 "List.c"
 		}
 	}
 #line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
@@ -3463,7 +3466,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 	_tmp33_ = freeIndex;
 #line 382 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_result_ = _tmp32_ - _tmp33_;
-#line 3467 "List.c"
+#line 3470 "List.c"
 	{
 		gint i = 0;
 		gint _tmp34_ = 0;
@@ -3471,26 +3474,26 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 		_tmp34_ = freeIndex;
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = _tmp34_;
-#line 3475 "List.c"
+#line 3478 "List.c"
 		{
 			gboolean _tmp35_ = FALSE;
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp35_ = TRUE;
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 3482 "List.c"
+#line 3485 "List.c"
 				gint _tmp37_ = 0;
 				gint _tmp38_ = 0;
 				gint _tmp39_ = 0;
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp35_) {
-#line 3488 "List.c"
+#line 3491 "List.c"
 					gint _tmp36_ = 0;
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp36_ = i;
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp36_ + 1;
-#line 3494 "List.c"
+#line 3497 "List.c"
 				}
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp35_ = FALSE;
@@ -3502,13 +3505,13 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 				if (!(_tmp37_ < _tmp38_)) {
 #line 384 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 3506 "List.c"
+#line 3509 "List.c"
 				}
 #line 385 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp39_ = i;
 #line 385 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				system_collections_generic_abstract_list_RemoveAt ((SystemCollectionsGenericAbstractList*) self, _tmp39_);
-#line 3512 "List.c"
+#line 3515 "List.c"
 			}
 		}
 	}
@@ -3524,7 +3527,7 @@ static gint system_collections_generic_list_real_RemoveAll (SystemCollectionsGen
 	result = _result_;
 #line 390 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 3528 "List.c"
+#line 3531 "List.c"
 }
 
 
@@ -3537,7 +3540,7 @@ static void system_collections_generic_list_real_RemoveRange (SystemCollectionsG
 	_tmp0_ = count;
 #line 396 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp0_ > 0) {
-#line 3541 "List.c"
+#line 3544 "List.c"
 		gint _tmp1_ = 0;
 		gint _tmp2_ = 0;
 		gint _tmp10_ = 0;
@@ -3547,7 +3550,7 @@ static void system_collections_generic_list_real_RemoveRange (SystemCollectionsG
 		_tmp2_ = self->_size;
 #line 398 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		if (_tmp1_ < _tmp2_) {
-#line 3551 "List.c"
+#line 3554 "List.c"
 			{
 				gint i = 0;
 				gint _tmp3_ = 0;
@@ -3555,27 +3558,27 @@ static void system_collections_generic_list_real_RemoveRange (SystemCollectionsG
 				_tmp3_ = index;
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				i = _tmp3_;
-#line 3559 "List.c"
+#line 3562 "List.c"
 				{
 					gboolean _tmp4_ = FALSE;
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp4_ = TRUE;
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					while (TRUE) {
-#line 3566 "List.c"
+#line 3569 "List.c"
 						gint _tmp6_ = 0;
 						gint _tmp7_ = 0;
 						gint _tmp8_ = 0;
 						gint _tmp9_ = 0;
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 						if (!_tmp4_) {
-#line 3573 "List.c"
+#line 3576 "List.c"
 							gint _tmp5_ = 0;
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 							_tmp5_ = i;
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 							i = _tmp5_ + 1;
-#line 3579 "List.c"
+#line 3582 "List.c"
 						}
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 						_tmp4_ = FALSE;
@@ -3589,13 +3592,13 @@ static void system_collections_generic_list_real_RemoveRange (SystemCollectionsG
 						if (!(_tmp6_ < (_tmp7_ + _tmp8_))) {
 #line 399 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 							break;
-#line 3593 "List.c"
+#line 3596 "List.c"
 						}
 #line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 						_tmp9_ = index;
 #line 400 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 						system_collections_generic_abstract_list_RemoveAt ((SystemCollectionsGenericAbstractList*) self, _tmp9_);
-#line 3599 "List.c"
+#line 3602 "List.c"
 					}
 				}
 			}
@@ -3604,7 +3607,7 @@ static void system_collections_generic_list_real_RemoveRange (SystemCollectionsG
 		_tmp10_ = self->priv->_stamp;
 #line 403 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		self->priv->_stamp = _tmp10_ + 1;
-#line 3608 "List.c"
+#line 3611 "List.c"
 	}
 }
 
@@ -3639,7 +3642,7 @@ static void system_collections_generic_list_real_Reverse (SystemCollectionsGener
 	j = (_tmp2_ + _tmp3_) - 1;
 #line 414 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	while (TRUE) {
-#line 3643 "List.c"
+#line 3646 "List.c"
 		gint _tmp4_ = 0;
 		gint _tmp5_ = 0;
 		gpointer temp = NULL;
@@ -3673,7 +3676,7 @@ static void system_collections_generic_list_real_Reverse (SystemCollectionsGener
 		if (!(_tmp4_ < _tmp5_)) {
 #line 414 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			break;
-#line 3677 "List.c"
+#line 3680 "List.c"
 		}
 #line 415 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp6_ = self->_items;
@@ -3735,7 +3738,7 @@ static void system_collections_generic_list_real_Reverse (SystemCollectionsGener
 		j = _tmp23_ - 1;
 #line 414 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		((temp == NULL) || (self->priv->t_destroy_func == NULL)) ? NULL : (temp = (self->priv->t_destroy_func (temp), NULL));
-#line 3739 "List.c"
+#line 3742 "List.c"
 	}
 }
 
@@ -3749,7 +3752,7 @@ static void system_collections_generic_list_real_Sort (SystemCollectionsGenericA
 	_tmp0_ = g_strcmp0;
 #line 429 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	system_collections_generic_tim_sort_sort (self->priv->t_type, (GBoxedCopyFunc) self->priv->t_dup_func, self->priv->t_destroy_func, (SystemCollectionsGenericICollection*) self, (GCompareDataFunc) _tmp0_, NULL);
-#line 3753 "List.c"
+#line 3756 "List.c"
 }
 
 
@@ -3785,13 +3788,13 @@ static gpointer* system_collections_generic_list_real_ToArray (SystemCollections
 	if (result_length1) {
 #line 437 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		*result_length1 = _tmp2__length1;
-#line 3789 "List.c"
+#line 3792 "List.c"
 	}
 #line 437 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	result = _tmp2_;
 #line 437 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 3795 "List.c"
+#line 3798 "List.c"
 }
 
 
@@ -3816,13 +3819,13 @@ static void system_collections_generic_list_real_TrimExcess (SystemCollectionsGe
 	_tmp2_ = threshold;
 #line 451 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp1_ < _tmp2_) {
-#line 3820 "List.c"
+#line 3823 "List.c"
 		gint _tmp3_ = 0;
 #line 452 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp3_ = self->_size;
 #line 452 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		system_collections_generic_abstract_list_set_Capacity ((SystemCollectionsGenericAbstractList*) self, _tmp3_);
-#line 3826 "List.c"
+#line 3829 "List.c"
 	}
 }
 
@@ -3832,19 +3835,19 @@ static gboolean system_collections_generic_list_real_TrueForAll (SystemCollectio
 	gboolean result = FALSE;
 #line 456 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericList*) base;
-#line 3836 "List.c"
+#line 3839 "List.c"
 	{
 		gint i = 0;
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		i = 0;
-#line 3841 "List.c"
+#line 3844 "List.c"
 		{
 			gboolean _tmp0_ = FALSE;
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp0_ = TRUE;
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			while (TRUE) {
-#line 3848 "List.c"
+#line 3851 "List.c"
 				gint _tmp2_ = 0;
 				gint _tmp3_ = 0;
 				SystemPredicate _tmp4_ = NULL;
@@ -3856,13 +3859,13 @@ static gboolean system_collections_generic_list_real_TrueForAll (SystemCollectio
 				gboolean _tmp8_ = FALSE;
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				if (!_tmp0_) {
-#line 3860 "List.c"
+#line 3863 "List.c"
 					gint _tmp1_ = 0;
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					_tmp1_ = i;
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					i = _tmp1_ + 1;
-#line 3866 "List.c"
+#line 3869 "List.c"
 				}
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp0_ = FALSE;
@@ -3874,7 +3877,7 @@ static gboolean system_collections_generic_list_real_TrueForAll (SystemCollectio
 				if (!(_tmp2_ < _tmp3_)) {
 #line 457 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					break;
-#line 3878 "List.c"
+#line 3881 "List.c"
 				}
 #line 458 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 				_tmp4_ = match;
@@ -3896,7 +3899,7 @@ static gboolean system_collections_generic_list_real_TrueForAll (SystemCollectio
 					result = FALSE;
 #line 459 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 					return result;
-#line 3900 "List.c"
+#line 3903 "List.c"
 				}
 			}
 		}
@@ -3905,7 +3908,7 @@ static gboolean system_collections_generic_list_real_TrueForAll (SystemCollectio
 	result = TRUE;
 #line 462 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 3909 "List.c"
+#line 3912 "List.c"
 }
 
 
@@ -3926,7 +3929,7 @@ static void system_collections_generic_list_shift (SystemCollectionsGenericList*
 	_tmp2_ = start;
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp2_ >= 0) {
-#line 3930 "List.c"
+#line 3933 "List.c"
 		gint _tmp3_ = 0;
 		gint _tmp4_ = 0;
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
@@ -3935,15 +3938,15 @@ static void system_collections_generic_list_shift (SystemCollectionsGenericList*
 		_tmp4_ = self->_size;
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp1_ = _tmp3_ <= _tmp4_;
-#line 3939 "List.c"
+#line 3942 "List.c"
 	} else {
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp1_ = FALSE;
-#line 3943 "List.c"
+#line 3946 "List.c"
 	}
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp1_) {
-#line 3947 "List.c"
+#line 3950 "List.c"
 		gint _tmp5_ = 0;
 		gint _tmp6_ = 0;
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
@@ -3952,11 +3955,11 @@ static void system_collections_generic_list_shift (SystemCollectionsGenericList*
 		_tmp6_ = delta;
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = _tmp5_ >= (-_tmp6_);
-#line 3956 "List.c"
+#line 3959 "List.c"
 	} else {
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp0_ = FALSE;
-#line 3960 "List.c"
+#line 3963 "List.c"
 	}
 #line 467 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_vala_assert (_tmp0_, "start >= 0 && start <= _size && start >= -delta");
@@ -3978,7 +3981,7 @@ static void system_collections_generic_list_shift (SystemCollectionsGenericList*
 	_tmp13_ = delta;
 #line 469 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->_size = _tmp12_ + _tmp13_;
-#line 3982 "List.c"
+#line 3985 "List.c"
 }
 
 
@@ -4010,7 +4013,7 @@ static void system_collections_generic_list_grow_if_needed (SystemCollectionsGen
 	_tmp4__length1 = self->_items_length1;
 #line 475 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp3_ > _tmp4__length1) {
-#line 4014 "List.c"
+#line 4017 "List.c"
 		gint _tmp5_ = 0;
 		gint _tmp6_ = 0;
 		gpointer* _tmp7_ = NULL;
@@ -4023,13 +4026,13 @@ static void system_collections_generic_list_grow_if_needed (SystemCollectionsGen
 		_tmp7__length1 = self->_items_length1;
 #line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		if (_tmp6_ > _tmp7__length1) {
-#line 4027 "List.c"
+#line 4030 "List.c"
 			gint _tmp8_ = 0;
 #line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp8_ = minimum_size;
 #line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp5_ = _tmp8_;
-#line 4033 "List.c"
+#line 4036 "List.c"
 		} else {
 			gpointer* _tmp9_ = NULL;
 			gint _tmp9__length1 = 0;
@@ -4039,11 +4042,11 @@ static void system_collections_generic_list_grow_if_needed (SystemCollectionsGen
 			_tmp9__length1 = self->_items_length1;
 #line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 			_tmp5_ = 2 * _tmp9__length1;
-#line 4043 "List.c"
+#line 4046 "List.c"
 		}
 #line 477 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		system_collections_generic_list_set_capacity (self, _tmp5_);
-#line 4047 "List.c"
+#line 4050 "List.c"
 	}
 }
 
@@ -4062,7 +4065,7 @@ static void system_collections_generic_list_set_capacity (SystemCollectionsGener
 	_tmp1_ = self->_size;
 #line 482 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp0_ < _tmp1_) {
-#line 4066 "List.c"
+#line 4069 "List.c"
 		GError* _tmp2_ = NULL;
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp2_ = g_error_new_literal (SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION, SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_VALUE, "Value is lower than current List size");
@@ -4074,7 +4077,7 @@ static void system_collections_generic_list_set_capacity (SystemCollectionsGener
 		g_clear_error (&_inner_error_);
 #line 483 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		return;
-#line 4078 "List.c"
+#line 4081 "List.c"
 	}
 #line 484 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp3_ = value;
@@ -4088,7 +4091,7 @@ static void system_collections_generic_list_set_capacity (SystemCollectionsGener
 	self->_items_length1 = _tmp4_;
 #line 484 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->__items_size_ = _tmp4_;
-#line 4092 "List.c"
+#line 4095 "List.c"
 }
 
 
@@ -4104,7 +4107,7 @@ static gint system_collections_generic_list_real_get_size (SystemCollectionsGene
 	result = _tmp0_;
 #line 115 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4108 "List.c"
+#line 4111 "List.c"
 }
 
 
@@ -4123,7 +4126,7 @@ static gint system_collections_generic_list_real_get_Capacity (SystemCollections
 	result = _tmp0__length1;
 #line 127 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4127 "List.c"
+#line 4130 "List.c"
 }
 
 
@@ -4138,7 +4141,7 @@ static void system_collections_generic_list_real_set_Capacity (SystemCollections
 	system_collections_generic_list_set_capacity (self, _tmp0_);
 #line 128 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	g_object_notify ((GObject *) self, "Capacity");
-#line 4142 "List.c"
+#line 4145 "List.c"
 }
 
 
@@ -4154,7 +4157,7 @@ static gint system_collections_generic_list_real_get_Count (SystemCollectionsGen
 	result = _tmp0_;
 #line 133 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4158 "List.c"
+#line 4161 "List.c"
 }
 
 
@@ -4167,7 +4170,7 @@ static gboolean system_collections_generic_list_real_get_IsFixedSize (SystemColl
 	result = FALSE;
 #line 136 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4171 "List.c"
+#line 4174 "List.c"
 }
 
 
@@ -4180,7 +4183,7 @@ static gboolean system_collections_generic_list_real_get_IsReadOnly (SystemColle
 	result = FALSE;
 #line 139 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4184 "List.c"
+#line 4187 "List.c"
 }
 
 
@@ -4193,7 +4196,7 @@ static gboolean system_collections_generic_list_real_get_IsSynchronized (SystemC
 	result = FALSE;
 #line 142 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4197 "List.c"
+#line 4200 "List.c"
 }
 
 
@@ -4206,7 +4209,7 @@ static GObject* system_collections_generic_list_real_get_SyncRoot (SystemCollect
 	result = G_TYPE_CHECK_INSTANCE_TYPE (self, G_TYPE_OBJECT) ? ((GObject*) self) : NULL;
 #line 146 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4210 "List.c"
+#line 4213 "List.c"
 }
 
 
@@ -4229,14 +4232,14 @@ SystemCollectionsGenericListEnumerator* system_collections_generic_list_enumerat
 	system_collections_generic_list_enumerator_set_list (self, _tmp0_);
 #line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self;
-#line 4233 "List.c"
+#line 4236 "List.c"
 }
 
 
 SystemCollectionsGenericListEnumerator* system_collections_generic_list_enumerator_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericList* list) {
 #line 494 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return system_collections_generic_list_enumerator_construct (SYSTEM_COLLECTIONS_GENERIC_LIST_TYPE_ENUMERATOR, t_type, t_dup_func, t_destroy_func, list);
-#line 4240 "List.c"
+#line 4243 "List.c"
 }
 
 
@@ -4270,13 +4273,13 @@ static gboolean system_collections_generic_list_enumerator_real_next (SystemColl
 	_tmp5_ = _tmp4_->_size;
 #line 507 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp3_ < _tmp5_) {
-#line 4274 "List.c"
+#line 4277 "List.c"
 		gint _tmp6_ = 0;
 #line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp6_ = self->priv->_index;
 #line 508 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		self->priv->_index = _tmp6_ + 1;
-#line 4280 "List.c"
+#line 4283 "List.c"
 	}
 #line 510 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp7_ = self->priv->_index;
@@ -4288,7 +4291,7 @@ static gboolean system_collections_generic_list_enumerator_real_next (SystemColl
 	result = _tmp7_ < _tmp9_;
 #line 510 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4292 "List.c"
+#line 4295 "List.c"
 }
 
 
@@ -4319,7 +4322,7 @@ static gpointer system_collections_generic_list_enumerator_real_get (SystemColle
 	if (_tmp4_ < 0) {
 #line 516 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp3_ = TRUE;
-#line 4323 "List.c"
+#line 4326 "List.c"
 	} else {
 		gint _tmp5_ = 0;
 		SystemCollectionsGenericList* _tmp6_ = NULL;
@@ -4332,7 +4335,7 @@ static gpointer system_collections_generic_list_enumerator_real_get (SystemColle
 		_tmp7_ = _tmp6_->_size;
 #line 516 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		_tmp3_ = _tmp5_ >= _tmp7_;
-#line 4336 "List.c"
+#line 4339 "List.c"
 	}
 #line 516 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	if (_tmp3_) {
@@ -4340,7 +4343,7 @@ static gpointer system_collections_generic_list_enumerator_real_get (SystemColle
 		result = NULL;
 #line 517 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		return result;
-#line 4344 "List.c"
+#line 4347 "List.c"
 	}
 #line 520 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	_tmp8_ = self->priv->_list;
@@ -4352,14 +4355,14 @@ static gpointer system_collections_generic_list_enumerator_real_get (SystemColle
 	result = _tmp10_;
 #line 520 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4356 "List.c"
+#line 4359 "List.c"
 }
 
 
 void system_collections_generic_list_enumerator_Dispose (SystemCollectionsGenericListEnumerator* self) {
 #line 524 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	g_return_if_fail (self != NULL);
-#line 4363 "List.c"
+#line 4366 "List.c"
 }
 
 
@@ -4375,7 +4378,7 @@ static gboolean system_collections_generic_list_enumerator_real_MoveNext (System
 	result = _tmp0_;
 #line 529 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4379 "List.c"
+#line 4382 "List.c"
 }
 
 
@@ -4390,7 +4393,7 @@ static gboolean system_collections_generic_list_enumerator_MoveNextRare (SystemC
 	result = _tmp0_;
 #line 534 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4394 "List.c"
+#line 4397 "List.c"
 }
 
 
@@ -4398,14 +4401,14 @@ static void system_collections_generic_list_enumerator_real_Reset (SystemCollect
 	SystemCollectionsGenericListEnumerator * self;
 #line 543 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self = (SystemCollectionsGenericListEnumerator*) base;
-#line 4402 "List.c"
+#line 4405 "List.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 500 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 4409 "List.c"
+#line 4412 "List.c"
 }
 
 
@@ -4432,7 +4435,7 @@ void system_collections_generic_list_enumerator_set_list (SystemCollectionsGener
 	self->_stamp = _tmp3_;
 #line 499 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	g_object_notify ((GObject *) self, "list");
-#line 4436 "List.c"
+#line 4439 "List.c"
 }
 
 
@@ -4454,7 +4457,7 @@ static gpointer system_collections_generic_list_enumerator_real_get_Current (Sys
 	result = _tmp2_;
 #line 539 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return result;
-#line 4458 "List.c"
+#line 4461 "List.c"
 }
 
 
@@ -4479,28 +4482,28 @@ static void system_collections_generic_list_enumerator_class_init (SystemCollect
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_LIST_ENUMERATOR_LIST, g_param_spec_object ("list", "list", "list", SYSTEM_COLLECTIONS_GENERIC_TYPE_LIST, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_WRITABLE));
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_LIST_ENUMERATOR_CURRENT, g_param_spec_pointer ("Current", "Current", "Current", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 4483 "List.c"
+#line 4486 "List.c"
 }
 
 
 static GType system_collections_generic_list_enumerator_system_collections_generic_ienumerator_get_t_type (SystemCollectionsGenericListEnumerator* self) {
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_type;
-#line 4490 "List.c"
+#line 4493 "List.c"
 }
 
 
 static GBoxedCopyFunc system_collections_generic_list_enumerator_system_collections_generic_ienumerator_get_t_dup_func (SystemCollectionsGenericListEnumerator* self) {
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_dup_func;
-#line 4497 "List.c"
+#line 4500 "List.c"
 }
 
 
 static GDestroyNotify system_collections_generic_list_enumerator_system_collections_generic_ienumerator_get_t_destroy_func (SystemCollectionsGenericListEnumerator* self) {
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	return self->priv->t_destroy_func;
-#line 4504 "List.c"
+#line 4507 "List.c"
 }
 
 
@@ -4523,7 +4526,7 @@ static void system_collections_generic_list_enumerator_system_collections_generi
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerator*)) system_collections_generic_list_enumerator_system_collections_generic_ienumerator_get_t_destroy_func;
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	iface->get_Current = system_collections_generic_list_enumerator_real_get_Current;
-#line 4527 "List.c"
+#line 4530 "List.c"
 }
 
 
@@ -4534,7 +4537,7 @@ static void system_collections_generic_list_enumerator_instance_init (SystemColl
 	self->priv->_index = -1;
 #line 492 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->_stamp = 0;
-#line 4538 "List.c"
+#line 4541 "List.c"
 }
 
 
@@ -4546,7 +4549,7 @@ static void system_collections_generic_list_enumerator_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_list);
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	G_OBJECT_CLASS (system_collections_generic_list_enumerator_parent_class)->finalize (obj);
-#line 4550 "List.c"
+#line 4553 "List.c"
 }
 
 
@@ -4575,13 +4578,13 @@ static void _vala_system_collections_generic_list_enumerator_get_property (GObje
 		g_value_set_pointer (value, system_collections_generic_ienumerator_get_Current ((SystemCollectionsGenericIEnumerator*) self));
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4579 "List.c"
+#line 4582 "List.c"
 		default:
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4585 "List.c"
+#line 4588 "List.c"
 	}
 }
 
@@ -4615,13 +4618,13 @@ static void _vala_system_collections_generic_list_enumerator_set_property (GObje
 		self->priv->t_destroy_func = g_value_get_pointer (value);
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4619 "List.c"
+#line 4622 "List.c"
 		default:
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 487 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4625 "List.c"
+#line 4628 "List.c"
 	}
 }
 
@@ -4739,7 +4742,7 @@ static void system_collections_generic_list_class_init (SystemCollectionsGeneric
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_LIST_IS_SYNCHRONIZED, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_GENERIC_LIST_SYNC_ROOT, g_param_spec_object ("SyncRoot", "SyncRoot", "SyncRoot", G_TYPE_OBJECT, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 4743 "List.c"
+#line 4746 "List.c"
 }
 
 
@@ -4757,7 +4760,7 @@ static void system_collections_generic_list_instance_init (SystemCollectionsGene
 	self->__items_size_ = self->_items_length1;
 #line 89 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	self->priv->_stamp = 0;
-#line 4761 "List.c"
+#line 4764 "List.c"
 }
 
 
@@ -4773,7 +4776,7 @@ static void system_collections_generic_list_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_compare_func);
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 	G_OBJECT_CLASS (system_collections_generic_list_parent_class)->finalize (obj);
-#line 4777 "List.c"
+#line 4780 "List.c"
 }
 
 
@@ -4836,13 +4839,13 @@ static void _vala_system_collections_generic_list_get_property (GObject * object
 		g_value_set_object (value, system_collections_generic_abstract_list_get_SyncRoot ((SystemCollectionsGenericAbstractList*) self));
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4840 "List.c"
+#line 4843 "List.c"
 		default:
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4846 "List.c"
+#line 4849 "List.c"
 	}
 }
 
@@ -4876,13 +4879,13 @@ static void _vala_system_collections_generic_list_set_property (GObject * object
 		self->priv->t_destroy_func = g_value_get_pointer (value);
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4880 "List.c"
+#line 4883 "List.c"
 		default:
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 81 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/Generic/List.vala"
 		break;
-#line 4886 "List.c"
+#line 4889 "List.c"
 	}
 }
 

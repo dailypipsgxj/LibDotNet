@@ -4,9 +4,10 @@
 // The GroupCollection lists the captured Capture numbers
 // contained in a compiled Regex.
 
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace System.Text.RegularExpressions
 {
@@ -14,7 +15,7 @@ namespace System.Text.RegularExpressions
     /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
-    public class GroupCollection : Object, System.Collections.ICollection, System.Collections.IEnumerable 
+    public class GroupCollection : ICollection<Group>, IEnumerable<Group> 
     {
         private Match _match;
 
@@ -29,6 +30,11 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Returns the number of groups.
         /// </summary>
+        public int size
+        {
+            get { return Count; }
+        }
+
         public int Count
         {
             get { return _match._matchinfo.get_match_count(); }
@@ -53,9 +59,14 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Provides an enumerator in the same order as Item[].
         /// </summary>
-        public System.Collections.IEnumerator GetEnumerator()
+        public IEnumerator<Group> GetEnumerator()
         {
             return new Enumerator(this);
+        }
+
+        public IEnumerator<Group> iterator()
+        {
+            return GetEnumerator();
         }
 
         private Group GetGroup(int groupnum)
@@ -77,15 +88,18 @@ namespace System.Text.RegularExpressions
             get { return false; }
         }
         
-        Object SyncRoot
+        public Object SyncRoot
         {
             get { return _match as Object; }
         }
 
+        public void CopyTo(Object[] array, int arrayIndex) {
+			
+		}
 
-        public class Enumerator : Object, System.Collections.IEnumerator
+        private class Enumerator<Group> : IEnumerator<Group>
         {
-            private   GroupCollection _collection;
+            private GroupCollection _collection;
             private int _index;
 			private Object _currentElement { get; set;}
 			private Gee.Iterator<Object> _iterator { get; set;}
@@ -95,6 +109,10 @@ namespace System.Text.RegularExpressions
                 _collection = collection;
                 _index = -1;
             }
+
+			public new Group get() {
+				return Current;
+			}
 
             public bool MoveNext()
             {
@@ -106,6 +124,10 @@ namespace System.Text.RegularExpressions
                 _index++;
 
                 return _index < size;
+            }
+
+            public bool next() {
+				return MoveNext();
             }
 
             new Object Current

@@ -20,6 +20,6 @@ namespace System {
     public interface IFormatProvider
     {
         // Interface does not need to be marked with the serializable attribute
-        Object GetFormat(GLib.Type formatType);
+        public abstract Object GetFormat(GLib.Type formatType);
     }
 }

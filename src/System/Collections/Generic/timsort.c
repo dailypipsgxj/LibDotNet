@@ -3868,7 +3868,7 @@ static void system_collections_generic_tim_sort_merge_low (SystemCollectionsGene
 #line 3869 "timsort.c"
 		}
 	}
-	__finally0:
+	__finally2:
 	{
 		SystemCollectionsGenericTimSortSlice* _tmp245_ = NULL;
 		gint _tmp246_ = 0;
@@ -5141,7 +5141,7 @@ static void system_collections_generic_tim_sort_merge_high (SystemCollectionsGen
 #line 5142 "timsort.c"
 		}
 	}
-	__finally1:
+	__finally3:
 	{
 		SystemCollectionsGenericTimSortSlice* _tmp294_ = NULL;
 		gint _tmp295_ = 0;

@@ -75,6 +75,24 @@ typedef struct _SystemCollectionsGenericIList SystemCollectionsGenericIList;
 typedef struct _SystemCollectionsGenericIListIface SystemCollectionsGenericIListIface;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 
+#define SYSTEM_COLLECTIONS_TYPE_ICOLLECTION (system_collections_icollection_get_type ())
+#define SYSTEM_COLLECTIONS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollection))
+#define SYSTEM_COLLECTIONS_IS_ICOLLECTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION))
+#define SYSTEM_COLLECTIONS_ICOLLECTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollectionIface))
+
+typedef struct _SystemCollectionsICollection SystemCollectionsICollection;
+typedef struct _SystemCollectionsICollectionIface SystemCollectionsICollectionIface;
+
+#define TYPE_OBJECT (object_get_type ())
+#define OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_OBJECT, Object))
+#define OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_OBJECT, ObjectClass))
+#define IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_OBJECT))
+#define IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TYPE_OBJECT))
+#define OBJECT_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_OBJECT, ObjectClass))
+
+typedef struct _Object Object;
+typedef struct _ObjectClass ObjectClass;
+
 typedef gpointer (*SystemFunc) (gconstpointer arg, void* user_data);
 struct _SystemCollectionsGenericIEnumeratorIface {
 	GTypeInterface parent_iface;
@@ -163,6 +181,15 @@ typedef enum  {
 	SYSTEM_NOT_SUPPORTED_EXCEPTION_KEY_COLLECTION_SET
 } SystemNotSupportedException;
 #define SYSTEM_NOT_SUPPORTED_EXCEPTION system_not_supported_exception_quark ()
+struct _SystemCollectionsICollectionIface {
+	GTypeInterface parent_iface;
+	void (*CopyTo) (SystemCollectionsICollection* self, Object** array, int array_length1, gint arrayIndex);
+	gint (*get_size) (SystemCollectionsICollection* self);
+	gint (*get_Count) (SystemCollectionsICollection* self);
+	gboolean (*get_IsSynchronized) (SystemCollectionsICollection* self);
+	Object* (*get_SyncRoot) (SystemCollectionsICollection* self);
+};
+
 
 static gpointer system_collections_object_model_read_only_collection_parent_class = NULL;
 static SystemCollectionsGenericIEnumerableIface* system_collections_object_model_read_only_collection_system_collections_generic_ienumerable_parent_iface = NULL;
@@ -212,14 +239,17 @@ static void system_collections_object_model_read_only_collection_real_Clear (Sys
 void system_collections_object_model_read_only_collection_Insert (SystemCollectionsObjectModelReadOnlyCollection* self, gint index, gconstpointer value);
 static gboolean system_collections_object_model_read_only_collection_real_Remove (SystemCollectionsGenericICollection* base, gconstpointer value);
 void system_collections_object_model_read_only_collection_RemoveAt (SystemCollectionsObjectModelReadOnlyCollection* self, gint index);
-gint system_collections_generic_icollection_get_Count (SystemCollectionsGenericICollection* self);
+GType object_get_type (void) G_GNUC_CONST;
+GType system_collections_icollection_get_type (void) G_GNUC_CONST;
+gint system_collections_icollection_get_Count (SystemCollectionsICollection* self);
 gint system_collections_object_model_read_only_collection_get_size (SystemCollectionsObjectModelReadOnlyCollection* self);
-gint system_collections_generic_icollection_get_size (SystemCollectionsGenericICollection* self);
+gint system_collections_icollection_get_size (SystemCollectionsICollection* self);
 SystemCollectionsGenericIList* system_collections_object_model_read_only_collection_get_Items (SystemCollectionsObjectModelReadOnlyCollection* self);
 gboolean system_collections_object_model_read_only_collection_get_IsReadOnly (SystemCollectionsObjectModelReadOnlyCollection* self);
 gboolean system_collections_object_model_read_only_collection_get_IsSynchronized (SystemCollectionsObjectModelReadOnlyCollection* self);
 gboolean system_collections_object_model_read_only_collection_get_IsFixedSize (SystemCollectionsObjectModelReadOnlyCollection* self);
 static void system_collections_object_model_read_only_collection_finalize (GObject* obj);
+gint system_collections_generic_icollection_get_Count (SystemCollectionsGenericICollection* self);
 static void _vala_system_collections_object_model_read_only_collection_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
 static void _vala_system_collections_object_model_read_only_collection_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec);
 
@@ -227,7 +257,7 @@ static void _vala_system_collections_object_model_read_only_collection_set_prope
 static gpointer _g_object_ref0 (gpointer self) {
 #line 24 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 231 "ReadOnlyCollection.c"
+#line 261 "ReadOnlyCollection.c"
 }
 
 
@@ -255,14 +285,14 @@ SystemCollectionsObjectModelReadOnlyCollection* system_collections_object_model_
 	self->priv->list = _tmp1_;
 #line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return self;
-#line 259 "ReadOnlyCollection.c"
+#line 289 "ReadOnlyCollection.c"
 }
 
 
 SystemCollectionsObjectModelReadOnlyCollection* system_collections_object_model_read_only_collection_new (GType t_type, GBoxedCopyFunc t_dup_func, GDestroyNotify t_destroy_func, SystemCollectionsGenericIList* list) {
 #line 23 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return system_collections_object_model_read_only_collection_construct (SYSTEM_COLLECTIONS_OBJECT_MODEL_TYPE_READ_ONLY_COLLECTION, t_type, t_dup_func, t_destroy_func, list);
-#line 266 "ReadOnlyCollection.c"
+#line 296 "ReadOnlyCollection.c"
 }
 
 
@@ -283,7 +313,7 @@ gpointer system_collections_object_model_read_only_collection_get (SystemCollect
 	result = _tmp2_;
 #line 36 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 287 "ReadOnlyCollection.c"
+#line 317 "ReadOnlyCollection.c"
 }
 
 
@@ -302,7 +332,7 @@ void system_collections_object_model_read_only_collection_set (SystemCollections
 	g_clear_error (&_inner_error_);
 #line 40 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return;
-#line 306 "ReadOnlyCollection.c"
+#line 336 "ReadOnlyCollection.c"
 }
 
 
@@ -324,7 +354,7 @@ static gboolean system_collections_object_model_read_only_collection_real_contai
 	result = _tmp2_;
 #line 44 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 328 "ReadOnlyCollection.c"
+#line 358 "ReadOnlyCollection.c"
 }
 
 
@@ -346,7 +376,7 @@ static gboolean system_collections_object_model_read_only_collection_real_Contai
 	result = _tmp2_;
 #line 48 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 350 "ReadOnlyCollection.c"
+#line 380 "ReadOnlyCollection.c"
 }
 
 
@@ -368,7 +398,7 @@ static void system_collections_object_model_read_only_collection_real_CopyTo (Sy
 	_tmp2_ = index;
 #line 52 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	system_collections_generic_icollection_CopyTo (G_TYPE_CHECK_INSTANCE_CAST (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection), _tmp1_, _tmp1__length1, _tmp2_);
-#line 372 "ReadOnlyCollection.c"
+#line 402 "ReadOnlyCollection.c"
 }
 
 
@@ -387,7 +417,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_object_model_read
 	result = _tmp1_;
 #line 56 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 391 "ReadOnlyCollection.c"
+#line 421 "ReadOnlyCollection.c"
 }
 
 
@@ -406,7 +436,7 @@ static SystemCollectionsGenericIEnumerator* system_collections_object_model_read
 	result = _tmp1_;
 #line 60 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 410 "ReadOnlyCollection.c"
+#line 440 "ReadOnlyCollection.c"
 }
 
 
@@ -427,7 +457,7 @@ gint system_collections_object_model_read_only_collection_IndexOf (SystemCollect
 	result = _tmp2_;
 #line 64 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 431 "ReadOnlyCollection.c"
+#line 461 "ReadOnlyCollection.c"
 }
 
 
@@ -440,7 +470,7 @@ static GType system_collections_object_model_read_only_collection_real_get_eleme
 	result = self->priv->t_type;
 #line 78 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 444 "ReadOnlyCollection.c"
+#line 474 "ReadOnlyCollection.c"
 }
 
 
@@ -460,7 +490,7 @@ static void system_collections_object_model_read_only_collection_real_Add (Syste
 	g_clear_error (&_inner_error_);
 #line 82 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return;
-#line 464 "ReadOnlyCollection.c"
+#line 494 "ReadOnlyCollection.c"
 }
 
 
@@ -480,7 +510,7 @@ static void system_collections_object_model_read_only_collection_real_Clear (Sys
 	g_clear_error (&_inner_error_);
 #line 86 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return;
-#line 484 "ReadOnlyCollection.c"
+#line 514 "ReadOnlyCollection.c"
 }
 
 
@@ -499,7 +529,7 @@ void system_collections_object_model_read_only_collection_Insert (SystemCollecti
 	g_clear_error (&_inner_error_);
 #line 90 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return;
-#line 503 "ReadOnlyCollection.c"
+#line 533 "ReadOnlyCollection.c"
 }
 
 
@@ -526,7 +556,7 @@ static gboolean system_collections_object_model_read_only_collection_real_Remove
 	return result;
 #line 93 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 530 "ReadOnlyCollection.c"
+#line 560 "ReadOnlyCollection.c"
 }
 
 
@@ -545,7 +575,7 @@ void system_collections_object_model_read_only_collection_RemoveAt (SystemCollec
 	g_clear_error (&_inner_error_);
 #line 99 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return;
-#line 549 "ReadOnlyCollection.c"
+#line 579 "ReadOnlyCollection.c"
 }
 
 
@@ -560,14 +590,14 @@ static gint system_collections_object_model_read_only_collection_real_get_Count 
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	_tmp0_ = self->priv->list;
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
-	_tmp1_ = system_collections_generic_icollection_get_Count (G_TYPE_CHECK_INSTANCE_CAST (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection));
+	_tmp1_ = system_collections_icollection_get_Count (G_TYPE_CHECK_INSTANCE_CAST (_tmp0_, SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollection));
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	_tmp2_ = _tmp1_;
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	result = _tmp2_;
 #line 28 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 571 "ReadOnlyCollection.c"
+#line 601 "ReadOnlyCollection.c"
 }
 
 
@@ -576,7 +606,7 @@ gint system_collections_object_model_read_only_collection_get_size (SystemCollec
 	g_return_val_if_fail (self != NULL, 0);
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return SYSTEM_COLLECTIONS_OBJECT_MODEL_READ_ONLY_COLLECTION_GET_CLASS (self)->get_size (self);
-#line 580 "ReadOnlyCollection.c"
+#line 610 "ReadOnlyCollection.c"
 }
 
 
@@ -591,14 +621,14 @@ static gint system_collections_object_model_read_only_collection_real_get_size (
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	_tmp0_ = self->priv->list;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
-	_tmp1_ = system_collections_generic_icollection_get_size (G_TYPE_CHECK_INSTANCE_CAST (_tmp0_, SYSTEM_COLLECTIONS_GENERIC_TYPE_ICOLLECTION, SystemCollectionsGenericICollection));
+	_tmp1_ = system_collections_icollection_get_size (G_TYPE_CHECK_INSTANCE_CAST (_tmp0_, SYSTEM_COLLECTIONS_TYPE_ICOLLECTION, SystemCollectionsICollection));
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	_tmp2_ = _tmp1_;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	result = _tmp2_;
 #line 32 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 602 "ReadOnlyCollection.c"
+#line 632 "ReadOnlyCollection.c"
 }
 
 
@@ -613,7 +643,7 @@ SystemCollectionsGenericIList* system_collections_object_model_read_only_collect
 	result = _tmp0_;
 #line 69 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 617 "ReadOnlyCollection.c"
+#line 647 "ReadOnlyCollection.c"
 }
 
 
@@ -622,7 +652,7 @@ gboolean system_collections_object_model_read_only_collection_get_IsReadOnly (Sy
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 74 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return SYSTEM_COLLECTIONS_OBJECT_MODEL_READ_ONLY_COLLECTION_GET_CLASS (self)->get_IsReadOnly (self);
-#line 626 "ReadOnlyCollection.c"
+#line 656 "ReadOnlyCollection.c"
 }
 
 
@@ -635,7 +665,7 @@ static gboolean system_collections_object_model_read_only_collection_real_get_Is
 	result = TRUE;
 #line 74 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 639 "ReadOnlyCollection.c"
+#line 669 "ReadOnlyCollection.c"
 }
 
 
@@ -647,7 +677,7 @@ gboolean system_collections_object_model_read_only_collection_get_IsSynchronized
 	result = FALSE;
 #line 103 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 651 "ReadOnlyCollection.c"
+#line 681 "ReadOnlyCollection.c"
 }
 
 
@@ -659,7 +689,7 @@ gboolean system_collections_object_model_read_only_collection_get_IsFixedSize (S
 	result = TRUE;
 #line 121 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return result;
-#line 663 "ReadOnlyCollection.c"
+#line 693 "ReadOnlyCollection.c"
 }
 
 
@@ -696,28 +726,28 @@ static void system_collections_object_model_read_only_collection_class_init (Sys
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_OBJECT_MODEL_READ_ONLY_COLLECTION_IS_SYNCHRONIZED, g_param_spec_boolean ("IsSynchronized", "IsSynchronized", "IsSynchronized", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), SYSTEM_COLLECTIONS_OBJECT_MODEL_READ_ONLY_COLLECTION_IS_FIXED_SIZE, g_param_spec_boolean ("IsFixedSize", "IsFixedSize", "IsFixedSize", FALSE, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 700 "ReadOnlyCollection.c"
+#line 730 "ReadOnlyCollection.c"
 }
 
 
 static GType system_collections_object_model_read_only_collection_system_collections_generic_ienumerable_get_t_type (SystemCollectionsObjectModelReadOnlyCollection* self) {
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return self->priv->t_type;
-#line 707 "ReadOnlyCollection.c"
+#line 737 "ReadOnlyCollection.c"
 }
 
 
 static GBoxedCopyFunc system_collections_object_model_read_only_collection_system_collections_generic_ienumerable_get_t_dup_func (SystemCollectionsObjectModelReadOnlyCollection* self) {
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return self->priv->t_dup_func;
-#line 714 "ReadOnlyCollection.c"
+#line 744 "ReadOnlyCollection.c"
 }
 
 
 static GDestroyNotify system_collections_object_model_read_only_collection_system_collections_generic_ienumerable_get_t_destroy_func (SystemCollectionsObjectModelReadOnlyCollection* self) {
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	return self->priv->t_destroy_func;
-#line 721 "ReadOnlyCollection.c"
+#line 751 "ReadOnlyCollection.c"
 }
 
 
@@ -736,7 +766,7 @@ static void system_collections_object_model_read_only_collection_system_collecti
 	iface->get_t_dup_func = (GBoxedCopyFunc(*)(SystemCollectionsGenericIEnumerable*)) system_collections_object_model_read_only_collection_system_collections_generic_ienumerable_get_t_dup_func;
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	iface->get_t_destroy_func = (GDestroyNotify(*)(SystemCollectionsGenericIEnumerable*)) system_collections_object_model_read_only_collection_system_collections_generic_ienumerable_get_t_destroy_func;
-#line 740 "ReadOnlyCollection.c"
+#line 770 "ReadOnlyCollection.c"
 }
 
 
@@ -761,21 +791,21 @@ static void system_collections_object_model_read_only_collection_system_collecti
 	iface->get_size = (gint (*) (SystemCollectionsGenericICollection *)) system_collections_object_model_read_only_collection_get_size;
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	iface->get_IsReadOnly = (gboolean (*) (SystemCollectionsGenericICollection *)) system_collections_object_model_read_only_collection_get_IsReadOnly;
-#line 765 "ReadOnlyCollection.c"
+#line 795 "ReadOnlyCollection.c"
 }
 
 
 static void system_collections_object_model_read_only_collection_system_collections_generic_iread_only_collection_interface_init (SystemCollectionsGenericIReadOnlyCollectionIface * iface) {
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	system_collections_object_model_read_only_collection_system_collections_generic_iread_only_collection_parent_iface = g_type_interface_peek_parent (iface);
-#line 772 "ReadOnlyCollection.c"
+#line 802 "ReadOnlyCollection.c"
 }
 
 
 static void system_collections_object_model_read_only_collection_instance_init (SystemCollectionsObjectModelReadOnlyCollection * self) {
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	self->priv = SYSTEM_COLLECTIONS_OBJECT_MODEL_READ_ONLY_COLLECTION_GET_PRIVATE (self);
-#line 779 "ReadOnlyCollection.c"
+#line 809 "ReadOnlyCollection.c"
 }
 
 
@@ -789,7 +819,7 @@ static void system_collections_object_model_read_only_collection_finalize (GObje
 	_g_object_unref0 (self->priv->_syncRoot);
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 	G_OBJECT_CLASS (system_collections_object_model_read_only_collection_parent_class)->finalize (obj);
-#line 793 "ReadOnlyCollection.c"
+#line 823 "ReadOnlyCollection.c"
 }
 
 
@@ -852,13 +882,13 @@ static void _vala_system_collections_object_model_read_only_collection_get_prope
 		g_value_set_boolean (value, system_collections_object_model_read_only_collection_get_IsFixedSize (self));
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 		break;
-#line 856 "ReadOnlyCollection.c"
+#line 886 "ReadOnlyCollection.c"
 		default:
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 		break;
-#line 862 "ReadOnlyCollection.c"
+#line 892 "ReadOnlyCollection.c"
 	}
 }
 
@@ -886,13 +916,13 @@ static void _vala_system_collections_object_model_read_only_collection_set_prope
 		self->priv->t_destroy_func = g_value_get_pointer (value);
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 		break;
-#line 890 "ReadOnlyCollection.c"
+#line 920 "ReadOnlyCollection.c"
 		default:
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 18 "/home/developer/projects/Backup/LibDotNet/src/System/Collections/ObjectModel/ReadOnlyCollection.vala"
 		break;
-#line 896 "ReadOnlyCollection.c"
+#line 926 "ReadOnlyCollection.c"
 	}
 }
 

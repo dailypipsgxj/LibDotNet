@@ -26,7 +26,8 @@ check_PROGRAMS = test_libdotnet
 test_libdotnet_SOURCES =  \
 	testcase.vala \
 	testmain.vala \
-	$(TEST_COLLECTIONS_GENERIC)
+	$(TEST_COLLECTIONS_GENERIC) \
+	$(TEST_TEXT)
 	
 test_libdotnet_DEPENDENCIES = \
 	$(top_builddir)/src/libdotnet-0.1.vapi	

@@ -15,7 +15,10 @@ typedef enum  {
 	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_VALUE,
 	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_NEED_NON_NEG_NUM,
 	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_BEGIN_INDEX_NOT_NEGATIVE,
-	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_LENGTH_NOT_NEGATIVE
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_LENGTH_NOT_NEGATIVE,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_NEGATIVE_CAPACITY,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_NEGATIVE_LENGTH,
+	SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION_SMALL_CAPACITY
 } SystemArgumentOutOfRangeException;
 #define SYSTEM_ARGUMENT_OUT_OF_RANGE_EXCEPTION system_argument_out_of_range_exception_quark ()
 typedef enum  {
@@ -33,7 +36,8 @@ typedef enum  {
 #define SYSTEM_ARGUMENT_EXCEPTION system_argument_exception_quark ()
 typedef enum  {
 	SYSTEM_ARGUMENT_NULL_EXCEPTION_POINTER,
-	SYSTEM_ARGUMENT_NULL_EXCEPTION_VALUE
+	SYSTEM_ARGUMENT_NULL_EXCEPTION_VALUE,
+	SYSTEM_ARGUMENT_NULL_EXCEPTION_STRING
 } SystemArgumentNullException;
 #define SYSTEM_ARGUMENT_NULL_EXCEPTION system_argument_null_exception_quark ()
 typedef enum  {
@@ -51,6 +55,10 @@ typedef enum  {
 	SYSTEM_NOT_SUPPORTED_EXCEPTION_KEY_COLLECTION_SET
 } SystemNotSupportedException;
 #define SYSTEM_NOT_SUPPORTED_EXCEPTION system_not_supported_exception_quark ()
+typedef enum  {
+	SYSTEM_SERIALIZATION_EXCEPTION_SERIALIZATION
+} SystemSerializationException;
+#define SYSTEM_SERIALIZATION_EXCEPTION system_serialization_exception_quark ()
 
 
 GQuark system_array_type_mismatch_exception_quark (void);
@@ -60,6 +68,7 @@ GQuark system_argument_exception_quark (void);
 GQuark system_argument_null_exception_quark (void);
 GQuark system_invalid_operation_exception_quark (void);
 GQuark system_not_supported_exception_quark (void);
+GQuark system_serialization_exception_quark (void);
 
 
 GQuark system_array_type_mismatch_exception_quark (void) {
@@ -94,6 +103,11 @@ GQuark system_invalid_operation_exception_quark (void) {
 
 GQuark system_not_supported_exception_quark (void) {
 	return g_quark_from_static_string ("system_not_supported_exception-quark");
+}
+
+
+GQuark system_serialization_exception_quark (void) {
+	return g_quark_from_static_string ("system_serialization_exception-quark");
 }
 
 

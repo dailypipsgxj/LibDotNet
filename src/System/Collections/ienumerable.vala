@@ -23,7 +23,7 @@ namespace System.Collections {
     // Also, COM classes that support an enumerator will also implement this interface.
 
 	//[GenericAccessors]
-    public interface IEnumerable : GLib.Object
+    public interface IEnumerable
     {
         // Interfaces are not serializable
         // Returns an IEnumerator for this enumerable Object.  The enumerator provides

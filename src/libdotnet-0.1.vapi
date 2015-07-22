@@ -324,6 +324,27 @@ namespace System {
 				public virtual int size { get; }
 			}
 		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public interface ICollection {
+			public abstract void CopyTo (Object[] array, int arrayIndex);
+			public abstract int Count { get; }
+			public abstract bool IsSynchronized { get; }
+			public abstract Object SyncRoot { get; }
+			public abstract int size { get; }
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public interface IEnumerable {
+			public virtual System.Collections.IEnumerator GetEnumerator ();
+			public abstract System.Collections.IEnumerator iterator ();
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public interface IEnumerator {
+			public virtual bool MoveNext ();
+			public abstract void Reset ();
+			public abstract Object @get ();
+			public abstract bool next ();
+			public abstract Object Current { owned get; }
+		}
 	}
 	namespace Diagnostics {
 		namespace CodeAnalysis {
@@ -363,6 +384,12 @@ namespace System {
 		namespace Remoting {
 		}
 		namespace Serialization {
+			[CCode (cheader_filename = "libdotnet.h")]
+			public interface IDeserializationCallback {
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public interface ISerializable {
+			}
 		}
 	}
 	namespace Security {
@@ -370,6 +397,145 @@ namespace System {
 		}
 	}
 	namespace Text {
+		namespace RegularExpressions {
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Capture {
+				public string ToString ();
+				public int Index { get; }
+				public int Length { get; }
+				public string Value { owned get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class CaptureCollection : System.Collections.ICollection, System.Collections.IEnumerable {
+				public new System.Text.RegularExpressions.Capture @get (int i);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Group : System.Text.RegularExpressions.Capture {
+				public System.Text.RegularExpressions.CaptureCollection Captures { get; }
+				public bool Success { get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class GroupCollection : System.Collections.ICollection, System.Collections.IEnumerable {
+				public GroupCollection (System.Text.RegularExpressions.Match match);
+				public new System.Text.RegularExpressions.Group @get (int groupnum);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Match : System.Text.RegularExpressions.Group {
+				public Match (GLib.MatchInfo matchinfo);
+				public System.Text.RegularExpressions.Match NextMatch ();
+				public virtual string Result (string replacement);
+				public virtual System.Text.RegularExpressions.GroupCollection Groups { get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class MatchCollection : System.Collections.ICollection, System.Collections.IEnumerable {
+				public MatchCollection (GLib.Regex regex, string input, int beginning, int length, int startat);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public class Regex : System.Text.RegularExpressions.StaticRegex {
+				public static GLib.TimeSpan InfiniteMatchTimeout;
+				public Regex (string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public string[] GetGroupNames ();
+				public int[] GetGroupNumbers ();
+				public string GroupNameFromNumber (int i);
+				public int GroupNumberFromName (string name);
+				public new bool IsMatch (string input, int startat);
+				public new System.Text.RegularExpressions.Match Match (string input, int beginning = 0, int length = -1);
+				public new System.Text.RegularExpressions.MatchCollection Matches (string input, int startat = 0);
+				public new string Replace (string input, string replacement, int count = -1, int startat = 0);
+				public new string[] Split (string input, int count = -1, int startat = 0);
+				public string ToString ();
+				public static int CacheSize { get; set; }
+				public GLib.TimeSpan MatchTimeout { get; }
+				public System.Text.RegularExpressions.RegexOptions Options { get; }
+				public bool RightToLeft { get; }
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public abstract class StaticRegex {
+				public StaticRegex ();
+				protected static GLib.RegexCompileFlags ConvertOptions (System.Text.RegularExpressions.RegexOptions options);
+				public static string Escape (string str);
+				public static bool IsMatch (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static System.Text.RegularExpressions.Match Match (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static System.Text.RegularExpressions.MatchCollection Matches (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static string Replace (string input, string pattern, string replacement, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static string[] Split (string input, string pattern, System.Text.RegularExpressions.RegexOptions options = RegexOptions.None, GLib.TimeSpan matchTimeout = DefaultMatchTimeout);
+				public static string Unescape (string str);
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public enum RegexOptions {
+				None,
+				IgnoreCase,
+				Multiline,
+				ExplicitCapture,
+				Compiled,
+				Singleline,
+				IgnorePatternWhitespace,
+				RightToLeft,
+				ECMAScript,
+				CultureInvariant
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public errordomain RegexMatchTimeoutException {
+				TIMEOUT
+			}
+			[CCode (cheader_filename = "libdotnet.h")]
+			public delegate string MatchEvaluator (System.Text.RegularExpressions.Match match);
+		}
+		[CCode (cheader_filename = "libdotnet.h")]
+		public class StringBuilder : GLib.StringBuilder {
+			public StringBuilder (string? value = "");
+			public unowned System.Text.StringBuilder Append (string value, int startIndex = 0, int count = -1);
+			public unowned System.Text.StringBuilder AppendBoolean (bool value);
+			public unowned System.Text.StringBuilder AppendByte (uint8 value);
+			public unowned System.Text.StringBuilder AppendChar (char value);
+			public unowned System.Text.StringBuilder AppendCharArray (char[] value);
+			public unowned System.Text.StringBuilder AppendCharArrayFromIndex (char[] value, int startIndex, int charCount);
+			public unowned System.Text.StringBuilder AppendCopies (char value, int repeatCount);
+			public unowned System.Text.StringBuilder AppendDouble (double value);
+			public unowned System.Text.StringBuilder AppendFloat (float value);
+			public unowned System.Text.StringBuilder AppendFormat (string format, params Object[] args);
+			public unowned System.Text.StringBuilder AppendFormatWithProvider (System.IFormatProvider provider, string format, params Object[] args);
+			public unowned System.Text.StringBuilder AppendInt (int value);
+			public unowned System.Text.StringBuilder AppendLine (string? value = null);
+			public unowned System.Text.StringBuilder AppendLong (long value);
+			public unowned System.Text.StringBuilder AppendObject (Object value);
+			public unowned System.Text.StringBuilder AppendSbyte (int8 value);
+			public unowned System.Text.StringBuilder AppendShort (short value);
+			public unowned System.Text.StringBuilder AppendString (string value);
+			public unowned System.Text.StringBuilder AppendUint (uint value);
+			public unowned System.Text.StringBuilder AppendUlong (ulong value);
+			public unowned System.Text.StringBuilder AppendUshort (ushort value);
+			public unowned System.Text.StringBuilder Clear ();
+			public void CopyTo (int sourceIndex, char[] destination, int destinationIndex = 0, int count = -1);
+			public int EnsureCapacity (int capacity = 16);
+			public bool Equals (System.Text.StringBuilder sb);
+			public unowned System.Text.StringBuilder InserWithCount (int index, string value, int count);
+			public unowned System.Text.StringBuilder Insert (int index, string value, int valueCount = 1);
+			public unowned System.Text.StringBuilder InsertBoolean (int index, bool value);
+			public unowned System.Text.StringBuilder InsertByte (int index, uint8 value);
+			public unowned System.Text.StringBuilder InsertChar (int index, char value);
+			public unowned System.Text.StringBuilder InsertCharArray (int index, char[]? value);
+			public unowned System.Text.StringBuilder InsertCharWithCount (int index, char[]? value, int startIndex, int charCount);
+			public unowned System.Text.StringBuilder InsertDouble (int index, double value);
+			public unowned System.Text.StringBuilder InsertFloat (int index, float value);
+			public unowned System.Text.StringBuilder InsertInt (int index, int value);
+			public unowned System.Text.StringBuilder InsertLong (int index, long value);
+			public unowned System.Text.StringBuilder InsertObject (int index, Object value);
+			public unowned System.Text.StringBuilder InsertSbyte (int index, int8 value);
+			public unowned System.Text.StringBuilder InsertShort (int index, short value);
+			public unowned System.Text.StringBuilder InsertUint (int index, uint value);
+			public unowned System.Text.StringBuilder InsertUlong (int index, ulong value);
+			public unowned System.Text.StringBuilder InsertUshort (int index, ushort value);
+			public unowned System.Text.StringBuilder Remove (int startIndex, int length);
+			public unowned System.Text.StringBuilder Replace (string oldValue, string newValue, int startIndex = 0, int count = -1);
+			public unowned System.Text.StringBuilder ReplaceChar (char oldChar, char newChar, int startIndex = 0, int count = @this.Length);
+			public string ToString (int startIndex = 0, int length = -1);
+			public char @get (int index);
+			public void @set (int index, string value);
+			public int Capacity { get; set; }
+			public int Length { get; set; }
+			public int MaxCapacity { get; }
+		}
 	}
 	namespace Threading {
 		namespace Tasks {
@@ -405,12 +571,22 @@ namespace System {
 		public abstract int CompareTo (T other);
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
+	public interface ICustomFormatter {
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
 	public interface IDisposable {
 		public abstract void Dispose ();
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public interface IEquatable<T> {
 		public abstract bool Equals (T other);
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public interface IFormatProvider {
+		public abstract Object GetFormat (GLib.Type formatType);
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public interface IFormattable {
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public errordomain ArgumentException {
@@ -424,7 +600,8 @@ namespace System {
 	[CCode (cheader_filename = "libdotnet.h")]
 	public errordomain ArgumentNullException {
 		POINTER,
-		VALUE
+		VALUE,
+		STRING
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public errordomain ArgumentOutOfRangeException {
@@ -432,7 +609,10 @@ namespace System {
 		VALUE,
 		NEED_NON_NEG_NUM,
 		BEGIN_INDEX_NOT_NEGATIVE,
-		LENGTH_NOT_NEGATIVE
+		LENGTH_NOT_NEGATIVE,
+		NEGATIVE_CAPACITY,
+		NEGATIVE_LENGTH,
+		SMALL_CAPACITY
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public errordomain ArrayTypeMismatchException {
@@ -456,6 +636,10 @@ namespace System {
 		READ_ONLY_COLLECTION,
 		SORTED_LIST_NESTED_WRITE,
 		KEY_COLLECTION_SET
+	}
+	[CCode (cheader_filename = "libdotnet.h")]
+	public errordomain SerializationException {
+		SERIALIZATION
 	}
 	[CCode (cheader_filename = "libdotnet.h")]
 	public delegate void Action<T> (T obj);

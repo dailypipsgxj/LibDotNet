@@ -21,7 +21,7 @@ namespace System.Collections {
     // Base interface for all enumerators, providing a simple approach
     // to iterating over a collection.
 	//[GenericAccessors]
-    public interface IEnumerator : GLib.Object
+    public interface IEnumerator
     {
         // Interfaces are not serializable
         // Advances the enumerator to the next element of the enumeration and
@@ -36,7 +36,7 @@ namespace System.Collections {
 			return next();
 		}
    
-		public abstract GLib.Object get();
+		public abstract Object get();
     
         // Returns the current element of the enumeration. The returned value is
         // undefined before the first call to MoveNext and following a
@@ -44,7 +44,7 @@ namespace System.Collections {
         // GetCurrent with no intervening calls to MoveNext 
         // will return the same object.
         // 
-        public abstract GLib.Object Current {
+        public abstract Object Current {
            owned get; 
         }
     

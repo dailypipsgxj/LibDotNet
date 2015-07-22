@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-//using System.Security;
+using System.Security;
 
 namespace System.Text.RegularExpressions
 {
@@ -10,7 +10,7 @@ namespace System.Text.RegularExpressions
     /// This is the exception that is thrown when a RegEx matching timeout occurs.
     /// </summary>
     
-    errordomain RegexMatchTimeoutException {
+    public errordomain RegexMatchTimeoutException {
 		TIMEOUT
 	}
     

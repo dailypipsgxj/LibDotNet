@@ -10,7 +10,9 @@ namespace System {
 		NEED_NON_NEG_NUM,
 		BEGIN_INDEX_NOT_NEGATIVE,
 		LENGTH_NOT_NEGATIVE,
-		NEGATIVE_CAPACITY
+		NEGATIVE_CAPACITY,
+		NEGATIVE_LENGTH,
+		SMALL_CAPACITY
 	}
 
 	public errordomain Error {
@@ -28,7 +30,8 @@ namespace System {
 
 	public errordomain ArgumentNullException {
 		POINTER,
-		VALUE
+		VALUE,
+		STRING
 	}
 
 	public errordomain InvalidOperationException {

@@ -35,22 +35,67 @@ namespace System.Text.RegularExpressions
     /// </summary>
     public class Match : Group
     {
-        //internal static Match s_empty = new Match(null, 1, "", 0, 0, 0);
+        internal static Match s_empty = new Match(null, 1, "", 0, 0, 0);
         internal GroupCollection _groupcoll;
-		internal unowned GLib.MatchInfo _matchinfo;
 
- 
-        public Match(GLib.MatchInfo matchinfo){
-			_matchinfo = matchinfo;
-			base();
-			//base(text, new int[2], 0);
+        // input to the match
+        internal Regex _regex;
+        internal int _textbeg;
+        internal int _textpos;
+        internal int _textend;
+        internal int _textstart;
+
+        // output from the match
+        internal int[][] _matches;
+        internal int[] _matchcount;
+        internal bool _balancing;        // whether we've done any balancing with this match.  If we
+                                         // have done balancing, we'll need to do extra work in Tidy().
+
+         /// <summary>
+        /// Returns an empty Match object.
+        /// </summary>
+        public static Match Empty
+        {
+            get
+            {
+                return s_empty;
+            }
+        }
+
+        internal Match(Regex regex, int capcount, string text, int begpos, int len, int startpos) {
+			base(text, new int[2], 0);
+            _regex = regex;
+            _matchcount = new int[capcount];
+
+            _matches = new int[][];
+            _matches[0] = _caps;
+            _textbeg = begpos;
+            _textend = begpos + len;
+            _textstart = startpos;
+            _balancing = false;
+
+            // No need for an exception here.  This is only called internally, so we'll use an Assert instead
+            System.Diagnostics.Debug.Assert(!(_textbeg < 0 || _textstart < _textbeg || _textend < _textstart || _text.Length < _textend),
+                                            "The parameters are out of range.");
         }
 
         /*
          * Nonpublic set-text method
          */
-        internal virtual void Reset(Regex regex, string text, int textbeg, int textend, int textstart)
+        internal virtual void Reset(Regex regex, String text, int textbeg, int textend, int textstart)
         {
+            _regex = regex;
+            _text = text;
+            _textbeg = textbeg;
+            _textend = textend;
+            _textstart = textstart;
+
+            for (int i = 0; i < _matchcount.Length; i++)
+            {
+                _matchcount[i] = 0;
+            }
+
+            _balancing = false;
         }
 
         public virtual GroupCollection Groups
@@ -71,7 +116,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public Match NextMatch()
         {
-            return this;//return _regex.Run(false, _length, _text, _textbeg, _textend - _textbeg, _textpos);
+            if (_regex == null)
+                return this;
+
+            return _regex.Run(false, _length, _text, _textbeg, _textend - _textbeg, _textpos);
         }
 
         /// <summary>
@@ -80,9 +128,19 @@ namespace System.Text.RegularExpressions
         /// of Group(1).Tostring() and Group(2).Tostring().
         /// </summary>
         public virtual string Result(string replacement)
+			requires (_regex != null)
         {
+			/*
+            RegexReplacement repl;
+            repl = (RegexReplacement)_regex._replref.Get();
 
-            return replacement;
+            if (repl == null || !repl.Pattern.Equals(replacement))
+            {
+                repl = RegexParser.ParseReplacement(replacement, _regex._caps, _regex._capsize, _regex._capnames, _regex._roptions);
+                _regex._replref.Cache(repl);
+            }
+			*/
+            return "";
         }
 
 
@@ -94,9 +152,182 @@ namespace System.Text.RegularExpressions
         /// between multiple threads.
         /// </summary>
 
-        static Match Synchronized (Match inner)
+        internal Match Synchronized (Match inner)
         {
+            int numgroups = inner._matchcount.Length;
+
+            // Populate all groups by looking at each one
+            for (int i = 0; i < numgroups; i++)
+            {
+                Group group = inner.Groups[i];
+
+                // Depends on the fact that Group.Synchronized just
+                // operates on and returns the same instance
+                base.Synchronized(group);
+            }
+
             return inner;
+        }
+
+        /*
+         * Nonpublic builder: add a capture to the group specified by "cap"
+         */
+        internal virtual void AddMatch(int cap, int start, int len)
+        {
+            int capcount;
+
+            if (_matches[cap] == null)
+                _matches[cap] = new int[2];
+
+            capcount = _matchcount[cap];
+
+            if (capcount * 2 + 2 > _matches[cap].Length)
+            {
+                int[] oldmatches = _matches[cap];
+                int[] newmatches = new int[capcount * 8];
+                for (int j = 0; j < capcount * 2; j++)
+                    newmatches[j] = oldmatches[j];
+                _matches[cap] = newmatches;
+            }
+
+            _matches[cap][capcount * 2] = start;
+            _matches[cap][capcount * 2 + 1] = len;
+            _matchcount[cap] = capcount + 1;
+        }
+
+        /*
+         * Nonpublic builder: Add a capture to balance the specified group.  This is used by the
+                              balanced match construct. (?<foo-foo2>...)
+
+           If there were no such thing as backtracking, this would be as simple as calling RemoveMatch(cap).
+           However, since we have backtracking, we need to keep track of everything.
+         */
+        internal virtual void BalanceMatch(int cap)
+        {
+            int capcount;
+            int target;
+
+            _balancing = true;
+
+            // we'll look at the last capture first
+            capcount = _matchcount[cap];
+            target = capcount * 2 - 2;
+
+            // first see if it is negative, and therefore is a reference to the next available
+            // capture group for balancing.  If it is, we'll reset target to point to that capture.
+            if (_matches[cap][target] < 0)
+                target = -3 - _matches[cap][target];
+
+            // move back to the previous capture
+            target -= 2;
+
+            // if the previous capture is a reference, just copy that reference to the end.  Otherwise, point to it.
+            if (target >= 0 && _matches[cap][target] < 0)
+                AddMatch(cap, _matches[cap][target], _matches[cap][target + 1]);
+            else
+                AddMatch(cap, -3 - target, -4 - target /* == -3 - (target + 1) */ );
+        }
+
+        /*
+         * Nonpublic builder: removes a group match by capnum
+         */
+        internal virtual void RemoveMatch(int cap)
+        {
+            _matchcount[cap]--;
+        }
+
+        /*
+         * Nonpublic: tells if a group was matched by capnum
+         */
+        internal virtual bool IsMatched(int cap)
+        {
+            return cap < _matchcount.Length && _matchcount[cap] > 0 && _matches[cap][_matchcount[cap] * 2 - 1] != (-3 + 1);
+        }
+
+        /*
+         * Nonpublic: returns the index of the last specified matched group by capnum
+         */
+        internal virtual int MatchIndex(int cap)
+        {
+            int i = _matches[cap][_matchcount[cap] * 2 - 2];
+            if (i >= 0)
+                return i;
+
+            return _matches[cap][-3 - i];
+        }
+
+        /*
+         * Nonpublic: returns the length of the last specified matched group by capnum
+         */
+        internal virtual int MatchLength(int cap)
+        {
+            int i = _matches[cap][_matchcount[cap] * 2 - 1];
+            if (i >= 0)
+                return i;
+
+            return _matches[cap][-3 - i];
+        }
+
+        /*
+         * Nonpublic: tidy the match so that it can be used as an immutable result
+         */
+        internal virtual void Tidy(int textpos)
+        {
+            int[] interval;
+
+            interval = _matches[0];
+            _index = interval[0];
+            _length = interval[1];
+            _textpos = textpos;
+            _capcount = _matchcount[0];
+
+            if (_balancing)
+            {
+                // The idea here is that we want to compact all of our unbalanced captures.  To do that we
+                // use j basically as a count of how many unbalanced captures we have at any given time
+                // (really j is an index, but j/2 is the count).  First we skip past all of the real captures
+                // until we find a balance captures.  Then we check each subsequent entry.  If it's a balance
+                // capture (it's negative), we decrement j.  If it's a real capture, we increment j and copy
+                // it down to the last free position.
+                for (int cap = 0; cap < _matchcount.Length; cap++)
+                {
+                    int limit;
+                    int[] matcharray;
+
+                    limit = _matchcount[cap] * 2;
+                    matcharray = _matches[cap];
+
+                    int i = 0;
+                    int j;
+
+                    for (i = 0; i < limit; i++)
+                    {
+                        if (matcharray[i] < 0)
+                            break;
+                    }
+
+                    for (j = i; i < limit; i++)
+                    {
+                        if (matcharray[i] < 0)
+                        {
+                            // skip negative values
+                            j--;
+                        }
+                        else
+                        {
+                            // but if we find something positive (an actual capture), copy it back to the last
+                            // unbalanced position.
+                            if (i != j)
+                                matcharray[j] = matcharray[i];
+                            j++;
+                        }
+                    }
+
+                    _matchcount[cap] = j / 2;
+                }
+
+                _balancing = false;
+            }
         }
 
 

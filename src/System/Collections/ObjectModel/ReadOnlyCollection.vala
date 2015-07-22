@@ -15,7 +15,7 @@ namespace System.Collections.ObjectModel
 	using System.Linq;
     
     [GenericAccessors]
-    public class ReadOnlyCollection<T>: Enumerable<T>, IEnumerable<T>, ICollection<T>, IReadOnlyCollection<T>
+    public class ReadOnlyCollection<T>:  Enumerable<T>, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.ICollection<T>, IReadOnlyCollection<T>
     {
         IList<T> list;
         private GLib.Object _syncRoot;
@@ -41,23 +41,23 @@ namespace System.Collections.ObjectModel
         }
 
         public bool contains(T value) {
-            return ((ICollection<T>)list).Contains(value);
+            return ((System.Collections.Generic.ICollection<T>)list).Contains(value);
         }
 
         public bool Contains(T value) {
-            return ((ICollection<T>)list).Contains(value);
+            return ((System.Collections.Generic.ICollection<T>)list).Contains(value);
         }
 
         public void CopyTo(T[] array, int index) {
-            ((ICollection<T>)list).CopyTo(array, index);
+            ((System.Collections.Generic.ICollection<T>)list).CopyTo(array, index);
         }
 
-        public IEnumerator<T> GetEnumerator() {
-            return ((IEnumerable<T>)list).GetEnumerator();
+        public System.Collections.Generic.IEnumerator<T> GetEnumerator() {
+            return ((System.Collections.Generic.IEnumerable<T>)list).GetEnumerator();
         }
 
-        public IEnumerator<T> iterator() {
-            return ((IEnumerable<T>)list).GetEnumerator();
+        public System.Collections.Generic.IEnumerator<T> iterator() {
+            return ((System.Collections.Generic.IEnumerable<T>)list).GetEnumerator();
         }
 
         public int IndexOf(T value, int index = 0) {

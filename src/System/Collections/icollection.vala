@@ -22,7 +22,7 @@ namespace System.Collections {
     // synchronization methods.
 
 	//[GenericAccessors]
-    public interface ICollection : GLib.Object
+    public interface ICollection
     {
 		/**
 		 * The number of items in this collection.
@@ -70,12 +70,12 @@ namespace System.Collections {
         // }
         // 
         // 
-        public abstract GLib.Object SyncRoot { get; }
+        public abstract Object SyncRoot { get; }
             
         // CopyTo copies a collection into an Array, starting at a particular
         // index into the array.
         // 
-        public abstract void CopyTo(GLib.Array<GLib.Object> array, int arrayIndex);
+        public abstract void CopyTo(Object[] array, int arrayIndex);
       
     }
 

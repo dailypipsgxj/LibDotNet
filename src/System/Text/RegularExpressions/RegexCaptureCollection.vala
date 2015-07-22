@@ -4,8 +4,9 @@
 // The CaptureCollection lists the captured Capture numbers
 // contained in a compiled Regex.
 
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace System.Text.RegularExpressions
 {
@@ -18,7 +19,7 @@ namespace System.Text.RegularExpressions
     /// Represents a sequence of capture substrings. TheObjectis used
     /// to return the set of captures done by a single capturing group.
     /// </summary>
-    public class CaptureCollection : Object, ICollection, IEnumerable
+    public class CaptureCollection : Enumerable<Capture>, ICollection<Capture>, IEnumerable<Capture>
     {
         private Group _group;
         private int _capcount;
@@ -38,19 +39,26 @@ namespace System.Text.RegularExpressions
             get { return _capcount; }
         }
 
+        public int size
+        {
+            get { return _capcount; }
+        }
+		
+
         /// <summary>
         /// Returns a specific capture, by index, in this collection.
         /// </summary>
         public new Capture get (int i) {
-		{ return GetCapture(i); }
+		{ 
+			return GetCapture(i); }
         }
 
         /// <summary>
         /// Provides an enumerator in the same order as Item[].
         /// </summary>
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Capture> GetEnumerator()
         {
-            return new Enumerator(this);
+            return new Enumerator<Capture>(this);
         }
 
         /// <summary>
@@ -61,23 +69,29 @@ namespace System.Text.RegularExpressions
             return _captures[i];
         }
 
+		public IEnumerator<Capture> iterator() {
+			return GetEnumerator();
+		}
+
         bool IsSynchronized
         {
             get { return false; }
         }
         
-        Object SyncRoot
+        public Object SyncRoot
         {
             get { return (Object)_group; }
         }
 
-        public class Enumerator : Object, IEnumerator
+        public void CopyTo(Capture[] array, int arrayIndex) {
+			
+		}
+
+        private class Enumerator<Capture> : Enumerable<Capture>, IEnumerator<Capture>
         {
             private   CaptureCollection _collection;
             private int _index;
 
-			private Object _currentElement { get; set;}
-			private Gee.Iterator<Object> _iterator { get; set;}
 
             internal Enumerator(CaptureCollection collection)
             {
@@ -85,6 +99,15 @@ namespace System.Text.RegularExpressions
                 _index = -1;
             }
 
+			public bool next () {
+				return MoveNext();
+			}
+
+			
+			public new Capture get () {
+				return Current;
+			}
+			
             public bool MoveNext()
             {
                 int size = _collection.Count;
@@ -93,15 +116,14 @@ namespace System.Text.RegularExpressions
                     return false;
 
                 _index++;
-
                 return _index < size;
             }
 
-            public Object Current
+            public Capture Current
             {
                 owned get
                 {
-                    return _currentElement;
+                    return _collection.get(_index);
                 }
             }
             

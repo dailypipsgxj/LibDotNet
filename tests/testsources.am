@@ -6,3 +6,7 @@ TEST_COLLECTIONS_GENERIC = \
 	System.Collections.Generic/testdictionary.vala \
 	System.Collections.Generic/teststack.vala \
 	System.Collections.Generic/testqueue.vala
+
+
+TEST_TEXT = \
+	System.Text/teststringbuilder.vala
